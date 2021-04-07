@@ -11,6 +11,7 @@ import com.project.halo.commons.viewmodel.ViewModelProvider
 import com.project.halo.commons.viewmodel.ViewModelType
 import com.project.halo.commons.viewmodel.externalViewModels
 import com.project.halo.vehicle.prediction.framework.databinding.PredictionFragmentBinding
+import com.project.halo.vehicle.prediction.framework.internal.FpsCounter
 import com.project.halo.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.halo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +40,9 @@ class PredictionFragment : Fragment() {
     @Inject
     lateinit var cameraAnalysis: CameraAnalysis
 
+    @Inject
+    lateinit var fpsCounter: FpsCounter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,6 +61,7 @@ class PredictionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observePredictedLines()
         observeRecognisedTexts()
+        observeFpsCounter()
         cameraAnalysis.startCameraAnalysis(textAnalyzer, binding.cameraPreview.surfaceProvider)
     }
 
@@ -69,7 +74,6 @@ class PredictionFragment : Fragment() {
         lifecycleScope.launch {
             textAnalyzer.textsObserver.consumeAsFlow().collect {
                 if (it.isNotEmpty()) {
-                    android.util.Log.d("test123", "$it")
                     predictionViewModel.processRecognisedTexts(it)
                 }
             }
@@ -86,7 +90,14 @@ class PredictionFragment : Fragment() {
                     .reduce { acc: String, s: String -> "$acc\n$s" }
 
                 binding.lineNumber.text = lineNumbers
+                fpsCounter.newFrameProcessed(System.currentTimeMillis())
             }
+        })
+    }
+
+    private fun observeFpsCounter() {
+        fpsCounter.currentValue.observe(viewLifecycleOwner, { fps ->
+            binding.fpsCounter.text = fps.toString()
         })
     }
 }
