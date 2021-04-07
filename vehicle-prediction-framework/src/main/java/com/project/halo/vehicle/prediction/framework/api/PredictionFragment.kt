@@ -86,7 +86,9 @@ class PredictionFragment : Fragment() {
         predictionViewModel.predictedLines.observe(viewLifecycleOwner, { lines ->
             if (lines.isNotEmpty()) {
                 val lineNumbers: String = lines
-                    .map { it.number }
+                    .map {
+                        "${it.line.number}  ${it.probability}"
+                    }
                     .reduce { acc: String, s: String -> "$acc\n$s" }
 
                 binding.lineNumber.text = lineNumbers

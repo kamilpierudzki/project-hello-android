@@ -1,11 +1,11 @@
 package com.project.halo.vehicle.prediction.framework.api
 
 import androidx.lifecycle.LiveData
-import com.project.hallo.city.plan.domain.Line
 import com.project.halo.commons.viewmodel.ExternalViewModel
+import com.project.halo.vehicle.prediction.data.analysis.LineWithProbability
 
 interface PredictionViewModel : ExternalViewModel {
-    val predictedLines: LiveData<List<Line>>
+    val predictedLines: LiveData<List<LineWithProbability>>
 
     fun processRecognisedTexts(input: List<String>)
 }

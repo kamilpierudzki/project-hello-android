@@ -1,6 +1,7 @@
 package com.project.halo.vehicle.domain.analysis
 
 import com.project.hallo.city.plan.domain.Line
+import com.project.halo.vehicle.prediction.data.analysis.LineWithProbability
 import com.project.halo.vehicle.prediction.data.analysis.PredictedLinesAnalysis
 
 private const val LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS = 7_000L
@@ -9,12 +10,12 @@ private const val ELEMENT_NOT_FOUND_IN_MEMORY = Long.MAX_VALUE
 class PredictedLinesAnalysisImpl : PredictedLinesAnalysis {
 
     private val linesInMemory = mutableMapOf<Line, AnalysisSpecs>()
-    private var lastOutput: List<Line>? = null
+    private var lastOutput: List<LineWithProbability>? = null
 
     override fun analysedLines(
         newLines: List<Line>,
         currentTimeInMillis: Long,
-        onDataChanged: (List<Line>) -> Unit
+        onDataChanged: (List<LineWithProbability>) -> Unit
     ) {
         removeExpiredLinesFromMemory(currentTimeInMillis)
         updateMemoryIfPossible(currentTimeInMillis, newLines)
@@ -51,17 +52,23 @@ class PredictedLinesAnalysisImpl : PredictedLinesAnalysis {
         }
     }
 
-    private fun createOutputOfMemory(): List<Line> =
-        linesInMemory
+    private fun createOutputOfMemory(): List<LineWithProbability> {
+        val numberOfAllOccurrences = linesInMemory.entries
+            .map { it.value.howManyTimesOccurred }
+            .reduceOrNull { acc, i -> acc + i } ?: 0
+
+        return linesInMemory
             .entries
+            .map {
+                val probability: Float =
+                    it.value.howManyTimesOccurred / (numberOfAllOccurrences * 1.0f)
+                LineWithProbability(it.key, probability)
+            }
             .sortedByDescending {
-                it.value.howManyTimesOccurred
+                it.probability
             }
-            .sortedBy {
-                it.value.latestTimestampOfOccurrence
-            }
-            .map { it.key }
             .toList()
+    }
 }
 
 private data class AnalysisSpecs(

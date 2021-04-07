@@ -6,6 +6,8 @@ interface PredictedLinesAnalysis {
     fun analysedLines(
         newLines: List<Line>,
         currentTimeInMillis: Long,
-        onDataChanged: (List<Line>) -> Unit
+        onDataChanged: (List<LineWithProbability>) -> Unit
     )
 }
+
+data class LineWithProbability(val line: Line, val probability: Float)

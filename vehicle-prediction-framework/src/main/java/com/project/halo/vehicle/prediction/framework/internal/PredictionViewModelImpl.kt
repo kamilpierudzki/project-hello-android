@@ -1,11 +1,10 @@
 package com.project.halo.vehicle.prediction.framework.internal
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.hallo.city.plan.data.CityPlanUseCase
-import com.project.hallo.city.plan.domain.Line
 import com.project.halo.vehicle.prediction.data.VehiclePrediction
+import com.project.halo.vehicle.prediction.data.analysis.LineWithProbability
 import com.project.halo.vehicle.prediction.data.analysis.PredictedLinesAnalysis
 import com.project.halo.vehicle.prediction.framework.api.PredictionViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +19,7 @@ class PredictionViewModelImpl @Inject constructor(
     private val predictedLinesAnalysis: PredictedLinesAnalysis
 ) : ViewModel(), PredictionViewModel {
 
-    override val predictedLines = MutableLiveData<List<Line>>()
+    override val predictedLines = MutableLiveData<List<LineWithProbability>>()
 
     override fun processRecognisedTexts(input: List<String>) {
         for (line in input) {
