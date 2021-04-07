@@ -23,7 +23,7 @@ internal class TextFromImageAnalyser @Inject constructor() : DisposableImageAnal
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun analyze(imageProxy: ImageProxy) {
-        recognizeText2(imageProxy)
+        recognizeText(imageProxy)
     }
 
     override fun dispose() {
@@ -32,15 +32,18 @@ internal class TextFromImageAnalyser @Inject constructor() : DisposableImageAnal
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     @SuppressLint("UnsafeExperimentalUsageError")
-    private fun recognizeText2(imageProxy: ImageProxy) {
+    private fun recognizeText(imageProxy: ImageProxy) {
         val mediaImage = imageProxy.image
         if (mediaImage != null) {
             val rotationDegrees = imageProxy.imageInfo.rotationDegrees
             val image = InputImage.fromMediaImage(mediaImage, rotationDegrees)
             textRecognizer.process(image)
                 .addOnSuccessListener {
+                    imageProxy.close()
                     val texts: List<String> = it.textBlocks.map { textLine -> textLine.text }
                     postTexts(texts)
+                }
+                .addOnFailureListener {
                     imageProxy.close()
                 }
         }

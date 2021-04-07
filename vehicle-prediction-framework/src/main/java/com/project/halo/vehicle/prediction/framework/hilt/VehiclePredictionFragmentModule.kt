@@ -12,6 +12,7 @@ import dagger.hilt.android.components.FragmentComponent
 import androidx.fragment.app.viewModels
 import com.project.halo.vehicle.prediction.framework.api.PredictionViewModel
 import com.project.halo.vehicle.prediction.framework.internal.TextFromImageAnalyser
+import com.project.halo.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.halo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import dagger.Binds
 
@@ -31,5 +32,8 @@ internal abstract class VehiclePredictionFragmentModule {
         ) = ExternalViewModelProvider<PredictionViewModel> {
             fragment.viewModels<PredictionViewModelImpl>().value
         }
+
+        @Provides
+        fun provideCameraAnalysis(fragment: Fragment) = CameraAnalysis(fragment)
     }
 }
