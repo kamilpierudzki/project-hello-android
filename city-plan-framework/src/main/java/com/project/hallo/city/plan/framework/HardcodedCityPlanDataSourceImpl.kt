@@ -1,6 +1,6 @@
 package com.project.hallo.city.plan.framework
 
-import com.project.hallo.city.plan.data.CityPlanDataSource
+import com.project.hallo.city.plan.domain.CityPlanDataSource
 import com.project.hallo.city.plan.domain.Line
 import com.project.hallo.city.plan.domain.VehicleType
 import com.project.hallo.city.plan.domain.city.Poznan

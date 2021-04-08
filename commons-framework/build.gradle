@@ -36,6 +36,4 @@ dependencies {
 
     implementation 'com.google.dagger:hilt-android:2.33-beta'
     kapt 'com.google.dagger:hilt-compiler:2.33-beta'
-
-    implementation project(path: ':commons-data')
 }

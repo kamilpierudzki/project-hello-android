@@ -59,6 +59,5 @@ dependencies {
 
     implementation project(path: ':commons-framework')
     implementation project(path: ':vehicle-prediction-domain')
-    implementation project(path: ':city-plan-data')
     implementation project(path: ':city-plan-domain')
 }

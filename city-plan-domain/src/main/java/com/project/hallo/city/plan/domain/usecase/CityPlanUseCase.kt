@@ -1,4 +1,4 @@
-package com.project.hallo.city.plan.data
+package com.project.hallo.city.plan.domain.usecase
 
 import com.project.hallo.city.plan.domain.Line
 

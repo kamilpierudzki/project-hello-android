@@ -1,8 +1,5 @@
-include ':city-plan-interactor'
 include ':city-plan-framework'
 include ':city-plan-domain'
-include ':city-plan-data'
-include ':commons-data'
 include ':commons-framework'
 include ':vehicle-prediction-framework'
 include ':vehicle-prediction-domain'
