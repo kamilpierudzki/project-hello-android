@@ -1,7 +1,7 @@
 package com.project.halo.vehicle.prediction.framework.hilt
 
 import com.project.halo.vehicle.domain.VehiclePrediction
-import com.project.halo.vehicle.domain.VehiclePredictionImpl
+import com.project.halo.vehicle.domain.steps.implementation.VehiclePredictionImpl
 import com.project.halo.vehicle.domain.analysis.implementation.PredictedLinesAnalysisImpl
 import com.project.halo.vehicle.domain.steps.Fragmentation
 import com.project.halo.vehicle.domain.steps.OutputAnalysis
@@ -10,7 +10,7 @@ import com.project.halo.vehicle.domain.steps.implementation.FindingLinesImpl
 import com.project.halo.vehicle.domain.steps.implementation.FragmentationImpl
 import com.project.halo.vehicle.domain.steps.implementation.OutputAnalysisImpl
 import com.project.halo.vehicle.domain.steps.implementation.ReductionExperimentalImpl
-import com.project.halo.vehicle.prediction.data.analysis.PredictedLinesAnalysis
+import com.project.halo.vehicle.domain.analysis.PredictedLinesAnalysis
 import com.project.halo.vehicle.domain.steps.FindingLines
 import dagger.Module
 import dagger.Provides

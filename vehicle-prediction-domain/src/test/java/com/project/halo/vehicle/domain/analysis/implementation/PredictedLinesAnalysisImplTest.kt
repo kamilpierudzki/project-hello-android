@@ -2,7 +2,7 @@ package com.project.halo.vehicle.domain.analysis.implementation
 
 import com.project.hallo.city.plan.domain.Line
 import com.project.hallo.city.plan.domain.VehicleType
-import com.project.halo.vehicle.prediction.data.analysis.LineWithProbability
+import com.project.halo.vehicle.domain.analysis.LineWithProbability
 import org.junit.Assert
 import org.junit.Test
 

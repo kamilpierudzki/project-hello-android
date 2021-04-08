@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.hallo.city.plan.data.CityPlanUseCase
 import com.project.halo.vehicle.domain.VehiclePrediction
-import com.project.halo.vehicle.prediction.data.analysis.LineWithProbability
-import com.project.halo.vehicle.prediction.data.analysis.PredictedLinesAnalysis
+import com.project.halo.vehicle.domain.analysis.LineWithProbability
+import com.project.halo.vehicle.domain.analysis.PredictedLinesAnalysis
 import com.project.halo.vehicle.prediction.framework.api.PredictionViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

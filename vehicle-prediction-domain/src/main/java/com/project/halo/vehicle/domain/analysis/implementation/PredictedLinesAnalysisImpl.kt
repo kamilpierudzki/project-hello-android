@@ -1,8 +1,8 @@
 package com.project.halo.vehicle.domain.analysis.implementation
 
 import com.project.hallo.city.plan.domain.Line
-import com.project.halo.vehicle.prediction.data.analysis.LineWithProbability
-import com.project.halo.vehicle.prediction.data.analysis.PredictedLinesAnalysis
+import com.project.halo.vehicle.domain.analysis.LineWithProbability
+import com.project.halo.vehicle.domain.analysis.PredictedLinesAnalysis
 
 private const val LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS = 7_000L
 private const val ELEMENT_NOT_FOUND_IN_MEMORY = Long.MAX_VALUE

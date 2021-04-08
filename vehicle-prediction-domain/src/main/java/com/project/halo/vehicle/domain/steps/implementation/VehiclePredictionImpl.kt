@@ -1,6 +1,7 @@
-package com.project.halo.vehicle.domain
+package com.project.halo.vehicle.domain.steps.implementation
 
 import com.project.hallo.city.plan.domain.Line
+import com.project.halo.vehicle.domain.VehiclePrediction
 import com.project.halo.vehicle.domain.steps.*
 
 class VehiclePredictionImpl(
