@@ -1,5 +1,4 @@
 include ':city-plan-interactor'
-include ':vehicle-prediction-interactor'
 include ':city-plan-framework'
 include ':city-plan-domain'
 include ':city-plan-data'
