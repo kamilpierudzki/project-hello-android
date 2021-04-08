@@ -1,16 +1,22 @@
-package com.project.halo.vehicle.domain.analysis.implementation
+package com.project.halo.vehicle.prediction.framework.internal.analysis
 
 import com.project.hallo.city.plan.domain.Line
 import com.project.halo.vehicle.domain.analysis.LineWithProbability
 import com.project.halo.vehicle.domain.analysis.PredictedLinesAnalysis
+import dagger.hilt.android.scopes.ViewModelScoped
+import java.util.LinkedList
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentLinkedQueue
+import javax.inject.Inject
 
 private const val LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS = 7_000L
 private const val ELEMENT_NOT_FOUND_IN_MEMORY = Long.MAX_VALUE
 
-class PredictedLinesAnalysisImpl : PredictedLinesAnalysis {
+@ViewModelScoped
+internal class PredictedLinesAnalysisImpl @Inject constructor(): PredictedLinesAnalysis {
 
-    private val linesInMemory = mutableMapOf<Line, AnalysisSpecs>()
-    private var lastOutput: List<LineWithProbability>? = null
+    private val linesInMemory = ConcurrentHashMap<Line, AnalysisSpecs>()
+    private var lastOutput = ConcurrentLinkedQueue<LineWithProbability>()
 
     override fun analysedSortedLines(
         newLines: List<Line>,
@@ -20,15 +26,22 @@ class PredictedLinesAnalysisImpl : PredictedLinesAnalysis {
         removeExpiredLinesFromMemory(currentTimeInMillis)
         updateMemoryIfPossible(currentTimeInMillis, newLines)
         val newOutput = createSortedOutputOfMemory()
-        if (lastOutput == null || lastOutput.hashCode() != newOutput.hashCode()) {
-            lastOutput = newOutput
+        if (newOutput.isNotEmpty() && lastOutput.hashCode() != newOutput.hashCode()) {
+            lastOutput.apply {
+                clear()
+                addAll(newOutput)
+            }
             onDataChanged.invoke(newOutput)
         }
     }
 
     private fun removeExpiredLinesFromMemory(currentTimeInMillis: Long) {
-        linesInMemory.entries.removeIf {
-            isElementExpired(currentTimeInMillis, it.value)
+        val iterator = linesInMemory.iterator()
+        while (iterator.hasNext()) {
+            val entry = iterator.next()
+            if (isElementExpired(currentTimeInMillis, entry.value)) {
+                iterator.remove()
+            }
         }
     }
 
@@ -53,22 +66,30 @@ class PredictedLinesAnalysisImpl : PredictedLinesAnalysis {
     }
 
     private fun createSortedOutputOfMemory(): List<LineWithProbability> {
-        val numberOfAllOccurrences = linesInMemory.entries
-            .map { it.value.howManyTimesOccurred }
-            .reduceOrNull { acc, i -> acc + i } ?: 0
+        val result = LinkedList<LineWithProbability>()
+        val numberOfAllOccurrences = getNumberOfAllOccurrences()
+        val iterator = linesInMemory.iterator()
+        while (iterator.hasNext()) {
+            val entry = iterator.next()
+            val probability: Float =
+                entry.value.howManyTimesOccurred / (numberOfAllOccurrences * 1.0f)
+            result.add(LineWithProbability(entry.key, probability))
+        }
 
-        return linesInMemory
-            .entries
-            .map {
-                val probability: Float =
-                    it.value.howManyTimesOccurred / (numberOfAllOccurrences * 1.0f)
-                LineWithProbability(it.key, probability)
-            }
-            .sortedByDescending {
-                it.probability
-            }
-            .toList()
+        result.sortByDescending { it.probability }
+        return result
     }
+
+    private fun getNumberOfAllOccurrences(): Int {
+        val iterator = linesInMemory.iterator()
+        var numberOfAllOccurrences = 0
+        while (iterator.hasNext()) {
+            val entry = iterator.next()
+            numberOfAllOccurrences += entry.value.howManyTimesOccurred
+        }
+        return numberOfAllOccurrences
+    }
+
 }
 
 private data class AnalysisSpecs(

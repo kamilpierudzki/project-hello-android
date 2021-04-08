@@ -8,20 +8,24 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.common.util.concurrent.ListenableFuture
 import com.project.halo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
+import kotlin.math.min
 
 class CameraAnalysis(
     private val fragment: Fragment
 ) {
+
+    private val cameraProviderFuture: ListenableFuture<ProcessCameraProvider> =
+        ProcessCameraProvider.getInstance(fragment.requireContext())
 
     @SuppressLint("NewApi", "UnsafeExperimentalUsageError")
     fun startCameraAnalysis(
         imageAnalyzer: DisposableImageAnalyzer,
         surfaceProvider: Preview.SurfaceProvider,
     ) {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(fragment.requireContext())
         cameraProviderFuture.addListener({
             val cameraSelector = createCameraSelector()
             val targetResolution = createTargetResolution()
@@ -54,7 +58,8 @@ class CameraAnalysis(
         }
 
     private fun createWorkerExecutor(): Executor {
-        return Executors.newSingleThreadExecutor()
+        val availableProcessors = Runtime.getRuntime().availableProcessors()
+        return Executors.newFixedThreadPool(min(2, availableProcessors))
     }
 
     private fun createTargetResolution(): Size = Size(1280, 720)
