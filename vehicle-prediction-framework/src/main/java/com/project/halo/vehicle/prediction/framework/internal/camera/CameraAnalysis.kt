@@ -9,6 +9,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.project.halo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
+import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 class CameraAnalysis(
@@ -22,33 +23,15 @@ class CameraAnalysis(
     ) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(fragment.requireContext())
         cameraProviderFuture.addListener({
-            val analysisExecutor = Executors.newSingleThreadExecutor()
-            val targetResolution = Size(1280, 720)
+            val cameraSelector = createCameraSelector()
+            val targetResolution = createTargetResolution()
+            val imageAnalysisUseCase = createImageAnalysisUseCase(targetResolution, imageAnalyzer)
+            val previewUseCase = createPreviewUseCase(targetResolution, surfaceProvider)
 
-            val imageAnalysisUseCase = ImageAnalysis.Builder()
-                .setTargetResolution(targetResolution)
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .build()
-                .apply {
-                    setAnalyzer(analysisExecutor, imageAnalyzer)
-                }
-
-            val previewUseCase = Preview.Builder()
-                .setTargetResolution(targetResolution)
-                .build()
-                .apply {
-                    setSurfaceProvider(surfaceProvider)
-                }
-
-            val cameraSelector = CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build()
-
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             try {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
-                    fragment,
+                val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+                bindCameraProviderToLifecycle(
+                    cameraProvider,
                     cameraSelector,
                     imageAnalysisUseCase,
                     previewUseCase
@@ -57,5 +40,52 @@ class CameraAnalysis(
             }
 
         }, ContextCompat.getMainExecutor(fragment.requireContext()))
+    }
+
+    private fun createImageAnalysisUseCase(
+        targetResolution: Size,
+        imageAnalyzer: DisposableImageAnalyzer
+    ) = ImageAnalysis.Builder()
+        .setTargetResolution(targetResolution)
+        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+        .build()
+        .apply {
+            setAnalyzer(createWorkerExecutor(), imageAnalyzer)
+        }
+
+    private fun createWorkerExecutor(): Executor {
+        return Executors.newSingleThreadExecutor()
+    }
+
+    private fun createTargetResolution(): Size = Size(1280, 720)
+
+    private fun createPreviewUseCase(
+        targetResolution: Size,
+        surfaceProvider: Preview.SurfaceProvider
+    ) = Preview.Builder()
+        .setTargetResolution(targetResolution)
+        .build()
+        .apply {
+            setSurfaceProvider(surfaceProvider)
+        }
+
+    private fun createCameraSelector() =
+        CameraSelector.Builder()
+            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+            .build()
+
+    private fun bindCameraProviderToLifecycle(
+        cameraProvider: ProcessCameraProvider,
+        cameraSelector: CameraSelector,
+        imageAnalysisUseCase: ImageAnalysis,
+        previewUseCase: Preview
+    ) {
+        cameraProvider.unbindAll()
+        cameraProvider.bindToLifecycle(
+            fragment,
+            cameraSelector,
+            imageAnalysisUseCase,
+            previewUseCase
+        )
     }
 }
