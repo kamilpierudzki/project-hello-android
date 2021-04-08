@@ -13,7 +13,7 @@ import javax.inject.Inject
 private const val NUM_OF_PREDICTED_LINES_TO_SHOW = 3
 
 @HiltViewModel
-class PredictionViewModelImpl @Inject constructor(
+internal class PredictionViewModelImpl @Inject constructor(
     private val vehiclePrediction: VehiclePrediction,
     private val cityPlanUseCase: CityPlanUseCase,
     private val predictedLinesAnalysis: PredictedLinesAnalysis
@@ -25,8 +25,9 @@ class PredictionViewModelImpl @Inject constructor(
         for (line in input) {
             val predictedLines = vehiclePrediction.processInput(line, cityPlanUseCase.getCityPlan())
             val currentTimeInMillis = System.currentTimeMillis()
-            predictedLinesAnalysis.analysedLines(predictedLines, currentTimeInMillis) {
-                this.predictedLines.postValue(it.take(NUM_OF_PREDICTED_LINES_TO_SHOW))
+            predictedLinesAnalysis.analysedSortedLines(predictedLines, currentTimeInMillis) {
+                val lines = it.take(NUM_OF_PREDICTED_LINES_TO_SHOW)
+                this.predictedLines.postValue(lines)
             }
         }
     }

@@ -12,14 +12,14 @@ class PredictedLinesAnalysisImpl : PredictedLinesAnalysis {
     private val linesInMemory = mutableMapOf<Line, AnalysisSpecs>()
     private var lastOutput: List<LineWithProbability>? = null
 
-    override fun analysedLines(
+    override fun analysedSortedLines(
         newLines: List<Line>,
         currentTimeInMillis: Long,
         onDataChanged: (List<LineWithProbability>) -> Unit
     ) {
         removeExpiredLinesFromMemory(currentTimeInMillis)
         updateMemoryIfPossible(currentTimeInMillis, newLines)
-        val newOutput = createOutputOfMemory()
+        val newOutput = createSortedOutputOfMemory()
         if (lastOutput == null || lastOutput.hashCode() != newOutput.hashCode()) {
             lastOutput = newOutput
             onDataChanged.invoke(newOutput)
@@ -52,7 +52,7 @@ class PredictedLinesAnalysisImpl : PredictedLinesAnalysis {
         }
     }
 
-    private fun createOutputOfMemory(): List<LineWithProbability> {
+    private fun createSortedOutputOfMemory(): List<LineWithProbability> {
         val numberOfAllOccurrences = linesInMemory.entries
             .map { it.value.howManyTimesOccurred }
             .reduceOrNull { acc, i -> acc + i } ?: 0
