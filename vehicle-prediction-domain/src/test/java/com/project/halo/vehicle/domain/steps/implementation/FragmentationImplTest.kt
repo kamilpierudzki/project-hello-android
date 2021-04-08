@@ -1,6 +1,5 @@
-package com.project.halo.vehicle.domain.internal.steps
+package com.project.halo.vehicle.domain.steps.implementation
 
-import com.project.halo.vehicle.domain.steps.FragmentationImpl
 import org.junit.Assert
 import org.junit.Test
 

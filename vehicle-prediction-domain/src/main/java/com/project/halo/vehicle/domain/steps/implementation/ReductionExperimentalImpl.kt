@@ -1,6 +1,6 @@
-package com.project.halo.vehicle.domain.steps
+package com.project.halo.vehicle.domain.steps.implementation
 
-import com.project.halo.vehicle.prediction.data.steps.Reduction
+import com.project.halo.vehicle.domain.steps.Reduction
 import java.util.*
 
 private const val MIN_SIZE_OF_INPUT_TEXT = 4

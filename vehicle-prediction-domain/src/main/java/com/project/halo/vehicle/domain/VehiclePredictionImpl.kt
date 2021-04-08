@@ -1,8 +1,7 @@
 package com.project.halo.vehicle.domain
 
 import com.project.hallo.city.plan.domain.Line
-import com.project.halo.vehicle.prediction.data.VehiclePrediction
-import com.project.halo.vehicle.prediction.data.steps.*
+import com.project.halo.vehicle.domain.steps.*
 
 class VehiclePredictionImpl(
     private val findingLines: FindingLines,

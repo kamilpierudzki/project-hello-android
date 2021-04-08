@@ -6,7 +6,6 @@ include ':city-plan-data'
 include ':commons-data'
 include ':commons-framework'
 include ':vehicle-prediction-framework'
-include ':vehicle-prediction-data'
 include ':vehicle-prediction-domain'
 include ':app'
 rootProject.name = "project-halo-android"

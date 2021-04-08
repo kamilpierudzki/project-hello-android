@@ -37,10 +37,9 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation project(path: ':city-plan-domain')
 
     testImplementation 'junit:junit:4.13.2'
 
-    implementation project(path: ':vehicle-prediction-data')
+    implementation project(path: ':city-plan-domain')
     implementation project(path: ':city-plan-data')
 }

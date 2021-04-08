@@ -1,9 +1,8 @@
-package com.project.halo.vehicle.domain.internal.steps
+package com.project.halo.vehicle.domain.steps.implementation
 
 import com.project.hallo.city.plan.domain.Line
 import com.project.hallo.city.plan.domain.VehicleType
-import com.project.halo.vehicle.domain.steps.FindingLinesImpl
-import com.project.halo.vehicle.prediction.data.steps.AccuracyLevel
+import com.project.halo.vehicle.domain.steps.AccuracyLevel
 import org.junit.Assert
 import org.junit.Test
 

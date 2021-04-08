@@ -1,6 +1,6 @@
-package com.project.halo.vehicle.domain.steps
+package com.project.halo.vehicle.domain.steps.implementation
 
-import com.project.halo.vehicle.prediction.data.steps.Fragmentation
+import com.project.halo.vehicle.domain.steps.Fragmentation
 import java.util.*
 import kotlin.math.max
 

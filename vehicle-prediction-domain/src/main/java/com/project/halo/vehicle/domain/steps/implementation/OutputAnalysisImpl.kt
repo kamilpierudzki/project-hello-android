@@ -1,8 +1,8 @@
-package com.project.halo.vehicle.domain.steps
+package com.project.halo.vehicle.domain.steps.implementation
 
-import com.project.halo.vehicle.prediction.data.steps.AccuracyLevel
-import com.project.halo.vehicle.prediction.data.steps.LineWithAccuracy
-import com.project.halo.vehicle.prediction.data.steps.OutputAnalysis
+import com.project.halo.vehicle.domain.steps.AccuracyLevel
+import com.project.halo.vehicle.domain.steps.LineWithAccuracy
+import com.project.halo.vehicle.domain.steps.OutputAnalysis
 
 class OutputAnalysisImpl: OutputAnalysis {
 

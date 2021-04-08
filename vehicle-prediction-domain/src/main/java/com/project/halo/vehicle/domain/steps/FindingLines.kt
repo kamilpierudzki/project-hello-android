@@ -1,4 +1,4 @@
-package com.project.halo.vehicle.prediction.data.steps
+package com.project.halo.vehicle.domain.steps
 
 import com.project.hallo.city.plan.domain.Line
 

@@ -1,6 +1,4 @@
-package com.project.halo.vehicle.prediction.data.steps
-
-import com.project.hallo.city.plan.domain.Line
+package com.project.halo.vehicle.domain.steps
 
 data class LineWithAccuracy(val line: com.project.hallo.city.plan.domain.Line, val accuracyLevel: AccuracyLevel) {
 

@@ -1,10 +1,10 @@
-package com.project.halo.vehicle.domain.steps
+package com.project.halo.vehicle.domain.steps.implementation
 
 import com.project.hallo.city.plan.domain.Line
-import com.project.halo.vehicle.prediction.data.steps.AccuracyLevel
-import com.project.halo.vehicle.prediction.data.steps.FindingLines
-import com.project.halo.vehicle.prediction.data.steps.FoundData
-import com.project.halo.vehicle.prediction.data.steps.LineWithAccuracy
+import com.project.halo.vehicle.domain.steps.AccuracyLevel
+import com.project.halo.vehicle.domain.steps.FindingLines
+import com.project.halo.vehicle.domain.steps.FoundData
+import com.project.halo.vehicle.domain.steps.LineWithAccuracy
 import java.util.*
 
 class FindingLinesImpl : FindingLines {

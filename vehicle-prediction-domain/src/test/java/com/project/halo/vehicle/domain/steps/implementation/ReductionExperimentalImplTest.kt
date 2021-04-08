@@ -1,12 +1,11 @@
-package com.project.halo.vehicle.domain.internal.steps
+package com.project.halo.vehicle.domain.steps.implementation
 
-import com.project.halo.vehicle.domain.steps.ReductionImpl
 import org.junit.Assert
 import org.junit.Test
 
-internal class ReductionImplTest {
+class ReductionExperimentalImplTest {
 
-    val tested = ReductionImpl()
+    val tested = ReductionExperimentalImpl()
 
     @Test
     fun `test 1`() {
@@ -17,18 +16,19 @@ internal class ReductionImplTest {
         val reduced = tested.reduceInput(input, emptyList())
 
         // then
-        Assert.assertEquals(1, reduced.size)
-        Assert.assertEquals("abcd", reduced[0])
+        Assert.assertEquals(2, reduced.size)
+        Assert.assertEquals("16", reduced[0])
+        Assert.assertEquals("abcd", reduced[1])
     }
 
     @Test
     fun `test 2`() {
         // given
         val input = listOf("aaaa", "bbbb", "cccc", "dddd")
-        val specs = listOf("bbbb", "cccc")
+        val foundSpecs = listOf("bbbb", "cccc")
 
         // when
-        val reduced = tested.reduceInput(input, specs)
+        val reduced = tested.reduceInput(input, foundSpecs)
 
         // then
         Assert.assertEquals(2, reduced.size)
@@ -89,5 +89,17 @@ internal class ReductionImplTest {
 
         // then
         Assert.assertEquals(0, reduced.size)
+    }
+
+    @Test
+    fun `test 7`() {
+        // given
+        val input = listOf("169", "16", "1", "loadx", "bies", "1xao", "1xe", "abc")
+
+        // when
+        val reduced = tested.reduceInput(input, emptyList())
+
+        // then
+        Assert.assertEquals(7, reduced.size)
     }
 }

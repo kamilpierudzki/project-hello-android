@@ -1,4 +1,4 @@
-package com.project.halo.vehicle.domain.analysis
+package com.project.halo.vehicle.domain.analysis.implementation
 
 import com.project.hallo.city.plan.domain.Line
 import com.project.halo.vehicle.prediction.data.analysis.LineWithProbability
