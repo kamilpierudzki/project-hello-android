@@ -71,13 +71,12 @@ class PredictionFragment : Fragment() {
     }
 
     private fun observeRecognisedTexts() {
-        lifecycleScope.launch {
-            textAnalyzer.textsObserver.consumeAsFlow().collect {
-                if (it.isNotEmpty()) {
-                    predictionViewModel.processRecognisedTexts(it)
-                }
+        textAnalyzer.textsObserver.observe(viewLifecycleOwner, { texts ->
+            if (texts.isNotEmpty()) {
+                android.util.Log.d("test123", texts.toString())
+                predictionViewModel.processRecognisedTexts(texts)
             }
-        }
+        })
     }
 
     private fun observePredictedLines() {
