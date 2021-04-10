@@ -15,19 +15,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/header"
-        android:layout_width="0dp"
+    <ImageView
+        android:id="@+id/help_icon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="#B3FFFFFF"
-        android:focusable="true"
         android:clickable="true"
-        android:gravity="center"
-        android:text="Aby rozpocząć rozpoznanie skieruj obiektyw kamery w kierunku pojazdu. Jeśli czytnik ekranu jest włączony dotknij środkowej części ekranu aby poznać prawdopodobny numer i kierunek pojazdu. Dolna część ekranu zawiera listę trzech wykrytych pojazdów. Najbardziej prawdopodobny pojazd znajduje się na pierwszym miejscu listy i jest on czytany przez czytnik ekranu po dotknięciu środkowej części ekranu."
-        android:textColor="@android:color/black"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="pomoc"
+        android:focusable="true"
+        android:padding="8dp"
+        android:src="@drawable/ic_help"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="#B3FFFFFF"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

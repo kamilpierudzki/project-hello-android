@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="help_dialog_title"></string>
+    <string name="help_dialog_message"></string>
+    <string name="help_dialog_neutral_button"></string>
+</resources>

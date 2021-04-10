@@ -17,6 +17,7 @@ import com.project.halo.vehicle.prediction.framework.internal.FpsCounterWrapper
 import com.project.halo.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.halo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import com.project.halo.vehicle.prediction.framework.internal.ui.PredictedLinesAdapter
+import com.project.halo.vehicle.prediction.framework.internal.ui.showHelpDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -76,6 +77,7 @@ class PredictionFragment : Fragment() {
 
     private fun setupViews() {
         setupPredictedLinesView()
+        setupHelpIconClicks()
     }
 
     private fun setupPredictedLinesView() {
@@ -83,6 +85,12 @@ class PredictionFragment : Fragment() {
         binding.predictedLines.also {
             it.adapter = predictedLinesAdapter
             it.layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun setupHelpIconClicks() {
+        binding.helpIcon.setOnClickListener {
+            showHelpDialog(it.context)
         }
     }
 
