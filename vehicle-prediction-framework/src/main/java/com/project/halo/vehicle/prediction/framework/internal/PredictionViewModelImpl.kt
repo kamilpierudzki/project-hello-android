@@ -1,5 +1,6 @@
 package com.project.halo.vehicle.prediction.framework.internal
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.hallo.city.plan.domain.usecase.CityPlanUseCase
@@ -21,6 +22,8 @@ internal class PredictionViewModelImpl @Inject constructor(
 
     override val predictedLines = MutableLiveData<List<LineWithProbability>>()
 
+    override val screenContentDescription = MutableLiveData("")
+
     override fun processRecognisedTexts(input: List<String>) {
         for (line in input) {
             val predictedLines = vehiclePrediction.processInput(line, cityPlanUseCase.getCityPlan())
@@ -28,7 +31,13 @@ internal class PredictionViewModelImpl @Inject constructor(
             val lines = predictedLinesAnalysis
                 .analysedSortedLines(predictedLines, currentTimeInMillis)
                 .take(NUM_OF_PREDICTED_LINES_TO_SHOW)
+            lines.firstOrNull()?.let { updateScreenContentDescription(it) }
             this.predictedLines.postValue(lines)
         }
+    }
+
+    private fun updateScreenContentDescription(data: LineWithProbability) {
+        val contentDescription = "Prawdopodobnie ${data.line.number}, ${data.line.destination}"
+        screenContentDescription.postValue(contentDescription)
     }
 }

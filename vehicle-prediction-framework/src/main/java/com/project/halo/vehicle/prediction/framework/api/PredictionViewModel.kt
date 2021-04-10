@@ -6,6 +6,7 @@ import com.project.halo.vehicle.domain.analysis.LineWithProbability
 
 interface PredictionViewModel : ExternalViewModel {
     val predictedLines: LiveData<List<LineWithProbability>>
+    val screenContentDescription: LiveData<String>
 
     fun processRecognisedTexts(input: List<String>)
 }

@@ -1,9 +1,11 @@
 package com.project.halo.vehicle.prediction.framework.api
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.halo.commons.viewmodel.ExternalViewModelProvider
@@ -18,6 +20,7 @@ import com.project.halo.vehicle.prediction.framework.internal.ui.PredictedLinesA
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@RequiresApi(Build.VERSION_CODES.DONUT)
 @AndroidEntryPoint
 class PredictionFragment : Fragment() {
 
@@ -62,6 +65,7 @@ class PredictionFragment : Fragment() {
         observePredictedLines()
         observeRecognisedTexts()
         observeFpsCounter()
+        observeScreenContentDescription()
         cameraAnalysis.startCameraAnalysis(textAnalyzer, binding.cameraPreview.surfaceProvider)
     }
 
@@ -103,6 +107,12 @@ class PredictionFragment : Fragment() {
     private fun observeFpsCounter() {
         fpsCounterWrapper.currentValue.observe(viewLifecycleOwner, { fps ->
             binding.fpsCounter.text = "${fps}FPS"
+        })
+    }
+
+    private fun observeScreenContentDescription() {
+        predictionViewModel.screenContentDescription.observe(viewLifecycleOwner, {
+            binding.cameraPreview.contentDescription = it
         })
     }
 }
