@@ -25,10 +25,10 @@ internal class PredictionViewModelImpl @Inject constructor(
         for (line in input) {
             val predictedLines = vehiclePrediction.processInput(line, cityPlanUseCase.getCityPlan())
             val currentTimeInMillis = System.currentTimeMillis()
-            predictedLinesAnalysis.analysedSortedLines(predictedLines, currentTimeInMillis) {
-                val lines = it.take(NUM_OF_PREDICTED_LINES_TO_SHOW)
-                this.predictedLines.postValue(lines)
-            }
+            val lines = predictedLinesAnalysis
+                .analysedSortedLines(predictedLines, currentTimeInMillis)
+                .take(NUM_OF_PREDICTED_LINES_TO_SHOW)
+            this.predictedLines.postValue(lines)
         }
     }
 }

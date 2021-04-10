@@ -4,35 +4,25 @@ import com.project.hallo.city.plan.domain.Line
 import com.project.halo.vehicle.domain.analysis.LineWithProbability
 import com.project.halo.vehicle.domain.analysis.PredictedLinesAnalysis
 import dagger.hilt.android.scopes.ViewModelScoped
-import java.util.LinkedList
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ConcurrentLinkedQueue
 import javax.inject.Inject
 
-private const val LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS = 7_000L
+private const val LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS = 4_000L
 private const val ELEMENT_NOT_FOUND_IN_MEMORY = Long.MAX_VALUE
 
 @ViewModelScoped
-internal class PredictedLinesAnalysisImpl @Inject constructor(): PredictedLinesAnalysis {
+internal class PredictedLinesAnalysisImpl @Inject constructor() : PredictedLinesAnalysis {
 
     private val linesInMemory = ConcurrentHashMap<Line, AnalysisSpecs>()
-    private var lastOutput = ConcurrentLinkedQueue<LineWithProbability>()
 
     override fun analysedSortedLines(
         newLines: List<Line>,
-        currentTimeInMillis: Long,
-        onDataChanged: (List<LineWithProbability>) -> Unit
-    ) {
+        currentTimeInMillis: Long
+    ): List<LineWithProbability> {
         removeExpiredLinesFromMemory(currentTimeInMillis)
         updateMemoryIfPossible(currentTimeInMillis, newLines)
-        val newOutput = createSortedOutputOfMemory()
-        if (newOutput.isNotEmpty() && lastOutput.hashCode() != newOutput.hashCode()) {
-            lastOutput.apply {
-                clear()
-                addAll(newOutput)
-            }
-            onDataChanged.invoke(newOutput)
-        }
+        return createSortedOutputOfMemory()
     }
 
     private fun removeExpiredLinesFromMemory(currentTimeInMillis: Long) {
