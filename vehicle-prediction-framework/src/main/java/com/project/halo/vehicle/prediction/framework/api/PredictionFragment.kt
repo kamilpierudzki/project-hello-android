@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.halo.commons.viewmodel.ExternalViewModelProvider
 import com.project.halo.commons.viewmodel.ViewModelProvider
 import com.project.halo.commons.viewmodel.ViewModelType
@@ -14,17 +14,12 @@ import com.project.halo.vehicle.prediction.framework.databinding.PredictionFragm
 import com.project.halo.vehicle.prediction.framework.internal.FpsCounterWrapper
 import com.project.halo.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.halo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
+import com.project.halo.vehicle.prediction.framework.internal.ui.PredictedLinesAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.consumeAsFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class PredictionFragment : Fragment() {
-
-    private var _binding: PredictionFragmentBinding? = null
-    private val binding get() = _binding!!
 
     @Inject
     @ViewModelProvider(ViewModelType.FRAGMENT)
@@ -43,6 +38,10 @@ class PredictionFragment : Fragment() {
     @Inject
     lateinit var fpsCounterWrapper: FpsCounterWrapper
 
+    private var _binding: PredictionFragmentBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var predictedLinesAdapter: PredictedLinesAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,6 +58,7 @@ class PredictionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews()
         observePredictedLines()
         observeRecognisedTexts()
         observeFpsCounter()
@@ -68,6 +68,18 @@ class PredictionFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         textAnalyzer.dispose()
+    }
+
+    private fun setupViews() {
+        setupPredictedLinesView()
+    }
+
+    private fun setupPredictedLinesView() {
+        predictedLinesAdapter = PredictedLinesAdapter()
+        binding.predictedLines.also {
+            it.adapter = predictedLinesAdapter
+            it.layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
     private fun observeRecognisedTexts() {
@@ -82,13 +94,7 @@ class PredictionFragment : Fragment() {
     private fun observePredictedLines() {
         predictionViewModel.predictedLines.observe(viewLifecycleOwner, { lines ->
             if (lines.isNotEmpty()) {
-                val lineNumbers: String = lines
-                    .map {
-                        "${it.line.number}  ${it.probability}"
-                    }
-                    .reduce { acc: String, s: String -> "$acc\n$s" }
-
-                binding.lineNumber.text = lineNumbers
+                predictedLinesAdapter.updateDataset(lines)
                 fpsCounterWrapper.newFrameProcessed(System.currentTimeMillis())
             }
         })
@@ -96,7 +102,7 @@ class PredictionFragment : Fragment() {
 
     private fun observeFpsCounter() {
         fpsCounterWrapper.currentValue.observe(viewLifecycleOwner, { fps ->
-            binding.fpsCounter.text = fps.toString()
+            binding.fpsCounter.text = "${fps}FPS"
         })
     }
 }
