@@ -97,7 +97,6 @@ class PredictionFragment : Fragment() {
     private fun observeRecognisedTexts() {
         textAnalyzer.textsObserver.observe(viewLifecycleOwner, { texts ->
             if (texts.isNotEmpty()) {
-                android.util.Log.d("test123", texts.toString())
                 predictionViewModel.processRecognisedTexts(texts)
             }
         })
@@ -120,7 +119,7 @@ class PredictionFragment : Fragment() {
 
     private fun observeScreenContentDescription() {
         predictionViewModel.screenContentDescription.observe(viewLifecycleOwner, {
-            binding.cameraPreview.contentDescription = it
+            binding.cameraPreview.contentDescription = it.get(resources)
         })
     }
 }

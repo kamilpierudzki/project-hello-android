@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.halo.vehicle.domain.analysis.LineWithProbability
 import com.project.halo.vehicle.prediction.framework.databinding.PredictedItemBinding
 
-class PredictedLineViewHolder(private val viewBinding: PredictedItemBinding) :
+internal class PredictedLineViewHolder(private val viewBinding: PredictedItemBinding) :
     RecyclerView.ViewHolder(viewBinding.root) {
 
     @RequiresApi(Build.VERSION_CODES.DONUT)

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.project.halo.vehicle.prediction.framework.R
 
-fun showHelpDialog(context: Context) {
+internal fun showHelpDialog(context: Context) {
     val dialog = AlertDialog.Builder(context)
         .apply {
             setTitle(R.string.help_dialog_title)

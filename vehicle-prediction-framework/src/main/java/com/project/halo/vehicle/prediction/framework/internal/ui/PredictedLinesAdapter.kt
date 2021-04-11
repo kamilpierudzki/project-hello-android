@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.halo.vehicle.domain.analysis.LineWithProbability
 import com.project.halo.vehicle.prediction.framework.databinding.PredictedItemBinding
 
-class PredictedLinesAdapter : RecyclerView.Adapter<PredictedLineViewHolder>() {
+internal class PredictedLinesAdapter : RecyclerView.Adapter<PredictedLineViewHolder>() {
 
     private var dataset: List<LineWithProbability> = emptyList()
 

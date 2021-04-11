@@ -1,10 +1,11 @@
 package com.project.hallo.city.plan.framework.hilt
 
+import android.content.res.Resources
 import com.project.hallo.city.plan.domain.CityPlanDataSource
 import com.project.hallo.city.plan.domain.CityPlanRepository
 import com.project.hallo.city.plan.domain.usecase.CityPlanUseCase
 import com.project.hallo.city.plan.domain.usecase.implementation.CityPlanUseCaseImpl
-import com.project.hallo.city.plan.framework.HardcodedCityPlanDataSourceImpl
+import com.project.hallo.city.plan.framework.internal.datasource.RawResourceCityPlanDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +18,8 @@ internal class CityPlanViewModelModule {
 
     @Provides
     @ViewModelScoped
-    fun provideCityPlanDataSource(): CityPlanDataSource = HardcodedCityPlanDataSourceImpl()
+    fun provideRawResourceCityPlanDataSource(resources: Resources): CityPlanDataSource =
+        RawResourceCityPlanDataSourceImpl(resources)
 
     @Provides
     @ViewModelScoped
