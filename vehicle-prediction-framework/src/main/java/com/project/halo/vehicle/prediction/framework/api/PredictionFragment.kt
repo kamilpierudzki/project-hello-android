@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.halo.commons.viewmodel.ExternalViewModelProvider
-import com.project.halo.commons.viewmodel.ViewModelProvider
-import com.project.halo.commons.viewmodel.ViewModelType
-import com.project.halo.commons.viewmodel.externalViewModels
 import com.project.halo.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.halo.vehicle.prediction.framework.internal.FpsCounterWrapper
+import com.project.halo.vehicle.prediction.framework.internal.PredictionViewModel
 import com.project.halo.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.halo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import com.project.halo.vehicle.prediction.framework.internal.ui.PredictedLinesAdapter
@@ -24,14 +22,6 @@ import javax.inject.Inject
 @RequiresApi(Build.VERSION_CODES.DONUT)
 @AndroidEntryPoint
 class PredictionFragment : Fragment() {
-
-    @Inject
-    @ViewModelProvider(ViewModelType.FRAGMENT)
-    lateinit var predictionViewModelProvider: ExternalViewModelProvider<PredictionViewModel>
-
-    private val predictionViewModel by externalViewModels {
-        predictionViewModelProvider
-    }
 
     @Inject
     lateinit var textAnalyzer: DisposableImageAnalyzer
@@ -45,6 +35,7 @@ class PredictionFragment : Fragment() {
     private var _binding: PredictionFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var predictedLinesAdapter: PredictedLinesAdapter
+    private val predictionViewModel: PredictionViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

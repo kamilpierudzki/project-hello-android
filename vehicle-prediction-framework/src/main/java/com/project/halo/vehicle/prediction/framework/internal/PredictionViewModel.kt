@@ -9,7 +9,6 @@ import com.project.halo.vehicle.domain.VehiclePrediction
 import com.project.halo.vehicle.domain.analysis.LineWithProbability
 import com.project.halo.vehicle.domain.analysis.PredictedLinesAnalysis
 import com.project.halo.vehicle.prediction.framework.R
-import com.project.halo.vehicle.prediction.framework.api.PredictionViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.concurrent.CopyOnWriteArrayList
 import javax.inject.Inject
@@ -17,22 +16,22 @@ import javax.inject.Inject
 private const val NUM_OF_PREDICTED_LINES_TO_SHOW = 3
 
 @HiltViewModel
-internal class PredictionViewModelImpl @Inject constructor(
+internal class PredictionViewModel @Inject constructor(
     private val vehiclePrediction: VehiclePrediction,
     private val cityPlanUseCase: CityPlanUseCase,
     private val predictedLinesAnalysis: PredictedLinesAnalysis
-) : ViewModel(), PredictionViewModel {
+) : ViewModel() {
 
     private val cityLines = CopyOnWriteArrayList<Line>()
 
-    override val predictedLines = MutableLiveData<List<LineWithProbability>>()
-    override val screenContentDescription = MutableLiveData(Text.empty())
+    val predictedLines = MutableLiveData<List<LineWithProbability>>()
+    val screenContentDescription = MutableLiveData(Text.empty())
 
     init {
         cityLines.addAll(cityPlanUseCase.getCityPlan())
     }
 
-    override fun processRecognisedTexts(inputs: List<String>) {
+    fun processRecognisedTexts(inputs: List<String>) {
         if (inputs.isNotEmpty() && cityLines.isNotEmpty()) {
             for (input in inputs) {
                 processInput(input)
