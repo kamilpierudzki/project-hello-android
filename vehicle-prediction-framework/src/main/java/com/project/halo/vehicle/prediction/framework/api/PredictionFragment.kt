@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.halo.vehicle.prediction.framework.R
 import com.project.halo.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.halo.vehicle.prediction.framework.internal.FpsCounterWrapper
 import com.project.halo.vehicle.prediction.framework.internal.PredictionViewModel
@@ -81,7 +82,7 @@ class PredictionFragment : Fragment() {
 
     private fun setupHelpIconClicks() {
         binding.helpIcon.setOnClickListener {
-            showHelpDialog(it.context)
+            showHelpDialog(it.context, R.string.help_dialog_title, R.string.help_dialog_message)
         }
     }
 

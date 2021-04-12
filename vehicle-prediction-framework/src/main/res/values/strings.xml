@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="prediction_fragment_label"></string>
+    <string name="help_icon_description">Help</string>
     <string name="help_dialog_title"></string>
     <string name="help_dialog_message"></string>
     <string name="help_dialog_neutral_button"></string>
     <string name="probably"></string>
+    <string name="vehicle_type_picker_fragment_lable"></string>
+    <string name="vehicle_type_picker_header"></string>
+    <string name="vehicle_type_picker_vehicle_all"></string>
+    <string name="vehicle_type_picker_vehicle_tram"></string>
+    <string name="vehicle_type_picker_vehicle_bus"></string>
+    <string name="vehicle_type_picker_help_title"></string>
+    <string name="vehicle_type_picker_help_message"></string>
 </resources>

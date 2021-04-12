@@ -3,19 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/PredictionFragment">
-
-    <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.project.halo.android.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
-    </fragment>
+    app:startDestination="@id/VehicleTypePickerFragment">
 
     <fragment
         android:id="@+id/PredictionFragment"
         android:name="com.project.halo.vehicle.prediction.framework.api.PredictionFragment"
-        android:label="test123" />
+        android:label="@string/prediction_fragment_label" />
+
+    <fragment
+        android:id="@+id/VehicleTypePickerFragment"
+        android:name="com.project.halo.vehicle.prediction.framework.api.VehicleTypePickerFragment"
+        android:label="@string/vehicle_type_picker_fragment_lable">
+        <action
+            android:id="@+id/action_VehicleTypePickerFragment_to_PredictionFragment"
+            app:destination="@id/PredictionFragment" />
+    </fragment>
 
 </navigation>

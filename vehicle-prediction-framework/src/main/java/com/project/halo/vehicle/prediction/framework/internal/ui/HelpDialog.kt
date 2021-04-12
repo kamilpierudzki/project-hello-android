@@ -1,14 +1,15 @@
 package com.project.halo.vehicle.prediction.framework.internal.ui
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.project.halo.vehicle.prediction.framework.R
 
-internal fun showHelpDialog(context: Context) {
+internal fun showHelpDialog(context: Context, @StringRes title: Int, @StringRes message: Int) {
     val dialog = AlertDialog.Builder(context)
         .apply {
-            setTitle(R.string.help_dialog_title)
-            setMessage(R.string.help_dialog_message)
+            setTitle(title)
+            setMessage(message)
             setNeutralButton(R.string.help_dialog_neutral_button) { dialog, _ ->
                 dialog.dismiss()
             }
