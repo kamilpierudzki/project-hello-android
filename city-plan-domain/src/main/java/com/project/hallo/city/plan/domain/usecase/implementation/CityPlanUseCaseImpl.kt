@@ -10,6 +10,7 @@ class CityPlanUseCaseImpl(
 ) : CityPlanUseCase {
 
     override fun getCityPlan(): List<Line> {
+        // todo start coroutine here
         return cityPlanRepository.getCityPlan(VehicleType.TRAM)
     }
 }

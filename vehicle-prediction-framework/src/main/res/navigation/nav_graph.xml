@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/VehicleTypePickerFragment"
-        android:name="com.project.halo.vehicle.prediction.framework.api.VehicleTypePickerFragment"
+        android:name="com.project.hallo.vehicle.prediction.framework.api.VehicleTypePickerFragment"
         android:label="@string/vehicle_type_picker_fragment_lable">
         <action
             android:id="@+id/action_VehicleTypePickerFragment_to_PredictionFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/PredictionFragment"
-        android:name="com.project.halo.vehicle.prediction.framework.api.PredictionFragment"
+        android:name="com.project.hallo.vehicle.prediction.framework.api.PredictionFragment"
         android:label="@string/prediction_fragment_label" />
 
 </navigation>
