@@ -34,7 +34,6 @@
             android:focusable="true"
             android:padding="8dp"
             android:src="@drawable/ic_help"
-            app:tint="@android:color/black"
             tools:targetApi="donut" />
 
     </FrameLayout>

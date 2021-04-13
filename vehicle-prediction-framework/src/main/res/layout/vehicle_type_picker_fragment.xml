@@ -18,7 +18,6 @@
         android:src="@drawable/ic_help"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@android:color/black"
         tools:targetApi="donut" />
 
     <TextView
