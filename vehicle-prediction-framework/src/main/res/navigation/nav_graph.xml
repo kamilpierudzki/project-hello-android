@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/VehicleTypePickerFragment">
-
-    <fragment
-        android:id="@+id/PredictionFragment"
-        android:name="com.project.halo.vehicle.prediction.framework.api.PredictionFragment"
-        android:label="@string/prediction_fragment_label" />
 
     <fragment
         android:id="@+id/VehicleTypePickerFragment"
@@ -18,5 +12,10 @@
             android:id="@+id/action_VehicleTypePickerFragment_to_PredictionFragment"
             app:destination="@id/PredictionFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/PredictionFragment"
+        android:name="com.project.halo.vehicle.prediction.framework.api.PredictionFragment"
+        android:label="@string/prediction_fragment_label" />
 
 </navigation>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.project.halo.vehicle.prediction.framework.R
 import com.project.halo.vehicle.prediction.framework.databinding.VehicleTypePickerFragmentBinding
 import com.project.halo.vehicle.prediction.framework.internal.ui.showHelpDialog
@@ -35,6 +36,7 @@ class VehicleTypePickerFragment : Fragment() {
 
     private fun setupViews() {
         setupHelpIconClicks()
+        setupButtonClicks()
     }
 
     private fun setupHelpIconClicks() {
@@ -44,6 +46,21 @@ class VehicleTypePickerFragment : Fragment() {
                 R.string.vehicle_type_picker_help_title,
                 R.string.vehicle_type_picker_help_message
             )
+        }
+    }
+
+    private fun setupButtonClicks() {
+        binding.allTypesButton.setOnClickListener {
+            it.findNavController()
+                .navigate(R.id.action_VehicleTypePickerFragment_to_PredictionFragment, null)
+        }
+        binding.tramTypesButton.setOnClickListener {
+            it.findNavController()
+                .navigate(R.id.action_VehicleTypePickerFragment_to_PredictionFragment, null)
+        }
+        binding.busTypesButton.setOnClickListener {
+            it.findNavController()
+                .navigate(R.id.action_VehicleTypePickerFragment_to_PredictionFragment, null)
         }
     }
 }
