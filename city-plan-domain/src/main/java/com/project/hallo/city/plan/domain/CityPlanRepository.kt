@@ -2,10 +2,16 @@ package com.project.hallo.city.plan.domain
 
 class CityPlanRepository(private val localCityPlanDataSource: CityPlanDataSource) {
 
-    fun getCityPlan(vehicleType: VehicleType): List<Line> {
-        val cityPlanApi = localCityPlanDataSource.fetchPlanFor(vehicleType)
-        return cityPlanApi.trams?.map {
-            Line.fromLineAPI(it)
-        } ?: emptyList()
+    fun getCityPlan(targetTypes: List<VehicleType>): List<Line> {
+        val cityPlanApi = localCityPlanDataSource.fetchPlanFor()
+        return targetTypes
+            .map {
+                when (it) {
+                    VehicleType.BUS -> cityPlanApi.buses
+                    VehicleType.TRAM -> cityPlanApi.trams
+                }
+            }
+            .flatMap { it.toList() }
+            .map { Line.fromLineAPI(it) }
     }
 }

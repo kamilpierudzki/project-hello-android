@@ -9,8 +9,8 @@ class CityPlanUseCaseImpl(
     private val cityPlanRepository: CityPlanRepository
 ) : CityPlanUseCase {
 
-    override fun getCityPlan(): List<Line> {
+    override fun getCityPlan(targetTypes: List<VehicleType>): List<Line> {
         // todo start coroutine here
-        return cityPlanRepository.getCityPlan(VehicleType.TRAM)
+        return cityPlanRepository.getCityPlan(targetTypes)
     }
 }

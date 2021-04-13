@@ -8,14 +8,28 @@
         android:id="@+id/VehicleTypePickerFragment"
         android:name="com.project.hallo.vehicle.prediction.framework.api.VehicleTypePickerFragment"
         android:label="@string/vehicle_type_picker_fragment_lable">
+
         <action
-            android:id="@+id/action_VehicleTypePickerFragment_to_PredictionFragment"
-            app:destination="@id/PredictionFragment" />
+            android:id="@+id/initialVehicleData"
+            app:destination="@id/PredictionFragment">
+
+            <argument
+                android:name="vehicleData"
+                app:argType="com.project.hallo.city.plan.domain.VehicleData" />
+
+        </action>
+
     </fragment>
 
     <fragment
         android:id="@+id/PredictionFragment"
         android:name="com.project.hallo.vehicle.prediction.framework.api.PredictionFragment"
-        android:label="@string/prediction_fragment_label" />
+        android:label="@string/prediction_fragment_label">
+
+        <argument
+            android:name="vehicleData"
+            app:argType="com.project.hallo.city.plan.domain.VehicleData" />
+
+    </fragment>
 
 </navigation>

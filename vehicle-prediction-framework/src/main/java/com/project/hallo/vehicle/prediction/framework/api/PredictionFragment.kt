@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.hallo.city.plan.domain.VehicleData
 import com.project.hallo.vehicle.prediction.framework.R
 import com.project.hallo.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.hallo.vehicle.prediction.framework.internal.FpsCounterWrapper
@@ -33,6 +35,8 @@ class PredictionFragment : Fragment() {
     @Inject
     lateinit var fpsCounterWrapper: FpsCounterWrapper
 
+    private val sageArgs: PredictionFragmentArgs by navArgs()
+    private val initialVehicleData: VehicleData get() = sageArgs.vehicleData
     private var _binding: PredictionFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var predictedLinesAdapter: PredictedLinesAdapter
@@ -55,11 +59,12 @@ class PredictionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
+        passInitialInfoToViewModel()
         observePredictedLines()
         observeRecognisedTexts()
         observeFpsCounter()
         observeScreenContentDescription()
-        cameraAnalysis.startCameraAnalysis(textAnalyzer, binding.cameraPreview.surfaceProvider)
+        startCameraAnalysis()
     }
 
     override fun onDestroy() {
@@ -94,6 +99,10 @@ class PredictionFragment : Fragment() {
         })
     }
 
+    private fun passInitialInfoToViewModel() {
+        predictionViewModel.setTargetVehicleType(initialVehicleData.vehicleTypes)
+    }
+
     private fun observePredictedLines() {
         predictionViewModel.predictedLines.observe(viewLifecycleOwner, { lines ->
             if (lines.isNotEmpty()) {
@@ -113,5 +122,9 @@ class PredictionFragment : Fragment() {
         predictionViewModel.screenContentDescription.observe(viewLifecycleOwner, {
             binding.cameraPreview.contentDescription = it.get(resources)
         })
+    }
+
+    private fun startCameraAnalysis() {
+        cameraAnalysis.startCameraAnalysis(textAnalyzer, binding.cameraPreview.surfaceProvider)
     }
 }

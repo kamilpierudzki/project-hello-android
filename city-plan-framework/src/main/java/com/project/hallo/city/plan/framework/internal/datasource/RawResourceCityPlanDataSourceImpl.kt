@@ -11,7 +11,7 @@ import java.io.InputStreamReader
 
 internal class RawResourceCityPlanDataSourceImpl(private val resources: Resources) : CityPlanDataSource {
 
-    override fun fetchPlanFor(vehicleType: VehicleType): CityPlanAPI {
+    override fun fetchPlanFor(): CityPlanAPI {
         val inputStream = resources.openRawResource(R.raw.poznan)
         val inputStreamReader = InputStreamReader(inputStream)
 

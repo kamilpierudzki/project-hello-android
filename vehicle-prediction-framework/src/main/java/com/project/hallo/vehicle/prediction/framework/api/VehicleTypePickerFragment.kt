@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.project.hallo.city.plan.domain.VehicleData
+import com.project.hallo.city.plan.domain.VehicleType
 import com.project.hallo.vehicle.prediction.framework.R
 import com.project.hallo.vehicle.prediction.framework.databinding.VehicleTypePickerFragmentBinding
 import com.project.hallo.vehicle.prediction.framework.internal.ui.showHelpDialog
@@ -51,16 +53,19 @@ class VehicleTypePickerFragment : Fragment() {
 
     private fun setupButtonClicks() {
         binding.allTypesButton.setOnClickListener {
-            it.findNavController()
-                .navigate(R.id.action_VehicleTypePickerFragment_to_PredictionFragment, null)
+            val vehicleData = VehicleData(listOf(VehicleType.TRAM, VehicleType.BUS))
+            val action = VehicleTypePickerFragmentDirections.initialVehicleData(vehicleData)
+            it.findNavController().navigate(action)
         }
         binding.tramTypesButton.setOnClickListener {
-            it.findNavController()
-                .navigate(R.id.action_VehicleTypePickerFragment_to_PredictionFragment, null)
+            val vehicleData = VehicleData(listOf(VehicleType.TRAM))
+            val action = VehicleTypePickerFragmentDirections.initialVehicleData(vehicleData)
+            it.findNavController().navigate(action)
         }
         binding.busTypesButton.setOnClickListener {
-            it.findNavController()
-                .navigate(R.id.action_VehicleTypePickerFragment_to_PredictionFragment, null)
+            val vehicleData = VehicleData(listOf(VehicleType.BUS))
+            val action = VehicleTypePickerFragmentDirections.initialVehicleData(vehicleData)
+            it.findNavController().navigate(action)
         }
     }
 }

@@ -3,6 +3,7 @@ package com.project.hallo.vehicle.prediction.framework.internal
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.project.hallo.city.plan.domain.Line
+import com.project.hallo.city.plan.domain.VehicleType
 import com.project.hallo.city.plan.domain.usecase.CityPlanUseCase
 import com.project.hallo.commons.viewmodel.ui.Text
 import com.project.hallo.vehicle.domain.VehiclePrediction
@@ -27,8 +28,12 @@ internal class PredictionViewModel @Inject constructor(
     val predictedLines = MutableLiveData<List<LineWithProbability>>()
     val screenContentDescription = MutableLiveData(Text.empty())
 
-    init {
-        cityLines.addAll(cityPlanUseCase.getCityPlan())
+    fun setTargetVehicleType(targetVehicleTypes: List<VehicleType>) {
+        // todo use async way
+        cityLines.apply {
+            clear()
+            addAll(cityPlanUseCase.getCityPlan(targetVehicleTypes))
+        }
     }
 
     fun processRecognisedTexts(inputs: List<String>) {
