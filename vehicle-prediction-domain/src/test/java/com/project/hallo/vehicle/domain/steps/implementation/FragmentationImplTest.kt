@@ -1,11 +1,17 @@
 package com.project.hallo.vehicle.domain.steps.implementation
 
+import com.project.hallo.vehicle.domain.steps.CountryCharactersProvider
 import org.junit.Assert
 import org.junit.Test
 
 internal class FragmentationImplTest {
 
-    val tested = FragmentationImpl()
+    val countryCharactersProvider = object : CountryCharactersProvider {
+        override fun get(): Map<String, String> = emptyMap()
+    }
+    val universalTransformation = UniversalTransformationImpl(countryCharactersProvider)
+
+    val tested = FragmentationImpl(universalTransformation)
 
     @Test
     fun `test 1`() {

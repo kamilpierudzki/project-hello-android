@@ -14,8 +14,9 @@ internal class TextMatchingImplTest {
             return polishCharacters
         }
     }
+    val universalTransformation = UniversalTransformationImpl(countryCharactersProvider)
 
-    val tested = TextMatchingImpl(countryCharactersProvider)
+    val tested = TextMatchingImpl(universalTransformation)
 
     @Test
     fun `test 1`() {

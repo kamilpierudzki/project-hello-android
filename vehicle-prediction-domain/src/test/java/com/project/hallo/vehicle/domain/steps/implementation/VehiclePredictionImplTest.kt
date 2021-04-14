@@ -18,11 +18,12 @@ internal class VehiclePredictionImplTest {
     val polishCharactersProvider = object : CountryCharactersProvider {
         override fun get(): Map<String, String> = mapOf("ą" to "a", "ł" to "l")
     }
+    val universalTransformation = UniversalTransformationImpl(polishCharactersProvider)
 
-    val textMatching = TextMatchingImpl(polishCharactersProvider)
-    val fragmentation = FragmentationImpl()
+    val textMatching = TextMatchingImpl(universalTransformation)
+    val fragmentation = FragmentationImpl(universalTransformation)
     val findingLines = FindingLinesExtendedImpl(textMatching)
-    val reduction = ReductionExperimentalImpl()
+    val reduction = ReductionExperimentalImpl(universalTransformation)
     val outputAnalysis = OutputAnalysisImpl()
 
     val tested = VehiclePredictionImpl(findingLines, reduction, fragmentation, outputAnalysis)

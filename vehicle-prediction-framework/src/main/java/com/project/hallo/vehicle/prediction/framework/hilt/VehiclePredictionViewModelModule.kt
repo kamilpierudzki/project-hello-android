@@ -37,8 +37,14 @@ internal abstract class VehiclePredictionViewModelModule {
 
         @Provides
         @ViewModelScoped
-        fun provideTextMatching(countryCharactersProvider: CountryCharactersProvider): TextMatching =
-            TextMatchingImpl(countryCharactersProvider)
+        fun provideTextMatching(universalTransformation: UniversalTransformation): TextMatching =
+            TextMatchingImpl(universalTransformation)
+
+        @Provides
+        @ViewModelScoped
+        fun provideUniversalTransformation(
+            countryCharactersProvider: CountryCharactersProvider
+        ): UniversalTransformation = UniversalTransformationImpl(countryCharactersProvider)
 
         @Provides
         @ViewModelScoped
@@ -47,11 +53,13 @@ internal abstract class VehiclePredictionViewModelModule {
 
         @Provides
         @ViewModelScoped
-        fun provideReduction(): Reduction = ReductionExperimentalImpl()
+        fun provideReduction(universalTransformation: UniversalTransformation): Reduction =
+            ReductionExperimentalImpl(universalTransformation)
 
         @Provides
         @ViewModelScoped
-        fun provideFragmentation(): Fragmentation = FragmentationImpl()
+        fun provideFragmentation(universalTransformation: UniversalTransformation): Fragmentation =
+            FragmentationImpl(universalTransformation)
 
         @Provides
         @ViewModelScoped

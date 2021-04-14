@@ -1,10 +1,13 @@
 package com.project.hallo.vehicle.domain.steps.implementation
 
 import com.project.hallo.vehicle.domain.steps.Reduction
+import com.project.hallo.vehicle.domain.steps.UniversalTransformation
 
 private const val MIN_SIZE_OF_INPUT_TEXT = 4
 
-class ReductionExperimentalImpl : Reduction {
+class ReductionExperimentalImpl(
+    private val universalTransformation: UniversalTransformation
+) : Reduction {
 
     override fun reduceInput(
         inputs: List<String>,
@@ -12,7 +15,7 @@ class ReductionExperimentalImpl : Reduction {
         numbersNotMatched: MutableList<String>
     ): List<String> {
         val mutableInput = inputs
-            .map { it.replace(" ", "").toLowerCase() }
+            .map { universalTransformation.transformedText(it) }
             .toMutableList()
 
         for (inputThatWasFound: String in textsUsedInMatch) {

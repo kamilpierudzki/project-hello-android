@@ -1,11 +1,17 @@
 package com.project.hallo.vehicle.domain.steps.implementation
 
+import com.project.hallo.vehicle.domain.steps.CountryCharactersProvider
 import org.junit.Assert
 import org.junit.Test
 
 class ReductionExperimentalImplTest {
 
-    val tested = ReductionExperimentalImpl()
+    val countryCharactersProvider = object : CountryCharactersProvider {
+        override fun get(): Map<String, String> = emptyMap()
+    }
+    val universalTransformation = UniversalTransformationImpl(countryCharactersProvider)
+
+    val tested = ReductionExperimentalImpl(universalTransformation)
 
     @Test
     fun `test 1`() {

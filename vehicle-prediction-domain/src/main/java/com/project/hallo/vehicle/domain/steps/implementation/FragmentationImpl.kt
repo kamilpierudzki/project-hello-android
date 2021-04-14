@@ -1,13 +1,16 @@
 package com.project.hallo.vehicle.domain.steps.implementation
 
 import com.project.hallo.vehicle.domain.steps.Fragmentation
+import com.project.hallo.vehicle.domain.steps.UniversalTransformation
 import kotlin.math.max
 
-class FragmentationImpl : Fragmentation {
+class FragmentationImpl(
+    private val universalTransformation: UniversalTransformation
+) : Fragmentation {
 
     override fun fragmentedInput(inputs: List<String>): List<String> {
         return inputs
-            .map { it.replace(" ", "").toLowerCase() }
+            .map { universalTransformation.transformedText(it) }
             .map { divideInput(it) }
             .flatMap { it.toList() }
     }
