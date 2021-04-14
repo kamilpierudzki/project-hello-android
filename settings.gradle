@@ -1,3 +1,5 @@
+include ':country-resources'
+include ':commons-domain'
 include ':city-plan-framework'
 include ':city-plan-domain'
 include ':commons-framework'

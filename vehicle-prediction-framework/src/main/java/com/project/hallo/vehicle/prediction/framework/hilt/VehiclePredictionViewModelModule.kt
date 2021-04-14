@@ -1,17 +1,10 @@
 package com.project.hallo.vehicle.prediction.framework.hilt
 
 import com.project.hallo.vehicle.domain.VehiclePrediction
-import com.project.hallo.vehicle.domain.steps.implementation.VehiclePredictionImpl
-import com.project.hallo.vehicle.prediction.framework.internal.analysis.PredictedLinesAnalysisImpl
-import com.project.hallo.vehicle.domain.steps.Fragmentation
-import com.project.hallo.vehicle.domain.steps.OutputAnalysis
-import com.project.hallo.vehicle.domain.steps.Reduction
-import com.project.hallo.vehicle.domain.steps.implementation.FindingLinesImpl
-import com.project.hallo.vehicle.domain.steps.implementation.FragmentationImpl
-import com.project.hallo.vehicle.domain.steps.implementation.OutputAnalysisImpl
-import com.project.hallo.vehicle.domain.steps.implementation.ReductionExperimentalImpl
 import com.project.hallo.vehicle.domain.analysis.PredictedLinesAnalysis
-import com.project.hallo.vehicle.domain.steps.FindingLines
+import com.project.hallo.vehicle.domain.steps.*
+import com.project.hallo.vehicle.domain.steps.implementation.*
+import com.project.hallo.vehicle.prediction.framework.internal.analysis.PredictedLinesAnalysisImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -30,7 +23,27 @@ internal abstract class VehiclePredictionViewModelModule {
 
         @Provides
         @ViewModelScoped
-        fun provideFindingLines(): FindingLines = FindingLinesImpl()
+        fun provideCountryCharactersProviderImpl() = CountryCharactersProviderImpl()
+
+        @Provides
+        @ViewModelScoped
+        fun provideCountryCharactersProvider(impl: CountryCharactersProviderImpl): CountryCharactersProvider =
+            impl
+
+        @Provides
+        @ViewModelScoped
+        fun provideCountryCharactersEmitter(impl: CountryCharactersProviderImpl): CountryCharactersEmitter =
+            impl
+
+        @Provides
+        @ViewModelScoped
+        fun provideTextMatching(countryCharactersProvider: CountryCharactersProvider): TextMatching =
+            TextMatchingImpl(countryCharactersProvider)
+
+        @Provides
+        @ViewModelScoped
+        fun provideFindingLines(textMatching: TextMatching): FindingLines =
+            FindingLinesExtendedImpl(textMatching)
 
         @Provides
         @ViewModelScoped

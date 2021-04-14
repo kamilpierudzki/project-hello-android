@@ -6,9 +6,9 @@ import org.junit.Test
 
 internal class PredictedLinesAnalysisImplTest {
 
-    val line_A = Line("A", listOf("aaa"))
-    val line_B = Line("B", listOf("bbb"))
-    val line_C = Line("C", listOf("ccc"))
+    val line_A = Line("A", "aaa")
+    val line_B = Line("B", "bbb")
+    val line_C = Line("C", "ccc")
 
     val tested = PredictedLinesAnalysisImpl()
 

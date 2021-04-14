@@ -1,11 +1,13 @@
 package com.project.hallo.vehicle.domain.steps.implementation
 
 import com.project.hallo.city.plan.domain.Line
+import com.project.hallo.commons.domain.addElementIfNotContains
 import com.project.hallo.vehicle.domain.steps.AccuracyLevel
 import com.project.hallo.vehicle.domain.steps.FindingLines
 import com.project.hallo.vehicle.domain.steps.FoundData
 import com.project.hallo.vehicle.domain.steps.LineWithAccuracy
 
+@Deprecated("Do not use it")
 class FindingLinesImpl : FindingLines {
 
     override fun foundLinesData(inputs: List<String>, cityLines: List<Line>): FoundData {
@@ -56,20 +58,14 @@ class FindingLinesImpl : FindingLines {
     private fun didNumberMatch(input: String, cityLine: Line): Boolean =
         transformedText(cityLine.number) == transformedText(input)
 
-    private fun didDestinationMatch(input: String, cityLine: Line): Boolean {
-        return cityLine.destinationVariants.firstOrNull {
-            transformedText(it) == transformedText(input)
-        } != null
-    }
+    private fun didDestinationMatch(input: String, cityLine: Line): Boolean =
+        transformedText(cityLine.destination) == transformedText(input)
 
     private fun didNumberContains(input: String, cityLine: Line): Boolean =
         transformedText(cityLine.number).contains(transformedText(input))
 
-    private fun didDestinationContain(input: String, cityLine: Line): Boolean {
-        return cityLine.destinationVariants.firstOrNull {
-            transformedText(it).contains(transformedText(input))
-        } != null
-    }
+    private fun didDestinationContain(input: String, cityLine: Line): Boolean =
+        transformedText(cityLine.destination).contains(transformedText(input))
 
     private fun didSliceMatch(input: String, cityLine: Line): Boolean =
         didNumberContains(input, cityLine) || didDestinationContain(input, cityLine)
@@ -78,10 +74,4 @@ class FindingLinesImpl : FindingLines {
         input
             .replace(" ", "")
             .toLowerCase()
-}
-
-internal fun <T> MutableList<T>.addElementIfNotContains(element: T) {
-    if (!contains(element)) {
-        add(element)
-    }
 }

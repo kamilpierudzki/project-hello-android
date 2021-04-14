@@ -8,19 +8,19 @@ import org.junit.Test
 internal class FindingLinesImplTest {
 
     val globalCityLines1 = listOf(
-        Line("12", listOf("os.sobieskiego")),
-        Line("16", listOf("os.sobieskiego")),
-        Line("169", listOf("os.sobieskiego")),
-        Line("174", listOf("os.sobieskiego")),
-        Line("1", listOf("franowo")),
+        Line("12", "os.sobieskiego"),
+        Line("16", "os.sobieskiego"),
+        Line("169", "os.sobieskiego"),
+        Line("174", "os.sobieskiego"),
+        Line("1", "franowo"),
     )
 
     val globalCityLines2 = listOf(
-        Line("12", listOf("Os. Sobieskiego")),
-        Line("16", listOf("Os. Sobieskiego")),
-        Line("169", listOf("Os. Sobieskiego")),
-        Line("174", listOf("Os. Sobieskiego")),
-        Line("1", listOf("Franowo")),
+        Line("12", "Os. Sobieskiego"),
+        Line("16", "Os. Sobieskiego"),
+        Line("169", "Os. Sobieskiego"),
+        Line("174", "Os. Sobieskiego"),
+        Line("1", "Franowo"),
     )
 
     @Test

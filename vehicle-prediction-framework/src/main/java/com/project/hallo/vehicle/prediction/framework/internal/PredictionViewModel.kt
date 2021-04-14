@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import com.project.hallo.city.plan.domain.Line
 import com.project.hallo.city.plan.domain.VehicleType
 import com.project.hallo.city.plan.domain.usecase.CityPlanUseCase
-import com.project.hallo.commons.viewmodel.ui.Text
+import com.project.hallo.commons.framework.ui.Text
 import com.project.hallo.vehicle.domain.VehiclePrediction
 import com.project.hallo.vehicle.domain.analysis.LineWithProbability
 import com.project.hallo.vehicle.domain.analysis.PredictedLinesAnalysis
+import com.project.hallo.vehicle.domain.steps.CountryCharactersEmitter
+import com.project.hallo.vehicle.domain.steps.CountryCharactersProvider
 import com.project.hallo.vehicle.prediction.framework.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.concurrent.CopyOnWriteArrayList
@@ -20,7 +22,8 @@ private const val NUM_OF_PREDICTED_LINES_TO_SHOW = 3
 internal class PredictionViewModel @Inject constructor(
     private val vehiclePrediction: VehiclePrediction,
     private val cityPlanUseCase: CityPlanUseCase,
-    private val predictedLinesAnalysis: PredictedLinesAnalysis
+    private val predictedLinesAnalysis: PredictedLinesAnalysis,
+    private val countryCharactersEmitter: CountryCharactersEmitter
 ) : ViewModel() {
 
     private val cityLines = CopyOnWriteArrayList<Line>()
@@ -28,12 +31,13 @@ internal class PredictionViewModel @Inject constructor(
     val predictedLines = MutableLiveData<List<LineWithProbability>>()
     val screenContentDescription = MutableLiveData(Text.empty())
 
-    fun setTargetVehicleType(targetVehicleTypes: List<VehicleType>) {
+    fun setTargetVehicleType(initialData: PredictionViewModelInitialData) {
         // todo use async way
         cityLines.apply {
             clear()
-            addAll(cityPlanUseCase.getCityPlan(targetVehicleTypes))
+            addAll(cityPlanUseCase.getCityPlan(initialData.targetVehicleTypes))
         }
+        countryCharactersEmitter.emmit(initialData.countryCharacters)
     }
 
     fun processRecognisedTexts(inputs: List<String>) {

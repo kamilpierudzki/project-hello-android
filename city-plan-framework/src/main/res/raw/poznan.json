@@ -5,255 +5,151 @@
   "trams": [
     {
       "number": "1",
-      "destinationVariants": [
-        "Franowo"
-      ]
+      "destination": "Franowo"
     },
     {
       "number": "1",
-      "destinationVariants": [
-        "Junikowo"
-      ]
+      "destination": "Junikowo"
     },
     {
       "number": "2",
-      "destinationVariants": [
-        "Dębiec",
-        "Debiec"
-      ]
+      "destination": "Dębiec"
     },
     {
       "number": "2",
-      "destinationVariants": [
-        "Ogrody"
-      ]
+      "destination": "Ogrody"
     },
     {
       "number": "3",
-      "destinationVariants": [
-        "Unii Lubelskiej"
-      ]
+      "destination": "Unii Lubelskiej"
     },
     {
       "number": "3",
-      "destinationVariants": [
-        "Wilczak"
-      ]
+      "destination": "Wilczak"
     },
     {
       "number": "4",
-      "destinationVariants": [
-        "Starołęka",
-        "Starolęka",
-        "Staroleka"
-      ]
+      "destination": "Starołęka"
     },
     {
       "number": "4",
-      "destinationVariants": [
-        "Os. Piastowskie"
-      ]
+      "destination": "Os. Piastowskie"
     },
     {
       "number": "5",
-      "destinationVariants": [
-        "Górczyn",
-        "Gorczyn"
-      ]
+      "destination": "Górczyn"
     },
     {
       "number": "6",
-      "destinationVariants": [
-        "Junikowo"
-      ]
+      "destination": "Junikowo"
     },
     {
       "number": "7",
-      "destinationVariants": [
-        "Os. Piastowskie"
-      ]
+      "destination": "Os. Piastowskie"
     },
     {
       "number": "7",
-      "destinationVariants": [
-        "Ogrody"
-      ]
+      "destination": "Ogrody"
     },
     {
       "number": "8",
-      "destinationVariants": [
-        "Miłostowo",
-        "Milostowo"
-      ]
+      "destination": "Miłostowo"
     },
     {
       "number": "8",
-      "destinationVariants": [
-        "Górczyn",
-        "Gorczyn"
-      ]
+      "destination": "Górczyn"
     },
     {
       "number": "9",
-      "destinationVariants": [
-        "Piątkowska",
-        "Piatkowska"
-      ]
+      "destination": "Piątkowska"
     },
     {
       "number": "9",
-      "destinationVariants": [
-        "Dębiec",
-        "Debiec"
-      ]
+      "destination": "Dębiec"
     },
     {
       "number": "10",
-      "destinationVariants": [
-        "Dębiec",
-        "Debiec"
-      ]
+      "destination": "Dębiec"
     },
     {
       "number": "10",
-      "destinationVariants": [
-        "Połabska",
-        "Polabska"
-      ]
+      "destination": "Połabska"
     },
     {
       "number": "11",
-      "destinationVariants": [
-        "Unii Lubelskiej"
-      ]
+      "destination": "Unii Lubelskiej"
     },
     {
       "number": "11",
-      "destinationVariants": [
-        "Piątkowska",
-        "Piatkowska"
-      ]
+      "destination": "Piątkowska"
     },
     {
       "number": "12",
-      "destinationVariants": [
-        "Os. Sobieskiego"
-      ]
+      "destination": "Os. Sobieskiego"
     },
     {
       "number": "12",
-      "destinationVariants": [
-        "Starołęka",
-        "Starolęka",
-        "Staroleka"
-      ]
+      "destination": "Starołęka"
     },
     {
       "number": "13",
-      "destinationVariants": [
-        "Rondo Rataje"
-      ]
+      "destination": "Rondo Rataje"
     },
     {
       "number": "13",
-      "destinationVariants": [
-        "Junikowo"
-      ]
+      "destination": "Junikowo"
     },
     {
       "number": "14",
-      "destinationVariants": [
-        "Górczyn",
-        "Gorczyn"
-      ]
+      "destination": "Górczyn"
     },
     {
       "number": "14",
-      "destinationVariants": [
-        "Os. Sobieskiego"
-      ]
+      "destination": "Os. Sobieskiego"
     },
     {
       "number": "15",
-      "destinationVariants": [
-        "Os. Sobieskiego"
-      ]
+      "destination": "Os. Sobieskiego"
     },
     {
       "number": "15",
-      "destinationVariants": [
-        "Budziszyńska",
-        "Budziszynska"
-      ]
+      "destination": "Budziszyńska"
     },
     {
       "number": "16",
-      "destinationVariants": [
-        "Os. Sobieskiego"
-      ]
+      "destination": "Os. Sobieskiego"
     },
     {
       "number": "16",
-      "destinationVariants": [
-        "Franowo"
-      ]
+      "destination": "Franowo"
     },
     {
       "number": "17",
-      "destinationVariants": [
-        "Ogrody"
-      ]
+      "destination": "Ogrody"
     },
     {
       "number": "17",
-      "destinationVariants": [
-        "Starołęka",
-        "Starolęka",
-        "Staroleka"
-      ]
+      "destination": "Starołęka"
     },
     {
       "number": "18",
-      "destinationVariants": [
-        "Ogrody"
-      ]
+      "destination": "Ogrody"
     },
     {
       "number": "18",
-      "destinationVariants": [
-        "Rondo Rataje"
-      ]
+      "destination": "Rondo Rataje"
     },
     {
       "number": "36",
-      "destinationVariants": [
-        "Os. Sobieskiego"
-      ]
+      "destination": "Os. Sobieskiego"
     },
     {
       "number": "96",
-      "destinationVariants": [
-        "Franowo"
-      ]
+      "destination": "Franowo"
     },
     {
       "number": "96",
-      "destinationVariants": [
-        "Miłostowo",
-        "Milostowo"
-      ]
-    },
-    {
-      "number": "201",
-      "destinationVariants": [
-        "Os. Sobieskiego"
-      ]
-    },
-    {
-      "number": "201",
-      "destinationVariants": [
-        "Unii Lubelskiej"
-      ]
+      "destination": "Miłostowo"
     }
   ]
 }

@@ -1,21 +1,27 @@
 package com.project.hallo.vehicle.domain.steps.implementation
 
 import com.project.hallo.city.plan.domain.Line
+import com.project.hallo.vehicle.domain.steps.CountryCharactersProvider
 import org.junit.Assert
 import org.junit.Test
 
 internal class VehiclePredictionImplTest {
 
     val globalCityLines1 = listOf(
-        Line("12", listOf("os.sobieskiego")),
-        Line("16", listOf("os.sobieskiego")),
-        Line("169", listOf("os.sobieskiego")),
-        Line("174", listOf("os.sobieskiego")),
-        Line("1", listOf("franowo")),
+        Line("12", "os.sobieskiego"),
+        Line("16", "os.sobieskiego"),
+        Line("169", "os.sobieskiego"),
+        Line("174", "os.sobieskiego"),
+        Line("1", "franowo"),
     )
 
+    val polishCharactersProvider = object : CountryCharactersProvider {
+        override fun get(): Map<String, String> = mapOf("ą" to "a", "ł" to "l")
+    }
+
+    val textMatching = TextMatchingImpl(polishCharactersProvider)
     val fragmentation = FragmentationImpl()
-    val findingLines = FindingLinesImpl()
+    val findingLines = FindingLinesExtendedImpl(textMatching)
     val reduction = ReductionExperimentalImpl()
     val outputAnalysis = OutputAnalysisImpl()
 
@@ -134,6 +140,23 @@ internal class VehiclePredictionImplTest {
 
         // when
         val predicted = tested.processInput(rawInput, globalCityLines1)
+
+        // then
+        Assert.assertEquals(1, predicted.size)
+        Assert.assertEquals("12", predicted[0].number)
+    }
+
+    @Test
+    fun `test 10`() {
+        // given
+        val cityLines = listOf(
+            Line("12", "Łąkowa"),
+            Line("16", "Os. Sobieskiego")
+        )
+        val rawInput = "Lakowa"
+
+        // when
+        val predicted = tested.processInput(rawInput, cityLines)
 
         // then
         Assert.assertEquals(1, predicted.size)

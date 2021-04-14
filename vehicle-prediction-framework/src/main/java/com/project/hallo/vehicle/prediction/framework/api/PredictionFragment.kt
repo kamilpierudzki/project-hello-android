@@ -11,10 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.domain.VehicleData
+import com.project.hallo.country.api.ResourceCountryCharacters
 import com.project.hallo.vehicle.prediction.framework.R
 import com.project.hallo.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.hallo.vehicle.prediction.framework.internal.FpsCounterWrapper
 import com.project.hallo.vehicle.prediction.framework.internal.PredictionViewModel
+import com.project.hallo.vehicle.prediction.framework.internal.PredictionViewModelInitialData
 import com.project.hallo.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hallo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import com.project.hallo.vehicle.prediction.framework.internal.ui.PredictedLinesAdapter
@@ -34,6 +36,9 @@ class PredictionFragment : Fragment() {
 
     @Inject
     lateinit var fpsCounterWrapper: FpsCounterWrapper
+
+    @Inject
+    lateinit var resourceCountryCharacters: ResourceCountryCharacters
 
     private val sageArgs: PredictionFragmentArgs by navArgs()
     private val initialVehicleData: VehicleData get() = sageArgs.vehicleData
@@ -100,7 +105,11 @@ class PredictionFragment : Fragment() {
     }
 
     private fun passInitialInfoToViewModel() {
-        predictionViewModel.setTargetVehicleType(initialVehicleData.vehicleTypes)
+        val initialData = PredictionViewModelInitialData(
+            targetVehicleTypes = initialVehicleData.vehicleTypes,
+            countryCharacters = resourceCountryCharacters.get()
+        )
+        predictionViewModel.setTargetVehicleType(initialData)
     }
 
     private fun observePredictedLines() {

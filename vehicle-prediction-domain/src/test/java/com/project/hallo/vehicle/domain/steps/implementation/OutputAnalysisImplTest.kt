@@ -15,12 +15,12 @@ internal class OutputAnalysisImplTest {
         // given
         val input = listOf(
             listOf(
-                LineWithAccuracy(Line("12", listOf("aaa")), AccuracyLevel.SLICE_MATCHED),
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED)
+                LineWithAccuracy(Line("12", "aaa"), AccuracyLevel.SLICE_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED)
             ),
             listOf(
-                LineWithAccuracy(Line("169", listOf("ccc")), AccuracyLevel.NUMBER_MATCHED),
-                LineWithAccuracy(Line("179", listOf("ddd")), AccuracyLevel.SLICE_MATCHED)
+                LineWithAccuracy(Line("169", "ccc"), AccuracyLevel.NUMBER_MATCHED),
+                LineWithAccuracy(Line("179", "ddd"), AccuracyLevel.SLICE_MATCHED)
             )
         )
 
@@ -36,16 +36,16 @@ internal class OutputAnalysisImplTest {
         // given
         val input = listOf(
             listOf(
-                LineWithAccuracy(Line("12", listOf("aaa")), AccuracyLevel.SLICE_MATCHED),
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
-                LineWithAccuracy(Line("1", listOf("eee")), AccuracyLevel.NUMBER_MATCHED)
+                LineWithAccuracy(Line("12", "aaa"), AccuracyLevel.SLICE_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("1", "eee"), AccuracyLevel.NUMBER_MATCHED)
             ),
             listOf(
-                LineWithAccuracy(Line("169", listOf("ccc")), AccuracyLevel.NUMBER_MATCHED),
-                LineWithAccuracy(Line("179", listOf("ddd")), AccuracyLevel.SLICE_MATCHED)
+                LineWithAccuracy(Line("169", "ccc"), AccuracyLevel.NUMBER_MATCHED),
+                LineWithAccuracy(Line("179", "ddd"), AccuracyLevel.SLICE_MATCHED)
             ),
             listOf(
-                LineWithAccuracy(Line("1", listOf("eee")), AccuracyLevel.NUMBER_MATCHED)
+                LineWithAccuracy(Line("1", "eee"), AccuracyLevel.NUMBER_MATCHED)
             )
         )
 
@@ -61,18 +61,18 @@ internal class OutputAnalysisImplTest {
         // given
         val input = listOf(
             listOf(
-                LineWithAccuracy(Line("12", listOf("aaa")), AccuracyLevel.SLICE_MATCHED),
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
-                LineWithAccuracy(Line("1", listOf("eee")), AccuracyLevel.NUMBER_MATCHED)
+                LineWithAccuracy(Line("12", "aaa"), AccuracyLevel.SLICE_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("1", "eee"), AccuracyLevel.NUMBER_MATCHED)
             ),
             listOf(
-                LineWithAccuracy(Line("169", listOf("ccc")), AccuracyLevel.NUMBER_MATCHED),
-                LineWithAccuracy(Line("179", listOf("ddd")), AccuracyLevel.SLICE_MATCHED),
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("169", "ccc"), AccuracyLevel.NUMBER_MATCHED),
+                LineWithAccuracy(Line("179", "ddd"), AccuracyLevel.SLICE_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
             ),
             listOf(
-                LineWithAccuracy(Line("1", listOf("eee")), AccuracyLevel.NUMBER_MATCHED),
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("1", "eee"), AccuracyLevel.NUMBER_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
             )
         )
 
@@ -88,18 +88,18 @@ internal class OutputAnalysisImplTest {
         // given
         val input = listOf(
             listOf(
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
-                LineWithAccuracy(Line("1", listOf("eee")), AccuracyLevel.NUMBER_MATCHED)
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("1", "eee"), AccuracyLevel.NUMBER_MATCHED)
             ),
             listOf(
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
             ),
             listOf(
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
-                LineWithAccuracy(Line("16", listOf("bbb")), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
+                LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
             )
         )
 
