@@ -2,6 +2,7 @@ package com.project.hallo.vehicle.prediction.framework.internal
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.project.hallo.city.plan.domain.Line
 import com.project.hallo.city.plan.domain.VehicleType
 import com.project.hallo.city.plan.domain.usecase.CityPlanUseCase
@@ -10,9 +11,10 @@ import com.project.hallo.vehicle.domain.VehiclePrediction
 import com.project.hallo.vehicle.domain.analysis.LineWithProbability
 import com.project.hallo.vehicle.domain.analysis.PredictedLinesAnalysis
 import com.project.hallo.vehicle.domain.steps.CountryCharactersEmitter
-import com.project.hallo.vehicle.domain.steps.CountryCharactersProvider
 import com.project.hallo.vehicle.prediction.framework.R
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.concurrent.CopyOnWriteArrayList
 import javax.inject.Inject
 
@@ -32,12 +34,8 @@ internal class PredictionViewModel @Inject constructor(
     val screenContentDescription = MutableLiveData(Text.empty())
 
     fun setTargetVehicleType(initialData: PredictionViewModelInitialData) {
-        // todo use async way
-        cityLines.apply {
-            clear()
-            addAll(cityPlanUseCase.getCityPlan(initialData.targetVehicleTypes))
-        }
         countryCharactersEmitter.emmit(initialData.countryCharacters)
+        provideCityLines(initialData.targetVehicleTypes)
     }
 
     fun processRecognisedTexts(inputs: List<String>) {
@@ -67,5 +65,17 @@ internal class PredictionViewModel @Inject constructor(
             separator = " "
         )
         screenContentDescription.postValue(contentDescription)
+    }
+
+    private fun provideCityLines(targetVehicleTypes: List<VehicleType>) {
+        viewModelScope.launch {
+            cityPlanUseCase.getCityPlan(targetVehicleTypes)
+                .collect { lines ->
+                    cityLines.apply {
+                        clear()
+                        addAll(lines)
+                    }
+                }
+        }
     }
 }
