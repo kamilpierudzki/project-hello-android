@@ -151,5 +151,11 @@
       "number": "96",
       "destination": "Miłostowo"
     }
+  ],
+  "buses": [
+    {
+      "number": "125",
+      "destination": "Starołęka"
+    }
   ]
 }
