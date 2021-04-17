@@ -10,8 +10,8 @@ internal class PredictedLinesAdapter : RecyclerView.Adapter<PredictedLineViewHol
 
     private var dataset: List<LineWithProbability> = emptyList()
 
-    fun updateDataset(newDataset: List<LineWithProbability>) {
-        dataset = newDataset
+    fun updateData(newData: List<LineWithProbability>) {
+        dataset = newData
         notifyDataSetChanged()
     }
 

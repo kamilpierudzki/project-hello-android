@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/VehicleTypePickerFragment">
+    android:id="@+id/prediction_nav_graph"
+    app:startDestination="@id/vehicle_type_picker_fragment">
 
     <fragment
-        android:id="@+id/VehicleTypePickerFragment"
+        android:id="@+id/vehicle_type_picker_fragment"
         android:name="com.project.hallo.vehicle.prediction.framework.api.VehicleTypePickerFragment"
         android:label="@string/vehicle_type_picker_fragment_lable">
 
         <action
-            android:id="@+id/initialVehicleData"
-            app:destination="@id/PredictionFragment">
+            android:id="@+id/go_to_prediction_screen"
+            app:destination="@id/prediction_fragment">
 
             <argument
                 android:name="vehicleData"
@@ -22,7 +22,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/PredictionFragment"
+        android:id="@+id/prediction_fragment"
         android:name="com.project.hallo.vehicle.prediction.framework.api.PredictionFragment"
         android:label="@string/prediction_fragment_label">
 

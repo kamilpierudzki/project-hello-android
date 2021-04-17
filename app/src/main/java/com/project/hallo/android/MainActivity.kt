@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.onNavDestinationSelected
 import com.project.hallo.android.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,10 +26,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        item.onNavDestinationSelected(findNavController(R.id.nav_host_fragment)) ||
+                super.onOptionsItemSelected(item)
 }

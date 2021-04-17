@@ -42,8 +42,7 @@ class PredictionFragment : Fragment() {
 
     private val sageArgs: PredictionFragmentArgs by navArgs()
     private val initialVehicleData: VehicleData get() = sageArgs.vehicleData
-    private var _binding: PredictionFragmentBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: PredictionFragmentBinding
     private lateinit var predictedLinesAdapter: PredictedLinesAdapter
     private val predictionViewModel: PredictionViewModel by viewModels()
 
@@ -52,13 +51,8 @@ class PredictionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = PredictionFragmentBinding.inflate(inflater, container, false)
+        binding = PredictionFragmentBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -115,7 +109,7 @@ class PredictionFragment : Fragment() {
     private fun observePredictedLines() {
         predictionViewModel.predictedLines.observe(viewLifecycleOwner, { lines ->
             if (lines.isNotEmpty()) {
-                predictedLinesAdapter.updateDataset(lines)
+                predictedLinesAdapter.updateData(lines)
                 fpsCounterWrapper.newFrameProcessed(System.currentTimeMillis())
             }
         })

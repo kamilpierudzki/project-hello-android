@@ -54,17 +54,17 @@ class VehicleTypePickerFragment : Fragment() {
     private fun setupButtonClicks() {
         binding.allTypesButton.setOnClickListener {
             val vehicleData = VehicleData(listOf(VehicleType.TRAM, VehicleType.BUS))
-            val action = VehicleTypePickerFragmentDirections.initialVehicleData(vehicleData)
+            val action = VehicleTypePickerFragmentDirections.goToPredictionScreen(vehicleData)
             it.findNavController().navigate(action)
         }
         binding.tramTypesButton.setOnClickListener {
             val vehicleData = VehicleData(listOf(VehicleType.TRAM))
-            val action = VehicleTypePickerFragmentDirections.initialVehicleData(vehicleData)
+            val action = VehicleTypePickerFragmentDirections.goToPredictionScreen(vehicleData)
             it.findNavController().navigate(action)
         }
         binding.busTypesButton.setOnClickListener {
             val vehicleData = VehicleData(listOf(VehicleType.BUS))
-            val action = VehicleTypePickerFragmentDirections.initialVehicleData(vehicleData)
+            val action = VehicleTypePickerFragmentDirections.goToPredictionScreen(vehicleData)
             it.findNavController().navigate(action)
         }
     }
