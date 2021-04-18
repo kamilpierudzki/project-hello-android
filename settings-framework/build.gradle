@@ -51,4 +51,5 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     implementation project(path: ':commons-framework')
+    implementation project(path: ':city-plan-framework')
 }

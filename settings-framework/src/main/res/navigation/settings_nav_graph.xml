@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settings_nav_graph"
+    app:startDestination="@id/settings_screen">
+
+    <fragment
+        android:id="@+id/settings_screen"
+        android:name="com.project.hallo.settings.framework.api.SettingsFragment">
+
+        <action
+            android:id="@+id/go_to_city_picker_screen"
+            app:destination="@id/city_picker_screen" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/city_picker_screen"
+        android:name="com.project.hallo.city.plan.framework.api.CityPickerFragment" />
+
+</navigation>
