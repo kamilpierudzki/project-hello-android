@@ -54,4 +54,5 @@ dependencies {
 
     implementation project(path: ':city-plan-domain')
     implementation project(path: ':commons-framework')
+    implementation project(path: ':commons-domain')
 }

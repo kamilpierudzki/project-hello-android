@@ -2,12 +2,19 @@ package com.project.hallo.city.plan.framework.internal.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.project.hallo.city.plan.framework.databinding.CityItemBinding
+import javax.inject.Inject
 
-internal class CityPickerAdapter : RecyclerView.Adapter<CityPickerViewHolder>() {
+internal class CityPickerAdapter @Inject constructor() :
+    RecyclerView.Adapter<CityPickerViewHolder>() {
 
     private var cities: List<String> = emptyList()
+    private val _citySelection = MutableLiveData<String>()
+
+    val citySelection: LiveData<String> = _citySelection
 
     fun updateData(cities: List<String>) {
         this.cities = cities
@@ -22,7 +29,9 @@ internal class CityPickerAdapter : RecyclerView.Adapter<CityPickerViewHolder>() 
 
     override fun onBindViewHolder(holder: CityPickerViewHolder, position: Int) {
         val city = City(cities[position], true)
-        holder.setupView(city)
+        holder.setupView(city) {
+            _citySelection.value = city.name
+        }
     }
 
     override fun getItemCount(): Int = cities.size

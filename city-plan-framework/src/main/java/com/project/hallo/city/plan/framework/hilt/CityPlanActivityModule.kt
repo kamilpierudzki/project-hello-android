@@ -24,4 +24,3 @@ class CityPlanActivityModule {
         activity.viewModels<CityPickViewModelImpl>().value
     }
 }
-

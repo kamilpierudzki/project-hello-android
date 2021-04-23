@@ -1,5 +1,7 @@
 package com.project.hallo.city.plan.domain
 
+import com.project.hallo.city.plan.domain.datasource.CityPlanDataSource
+
 class CityPlanRepository(private val localCityPlanDataSource: CityPlanDataSource) {
 
     fun getCityPlan(targetTypes: List<VehicleType>): List<Line> {

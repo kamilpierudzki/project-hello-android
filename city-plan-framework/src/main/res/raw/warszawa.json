@@ -1,0 +1,29 @@
+{
+  "city": "warszawa",
+  "lastUpdateTimestampInMillis": "1618155330",
+  "appVersion": "1",
+  "trams": [
+    {
+      "number": "1",
+      "destination": "Aaa"
+    },
+    {
+      "number": "1",
+      "destination": "Bbb"
+    },
+    {
+      "number": "2",
+      "destination": "Ccc"
+    },
+    {
+      "number": "2",
+      "destination": "Ddd"
+    }
+  ],
+  "buses": [
+    {
+      "number": "125",
+      "destination": "Eee"
+    }
+  ]
+}

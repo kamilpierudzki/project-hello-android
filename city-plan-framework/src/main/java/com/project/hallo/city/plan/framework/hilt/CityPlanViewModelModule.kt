@@ -1,11 +1,17 @@
 package com.project.hallo.city.plan.framework.hilt
 
 import android.content.res.Resources
-import com.project.hallo.city.plan.domain.CityPlanDataSource
+import com.project.hallo.city.plan.domain.datasource.CityPlanDataSource
 import com.project.hallo.city.plan.domain.CityPlanRepository
+import com.project.hallo.city.plan.domain.datasource.SupportedCityDataSource
+import com.project.hallo.city.plan.domain.repository.SupportedCitiesRepository
 import com.project.hallo.city.plan.domain.usecase.CityPlanUseCase
+import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCase
 import com.project.hallo.city.plan.domain.usecase.implementation.CityPlanUseCaseImpl
+import com.project.hallo.city.plan.domain.usecase.implementation.SupportedCitiesUseCaseImpl
 import com.project.hallo.city.plan.framework.internal.datasource.RawResourceCityPlanDataSourceImpl
+import com.project.hallo.city.plan.framework.internal.datasource.RawResourcesSupportedCityDataSourceImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,20 +20,29 @@ import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-internal class CityPlanViewModelModule {
+internal abstract class CityPlanViewModelModule {
 
     @Provides
-    @ViewModelScoped
     fun provideRawResourceCityPlanDataSource(resources: Resources): CityPlanDataSource =
         RawResourceCityPlanDataSourceImpl(resources)
 
     @Provides
-    @ViewModelScoped
     fun provideCityPlanRepository(cityPlanDataSource: CityPlanDataSource) =
         CityPlanRepository(cityPlanDataSource)
 
     @Provides
-    @ViewModelScoped
     fun provideCityPlanUseCase(cityPlanRepository: CityPlanRepository): CityPlanUseCase =
         CityPlanUseCaseImpl(cityPlanRepository)
+
+    @Provides
+    fun provideRawResourcesSupportedCityDataSourceImpl(resources: Resources): SupportedCityDataSource =
+        RawResourcesSupportedCityDataSourceImpl(resources)
+
+    @Provides
+    fun provideSupportedCitiesRepository(supportedCityDataSource: SupportedCityDataSource):
+            SupportedCitiesRepository = SupportedCitiesRepository(supportedCityDataSource)
+
+    @Provides
+    fun provideSupportedCitiesUseCase(supportedCitiesRepository: SupportedCitiesRepository):
+            SupportedCitiesUseCase = SupportedCitiesUseCaseImpl(supportedCitiesRepository)
 }

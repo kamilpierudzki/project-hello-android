@@ -4,6 +4,8 @@
     android:id="@+id/settings_nav_graph"
     app:startDestination="@id/settings_screen">
 
+    <include app:graph="@navigation/city_plan_nav_graph" />
+
     <fragment
         android:id="@+id/settings_screen"
         android:name="com.project.hallo.settings.framework.api.SettingsFragment">
@@ -13,9 +15,5 @@
             app:destination="@id/city_picker_screen" />
 
     </fragment>
-
-    <fragment
-        android:id="@+id/city_picker_screen"
-        android:name="com.project.hallo.city.plan.framework.api.CityPickerFragment" />
 
 </navigation>

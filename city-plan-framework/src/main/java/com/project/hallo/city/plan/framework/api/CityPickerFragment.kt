@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.framework.databinding.CityPickerFragmentBinding
 import com.project.hallo.city.plan.framework.internal.ui.CityPickerAdapter
@@ -19,7 +20,9 @@ import javax.inject.Inject
 class CityPickerFragment : Fragment() {
 
     private lateinit var binding: CityPickerFragmentBinding
-    private lateinit var cityPickerAdapter: CityPickerAdapter
+
+    @Inject
+    internal lateinit var cityPickerAdapter: CityPickerAdapter
 
     @Inject
     @ViewModelProvider(ViewModelType.ACTIVITY)
@@ -41,6 +44,8 @@ class CityPickerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
+        observeCitySelection()
+        observeFetchingCityData()
         provideTemporaryDataForList()
     }
 
@@ -49,11 +54,36 @@ class CityPickerFragment : Fragment() {
     }
 
     private fun setupList() {
-        cityPickerAdapter = CityPickerAdapter()
         binding.recyclerView.also {
             it.adapter = cityPickerAdapter
             it.layoutManager = LinearLayoutManager(requireContext())
         }
+    }
+
+    private fun observeCitySelection() {
+        cityPickerAdapter.citySelection.observe(viewLifecycleOwner, { selectedCity ->
+            cityPickViewModel.selectCity(selectedCity)
+        })
+    }
+
+    private fun observeFetchingCityData() {
+        cityPickViewModel.fetchingCityStatus.observe(viewLifecycleOwner, { event ->
+            when (event.getContentOrNull()) {
+                FetchingCityStatus.InProgress,
+                FetchingCityStatus.Success -> navigateToSplashScreen()
+                FetchingCityStatus.Error -> showErrorMessage()
+            }
+        })
+    }
+
+    private fun navigateToSplashScreen() {
+        val navController = findNavController()
+        val startDestination = navController.graph.startDestination
+        navController.navigate(startDestination)
+    }
+
+    private fun showErrorMessage() {
+        // todo show error message
     }
 
     private fun provideTemporaryDataForList() {

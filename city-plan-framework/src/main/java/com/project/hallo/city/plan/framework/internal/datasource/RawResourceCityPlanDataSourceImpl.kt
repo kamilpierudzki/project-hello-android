@@ -3,13 +3,15 @@ package com.project.hallo.city.plan.framework.internal.datasource
 import android.content.res.Resources
 import com.google.gson.Gson
 import com.project.hallo.city.plan.domain.CityPlanAPI
-import com.project.hallo.city.plan.domain.CityPlanDataSource
-import com.project.hallo.city.plan.domain.VehicleType
+import com.project.hallo.city.plan.domain.datasource.CityPlanDataSource
 import com.project.hallo.city.plan.framework.R
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import javax.inject.Inject
 
-internal class RawResourceCityPlanDataSourceImpl(private val resources: Resources) : CityPlanDataSource {
+internal class RawResourceCityPlanDataSourceImpl @Inject constructor(
+    private val resources: Resources
+) : CityPlanDataSource {
 
     override fun fetchPlanFor(): CityPlanAPI {
         val inputStream = resources.openRawResource(R.raw.poznan)

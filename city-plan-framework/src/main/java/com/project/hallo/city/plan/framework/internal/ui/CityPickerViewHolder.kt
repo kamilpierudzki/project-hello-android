@@ -11,7 +11,7 @@ internal class CityPickerViewHolder(private val viewBinding: CityItemBinding) :
     RecyclerView.ViewHolder(viewBinding.root) {
 
     @RequiresApi(Build.VERSION_CODES.DONUT)
-    fun setupView(city: City) {
+    fun setupView(city: City, selectionListener: () -> Unit) {
         viewBinding.city.text = city.name
         viewBinding.selected.visibility = if (city.selected) View.VISIBLE else View.GONE
         val contentDescription = if (city.selected) {
@@ -22,6 +22,9 @@ internal class CityPickerViewHolder(private val viewBinding: CityItemBinding) :
             city.name
         }
         viewBinding.root.contentDescription = contentDescription
+        viewBinding.root.setOnClickListener {
+            selectionListener.invoke()
+        }
     }
 }
 
