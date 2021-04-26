@@ -13,26 +13,23 @@ class SupportedCitiesUseCaseImpl(
     private val supportedCitiesRepository: SupportedCitiesRepository
 ) : SupportedCitiesUseCase {
 
-
-    override fun getSupportedCities(): Flow<Response<SupportedCitiesData>> {
-        return flow {
-            emit(Response.Loading())
-            val supportedCitiesResource = supportedCitiesRepository.getSupportedCitiesResource()
-            when (val apiResponse: Response<SupportedCitiesApi> = supportedCitiesResource.fetch()) {
-                is Response.Success -> {
-                    val apiData = apiResponse.data!!
-                    supportedCitiesResource.saveFetchResult(apiData)
-                    val data = Response.Success(apiData.toSupportedCitiesData())
-                    emit(data)
-                }
-                is Response.Error -> {
-                    when (val dbResponse = supportedCitiesResource.loadFromDb()) {
-                        is Response.Success -> {
-                            emit(dbResponse)
-                        }
-                        is Response.Error -> {
-                            emit(Response.Error<SupportedCitiesData>("Couldn't get supported cities"))
-                        }
+    override fun execute(): Flow<Response<SupportedCitiesData>> = flow {
+        emit(Response.Loading())
+        val supportedCitiesResource = supportedCitiesRepository.getSupportedCitiesResource()
+        when (val apiResponse: Response<SupportedCitiesApi> = supportedCitiesResource.fetch()) {
+            is Response.Success -> {
+                val apiData = apiResponse.data!!
+                supportedCitiesResource.saveFetchResult(apiData)
+                val data = Response.Success(apiData.toSupportedCitiesData())
+                emit(data)
+            }
+            is Response.Error -> {
+                when (val dbResponse = supportedCitiesResource.loadFromDb()) {
+                    is Response.Success -> {
+                        emit(dbResponse)
+                    }
+                    is Response.Error -> {
+                        emit(Response.Error<SupportedCitiesData>("Couldn't get supported cities"))
                     }
                 }
             }

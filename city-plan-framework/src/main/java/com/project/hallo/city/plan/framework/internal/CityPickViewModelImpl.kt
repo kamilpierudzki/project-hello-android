@@ -1,14 +1,16 @@
 package com.project.hallo.city.plan.framework.internal
 
-import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.domain.model.SupportedCitiesData
+import com.project.hallo.city.plan.domain.usecase.CityUseCase
 import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCase
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.city.plan.framework.api.CitySelection
 import com.project.hallo.city.plan.framework.api.FetchingCityStatus
+import com.project.hallo.city.plan.framework.api.FetchingSupportedCitiesStatus
 import com.project.hallo.commons.domain.repository.Response
 import com.project.hallo.commons.framework.livedata.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,61 +20,77 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CityPickViewModelImpl @Inject constructor(
-    private val supportedCitiesUseCase: SupportedCitiesUseCase
+    private val supportedCitiesUseCase: SupportedCitiesUseCase,
+    private val cityUseCase: CityUseCase
 ) : ViewModel(), CityPickViewModel {
 
     override val fetchingCityStatus = MutableLiveData<Event<FetchingCityStatus>>()
     override val currentlySelectedCity = MutableLiveData<Event<CitySelection>>()
+    override val supportedCities = MutableLiveData<FetchingSupportedCitiesStatus>()
 
     init {
-        fetchCurrentlySelectedCity()
-        collectSupportedCities()
+        fetchSupportedCities()
     }
 
     override fun selectCity(city: String) {
-        fetchingCityStatus.postValue(Event(FetchingCityStatus.InProgress))
-        // todo it is temporary
-        Handler().postDelayed({
-            fetchingCityStatus.postValue(Event(FetchingCityStatus.Success))
-            currentlySelectedCity.postValue(Event(CitySelection.Selected(city)))
-        }, 5_000L)
-    }
-
-    private fun fetchCurrentlySelectedCity() {
-        Handler().postDelayed({
-            currentlySelectedCity.postValue(Event(CitySelection.NotSelected))
-        }, 2_000L)
-    }
-
-    private fun collectSupportedCities() {
         viewModelScope.launch {
-            supportedCitiesUseCase.getSupportedCities()
-                .collect { supportedCitiesResult ->
-                    when (supportedCitiesResult) {
-                        is Response.Success -> {
-                            val data: SupportedCitiesData? = supportedCitiesResult.data
-                            handleSupportedCities(data!!)
-                        }
-                        is Response.Error -> {
-                            showErrorMessage(supportedCitiesResult.message)
-                        }
-                        is Response.Loading -> {
-                            handleLoadingSupportedCities()
-                        }
+            cityUseCase.execute(city)
+                .collect { cityPlanResult ->
+                    when (cityPlanResult) {
+                        is Response.Error -> fetchingCityFailed(cityPlanResult)
+                        is Response.Loading -> fetchingCityLoading()
+                        is Response.Success -> fetchingCitySucceeded()
                     }
                 }
         }
     }
 
-    private fun handleSupportedCities(data: SupportedCitiesData) {
-        //todo handle the list
+    override fun forceFetchSupportedCities() {
+        fetchSupportedCities()
+    }
+
+    private fun fetchingCitySucceeded() {
+        fetchingCityStatus.postValue(Event(FetchingCityStatus.Success))
+    }
+
+    private fun fetchingCityFailed(result: Response.Error<CityPlan>) {
+        showErrorMessage(result.message)
+    }
+
+    private fun fetchingCityLoading() {
+        fetchingCityStatus.postValue(Event(FetchingCityStatus.Loading))
+    }
+
+    private fun fetchSupportedCities() {
+        viewModelScope.launch {
+            supportedCitiesUseCase.execute()
+                .collect { supportedCitiesResult ->
+                    when (supportedCitiesResult) {
+                        is Response.Success -> fetchSupportedCitiesSucceeded(supportedCitiesResult)
+                        is Response.Error -> fetchSupportedCitiesFailed(supportedCitiesResult)
+                        is Response.Loading -> fetchSupportedCitiesLoading()
+                    }
+                }
+        }
+    }
+
+    private fun fetchSupportedCitiesSucceeded(result: Response.Success<SupportedCitiesData>) {
+        val data: SupportedCitiesData = result.data!!
+        val status = FetchingSupportedCitiesStatus.Success(data.supportedCities)
+        supportedCities.postValue(status)
+    }
+
+    private fun fetchSupportedCitiesFailed(result: Response.Error<SupportedCitiesData>) {
+        showErrorMessage(result.message)
     }
 
     private fun showErrorMessage(message: String?) {
-        // todo show this message
+        val status = FetchingSupportedCitiesStatus.Error(message ?: "")
+        supportedCities.postValue(status)
     }
 
-    private fun handleLoadingSupportedCities() {
-        // todo
+    private fun fetchSupportedCitiesLoading() {
+        val status = FetchingSupportedCitiesStatus.Loading
+        supportedCities.postValue(status)
     }
 }

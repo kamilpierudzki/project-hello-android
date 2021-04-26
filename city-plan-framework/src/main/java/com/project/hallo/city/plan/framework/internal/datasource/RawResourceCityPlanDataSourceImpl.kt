@@ -2,7 +2,7 @@ package com.project.hallo.city.plan.framework.internal.datasource
 
 import android.content.res.Resources
 import com.google.gson.Gson
-import com.project.hallo.city.plan.domain.CityPlanAPI
+import com.project.hallo.city.plan.domain.model.api.CityPlanAPI
 import com.project.hallo.city.plan.domain.datasource.CityPlanDataSource
 import com.project.hallo.city.plan.framework.R
 import java.io.BufferedReader

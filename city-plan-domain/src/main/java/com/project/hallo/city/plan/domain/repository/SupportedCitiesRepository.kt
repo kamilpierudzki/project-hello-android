@@ -3,10 +3,8 @@ package com.project.hallo.city.plan.domain.repository
 import com.project.hallo.city.plan.domain.datasource.SupportedCityDataSource
 import com.project.hallo.city.plan.domain.model.SupportedCitiesData
 import com.project.hallo.city.plan.domain.model.api.SupportedCitiesApi
+import com.project.hallo.city.plan.domain.repository.resource.SupportedCitiesResource
 import com.project.hallo.commons.domain.repository.Response
-import com.project.hallo.commons.domain.repository.api.ApiResponse
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 class SupportedCitiesRepository(
     private val resourcesSource: SupportedCityDataSource
@@ -20,10 +18,11 @@ class SupportedCitiesRepository(
             }
 
             override fun saveFetchResult(item: SupportedCitiesApi) {
+                // todo implement
             }
 
             override fun loadFromDb(): Response<SupportedCitiesData> {
-                return Response.Success(SupportedCitiesData(listOf("poznań", "warszawa", "kraków")))
+                return Response.Error("no data in DB")
             }
         }
 }

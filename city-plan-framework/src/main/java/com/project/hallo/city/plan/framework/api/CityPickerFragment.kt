@@ -46,7 +46,7 @@ class CityPickerFragment : Fragment() {
         setUpViews()
         observeCitySelection()
         observeFetchingCityData()
-        provideTemporaryDataForList()
+        observeSupportedCities()
     }
 
     private fun setUpViews() {
@@ -69,7 +69,7 @@ class CityPickerFragment : Fragment() {
     private fun observeFetchingCityData() {
         cityPickViewModel.fetchingCityStatus.observe(viewLifecycleOwner, { event ->
             when (event.getContentOrNull()) {
-                FetchingCityStatus.InProgress,
+                FetchingCityStatus.Loading,
                 FetchingCityStatus.Success -> navigateToSplashScreen()
                 FetchingCityStatus.Error -> showErrorMessage()
             }
@@ -86,7 +86,38 @@ class CityPickerFragment : Fragment() {
         // todo show error message
     }
 
-    private fun provideTemporaryDataForList() {
-        cityPickerAdapter.updateData(listOf("Poznań", "Kraków", "Warszawa"))
+
+    private fun observeSupportedCities() {
+        cityPickViewModel.supportedCities.observe(viewLifecycleOwner, { status ->
+            when (status) {
+                is FetchingSupportedCitiesStatus.Error -> fetchingSupportedCitiesFailed(status)
+                FetchingSupportedCitiesStatus.Loading -> setupUiForLoadingStatus()
+                is FetchingSupportedCitiesStatus.Success -> fetchingSupportedCitiesSucceeded(status)
+            }
+        })
+    }
+
+    private fun fetchingSupportedCitiesFailed(status: FetchingSupportedCitiesStatus.Error) {
+        showErrorMessage(status.message)
+        binding.root.setOnRefreshListener {
+            cityPickViewModel.forceFetchSupportedCities()
+        }
+    }
+
+    private fun showErrorMessage(message: String) {
+        // todo show message
+    }
+
+    private fun setupUiForLoadingStatus() {
+        binding.apply {
+            recyclerView.visibility = View.GONE
+            progressLabel.visibility = View.VISIBLE
+            progress.visibility = View.VISIBLE
+        }
+    }
+
+    private fun fetchingSupportedCitiesSucceeded(status: FetchingSupportedCitiesStatus.Success) {
+        cityPickerAdapter.updateData(status.supportedCities)
+        binding.root.setOnRefreshListener(null)
     }
 }

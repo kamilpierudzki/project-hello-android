@@ -1,4 +1,6 @@
-package com.project.hallo.city.plan.domain
+package com.project.hallo.city.plan.domain.model
+
+import com.project.hallo.city.plan.domain.model.api.LineAPI
 
 data class Line(
     val number: String,

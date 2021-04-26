@@ -8,6 +8,5 @@ data class SupportedCitiesApi(
     val supportedCities: List<String>? = null
 )
 
-fun SupportedCitiesApi.toSupportedCitiesData(): SupportedCitiesData {
-    return SupportedCitiesData(supportedCities ?: emptyList())
-}
+fun SupportedCitiesApi.toSupportedCitiesData() =
+    SupportedCitiesData(supportedCities ?: emptyList())

@@ -1,5 +1,6 @@
 package com.project.hallo.vehicle.domain.steps.implementation
 
+import com.project.hallo.city.plan.domain.model.Line
 import com.project.hallo.vehicle.domain.steps.AccuracyLevel
 import com.project.hallo.vehicle.domain.steps.LineWithAccuracy
 import com.project.hallo.vehicle.domain.steps.OutputAnalysis
@@ -12,7 +13,7 @@ class OutputAnalysisImpl : OutputAnalysis {
         AccuracyLevel.SLICE_MATCHED
     )
 
-    override fun analyseOutput(outputs: List<List<LineWithAccuracy>>): List<com.project.hallo.city.plan.domain.Line> {
+    override fun analyseOutput(outputs: List<List<LineWithAccuracy>>): List<Line> {
         var winner = AccuracyAnalysisData.EMPTY
         for (priority in priorities) {
             val analysisData = createAnalysisForAccuracy(priority, outputs)

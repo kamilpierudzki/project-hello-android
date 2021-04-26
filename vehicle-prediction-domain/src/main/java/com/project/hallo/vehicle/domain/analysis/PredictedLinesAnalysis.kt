@@ -1,6 +1,6 @@
 package com.project.hallo.vehicle.domain.analysis
 
-import com.project.hallo.city.plan.domain.Line
+import com.project.hallo.city.plan.domain.model.Line
 
 interface PredictedLinesAnalysis {
 

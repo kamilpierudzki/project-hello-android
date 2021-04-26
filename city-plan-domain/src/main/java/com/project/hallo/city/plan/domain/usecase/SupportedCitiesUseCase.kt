@@ -5,5 +5,5 @@ import com.project.hallo.commons.domain.repository.Response
 import kotlinx.coroutines.flow.Flow
 
 interface SupportedCitiesUseCase {
-    fun getSupportedCities(): Flow<Response<SupportedCitiesData>>
+    fun execute(): Flow<Response<SupportedCitiesData>>
 }

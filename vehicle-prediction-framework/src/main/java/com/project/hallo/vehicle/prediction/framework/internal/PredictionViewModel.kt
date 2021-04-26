@@ -3,7 +3,7 @@ package com.project.hallo.vehicle.prediction.framework.internal
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.hallo.city.plan.domain.Line
+import com.project.hallo.city.plan.domain.model.Line
 import com.project.hallo.city.plan.domain.VehicleType
 import com.project.hallo.city.plan.domain.usecase.CityPlanUseCase
 import com.project.hallo.commons.framework.ui.Text

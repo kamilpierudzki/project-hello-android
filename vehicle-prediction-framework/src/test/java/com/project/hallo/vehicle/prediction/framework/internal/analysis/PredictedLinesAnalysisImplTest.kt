@@ -1,6 +1,6 @@
 package com.project.hallo.vehicle.prediction.framework.internal.analysis
 
-import com.project.hallo.city.plan.domain.Line
+import com.project.hallo.city.plan.domain.model.Line
 import org.junit.Assert
 import org.junit.Test
 

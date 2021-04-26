@@ -1,7 +1,6 @@
 package com.project.hallo.vehicle.domain.steps.implementation
 
-import com.project.hallo.city.plan.domain.Line
-import com.project.hallo.vehicle.domain.steps.CountryCharactersProvider
+import com.project.hallo.city.plan.domain.model.Line
 import com.project.hallo.vehicle.domain.steps.TextMatching
 import com.project.hallo.vehicle.domain.steps.UniversalTransformation
 

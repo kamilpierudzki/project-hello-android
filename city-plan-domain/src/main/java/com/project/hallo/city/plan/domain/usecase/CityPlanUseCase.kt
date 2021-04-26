@@ -1,6 +1,6 @@
 package com.project.hallo.city.plan.domain.usecase
 
-import com.project.hallo.city.plan.domain.Line
+import com.project.hallo.city.plan.domain.model.Line
 import com.project.hallo.city.plan.domain.VehicleType
 import kotlinx.coroutines.flow.Flow
 

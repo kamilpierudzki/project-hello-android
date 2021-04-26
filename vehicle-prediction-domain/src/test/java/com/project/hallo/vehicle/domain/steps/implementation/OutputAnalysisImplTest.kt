@@ -1,6 +1,6 @@
 package com.project.hallo.vehicle.domain.steps.implementation
 
-import com.project.hallo.city.plan.domain.Line
+import com.project.hallo.city.plan.domain.model.Line
 import com.project.hallo.vehicle.domain.steps.AccuracyLevel
 import com.project.hallo.vehicle.domain.steps.LineWithAccuracy
 import org.junit.Assert
