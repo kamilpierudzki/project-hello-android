@@ -1,6 +1,6 @@
 package com.project.hallo.commons.framework.livedata
 
-class Event<T>(private val content: T) {
+class Event<T>(val content: T) {
 
     var consumed = false
         private set

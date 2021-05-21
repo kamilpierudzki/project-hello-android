@@ -4,7 +4,6 @@
     <string name="help_icon_description">Help</string>
     <string name="help_dialog_title"></string>
     <string name="help_dialog_message"></string>
-    <string name="help_dialog_neutral_button"></string>
     <string name="probably"></string>
     <string name="vehicle_type_picker_fragment_lable"></string>
     <string name="vehicle_type_picker_header"></string>

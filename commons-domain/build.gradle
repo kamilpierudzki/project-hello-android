@@ -29,4 +29,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
 
     testImplementation 'junit:junit:4.13.2'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3"
+    implementation 'junit:junit:4.13.2'
 }

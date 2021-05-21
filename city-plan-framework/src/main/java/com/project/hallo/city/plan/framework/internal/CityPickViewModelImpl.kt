@@ -5,15 +5,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.domain.model.SupportedCitiesData
-import com.project.hallo.city.plan.domain.usecase.CityUseCase
+import com.project.hallo.city.plan.domain.usecase.CitySelectionUseCase
+import com.project.hallo.city.plan.domain.usecase.SelectedCityUseCase
 import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCase
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.city.plan.framework.api.CitySelection
-import com.project.hallo.city.plan.framework.api.FetchingCityStatus
-import com.project.hallo.city.plan.framework.api.FetchingSupportedCitiesStatus
+import com.project.hallo.city.plan.framework.api.SupportedCitiesStatus
 import com.project.hallo.commons.domain.repository.Response
 import com.project.hallo.commons.framework.livedata.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,25 +23,27 @@ import javax.inject.Inject
 @HiltViewModel
 internal class CityPickViewModelImpl @Inject constructor(
     private val supportedCitiesUseCase: SupportedCitiesUseCase,
-    private val cityUseCase: CityUseCase
+    private val citySelectionUseCase: CitySelectionUseCase,
+    private val selectedCityUseCase: SelectedCityUseCase,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel(), CityPickViewModel {
 
-    override val fetchingCityStatus = MutableLiveData<Event<FetchingCityStatus>>()
     override val currentlySelectedCity = MutableLiveData<Event<CitySelection>>()
-    override val supportedCities = MutableLiveData<FetchingSupportedCitiesStatus>()
+    override val supportedCities = MutableLiveData<Event<SupportedCitiesStatus>>()
+    override val processing = MutableLiveData<Boolean>()
 
     init {
-        fetchSupportedCities()
+        getCurrentlySelectedCity()
     }
 
-    override fun selectCity(city: String) {
+    override fun selectCity(city: CityPlan) {
         viewModelScope.launch {
-            cityUseCase.execute(city)
+            citySelectionUseCase.execute(city)
                 .collect { cityPlanResult ->
                     when (cityPlanResult) {
-                        is Response.Error -> fetchingCityFailed(cityPlanResult)
-                        is Response.Loading -> fetchingCityLoading()
-                        is Response.Success -> fetchingCitySucceeded()
+                        is Response.Success -> selectedCitySucceeded(cityPlanResult)
+                        is Response.Error -> selectedCityFailed()
+                        is Response.Loading -> processing.postValue(true)
                     }
                 }
         }
@@ -49,16 +53,30 @@ internal class CityPickViewModelImpl @Inject constructor(
         fetchSupportedCities()
     }
 
-    private fun fetchingCitySucceeded() {
-        fetchingCityStatus.postValue(Event(FetchingCityStatus.Success))
+    private fun getCurrentlySelectedCity() {
+        viewModelScope.launch(ioDispatcher) {
+            selectedCityUseCase.execute()
+                .collect { selectedCityResult ->
+                    when (selectedCityResult) {
+                        is Response.Error -> selectedCityFailed()
+                        is Response.Success -> selectedCitySucceeded(selectedCityResult)
+                        is Response.Loading -> {
+                        }
+                    }
+                }
+        }
     }
 
-    private fun fetchingCityFailed(result: Response.Error<CityPlan>) {
-        showErrorMessage(result.message)
+    private fun selectedCityFailed() {
+        val selection = CitySelection.NotSelected
+        currentlySelectedCity.postValue(Event(selection))
+        processing.postValue(false)
     }
 
-    private fun fetchingCityLoading() {
-        fetchingCityStatus.postValue(Event(FetchingCityStatus.Loading))
+    private fun selectedCitySucceeded(result: Response.Success<CityPlan>) {
+        val selection = CitySelection.Selected(result.successData)
+        currentlySelectedCity.postValue(Event(selection))
+        processing.postValue(false)
     }
 
     private fun fetchSupportedCities() {
@@ -68,29 +86,28 @@ internal class CityPickViewModelImpl @Inject constructor(
                     when (supportedCitiesResult) {
                         is Response.Success -> fetchSupportedCitiesSucceeded(supportedCitiesResult)
                         is Response.Error -> fetchSupportedCitiesFailed(supportedCitiesResult)
-                        is Response.Loading -> fetchSupportedCitiesLoading()
+                        is Response.Loading -> processing.postValue(true)
                     }
                 }
         }
     }
 
     private fun fetchSupportedCitiesSucceeded(result: Response.Success<SupportedCitiesData>) {
-        val data: SupportedCitiesData = result.data!!
-        val status = FetchingSupportedCitiesStatus.Success(data.supportedCities)
-        supportedCities.postValue(status)
+        val data: SupportedCitiesData = result.successData
+        val currentlySelectedCity: CitySelection.Selected? =
+            currentlySelectedCity.value?.content as? CitySelection.Selected
+        val supportedCities = data.supportedCities.map {
+            val isCurrentlySelected = currentlySelectedCity?.cityPlan == it
+            SupportedCitiesStatus.Success.City(it, isCurrentlySelected)
+        }
+        val status = SupportedCitiesStatus.Success(supportedCities)
+        this.supportedCities.postValue(Event(status))
+        processing.postValue(false)
     }
 
     private fun fetchSupportedCitiesFailed(result: Response.Error<SupportedCitiesData>) {
-        showErrorMessage(result.message)
-    }
-
-    private fun showErrorMessage(message: String?) {
-        val status = FetchingSupportedCitiesStatus.Error(message ?: "")
-        supportedCities.postValue(status)
-    }
-
-    private fun fetchSupportedCitiesLoading() {
-        val status = FetchingSupportedCitiesStatus.Loading
-        supportedCities.postValue(status)
+        val status = SupportedCitiesStatus.Error(result.errorMessage)
+        supportedCities.postValue(Event(status))
+        processing.postValue(false)
     }
 }

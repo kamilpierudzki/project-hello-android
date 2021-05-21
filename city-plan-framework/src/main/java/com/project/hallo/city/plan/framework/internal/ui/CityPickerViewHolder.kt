@@ -4,6 +4,7 @@ import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.R
 import com.project.hallo.city.plan.framework.databinding.CityItemBinding
 
@@ -12,14 +13,15 @@ internal class CityPickerViewHolder(private val viewBinding: CityItemBinding) :
 
     @RequiresApi(Build.VERSION_CODES.DONUT)
     fun setupView(city: City, selectionListener: () -> Unit) {
-        viewBinding.city.text = city.name
+        val cityName = city.cityPlan.city
+        viewBinding.city.text = cityName
         viewBinding.selected.visibility = if (city.selected) View.VISIBLE else View.GONE
         val contentDescription = if (city.selected) {
             val context = viewBinding.selected.context
             val textSelectedFromRes = context.getString(R.string.currently_selected)
-            "${city.name}, $textSelectedFromRes"
+            "${cityName}, $textSelectedFromRes"
         } else {
-            city.name
+            cityName
         }
         viewBinding.root.contentDescription = contentDescription
         viewBinding.root.setOnClickListener {
@@ -28,4 +30,4 @@ internal class CityPickerViewHolder(private val viewBinding: CityItemBinding) :
     }
 }
 
-internal data class City(val name: String, val selected: Boolean)
+internal data class City(val cityPlan: CityPlan, val selected: Boolean)

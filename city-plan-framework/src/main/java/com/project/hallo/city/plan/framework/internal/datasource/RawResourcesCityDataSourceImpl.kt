@@ -15,13 +15,8 @@ internal class RawResourcesCityDataSourceImpl @Inject constructor(
     private val resources: Resources
 ) : CityDataSource {
 
-    override fun fetchCityData(city: String): Response<CityPlanAPI> {
-        val resource = when (city) {
-            "Poznań" -> R.raw.poznan
-            "Warszawa" -> R.raw.warszawa
-            else -> 0
-        }
-        val inputStream = resources.openRawResource(resource)
+    override fun fetchCityData(resFile: Int): Response<CityPlanAPI> {
+        val inputStream = resources.openRawResource(resFile)
         val inputStreamReader = InputStreamReader(inputStream)
 
         val bufferedReader = BufferedReader(inputStreamReader)
@@ -41,5 +36,14 @@ internal class RawResourcesCityDataSourceImpl @Inject constructor(
         } catch (exception: JsonSyntaxException) {
             Response.Error(exception.message ?: "")
         }
+    }
+
+    override fun fetchCityData(city: String): Response<CityPlanAPI> {
+        val resource = when (city) {
+            "Poznań" -> R.raw.Poznan
+            "Warszawa" -> R.raw.Warszawa
+            else -> 0
+        }
+        return fetchCityData(resource)
     }
 }

@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.framework.databinding.CityPickerFragmentBinding
+import com.project.hallo.city.plan.framework.internal.ui.City
 import com.project.hallo.city.plan.framework.internal.ui.CityPickerAdapter
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
@@ -44,9 +44,10 @@ class CityPickerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
-        observeCitySelection()
-        observeFetchingCityData()
+        observeProgress()
         observeSupportedCities()
+        observeCitySelection()
+        cityPickViewModel.forceFetchSupportedCities()
     }
 
     private fun setUpViews() {
@@ -66,38 +67,22 @@ class CityPickerFragment : Fragment() {
         })
     }
 
-    private fun observeFetchingCityData() {
-        cityPickViewModel.fetchingCityStatus.observe(viewLifecycleOwner, { event ->
-            when (event.getContentOrNull()) {
-                FetchingCityStatus.Loading,
-                FetchingCityStatus.Success -> navigateToSplashScreen()
-                FetchingCityStatus.Error -> showErrorMessage()
-            }
+    private fun observeProgress() {
+        cityPickViewModel.processing.observe(viewLifecycleOwner, {
+            setProgressVisibility(it)
         })
     }
-
-    private fun navigateToSplashScreen() {
-        val navController = findNavController()
-        val startDestination = navController.graph.startDestination
-        navController.navigate(startDestination)
-    }
-
-    private fun showErrorMessage() {
-        // todo show error message
-    }
-
 
     private fun observeSupportedCities() {
-        cityPickViewModel.supportedCities.observe(viewLifecycleOwner, { status ->
-            when (status) {
-                is FetchingSupportedCitiesStatus.Error -> fetchingSupportedCitiesFailed(status)
-                FetchingSupportedCitiesStatus.Loading -> setupUiForLoadingStatus()
-                is FetchingSupportedCitiesStatus.Success -> fetchingSupportedCitiesSucceeded(status)
+        cityPickViewModel.supportedCities.observe(viewLifecycleOwner, {
+            when (val status = it.getContentOrNull()) {
+                is SupportedCitiesStatus.Error -> fetchingSupportedCitiesFailed(status)
+                is SupportedCitiesStatus.Success -> fetchingSupportedCitiesSucceeded(status)
             }
         })
     }
 
-    private fun fetchingSupportedCitiesFailed(status: FetchingSupportedCitiesStatus.Error) {
+    private fun fetchingSupportedCitiesFailed(status: SupportedCitiesStatus.Error) {
         showErrorMessage(status.message)
         binding.root.setOnRefreshListener {
             cityPickViewModel.forceFetchSupportedCities()
@@ -105,19 +90,20 @@ class CityPickerFragment : Fragment() {
     }
 
     private fun showErrorMessage(message: String) {
-        // todo show message
+        // todo
     }
 
-    private fun setupUiForLoadingStatus() {
-        binding.apply {
-            recyclerView.visibility = View.GONE
-            progressLabel.visibility = View.VISIBLE
-            progress.visibility = View.VISIBLE
+    private fun setProgressVisibility(visible: Boolean) {
+        binding.progressLabel.visibility = if (visible) View.VISIBLE else View.GONE
+        binding.progress.visibility = if (visible) View.VISIBLE else View.GONE
+        binding.recyclerView.visibility = if (visible) View.GONE else View.VISIBLE
+    }
+
+    private fun fetchingSupportedCitiesSucceeded(status: SupportedCitiesStatus.Success) {
+        val cities = status.supportedCities.map {
+            City(it.cityPlan, it.currentlySelected)
         }
-    }
-
-    private fun fetchingSupportedCitiesSucceeded(status: FetchingSupportedCitiesStatus.Success) {
-        cityPickerAdapter.updateData(status.supportedCities)
+        cityPickerAdapter.updateData(cities)
         binding.root.setOnRefreshListener(null)
     }
 }

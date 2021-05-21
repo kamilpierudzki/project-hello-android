@@ -14,7 +14,7 @@ internal class RawResourceCityPlanDataSourceImpl @Inject constructor(
 ) : CityPlanDataSource {
 
     override fun fetchPlanFor(): CityPlanAPI {
-        val inputStream = resources.openRawResource(R.raw.poznan)
+        val inputStream = resources.openRawResource(R.raw.Poznan)
         val inputStreamReader = InputStreamReader(inputStream)
 
         val bufferedReader = BufferedReader(inputStreamReader)

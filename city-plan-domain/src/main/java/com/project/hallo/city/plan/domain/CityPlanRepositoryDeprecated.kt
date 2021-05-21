@@ -3,7 +3,8 @@ package com.project.hallo.city.plan.domain
 import com.project.hallo.city.plan.domain.datasource.CityPlanDataSource
 import com.project.hallo.city.plan.domain.model.Line
 
-class CityPlanRepository(private val localCityPlanDataSource: CityPlanDataSource) {
+@Deprecated("")
+class CityPlanRepositoryDeprecated(private val localCityPlanDataSource: CityPlanDataSource) {
 
     fun getCityPlan(targetTypes: List<VehicleType>): List<Line> {
         val cityPlanApi = localCityPlanDataSource.fetchPlanFor()

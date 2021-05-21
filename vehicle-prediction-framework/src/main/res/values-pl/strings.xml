@@ -4,7 +4,6 @@
     <string name="help_icon_description">Pomoc</string>
     <string name="help_dialog_title">Jak korzystać z rozpoznawania</string>
     <string name="help_dialog_message">Aby rozpocząć rozpoznanie skieruj obiektyw kamery w kierunku pojazdu. Jeśli czytnik ekranu jest włączony dotknij środkowej części ekranu aby poznać prawdopodobny numer i kierunek pojazdu. Dolna część ekranu zawiera listę trzech wykrytych pojazdów. Najbardziej prawdopodobny pojazd znajduje się na pierwszym miejscu listy i jest on czytany przez czytnik ekranu po dotknięciu środkowej części ekranu.</string>
-    <string name="help_dialog_neutral_button">Rozumiem</string>
     <string name="probably">Prawdopodobnie</string>
     <string name="vehicle_type_picker_fragment_lable">Typ Pojazdu</string>
     <string name="vehicle_type_picker_header">Wybierz typ pojazdu</string>

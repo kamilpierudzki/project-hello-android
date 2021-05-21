@@ -42,22 +42,21 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeFetchingCityData()
         observeCurrentlySelectedCity()
     }
 
     private fun observeFetchingCityData() {
-        cityPickViewModel.fetchingCityStatus.observe(viewLifecycleOwner, { event ->
+        /*cityPickViewModel.fetchingCityStatus.observe(viewLifecycleOwner, { event ->
             val status: FetchingCityStatus? = event.getContentOrNull()
             if (status == FetchingCityStatus.Success) {
-                navigateToVehicleTypePickerScreen()
+                goToVehicleTypePickerScreen()
             } else if (status == FetchingCityStatus.Error) {
                 showErrorMessage()
             }
-        })
+        })*/
     }
 
-    private fun navigateToVehicleTypePickerScreen() {
+    private fun goToVehicleTypePickerScreen() {
         findNavController().navigate(R.id.prediction_nav_graph)
     }
 
@@ -69,7 +68,7 @@ class SplashFragment : Fragment() {
         cityPickViewModel.currentlySelectedCity.observe(viewLifecycleOwner, { event ->
             when (event.getContentOrNull()) {
                 CitySelection.NotSelected -> goToCityPickerScreen()
-                is CitySelection.Selected -> checkIfUpdateIsAvailable()
+                is CitySelection.Selected -> goToVehicleTypePickerScreen()
             }
         })
     }
