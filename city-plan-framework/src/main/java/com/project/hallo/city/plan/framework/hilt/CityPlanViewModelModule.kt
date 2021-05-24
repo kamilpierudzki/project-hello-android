@@ -1,9 +1,7 @@
 package com.project.hallo.city.plan.framework.hilt
 
 import android.content.res.Resources
-import com.project.hallo.city.plan.domain.CityPlanRepositoryDeprecated
 import com.project.hallo.city.plan.domain.datasource.CityDataSource
-import com.project.hallo.city.plan.domain.datasource.CityPlanDataSource
 import com.project.hallo.city.plan.domain.repository.CityPlanRepository
 import com.project.hallo.city.plan.domain.repository.implementation.CityPlanRepositoryImpl
 import com.project.hallo.city.plan.domain.usecase.CityPlanUseCase
@@ -14,7 +12,6 @@ import com.project.hallo.city.plan.domain.usecase.implementation.CityPlanUseCase
 import com.project.hallo.city.plan.domain.usecase.implementation.CitySelectionUseCaseImpl
 import com.project.hallo.city.plan.domain.usecase.implementation.SelectedCityUseCaseImpl
 import com.project.hallo.city.plan.domain.usecase.implementation.SupportedCitiesUseCaseImpl
-import com.project.hallo.city.plan.framework.internal.datasource.RawResourceCityPlanDataSourceImpl
 import com.project.hallo.city.plan.framework.internal.datasource.RawResourcesCityDataSourceImpl
 import dagger.Module
 import dagger.Provides
@@ -26,15 +23,7 @@ import dagger.hilt.android.components.ViewModelComponent
 internal class CityPlanViewModelModule {
 
     @Provides
-    fun provideRawResourceCityPlanDataSource(resources: Resources): CityPlanDataSource =
-        RawResourceCityPlanDataSourceImpl(resources)
-
-    @Provides
-    fun provideCityPlanRepository(cityPlanDataSource: CityPlanDataSource) =
-        CityPlanRepositoryDeprecated(cityPlanDataSource)
-
-    @Provides
-    fun provideCityPlanUseCase(cityPlanRepository: CityPlanRepositoryDeprecated): CityPlanUseCase =
+    fun provideCityPlanUseCase(cityPlanRepository: CityPlanRepository): CityPlanUseCase =
         CityPlanUseCaseImpl(cityPlanRepository)
 
     @Provides

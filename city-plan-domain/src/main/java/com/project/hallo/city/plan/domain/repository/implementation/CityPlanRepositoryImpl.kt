@@ -18,7 +18,7 @@ class CityPlanRepositoryImpl(private val resourcesSource: CityDataSource) : City
         }
 
         override fun getCurrentlySelectedCity(): Response<CityPlan> {
-            TODO("Not yet implemented")
+            return Response.Error<CityPlan>("not yet implemented")
         }
 
         override fun saveCurrentlySelectedCity(item: CityPlan) {

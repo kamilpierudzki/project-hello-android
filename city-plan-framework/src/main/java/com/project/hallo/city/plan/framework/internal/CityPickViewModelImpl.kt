@@ -1,5 +1,6 @@
 package com.project.hallo.city.plan.framework.internal
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,7 +34,7 @@ internal class CityPickViewModelImpl @Inject constructor(
     override val processing = MutableLiveData<Boolean>()
 
     init {
-        getCurrentlySelectedCity()
+        fetchCurrentlySelectedCity()
     }
 
     override fun selectCity(city: CityPlan) {
@@ -53,15 +54,15 @@ internal class CityPickViewModelImpl @Inject constructor(
         fetchSupportedCities()
     }
 
-    private fun getCurrentlySelectedCity() {
+    @VisibleForTesting
+    fun fetchCurrentlySelectedCity() {
         viewModelScope.launch(ioDispatcher) {
             selectedCityUseCase.execute()
                 .collect { selectedCityResult ->
                     when (selectedCityResult) {
                         is Response.Error -> selectedCityFailed()
                         is Response.Success -> selectedCitySucceeded(selectedCityResult)
-                        is Response.Loading -> {
-                        }
+                        is Response.Loading -> processing.postValue(true)
                     }
                 }
         }

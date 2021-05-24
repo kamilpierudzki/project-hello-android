@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.project.hallo.city.plan.domain.datasource.CityDataSource
 import com.project.hallo.city.plan.domain.model.api.CityPlanAPI
-import com.project.hallo.city.plan.framework.R
 import com.project.hallo.commons.domain.repository.Response
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -36,14 +35,5 @@ internal class RawResourcesCityDataSourceImpl @Inject constructor(
         } catch (exception: JsonSyntaxException) {
             Response.Error(exception.message ?: "")
         }
-    }
-
-    override fun fetchCityData(city: String): Response<CityPlanAPI> {
-        val resource = when (city) {
-            "Poznań" -> R.raw.Poznan
-            "Warszawa" -> R.raw.Warszawa
-            else -> 0
-        }
-        return fetchCityData(resource)
     }
 }

@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.city.plan.framework.api.CitySelection
-import com.project.hallo.city.plan.framework.api.FetchingCityStatus
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType

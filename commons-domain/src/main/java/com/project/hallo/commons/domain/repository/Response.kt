@@ -1,8 +1,7 @@
 package com.project.hallo.commons.domain.repository
 
 sealed class Response<T>(
-    val data: T? = null,
-    val message: String? = null
+    val data: T? = null
 ) {
     class Success<T>(data: T) : Response<T>(data) {
         val successData: T get() = data!!
@@ -10,7 +9,5 @@ sealed class Response<T>(
 
     class Loading<T>(data: T? = null) : Response<T>(data)
 
-    class Error<T>(message: String) : Response<T>(null, message) {
-        val errorMessage: String get() = message!!
-    }
+    class Error<T>(val errorMessage: String, data: T? = null) : Response<T>(data)
 }
