@@ -44,23 +44,8 @@ class SplashFragment : Fragment() {
         observeCurrentlySelectedCity()
     }
 
-    private fun observeFetchingCityData() {
-        /*cityPickViewModel.fetchingCityStatus.observe(viewLifecycleOwner, { event ->
-            val status: FetchingCityStatus? = event.getContentOrNull()
-            if (status == FetchingCityStatus.Success) {
-                goToVehicleTypePickerScreen()
-            } else if (status == FetchingCityStatus.Error) {
-                showErrorMessage()
-            }
-        })*/
-    }
-
     private fun goToVehicleTypePickerScreen() {
         findNavController().navigate(R.id.prediction_nav_graph)
-    }
-
-    private fun showErrorMessage() {
-        // todo show error message
     }
 
     private fun observeCurrentlySelectedCity() {
@@ -74,10 +59,5 @@ class SplashFragment : Fragment() {
 
     private fun goToCityPickerScreen() {
         findNavController().navigate(R.id.city_plan_nav_graph)
-    }
-
-    private fun checkIfUpdateIsAvailable() {
-        android.util.Log.d("test123", "checkIfUpdateIsAvailable()")
-        // todo check if update is available
     }
 }
