@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.databinding.CityPickerFragmentBinding
 import com.project.hallo.city.plan.framework.internal.ui.City
 import com.project.hallo.city.plan.framework.internal.ui.CityPickerAdapter
@@ -47,6 +50,7 @@ class CityPickerFragment : Fragment() {
         observeProgress()
         observeSupportedCities()
         observeCitySelection()
+        observeCurrentlySelectedCity()
         cityPickViewModel.forceFetchSupportedCities()
     }
 
@@ -71,6 +75,23 @@ class CityPickerFragment : Fragment() {
         cityPickViewModel.processing.observe(viewLifecycleOwner, {
             setProgressVisibility(it)
         })
+    }
+
+    private fun observeCurrentlySelectedCity() {
+        cityPickViewModel.currentlySelectedCity.observe(viewLifecycleOwner, {
+            when (val selection = it.getContentOrNull()) {
+                is CitySelection.NotSelected -> showErrorMessage(selection.errorStringRes)
+                is CitySelection.Selected -> goToVehicleTypePickerScreen(selection.cityPlan)
+            }
+        })
+    }
+
+    private fun showErrorMessage(@StringRes message: Int) {
+        // todo
+    }
+
+    private fun goToVehicleTypePickerScreen(cityPlan: CityPlan) {
+        // todo return cityPlan and go back to previous fragment
     }
 
     private fun observeSupportedCities() {

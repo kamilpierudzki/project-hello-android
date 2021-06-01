@@ -20,7 +20,7 @@ import com.project.hallo.vehicle.prediction.framework.internal.PredictionViewMod
 import com.project.hallo.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hallo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import com.project.hallo.vehicle.prediction.framework.internal.ui.PredictedLinesAdapter
-import com.project.hallo.vehicle.prediction.framework.internal.ui.showHelpDialog
+import com.project.hallo.vehicle.prediction.framework.internal.ui.showNeutralDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -86,7 +86,7 @@ class PredictionFragment : Fragment() {
 
     private fun setupHelpIconClicks() {
         binding.helpIcon.setOnClickListener {
-            showHelpDialog(it.context, R.string.help_dialog_title, R.string.help_dialog_message)
+            showNeutralDialog(it.context, R.string.help_dialog_title, R.string.help_dialog_message)
         }
     }
 

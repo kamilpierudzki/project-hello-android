@@ -10,7 +10,7 @@ import com.project.hallo.city.plan.domain.VehicleData
 import com.project.hallo.city.plan.domain.VehicleType
 import com.project.hallo.vehicle.prediction.framework.R
 import com.project.hallo.vehicle.prediction.framework.databinding.VehicleTypePickerFragmentBinding
-import com.project.hallo.vehicle.prediction.framework.internal.ui.showHelpDialog
+import com.project.hallo.vehicle.prediction.framework.internal.ui.showNeutralDialog
 
 class VehicleTypePickerFragment : Fragment() {
 
@@ -43,7 +43,7 @@ class VehicleTypePickerFragment : Fragment() {
 
     private fun setupHelpIconClicks() {
         binding.helpIcon.setOnClickListener {
-            showHelpDialog(
+            showNeutralDialog(
                 it.context,
                 R.string.vehicle_type_picker_help_title,
                 R.string.vehicle_type_picker_help_message

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.city.plan.framework.api.CitySelection
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
@@ -44,15 +45,16 @@ class SplashFragment : Fragment() {
         observeCurrentlySelectedCity()
     }
 
-    private fun goToVehicleTypePickerScreen() {
+    private fun goToVehicleTypePickerScreen(cityPlan: CityPlan) {
+        // todo pass cityPlan into prediction_nav_graph (parhaps?)
         findNavController().navigate(R.id.prediction_nav_graph)
     }
 
     private fun observeCurrentlySelectedCity() {
         cityPickViewModel.currentlySelectedCity.observe(viewLifecycleOwner, { event ->
-            when (event.getContentOrNull()) {
-                CitySelection.NotSelected -> goToCityPickerScreen()
-                is CitySelection.Selected -> goToVehicleTypePickerScreen()
+            when (val selection = event.getContentOrNull()) {
+                is CitySelection.NotSelected -> goToCityPickerScreen()
+                is CitySelection.Selected -> goToVehicleTypePickerScreen(selection.cityPlan)
             }
         })
     }

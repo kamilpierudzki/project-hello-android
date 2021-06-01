@@ -1,5 +1,6 @@
 package com.project.hallo.city.plan.framework.api
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.commons.framework.livedata.Event
@@ -24,5 +25,5 @@ sealed class SupportedCitiesStatus {
 
 sealed class CitySelection {
     class Selected(val cityPlan: CityPlan) : CitySelection()
-    object NotSelected : CitySelection()
+    class NotSelected(@StringRes val errorStringRes: Int) : CitySelection()
 }

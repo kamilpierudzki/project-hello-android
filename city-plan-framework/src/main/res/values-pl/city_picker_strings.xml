@@ -2,4 +2,5 @@
 <resources>
     <string name="currently_selected">Aktualnie zaznaczono</string>
     <string name="fetching_supported_cities">Pobieranie wspieranych miast</string>
+    <string name="city_selection_error">Błąd podczas wybierania miasta.</string>
 </resources>

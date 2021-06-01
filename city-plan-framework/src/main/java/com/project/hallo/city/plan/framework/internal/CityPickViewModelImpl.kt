@@ -9,10 +9,12 @@ import com.project.hallo.city.plan.domain.model.SupportedCitiesData
 import com.project.hallo.city.plan.domain.usecase.CitySelectionUseCase
 import com.project.hallo.city.plan.domain.usecase.SelectedCityUseCase
 import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCase
+import com.project.hallo.city.plan.framework.R
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.city.plan.framework.api.CitySelection
 import com.project.hallo.city.plan.framework.api.SupportedCitiesStatus
 import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.framework.hilt.IoDispatcher
 import com.project.hallo.commons.framework.livedata.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,7 +28,7 @@ internal class CityPickViewModelImpl @Inject constructor(
     private val supportedCitiesUseCase: SupportedCitiesUseCase,
     private val citySelectionUseCase: CitySelectionUseCase,
     private val selectedCityUseCase: SelectedCityUseCase,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel(), CityPickViewModel {
 
     override val currentlySelectedCity = MutableLiveData<Event<CitySelection>>()
@@ -69,7 +71,7 @@ internal class CityPickViewModelImpl @Inject constructor(
     }
 
     private fun selectedCityFailed() {
-        val selection = CitySelection.NotSelected
+        val selection = CitySelection.NotSelected(R.string.city_selection_error)
         currentlySelectedCity.postValue(Event(selection))
         processing.postValue(false)
     }
