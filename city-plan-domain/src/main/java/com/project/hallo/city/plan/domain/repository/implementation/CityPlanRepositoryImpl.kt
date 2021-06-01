@@ -1,6 +1,7 @@
 package com.project.hallo.city.plan.domain.repository.implementation
 
 import com.project.hallo.city.plan.domain.datasource.CityDataSource
+import com.project.hallo.city.plan.domain.datasource.SelectedCityDataSource
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.domain.model.api.City
 import com.project.hallo.city.plan.domain.model.api.CityPlanAPI
@@ -8,7 +9,10 @@ import com.project.hallo.city.plan.domain.repository.CityPlanRepository
 import com.project.hallo.city.plan.domain.repository.resource.CityDataResource
 import com.project.hallo.commons.domain.repository.Response
 
-class CityPlanRepositoryImpl(private val resourcesSource: CityDataSource) : CityPlanRepository {
+class CityPlanRepositoryImpl(
+    private val resourcesSource: CityDataSource,
+    private val selectedCityDataSource: SelectedCityDataSource
+) : CityPlanRepository {
 
     override fun getSupportedCityFileResources(): List<Int> = City.values().map { it.file }
 
@@ -18,11 +22,11 @@ class CityPlanRepositoryImpl(private val resourcesSource: CityDataSource) : City
         }
 
         override fun getCurrentlySelectedCity(): Response<CityPlan> {
-            return Response.Error<CityPlan>("not yet implemented")
+            return selectedCityDataSource.loadCity()
         }
 
         override fun saveCurrentlySelectedCity(item: CityPlan) {
-            TODO("Not yet implemented")
+            selectedCityDataSource.saveCity(item)
         }
     }
 }
