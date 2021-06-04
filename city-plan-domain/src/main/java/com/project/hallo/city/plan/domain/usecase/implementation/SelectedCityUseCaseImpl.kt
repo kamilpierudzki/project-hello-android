@@ -1,6 +1,7 @@
 package com.project.hallo.city.plan.domain.usecase.implementation
 
 import com.project.hallo.city.plan.domain.model.CityPlan
+import com.project.hallo.city.plan.domain.model.api.toCityPlan
 import com.project.hallo.city.plan.domain.repository.CityPlanRepository
 import com.project.hallo.city.plan.domain.usecase.SelectedCityUseCase
 import com.project.hallo.commons.domain.repository.Response
@@ -18,8 +19,23 @@ class SelectedCityUseCaseImpl(
     override fun execute(): Flow<Response<CityPlan>> = flow {
         emit(Response.Loading())
         val cityDataResource = cityPlanRepository.getCityDataResource()
-        val response: Response<CityPlan> = cityDataResource.getCurrentlySelectedCity()
-        emit(response)
+        val selectedCityResponse: Response<CityPlan> = cityDataResource.getCurrentlySelectedCity()
+        if (selectedCityResponse is Response.Error) {
+            emit(selectedCityResponse)
+        } else {
+            val updatedSelectedCity: CityPlan? = cityPlanRepository.getSupportedCityFileResources()
+                .map { supportedCityFile -> cityDataResource.load(supportedCityFile) }
+                .mapNotNull { cityPlanResponse -> (cityPlanResponse as? Response.Success)?.successData }
+                .map { it.toCityPlan() }
+                .firstOrNull {
+                    it.city == selectedCityResponse.data?.city
+                }
+            if (updatedSelectedCity != null) {
+                emit(Response.Success(updatedSelectedCity))
+            } else {
+                emit(Response.Error<CityPlan>("Selected city is no longer supported"))
+            }
+        }
     }
         .flowOn(ioDispatcher)
 }
