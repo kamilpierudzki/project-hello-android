@@ -12,7 +12,6 @@ interface CityPickViewModel : ExternalViewModel {
     val processing: LiveData<Boolean>
 
     fun selectCity(city: CityPlan)
-    fun forceFetchSupportedCities()
 }
 
 sealed class SupportedCitiesStatus {

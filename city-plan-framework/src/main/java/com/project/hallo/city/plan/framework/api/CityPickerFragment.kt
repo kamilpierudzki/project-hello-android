@@ -51,7 +51,6 @@ class CityPickerFragment : Fragment() {
         observeSupportedCities()
         observeCitySelection()
         observeCurrentlySelectedCity()
-        cityPickViewModel.forceFetchSupportedCities()
     }
 
     private fun setUpViews() {
@@ -105,9 +104,6 @@ class CityPickerFragment : Fragment() {
 
     private fun fetchingSupportedCitiesFailed(status: SupportedCitiesStatus.Error) {
         showErrorMessage(status.message)
-        binding.root.setOnRefreshListener {
-            cityPickViewModel.forceFetchSupportedCities()
-        }
     }
 
     private fun showErrorMessage(message: String) {
@@ -125,6 +121,5 @@ class CityPickerFragment : Fragment() {
             City(it.cityPlan, it.currentlySelected)
         }
         cityPickerAdapter.updateData(cities)
-        binding.root.setOnRefreshListener(null)
     }
 }

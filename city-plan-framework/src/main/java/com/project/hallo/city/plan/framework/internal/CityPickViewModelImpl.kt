@@ -18,11 +18,14 @@ import com.project.hallo.commons.framework.hilt.IoDispatcher
 import com.project.hallo.commons.framework.livedata.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@FlowPreview
 @HiltViewModel
 internal class CityPickViewModelImpl @Inject constructor(
     private val supportedCitiesUseCase: SupportedCitiesUseCase,
@@ -36,7 +39,25 @@ internal class CityPickViewModelImpl @Inject constructor(
     override val processing = MutableLiveData<Boolean>()
 
     init {
-        fetchCurrentlySelectedCity()
+        fetchData()
+    }
+
+    @VisibleForTesting
+    fun fetchData() {
+        viewModelScope.launch(ioDispatcher) {
+            selectedCityUseCase.execute()
+                .onEach {
+                    handleSelectedCityResult(it)
+                }
+                .onCompletion {
+                    supportedCitiesUseCase.execute()
+                        .onEach {
+                            handleSupportedCitiesResult(it)
+                        }
+                        .collect { }
+                }
+                .collect()
+        }
     }
 
     override fun selectCity(city: CityPlan) {
@@ -52,21 +73,11 @@ internal class CityPickViewModelImpl @Inject constructor(
         }
     }
 
-    override fun forceFetchSupportedCities() {
-        fetchSupportedCities()
-    }
-
-    @VisibleForTesting
-    fun fetchCurrentlySelectedCity() {
-        viewModelScope.launch(ioDispatcher) {
-            selectedCityUseCase.execute()
-                .collect { selectedCityResult ->
-                    when (selectedCityResult) {
-                        is Response.Error -> selectedCityFailed()
-                        is Response.Success -> selectedCitySucceeded(selectedCityResult)
-                        is Response.Loading -> processing.postValue(true)
-                    }
-                }
+    private fun handleSelectedCityResult(selectedCityResult: Response<CityPlan>) {
+        when (selectedCityResult) {
+            is Response.Error -> selectedCityFailed()
+            is Response.Success -> selectedCitySucceeded(selectedCityResult)
+            is Response.Loading -> processing.postValue(true)
         }
     }
 
@@ -82,16 +93,11 @@ internal class CityPickViewModelImpl @Inject constructor(
         processing.postValue(false)
     }
 
-    private fun fetchSupportedCities() {
-        viewModelScope.launch {
-            supportedCitiesUseCase.execute()
-                .collect { supportedCitiesResult ->
-                    when (supportedCitiesResult) {
-                        is Response.Success -> fetchSupportedCitiesSucceeded(supportedCitiesResult)
-                        is Response.Error -> fetchSupportedCitiesFailed(supportedCitiesResult)
-                        is Response.Loading -> processing.postValue(true)
-                    }
-                }
+    private fun handleSupportedCitiesResult(supportedCitiesResult: Response<SupportedCitiesData>) {
+        when (supportedCitiesResult) {
+            is Response.Success -> fetchSupportedCitiesSucceeded(supportedCitiesResult)
+            is Response.Error -> fetchSupportedCitiesFailed(supportedCitiesResult)
+            is Response.Loading -> processing.postValue(true)
         }
     }
 

@@ -13,6 +13,7 @@ import com.project.hallo.commons.domain.test.CoroutinesTestRule
 import com.project.hallo.commons.framework.livedata.Event
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
@@ -20,6 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.*
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 internal class CityPickViewModelImplTest {
 
@@ -32,8 +34,16 @@ internal class CityPickViewModelImplTest {
     val cityA = CityPlan("A", emptyList(), emptyList())
     val cityB = CityPlan("B", emptyList(), emptyList())
 
-    val supportedCitiesUseCase: SupportedCitiesUseCase = mock()
-    val citySelectionUseCase: CitySelectionUseCase = mock()
+    val supportedCitiesUseCase: SupportedCitiesUseCase = mock {
+        on { execute() } doReturn flow {
+            emit(Response.Loading<SupportedCitiesData>())
+        }
+    }
+    val citySelectionUseCase: CitySelectionUseCase = mock {
+        on { execute(any()) } doReturn flow {
+            emit(Response.Loading<CityPlan>())
+        }
+    }
     val selectedCityUseCase: SelectedCityUseCase = mock {
         on { execute() } doReturn flow {
             emit(Response.Loading<CityPlan>())
@@ -41,7 +51,7 @@ internal class CityPickViewModelImplTest {
     }
 
     @Test
-    fun `given city is selected when view model is initialised then proper use case is called`() =
+    fun `given city is selected when view model is initialised then SelectedCityUseCase is executed`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(selectedCityUseCase.execute()).thenReturn(
@@ -55,6 +65,23 @@ internal class CityPickViewModelImplTest {
 
             // then
             verify(selectedCityUseCase).execute()
+        }
+
+    @Test
+    fun `given city is selected when view model is initialised then SupportedCitiesUseCase is executed`() =
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+            whenever(selectedCityUseCase.execute()).thenReturn(
+                flow {
+                    emit(Response.Success(cityA))
+                }
+            )
+
+            // when
+            tested()
+
+            // then
+            verify(supportedCitiesUseCase).execute()
         }
 
     @Test
@@ -103,7 +130,7 @@ internal class CityPickViewModelImplTest {
         }
 
     @Test
-    fun `given observing supported cities and successful fetching supported cities when supported cities are being fetch then loading status followed by successful status is sent`() =
+    fun `given observing supported cities and successful fetching supported cities when view model is initialised then loading status followed by successful status is sent`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(supportedCitiesUseCase.execute()).thenReturn(
@@ -112,12 +139,11 @@ internal class CityPickViewModelImplTest {
                     emit(Response.Success(SupportedCitiesData(listOf(cityA, cityB))))
                 }
             )
+
+            // when
             val tested = tested()
             val statuses = mutableListOf<Event<SupportedCitiesStatus>>()
             tested.supportedCities.observeForever { statuses.add(it) }
-
-            // when
-            tested.forceFetchSupportedCities()
 
             // then
             verify(supportedCitiesUseCase).execute()
@@ -128,7 +154,7 @@ internal class CityPickViewModelImplTest {
         }
 
     @Test
-    fun `given observing supported cities, successful fetching supported cities and currently selected city is available when supported cities are being fetch then loading status followed by successful status is sent`() =
+    fun `given observing supported cities, successful fetching supported cities and currently selected city is available when view model is initialised then loading status followed by successful status is sent`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(selectedCityUseCase.execute()).thenReturn(
@@ -142,12 +168,11 @@ internal class CityPickViewModelImplTest {
                     emit(Response.Success(SupportedCitiesData(listOf(cityA, cityB))))
                 }
             )
+
+            // when
             val tested = tested()
             val statuses = mutableListOf<Event<SupportedCitiesStatus>>()
             tested.supportedCities.observeForever { statuses.add(it) }
-
-            // when
-            tested.forceFetchSupportedCities()
 
             // then
             verify(selectedCityUseCase).execute()
@@ -162,7 +187,7 @@ internal class CityPickViewModelImplTest {
         }
 
     @Test
-    fun `given observing supported cities and failed fetching supported cities when supported cities are being fetch then loading status followed by failure status is sent`() =
+    fun `given observing supported cities and failed fetching supported cities when view model is initialised then loading status followed by failure status is sent`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(supportedCitiesUseCase.execute()).thenReturn(
@@ -171,12 +196,11 @@ internal class CityPickViewModelImplTest {
                     emit(Response.Error<SupportedCitiesData>("error"))
                 }
             )
+
+            // when
             val tested = tested()
             val statuses = mutableListOf<Event<SupportedCitiesStatus>>()
             tested.supportedCities.observeForever { statuses.add(it) }
-
-            // when
-            tested.forceFetchSupportedCities()
 
             // then
             verify(supportedCitiesUseCase).execute()
@@ -185,7 +209,7 @@ internal class CityPickViewModelImplTest {
         }
 
     @Test
-    fun `given observing progress when currently selected city is fetched then progress visibility changes`() =
+    fun `given selected city is available and observing progress when view model is initialised then progress visibility changes`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(selectedCityUseCase.execute()).thenReturn(
@@ -194,26 +218,6 @@ internal class CityPickViewModelImplTest {
                     emit(Response.Success(cityA))
                 }
             )
-            val tested = tested()
-            val events = mutableListOf<Boolean>()
-            tested.processing.observeForever {
-                events.add(it)
-            }
-
-            // when
-            events.clear()
-            tested.fetchCurrentlySelectedCity()
-
-            // then
-            Assert.assertEquals(2, events.size)
-            Assert.assertEquals(true, events[0])
-            Assert.assertEquals(false, events[1])
-        }
-
-    @Test
-    fun `given observing progress when supported cities are fetched then progress visibility changes`() =
-        coroutinesTestRule.testDispatcher.runBlockingTest {
-            // given
             whenever(supportedCitiesUseCase.execute()).thenReturn(
                 flow {
                     emit(Response.Loading())
@@ -226,12 +230,46 @@ internal class CityPickViewModelImplTest {
 
             // when
             events.clear()
-            tested.forceFetchSupportedCities()
+            tested.fetchData()
 
             // then
-            Assert.assertEquals(2, events.size)
+            Assert.assertEquals(4, events.size)
             Assert.assertEquals(true, events[0])
             Assert.assertEquals(false, events[1])
+            Assert.assertEquals(true, events[2])
+            Assert.assertEquals(false, events[3])
+        }
+
+    @Test
+    fun `given supported cities are available and observing progress when view model is initialised then progress visibility changes`() =
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+            whenever(selectedCityUseCase.execute()).thenReturn(
+                flow {
+                    emit(Response.Loading())
+                    emit(Response.Success(cityA))
+                }
+            )
+            whenever(supportedCitiesUseCase.execute()).thenReturn(
+                flow {
+                    emit(Response.Loading())
+                    emit(Response.Success(SupportedCitiesData(listOf(cityA, cityB))))
+                }
+            )
+            val tested = tested()
+            val events = mutableListOf<Boolean>()
+            tested.processing.observeForever { events.add(it) }
+
+            // when
+            events.clear()
+            tested.fetchData()
+
+            // then
+            Assert.assertEquals(4, events.size)
+            Assert.assertEquals(true, events[0])
+            Assert.assertEquals(false, events[1])
+            Assert.assertEquals(true, events[2])
+            Assert.assertEquals(false, events[3])
         }
 
     @Test
