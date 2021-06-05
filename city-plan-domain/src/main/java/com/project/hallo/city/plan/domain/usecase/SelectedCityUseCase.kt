@@ -7,3 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface SelectedCityUseCase {
     fun execute(): Flow<Response<CityPlan>>
 }
+
+interface SelectedCityUseCaseErrorMapper {
+    fun mapError(error: Response.Error<CityPlan>)
+}

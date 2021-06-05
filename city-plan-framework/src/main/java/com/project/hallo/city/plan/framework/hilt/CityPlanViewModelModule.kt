@@ -5,14 +5,8 @@ import com.project.hallo.city.plan.domain.datasource.CityDataSource
 import com.project.hallo.city.plan.domain.datasource.SelectedCityDataSource
 import com.project.hallo.city.plan.domain.repository.CityPlanRepository
 import com.project.hallo.city.plan.domain.repository.implementation.CityPlanRepositoryImpl
-import com.project.hallo.city.plan.domain.usecase.CityPlanUseCase
-import com.project.hallo.city.plan.domain.usecase.CitySelectionUseCase
-import com.project.hallo.city.plan.domain.usecase.SelectedCityUseCase
-import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCase
-import com.project.hallo.city.plan.domain.usecase.implementation.CityPlanUseCaseImpl
-import com.project.hallo.city.plan.domain.usecase.implementation.CitySelectionUseCaseImpl
-import com.project.hallo.city.plan.domain.usecase.implementation.SelectedCityUseCaseImpl
-import com.project.hallo.city.plan.domain.usecase.implementation.SupportedCitiesUseCaseImpl
+import com.project.hallo.city.plan.domain.usecase.*
+import com.project.hallo.city.plan.domain.usecase.implementation.*
 import com.project.hallo.city.plan.framework.internal.datasource.RawResourcesCityDataSourceImpl
 import com.project.hallo.city.plan.framework.internal.datasource.db.DataBaseSelectedCity
 import com.project.hallo.city.plan.framework.internal.db.CityDatabase
@@ -45,14 +39,28 @@ internal class CityPlanViewModelModule {
         CityPlanRepositoryImpl(cityDataSource, selectedCityDataSource)
 
     @Provides
-    fun provideSupportedCitiesUseCase(cityPlanRepository: CityPlanRepository):
-            SupportedCitiesUseCase = SupportedCitiesUseCaseImpl(cityPlanRepository)
+    fun provideSupportedCitiesUseCaseErrorMapper(resources: Resources): SupportedCitiesUseCaseErrorMapper =
+        SupportedCitiesUseCaseErrorMapperImpl(resources)
+
+    @Provides
+    fun provideSupportedCitiesUseCase(
+        cityPlanRepository: CityPlanRepository,
+        supportedCitiesUseCaseErrorMapper: SupportedCitiesUseCaseErrorMapper
+    ): SupportedCitiesUseCase =
+        SupportedCitiesUseCaseImpl(cityPlanRepository, supportedCitiesUseCaseErrorMapper)
 
     @Provides
     fun provideCityUseCase(cityPlanRepository: CityPlanRepository): CitySelectionUseCase =
         CitySelectionUseCaseImpl(cityPlanRepository)
 
     @Provides
-    fun provideSelectedCityUseCase(cityPlanRepository: CityPlanRepository): SelectedCityUseCase =
-        SelectedCityUseCaseImpl(cityPlanRepository)
+    fun provideSelectedCityUseCaseErrorMapper(resources: Resources): SelectedCityUseCaseErrorMapper =
+        SelectedCityUseCaseErrorMapperImpl(resources)
+
+    @Provides
+    fun provideSelectedCityUseCase(
+        cityPlanRepository: CityPlanRepository,
+        selectedCityUseCaseErrorMapper: SelectedCityUseCaseErrorMapperImpl
+    ): SelectedCityUseCase =
+        SelectedCityUseCaseImpl(cityPlanRepository, selectedCityUseCaseErrorMapper)
 }

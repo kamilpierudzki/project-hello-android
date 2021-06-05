@@ -5,6 +5,7 @@ import com.project.hallo.city.plan.domain.model.api.CityPlanAPI
 import com.project.hallo.city.plan.domain.model.api.LineAPI
 import com.project.hallo.city.plan.domain.repository.CityPlanRepository
 import com.project.hallo.city.plan.domain.repository.resource.CityDataResource
+import com.project.hallo.city.plan.domain.usecase.SelectedCityUseCaseErrorMapper
 import com.project.hallo.commons.domain.repository.Response
 import com.project.hallo.commons.domain.test.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -36,8 +37,13 @@ internal class SelectedCityUseCaseImplTest {
     }
 
     val cityPlanRepository: CityPlanRepository = mock()
+    val selectedCityUseCaseErrorMapper: SelectedCityUseCaseErrorMapper = mock()
 
-    val tested = SelectedCityUseCaseImpl(cityPlanRepository, coroutinesTestRule.testDispatcher)
+    val tested = SelectedCityUseCaseImpl(
+        cityPlanRepository,
+        selectedCityUseCaseErrorMapper,
+        coroutinesTestRule.testDispatcher
+    )
 
     @Test
     fun `when execute is called then loading event is sent`() =
@@ -69,7 +75,7 @@ internal class SelectedCityUseCaseImplTest {
         }
 
     @Test
-    fun `given fetching currently selected city succeeds and fetching supported cities fails when execute is called then loading event followed by failure event is sent`() =
+    fun `given fetching currently selected city succeeds and fetching supported cities fails when execute is called then loading event followed by successful event is sent`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(cityPlanRepository.getCityDataResource()).thenReturn(successfulResource)
@@ -81,7 +87,7 @@ internal class SelectedCityUseCaseImplTest {
 
             // then
             Assert.assertEquals(true, events[0] is Response.Loading)
-            Assert.assertEquals(true, events[1] is Response.Error)
+            Assert.assertEquals(true, events[1] is Response.Success)
         }
 
     @Test

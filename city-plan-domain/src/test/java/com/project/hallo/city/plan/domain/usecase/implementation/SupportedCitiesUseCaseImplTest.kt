@@ -5,6 +5,7 @@ import com.project.hallo.city.plan.domain.model.SupportedCitiesData
 import com.project.hallo.city.plan.domain.model.api.CityPlanAPI
 import com.project.hallo.city.plan.domain.repository.CityPlanRepository
 import com.project.hallo.city.plan.domain.repository.resource.CityDataResource
+import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCaseErrorMapper
 import com.project.hallo.commons.domain.repository.Response
 import com.project.hallo.commons.domain.test.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,7 +38,13 @@ internal class SupportedCitiesUseCaseImplTest {
         on { getSupportedCityFileResources() } doReturn listOf(0, 1)
     }
 
-    val tested = SupportedCitiesUseCaseImpl(repository, coroutinesTestRule.testDispatcher)
+    val supportedCitiesUseCaseErrorMapper: SupportedCitiesUseCaseErrorMapper = mock()
+
+    val tested = SupportedCitiesUseCaseImpl(
+        repository,
+        supportedCitiesUseCaseErrorMapper,
+        coroutinesTestRule.testDispatcher
+    )
 
     @Test
     fun `given successful fetching supported cities when execute is called then loading event followed by successful event is sent`() =

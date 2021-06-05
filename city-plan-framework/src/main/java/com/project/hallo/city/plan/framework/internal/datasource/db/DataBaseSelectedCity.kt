@@ -2,6 +2,7 @@ package com.project.hallo.city.plan.framework.internal.datasource.db
 
 import com.project.hallo.city.plan.domain.datasource.SelectedCityDataSource
 import com.project.hallo.city.plan.domain.model.CityPlan
+import com.project.hallo.city.plan.domain.model.ErrorCode.SelectedCity
 import com.project.hallo.city.plan.framework.internal.db.CityDatabase
 import com.project.hallo.commons.domain.repository.Response
 import javax.inject.Inject
@@ -20,7 +21,7 @@ internal class DataBaseSelectedCity @Inject constructor(
     override fun loadCity(): Response<CityPlan> {
         val dao = database.cityDao()
         val cityPlanEntity = dao.getCities().firstOrNull()
-            ?: return Response.Error("Couldn't load CityPlanEntity")
+            ?: return Response.Error(SelectedCity.SELECTED_CITY_ERROR)
         val cityPlan = CityPlanEntity.toCityPlan(cityPlanEntity)
         return Response.Success(cityPlan)
     }
