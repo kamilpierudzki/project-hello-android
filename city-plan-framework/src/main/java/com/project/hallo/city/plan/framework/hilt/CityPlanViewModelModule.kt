@@ -60,7 +60,7 @@ internal class CityPlanViewModelModule {
     @Provides
     fun provideSelectedCityUseCase(
         cityPlanRepository: CityPlanRepository,
-        selectedCityUseCaseErrorMapper: SelectedCityUseCaseErrorMapperImpl
+        selectedCityUseCaseErrorMapper: SelectedCityUseCaseErrorMapper
     ): SelectedCityUseCase =
         SelectedCityUseCaseImpl(cityPlanRepository, selectedCityUseCaseErrorMapper)
 }

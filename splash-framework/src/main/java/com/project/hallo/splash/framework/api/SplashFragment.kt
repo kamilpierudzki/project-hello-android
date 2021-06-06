@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.city.plan.framework.api.CitySelection
+import com.project.hallo.city.plan.framework.internal.datamodel.CityPlanParcelable
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType
@@ -46,8 +47,9 @@ class SplashFragment : Fragment() {
     }
 
     private fun goToVehicleTypePickerScreen(cityPlan: CityPlan) {
-        // todo pass cityPlan into prediction_nav_graph (parhaps?)
-        findNavController().navigate(R.id.prediction_nav_graph)
+        val cityPlanParcelable = CityPlanParcelable.fromCityPlan(cityPlan)
+        val action = SplashFragmentDirections.goToVehicleTypePickerScreen(cityPlanParcelable)
+        findNavController().navigate(action)
     }
 
     private fun observeCurrentlySelectedCity() {

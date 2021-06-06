@@ -14,8 +14,8 @@
             app:destination="@id/prediction_fragment">
 
             <argument
-                android:name="vehicleData"
-                app:argType="com.project.hallo.city.plan.domain.VehicleData" />
+                android:name="vehicleDataParcelable"
+                app:argType="com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable" />
 
         </action>
 
@@ -27,8 +27,8 @@
         android:label="@string/prediction_fragment_label">
 
         <argument
-            android:name="vehicleData"
-            app:argType="com.project.hallo.city.plan.domain.VehicleData" />
+            android:name="vehicleDataParcelable"
+            app:argType="com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable" />
 
     </fragment>
 

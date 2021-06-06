@@ -24,5 +24,5 @@ sealed class SupportedCitiesStatus {
 
 sealed class CitySelection {
     class Selected(val cityPlan: CityPlan) : CitySelection()
-    class NotSelected(@StringRes val errorStringRes: Int) : CitySelection()
+    class NotSelected(val message: String) : CitySelection()
 }

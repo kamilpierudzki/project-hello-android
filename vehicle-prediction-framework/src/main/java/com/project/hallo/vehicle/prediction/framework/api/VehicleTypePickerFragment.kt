@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.project.hallo.city.plan.domain.VehicleData
 import com.project.hallo.city.plan.domain.VehicleType
+import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hallo.vehicle.prediction.framework.R
 import com.project.hallo.vehicle.prediction.framework.databinding.VehicleTypePickerFragmentBinding
 import com.project.hallo.vehicle.prediction.framework.internal.ui.showNeutralDialog
@@ -53,17 +54,17 @@ class VehicleTypePickerFragment : Fragment() {
 
     private fun setupButtonClicks() {
         binding.allTypesButton.setOnClickListener {
-            val vehicleData = VehicleData(listOf(VehicleType.TRAM, VehicleType.BUS))
+            val vehicleData = VehicleDataParcelable(listOf(VehicleType.TRAM, VehicleType.BUS))
             val action = VehicleTypePickerFragmentDirections.goToPredictionScreen(vehicleData)
             it.findNavController().navigate(action)
         }
         binding.tramTypesButton.setOnClickListener {
-            val vehicleData = VehicleData(listOf(VehicleType.TRAM))
+            val vehicleData = VehicleDataParcelable(listOf(VehicleType.TRAM))
             val action = VehicleTypePickerFragmentDirections.goToPredictionScreen(vehicleData)
             it.findNavController().navigate(action)
         }
         binding.busTypesButton.setOnClickListener {
-            val vehicleData = VehicleData(listOf(VehicleType.BUS))
+            val vehicleData = VehicleDataParcelable(listOf(VehicleType.BUS))
             val action = VehicleTypePickerFragmentDirections.goToPredictionScreen(vehicleData)
             it.findNavController().navigate(action)
         }

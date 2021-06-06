@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.domain.VehicleData
+import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hallo.country.api.ResourceCountryCharacters
 import com.project.hallo.vehicle.prediction.framework.R
 import com.project.hallo.vehicle.prediction.framework.databinding.PredictionFragmentBinding
@@ -41,7 +42,7 @@ class PredictionFragment : Fragment() {
     lateinit var resourceCountryCharacters: ResourceCountryCharacters
 
     private val sageArgs: PredictionFragmentArgs by navArgs()
-    private val initialVehicleData: VehicleData get() = sageArgs.vehicleData
+    private val initialVehicleData: VehicleDataParcelable get() = sageArgs.vehicleDataParcelable
     private lateinit var binding: PredictionFragmentBinding
     private lateinit var predictedLinesAdapter: PredictedLinesAdapter
     private val predictionViewModel: PredictionViewModel by viewModels()

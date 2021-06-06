@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.databinding.CityPickerFragmentBinding
@@ -79,8 +78,8 @@ class CityPickerFragment : Fragment() {
     private fun observeCurrentlySelectedCity() {
         cityPickViewModel.currentlySelectedCity.observe(viewLifecycleOwner, {
             when (val selection = it.getContentOrNull()) {
-                is CitySelection.NotSelected -> showErrorMessage(selection.errorStringRes)
-                is CitySelection.Selected -> goToVehicleTypePickerScreen(selection.cityPlan)
+                is CitySelection.NotSelected -> showErrorMessage(selection.message)
+                is CitySelection.Selected -> returnSelectedCity(selection.cityPlan)
             }
         })
     }
@@ -89,8 +88,9 @@ class CityPickerFragment : Fragment() {
         // todo
     }
 
-    private fun goToVehicleTypePickerScreen(cityPlan: CityPlan) {
+    private fun returnSelectedCity(cityPlan: CityPlan) {
         // todo return cityPlan and go back to previous fragment
+        // todo https://developer.android.com/guide/navigation/navigation-programmatic#returning_a_result
     }
 
     private fun observeSupportedCities() {
