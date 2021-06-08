@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.databinding.CityPickerFragmentBinding
+import com.project.hallo.city.plan.framework.internal.datamodel.CityPlanParcelable
 import com.project.hallo.city.plan.framework.internal.ui.City
 import com.project.hallo.city.plan.framework.internal.ui.CityPickerAdapter
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
@@ -89,8 +91,12 @@ class CityPickerFragment : Fragment() {
     }
 
     private fun returnSelectedCity(cityPlan: CityPlan) {
-        // todo return cityPlan and go back to previous fragment
-        // todo https://developer.android.com/guide/navigation/navigation-programmatic#returning_a_result
+        val cityPlanParcelable = CityPlanParcelable.fromCityPlan(cityPlan)
+        val navController = findNavController()
+        val previousBackStackEntry = navController.previousBackStackEntry
+        val savedStateHandle = previousBackStackEntry?.savedStateHandle
+        savedStateHandle?.set<CityPlanParcelable>(RESULT_KEY, cityPlanParcelable)
+        navController.navigateUp()
     }
 
     private fun observeSupportedCities() {
@@ -121,5 +127,9 @@ class CityPickerFragment : Fragment() {
             City(it.cityPlan, it.currentlySelected)
         }
         cityPickerAdapter.updateData(cities)
+    }
+
+    companion object {
+        const val RESULT_KEY = "CityPickerFragment_RESULT_KEY"
     }
 }
