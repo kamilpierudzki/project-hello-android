@@ -6,10 +6,10 @@
     <string name="help_dialog_message"></string>
     <string name="probably"></string>
     <string name="vehicle_type_picker_fragment_lable"></string>
-    <string name="vehicle_type_picker_header"></string>
-    <string name="vehicle_type_picker_vehicle_all"></string>
-    <string name="vehicle_type_picker_vehicle_tram"></string>
-    <string name="vehicle_type_picker_vehicle_bus"></string>
+    <string name="vehicle_type_picker_header">Select vehicle type</string>
+    <string name="vehicle_type_picker_vehicle_all">All kind of vehicles</string>
+    <string name="vehicle_type_picker_vehicle_tram">Tram</string>
+    <string name="vehicle_type_picker_vehicle_bus">Bus</string>
     <string name="vehicle_type_picker_help_title"></string>
     <string name="vehicle_type_picker_help_message"></string>
 </resources>

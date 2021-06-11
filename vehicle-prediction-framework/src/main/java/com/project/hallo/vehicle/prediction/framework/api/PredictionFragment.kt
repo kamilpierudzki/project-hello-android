@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.domain.VehicleData
+import com.project.hallo.city.plan.framework.internal.datamodel.CityPlanParcelable
 import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hallo.country.api.ResourceCountryCharacters
 import com.project.hallo.vehicle.prediction.framework.R
@@ -41,8 +42,9 @@ class PredictionFragment : Fragment() {
     @Inject
     lateinit var resourceCountryCharacters: ResourceCountryCharacters
 
-    private val sageArgs: PredictionFragmentArgs by navArgs()
-    private val initialVehicleData: VehicleDataParcelable get() = sageArgs.vehicleDataParcelable
+    private val safeArgs: PredictionFragmentArgs by navArgs()
+    private val initialVehicleData: VehicleDataParcelable get() = safeArgs.vehicleDataParcelable
+    private val selectedCityParcelable: CityPlanParcelable get() = safeArgs.selectedCityParcelable
     private lateinit var binding: PredictionFragmentBinding
     private lateinit var predictedLinesAdapter: PredictedLinesAdapter
     private val predictionViewModel: PredictionViewModel by viewModels()
@@ -102,7 +104,8 @@ class PredictionFragment : Fragment() {
     private fun passInitialInfoToViewModel() {
         val initialData = PredictionViewModelInitialData(
             targetVehicleTypes = initialVehicleData.vehicleTypes,
-            countryCharacters = resourceCountryCharacters.get()
+            countryCharacters = resourceCountryCharacters.get(),
+            selectedCityParcelable = selectedCityParcelable
         )
         predictionViewModel.setTargetVehicleType(initialData)
     }

@@ -9,6 +9,10 @@
         android:name="com.project.hallo.vehicle.prediction.framework.api.VehicleTypePickerFragment"
         android:label="@string/vehicle_type_picker_fragment_lable">
 
+        <argument
+            android:name="selectedCityParcelable"
+            app:argType="com.project.hallo.city.plan.framework.internal.datamodel.CityPlanParcelable" />
+
         <action
             android:id="@+id/go_to_prediction_screen"
             app:destination="@id/prediction_fragment">
@@ -16,6 +20,10 @@
             <argument
                 android:name="vehicleDataParcelable"
                 app:argType="com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable" />
+
+            <argument
+                android:name="selectedCityParcelable"
+                app:argType="com.project.hallo.city.plan.framework.internal.datamodel.CityPlanParcelable" />
 
         </action>
 
@@ -29,6 +37,10 @@
         <argument
             android:name="vehicleDataParcelable"
             app:argType="com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable" />
+
+        <argument
+            android:name="selectedCityParcelable"
+            app:argType="com.project.hallo.city.plan.framework.internal.datamodel.CityPlanParcelable" />
 
     </fragment>
 

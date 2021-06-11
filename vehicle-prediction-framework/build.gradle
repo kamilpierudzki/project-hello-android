@@ -64,5 +64,5 @@ dependencies {
     implementation project(path: ':vehicle-prediction-domain')
     implementation project(path: ':city-plan-domain')
     implementation project(path: ':city-plan-framework')
-    implementation project(path: ':country-resources')
+    implementation project(path: ':country-resources-framework')
 }

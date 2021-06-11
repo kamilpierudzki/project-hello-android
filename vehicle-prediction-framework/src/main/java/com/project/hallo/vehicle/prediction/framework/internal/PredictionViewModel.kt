@@ -2,10 +2,8 @@ package com.project.hallo.vehicle.prediction.framework.internal
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.project.hallo.city.plan.domain.model.Line
 import com.project.hallo.city.plan.domain.VehicleType
-import com.project.hallo.city.plan.domain.usecase.CityPlanUseCase
+import com.project.hallo.city.plan.domain.model.Line
 import com.project.hallo.commons.framework.ui.Text
 import com.project.hallo.vehicle.domain.VehiclePrediction
 import com.project.hallo.vehicle.domain.analysis.LineWithProbability
@@ -13,8 +11,6 @@ import com.project.hallo.vehicle.domain.analysis.PredictedLinesAnalysis
 import com.project.hallo.vehicle.domain.steps.CountryCharactersEmitter
 import com.project.hallo.vehicle.prediction.framework.R
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import java.util.concurrent.CopyOnWriteArrayList
 import javax.inject.Inject
 
@@ -23,7 +19,6 @@ private const val NUM_OF_PREDICTED_LINES_TO_SHOW = 3
 @HiltViewModel
 internal class PredictionViewModel @Inject constructor(
     private val vehiclePrediction: VehiclePrediction,
-    private val cityPlanUseCase: CityPlanUseCase,
     private val predictedLinesAnalysis: PredictedLinesAnalysis,
     private val countryCharactersEmitter: CountryCharactersEmitter
 ) : ViewModel() {
@@ -35,7 +30,7 @@ internal class PredictionViewModel @Inject constructor(
 
     fun setTargetVehicleType(initialData: PredictionViewModelInitialData) {
         countryCharactersEmitter.emmit(initialData.countryCharacters)
-        provideCityLines(initialData.targetVehicleTypes)
+        updateCityLines(initialData)
     }
 
     fun processRecognisedTexts(inputs: List<String>) {
@@ -67,15 +62,20 @@ internal class PredictionViewModel @Inject constructor(
         screenContentDescription.postValue(contentDescription)
     }
 
-    private fun provideCityLines(targetVehicleTypes: List<VehicleType>) {
-        viewModelScope.launch {
-            cityPlanUseCase.getCityPlan(targetVehicleTypes)
-                .collect { lines ->
-                    cityLines.apply {
-                        clear()
-                        addAll(lines)
-                    }
+    private fun updateCityLines(initialData: PredictionViewModelInitialData) {
+        val selectedCityLines: List<Line>? = initialData.targetVehicleTypes
+            .takeIf { it.isNotEmpty() }
+            ?.flatMap {
+                when (it) {
+                    VehicleType.TRAM -> initialData.selectedCityParcelable.trams
+                    VehicleType.BUS -> initialData.selectedCityParcelable.buses
                 }
+            }
+        if (selectedCityLines != null) {
+            cityLines.apply {
+                clear()
+                addAll(selectedCityLines)
+            }
         }
     }
 }

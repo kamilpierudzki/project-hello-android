@@ -28,10 +28,6 @@ internal class CityPlanViewModelModule {
         DataBaseSelectedCity(database)
 
     @Provides
-    fun provideCityPlanUseCase(cityPlanRepository: CityPlanRepository): CityPlanUseCase =
-        CityPlanUseCaseImpl(cityPlanRepository)
-
-    @Provides
     fun provideCityPlanRepositoryNew(
         cityDataSource: CityDataSource,
         selectedCityDataSource: SelectedCityDataSource
