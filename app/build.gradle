@@ -74,7 +74,7 @@ dependencies {
     implementation project(path: ':city-plan-framework')
     implementation project(path: ':vehicle-prediction-domain')
     implementation project(path: ':vehicle-prediction-framework')
-    implementation project(path: ':country-resources')
+    implementation project(path: ':country-resources-framework')
     implementation project(path: ':settings-framework')
     implementation project(path: ':splash-framework')
 }

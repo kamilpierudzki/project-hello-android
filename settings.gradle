@@ -1,6 +1,6 @@
 include ':splash-framework'
 include ':settings-framework'
-include ':country-resources'
+include ':country-resources-framework'
 include ':commons-domain'
 include ':city-plan-framework'
 include ':city-plan-domain'
