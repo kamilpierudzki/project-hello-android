@@ -2,8 +2,10 @@ package com.project.hallo.vehicle.prediction.framework.internal
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.project.hallo.city.plan.domain.VehicleType
 import com.project.hallo.city.plan.domain.model.Line
+import com.project.hallo.commons.framework.hilt.DefaultDispatcher
 import com.project.hallo.commons.framework.ui.Text
 import com.project.hallo.vehicle.domain.VehiclePrediction
 import com.project.hallo.vehicle.domain.analysis.LineWithProbability
@@ -11,6 +13,8 @@ import com.project.hallo.vehicle.domain.analysis.PredictedLinesAnalysis
 import com.project.hallo.vehicle.domain.steps.CountryCharactersEmitter
 import com.project.hallo.vehicle.prediction.framework.R
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 import java.util.concurrent.CopyOnWriteArrayList
 import javax.inject.Inject
 
@@ -20,7 +24,8 @@ private const val NUM_OF_PREDICTED_LINES_TO_SHOW = 3
 internal class PredictionViewModel @Inject constructor(
     private val vehiclePrediction: VehiclePrediction,
     private val predictedLinesAnalysis: PredictedLinesAnalysis,
-    private val countryCharactersEmitter: CountryCharactersEmitter
+    private val countryCharactersEmitter: CountryCharactersEmitter,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val cityLines = CopyOnWriteArrayList<Line>()
@@ -35,8 +40,10 @@ internal class PredictionViewModel @Inject constructor(
 
     fun processRecognisedTexts(inputs: List<String>) {
         if (inputs.isNotEmpty() && cityLines.isNotEmpty()) {
-            for (input in inputs) {
-                processInput(input)
+            viewModelScope.launch(defaultDispatcher) {
+                for (input in inputs) {
+                    processInput(input)
+                }
             }
         }
     }
