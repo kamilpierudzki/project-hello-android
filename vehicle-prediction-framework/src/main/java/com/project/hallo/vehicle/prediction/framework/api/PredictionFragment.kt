@@ -107,7 +107,7 @@ class PredictionFragment : Fragment() {
             countryCharacters = resourceCountryCharacters.get(),
             selectedCityParcelable = selectedCityParcelable
         )
-        predictionViewModel.setTargetVehicleType(initialData)
+        predictionViewModel.setInitialData(initialData)
     }
 
     private fun observePredictedLines() {

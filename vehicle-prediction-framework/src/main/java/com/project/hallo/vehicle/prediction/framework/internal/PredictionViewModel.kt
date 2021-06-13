@@ -33,7 +33,7 @@ internal class PredictionViewModel @Inject constructor(
     val predictedLines = MutableLiveData<List<LineWithProbability>>()
     val screenContentDescription = MutableLiveData(Text.empty())
 
-    fun setTargetVehicleType(initialData: PredictionViewModelInitialData) {
+    fun setInitialData(initialData: PredictionViewModelInitialData) {
         countryCharactersEmitter.emmit(initialData.countryCharacters)
         updateCityLines(initialData)
     }
