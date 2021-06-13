@@ -15,10 +15,7 @@ interface CityPickViewModel : ExternalViewModel {
 }
 
 sealed class SupportedCitiesStatus {
-    class Success(val supportedCities: List<City>) : SupportedCitiesStatus() {
-        data class City(val cityPlan: CityPlan, val currentlySelected: Boolean)
-    }
-
+    class Success(val supportedCities: List<CityPlan>) : SupportedCitiesStatus()
     class Error(val message: String) : SupportedCitiesStatus()
 }
 

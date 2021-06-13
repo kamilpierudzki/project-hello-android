@@ -182,8 +182,6 @@ internal class CityPickViewModelImplTest {
             val second = statuses[0].content as SupportedCitiesStatus.Success
             val supportedCities = second.supportedCities
             Assert.assertEquals(2, supportedCities.size)
-            Assert.assertEquals(true, supportedCities[0].currentlySelected)
-            Assert.assertEquals(false, supportedCities[1].currentlySelected)
         }
 
     @Test

@@ -68,12 +68,8 @@ internal class CityPickViewModelImpl @Inject constructor(
     override fun selectCity(city: CityPlan) {
         viewModelScope.launch {
             citySelectionUseCase.execute(city)
-                .collect { cityPlanResult ->
-                    when (cityPlanResult) {
-                        is Response.Success -> selectedCitySucceeded(cityPlanResult)
-                        is Response.Error -> selectedCityFailed(cityPlanResult)
-                        is Response.Loading -> processing.postValue(true)
-                    }
+                .collect {
+                    handleSelectedCityResult(it)
                 }
         }
     }
@@ -108,13 +104,7 @@ internal class CityPickViewModelImpl @Inject constructor(
 
     private fun fetchSupportedCitiesSucceeded(result: Response.Success<SupportedCitiesData>) {
         val data: SupportedCitiesData = result.successData
-        val currentlySelectedCity: CitySelection.Selected? =
-            currentlySelectedCityEvent.value?.content as? CitySelection.Selected
-        val supportedCities = data.supportedCities.map {
-            val isCurrentlySelected = currentlySelectedCity?.cityPlan == it
-            SupportedCitiesStatus.Success.City(it, isCurrentlySelected)
-        }
-        val status = SupportedCitiesStatus.Success(supportedCities)
+        val status = SupportedCitiesStatus.Success(data.supportedCities)
         this.supportedCities.postValue(Event(status))
         processing.postValue(false)
     }

@@ -51,7 +51,7 @@ class CityPickerFragment : Fragment() {
         observeProgress()
         observeSupportedCities()
         observeCitySelection()
-        observeCurrentlySelectedCity()
+        observeCurrentlySelectedCityEvent()
     }
 
     private fun setUpViews() {
@@ -77,13 +77,13 @@ class CityPickerFragment : Fragment() {
         })
     }
 
-    private fun observeCurrentlySelectedCity() {
-        cityPickViewModel.currentlySelectedCityEvent.observe(viewLifecycleOwner, {
+    private fun observeCurrentlySelectedCityEvent() {
+        cityPickViewModel.currentlySelectedCityEvent.observe(viewLifecycleOwner) {
             when (val selection = it.getContentOrNull()) {
                 is CitySelection.NotSelected -> showErrorMessage(selection.message)
                 is CitySelection.Selected -> returnSelectedCity(selection.cityPlan)
             }
-        })
+        }
     }
 
     private fun showErrorMessage(@StringRes message: Int) {
@@ -101,9 +101,11 @@ class CityPickerFragment : Fragment() {
 
     private fun observeSupportedCities() {
         cityPickViewModel.supportedCities.observe(viewLifecycleOwner, {
-            when (val status = it.getContentOrNull()) {
-                is SupportedCitiesStatus.Error -> fetchingSupportedCitiesFailed(status)
-                is SupportedCitiesStatus.Success -> fetchingSupportedCitiesSucceeded(status)
+            val content = it.content
+            if (it.consumed.not() && content is SupportedCitiesStatus.Error) {
+                fetchingSupportedCitiesFailed(content)
+            } else if (content is SupportedCitiesStatus.Success) {
+                fetchingSupportedCitiesSucceeded(content)
             }
         })
     }
@@ -123,10 +125,11 @@ class CityPickerFragment : Fragment() {
     }
 
     private fun fetchingSupportedCitiesSucceeded(status: SupportedCitiesStatus.Success) {
+        val currentlySelected: CityPlan? = cityPickViewModel.currentlySelectedCity.value
         val cities = status.supportedCities.map {
-            City(it.cityPlan, it.currentlySelected)
+            City(cityPlan = it, selected = currentlySelected?.city == it.city)
         }
-        cityPickerAdapter.updateData(cities)
+        cityPickerAdapter.updateSupportedCities(cities)
     }
 
     companion object {

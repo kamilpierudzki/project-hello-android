@@ -35,7 +35,7 @@ internal class CityPickerAdapter @Inject constructor() :
 
     override fun getItemCount(): Int = cities.size
 
-    fun updateData(cities: List<City>) {
+    fun updateSupportedCities(cities: List<City>) {
         this.cities = cities
         notifyDataSetChanged()
     }
