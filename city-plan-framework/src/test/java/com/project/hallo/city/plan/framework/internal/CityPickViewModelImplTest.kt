@@ -97,14 +97,19 @@ internal class CityPickViewModelImplTest {
 
             // when
             val tested = tested(selectedCityUseCase = selectedCityUseCase)
-            lateinit var selection: CitySelection.Selected
+            lateinit var selection1: CitySelection.Selected
+            lateinit var selection2: CitySelection.Selected
             tested.currentlySelectedCityEvent.observeForever {
-                selection = it.getContentOrNull() as CitySelection.Selected
+                selection1 = it.getContentOrNull() as CitySelection.Selected
+            }
+            tested.currentlySelectedCityChangedEvent.observeForever {
+                selection2 = it.getContentOrNull() as CitySelection.Selected
             }
 
             // then
             verify(selectedCityUseCase).execute()
-            Assert.assertEquals("B", selection.cityPlan.city)
+            Assert.assertEquals("B", selection1.cityPlan.city)
+            Assert.assertEquals("B", selection2.cityPlan.city)
         }
 
     @Test
@@ -119,14 +124,15 @@ internal class CityPickViewModelImplTest {
 
             // when
             val tested = tested(selectedCityUseCase = selectedCityUseCase)
-            lateinit var selection: CitySelection
-            tested.currentlySelectedCityEvent.observeForever {
-                selection = it.content
-            }
+            lateinit var selection1: CitySelection
+            lateinit var selection2: CitySelection
+            tested.currentlySelectedCityEvent.observeForever { selection1 = it.content }
+            tested.currentlySelectedCityChangedEvent.observeForever { selection2 = it.content }
 
             // then
             verify(selectedCityUseCase).execute()
-            Assert.assertEquals(true, selection is CitySelection.NotSelected)
+            Assert.assertEquals(true, selection1 is CitySelection.NotSelected)
+            Assert.assertEquals(true, selection2 is CitySelection.NotSelected)
         }
 
     @Test
@@ -282,17 +288,22 @@ internal class CityPickViewModelImplTest {
             )
 
             val tested = tested()
-            val events = mutableListOf<Event<CitySelection>>()
-            tested.currentlySelectedCityEvent.observeForever { events.add(it) }
+            val events1 = mutableListOf<Event<CitySelection>>()
+            tested.currentlySelectedCityEvent.observeForever { events1.add(it) }
+            val events2 = mutableListOf<Event<CitySelection>>()
+            tested.currentlySelectedCityChangedEvent.observeForever { events2.add(it) }
 
             // when
-            events.clear()
+            events1.clear()
+            events2.clear()
             tested.selectCity(cityA)
 
             // then
             verify(citySelectionUseCase).execute(cityA)
-            Assert.assertEquals(1, events.size)
-            Assert.assertEquals(true, events[0].content is CitySelection.Selected)
+            Assert.assertEquals(1, events1.size)
+            Assert.assertEquals(1, events2.size)
+            Assert.assertEquals(true, events1[0].content is CitySelection.Selected)
+            Assert.assertEquals(true, events2[0].content is CitySelection.Selected)
         }
 
     @Test
@@ -307,17 +318,22 @@ internal class CityPickViewModelImplTest {
             )
 
             val tested = tested()
-            val events = mutableListOf<Event<CitySelection>>()
-            tested.currentlySelectedCityEvent.observeForever { events.add(it) }
+            val events1 = mutableListOf<Event<CitySelection>>()
+            tested.currentlySelectedCityEvent.observeForever { events1.add(it) }
+            val events2 = mutableListOf<Event<CitySelection>>()
+            tested.currentlySelectedCityChangedEvent.observeForever { events2.add(it) }
 
             // when
-            events.clear()
+            events1.clear()
+            events2.clear()
             tested.selectCity(cityA)
 
             // then
             verify(citySelectionUseCase).execute(cityA)
-            Assert.assertEquals(1, events.size)
-            Assert.assertEquals(true, events[0].content is CitySelection.NotSelected)
+            Assert.assertEquals(1, events1.size)
+            Assert.assertEquals(1, events2.size)
+            Assert.assertEquals(true, events1[0].content is CitySelection.NotSelected)
+            Assert.assertEquals(true, events2[0].content is CitySelection.NotSelected)
         }
 
     @Test

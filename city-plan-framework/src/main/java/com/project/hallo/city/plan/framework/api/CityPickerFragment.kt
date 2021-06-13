@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.databinding.CityPickerFragmentBinding
-import com.project.hallo.city.plan.framework.internal.datamodel.CityPlanParcelable
 import com.project.hallo.city.plan.framework.internal.ui.City
 import com.project.hallo.city.plan.framework.internal.ui.CityPickerAdapter
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
@@ -34,6 +33,14 @@ class CityPickerFragment : Fragment() {
 
     private val cityPickViewModel by externalViewModels {
         cityPickViewModelProvider
+    }
+
+    @Inject
+    @ViewModelProvider(ViewModelType.ACTIVITY)
+    internal lateinit var internalCityPickViewModelProvider: ExternalViewModelProvider<InternalCityPickViewModel>
+
+    private val internalCityPickViewModel by externalViewModels {
+        internalCityPickViewModelProvider
     }
 
     override fun onCreateView(
@@ -67,7 +74,7 @@ class CityPickerFragment : Fragment() {
 
     private fun observeCitySelection() {
         cityPickerAdapter.citySelection.observe(viewLifecycleOwner, { selectedCity ->
-            cityPickViewModel.selectCity(selectedCity)
+            internalCityPickViewModel.selectCity(selectedCity)
         })
     }
 
@@ -79,9 +86,11 @@ class CityPickerFragment : Fragment() {
 
     private fun observeCurrentlySelectedCityEvent() {
         cityPickViewModel.currentlySelectedCityEvent.observe(viewLifecycleOwner) {
-            when (val selection = it.getContentOrNull()) {
-                is CitySelection.NotSelected -> showErrorMessage(selection.message)
-                is CitySelection.Selected -> returnSelectedCity(selection.cityPlan)
+            val content = it.content
+            if (it.consumed.not() && content is CitySelection.NotSelected) {
+                showErrorMessage(content.message)
+            } else if (it.consumed.not() && content is CitySelection.Selected) {
+                goBackToPreviousScreen()
             }
         }
     }
@@ -90,13 +99,8 @@ class CityPickerFragment : Fragment() {
         // todo
     }
 
-    private fun returnSelectedCity(cityPlan: CityPlan) {
-        val cityPlanParcelable = CityPlanParcelable.fromCityPlan(cityPlan)
-        val navController = findNavController()
-        val previousBackStackEntry = navController.previousBackStackEntry
-        val savedStateHandle = previousBackStackEntry?.savedStateHandle
-        savedStateHandle?.set<CityPlanParcelable>(RESULT_KEY, cityPlanParcelable)
-        navController.navigateUp()
+    private fun goBackToPreviousScreen() {
+        findNavController().navigateUp()
     }
 
     private fun observeSupportedCities() {

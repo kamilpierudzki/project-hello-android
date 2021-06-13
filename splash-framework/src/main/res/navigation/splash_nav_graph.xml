@@ -12,9 +12,6 @@
             android:id="@+id/go_to_vehicle_type_picker_screen"
             app:destination="@id/prediction_nav_graph">
 
-            <argument
-                android:name="selectedCityParcelable"
-                app:argType="com.project.hallo.city.plan.framework.internal.datamodel.CityPlanParcelable" />
         </action>
     </fragment>
 

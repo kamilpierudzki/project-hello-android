@@ -9,6 +9,7 @@ import com.project.hallo.city.plan.domain.usecase.SelectedCityUseCase
 import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCase
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.city.plan.framework.api.CitySelection
+import com.project.hallo.city.plan.framework.api.InternalCityPickViewModel
 import com.project.hallo.city.plan.framework.api.SupportedCitiesStatus
 import com.project.hallo.commons.domain.repository.Response
 import com.project.hallo.commons.framework.hilt.IoDispatcher
@@ -29,9 +30,10 @@ internal class CityPickViewModelImpl @Inject constructor(
     private val citySelectionUseCase: CitySelectionUseCase,
     private val selectedCityUseCase: SelectedCityUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : ViewModel(), CityPickViewModel {
+) : ViewModel(), CityPickViewModel, InternalCityPickViewModel {
 
     override val currentlySelectedCityEvent = MutableLiveData<Event<CitySelection>>()
+    override val currentlySelectedCityChangedEvent = MutableLiveData<Event<CitySelection>>()
     override val currentlySelectedCity = currentlySelectedCityEvent.map {
         val event = it.content
         return@map if (event is CitySelection.Selected) {
@@ -83,14 +85,16 @@ internal class CityPickViewModelImpl @Inject constructor(
     }
 
     private fun selectedCityFailed(result: Response.Error<CityPlan>) {
-        val selection = CitySelection.NotSelected(result.errorMessage)
+        val selection: CitySelection = CitySelection.NotSelected(result.errorMessage)
         currentlySelectedCityEvent.postValue(Event(selection))
+        currentlySelectedCityChangedEvent.postValue(Event(selection))
         processing.postValue(false)
     }
 
     private fun selectedCitySucceeded(result: Response.Success<CityPlan>) {
-        val selection = CitySelection.Selected(result.successData)
+        val selection: CitySelection = CitySelection.Selected(result.successData)
         currentlySelectedCityEvent.postValue(Event(selection))
+        currentlySelectedCityChangedEvent.postValue(Event(selection))
         processing.postValue(false)
     }
 

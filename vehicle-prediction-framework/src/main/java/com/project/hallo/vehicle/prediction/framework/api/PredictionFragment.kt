@@ -10,9 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.hallo.city.plan.domain.VehicleData
-import com.project.hallo.city.plan.framework.internal.datamodel.CityPlanParcelable
+import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable
+import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
+import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
+import com.project.hallo.commons.framework.viewmodel.ViewModelType
+import com.project.hallo.commons.framework.viewmodel.externalViewModels
 import com.project.hallo.country.api.ResourceCountryCharacters
 import com.project.hallo.vehicle.prediction.framework.R
 import com.project.hallo.vehicle.prediction.framework.databinding.PredictionFragmentBinding
@@ -42,9 +45,16 @@ class PredictionFragment : Fragment() {
     @Inject
     lateinit var resourceCountryCharacters: ResourceCountryCharacters
 
+    @Inject
+    @ViewModelProvider(ViewModelType.ACTIVITY)
+    lateinit var cityPickViewModelProvider: ExternalViewModelProvider<CityPickViewModel>
+
+    private val cityPickViewModel by externalViewModels {
+        cityPickViewModelProvider
+    }
+
     private val safeArgs: PredictionFragmentArgs by navArgs()
     private val initialVehicleData: VehicleDataParcelable get() = safeArgs.vehicleDataParcelable
-    private val selectedCityParcelable: CityPlanParcelable get() = safeArgs.selectedCityParcelable
     private lateinit var binding: PredictionFragmentBinding
     private lateinit var predictedLinesAdapter: PredictedLinesAdapter
     private val predictionViewModel: PredictionViewModel by viewModels()
@@ -105,7 +115,7 @@ class PredictionFragment : Fragment() {
         val initialData = PredictionViewModelInitialData(
             targetVehicleTypes = initialVehicleData.vehicleTypes,
             countryCharacters = resourceCountryCharacters.get(),
-            selectedCityParcelable = selectedCityParcelable
+            selectedCity = cityPickViewModel.currentlySelectedCity.value!!
         )
         predictionViewModel.setInitialData(initialData)
     }

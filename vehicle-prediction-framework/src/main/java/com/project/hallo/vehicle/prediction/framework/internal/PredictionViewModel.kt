@@ -74,8 +74,8 @@ internal class PredictionViewModel @Inject constructor(
             .takeIf { it.isNotEmpty() }
             ?.flatMap {
                 when (it) {
-                    VehicleType.TRAM -> initialData.selectedCityParcelable.trams
-                    VehicleType.BUS -> initialData.selectedCityParcelable.buses
+                    VehicleType.TRAM -> initialData.selectedCity.trams
+                    VehicleType.BUS -> initialData.selectedCity.buses
                 }
             }
         if (selectedCityLines != null) {

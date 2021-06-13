@@ -10,6 +10,10 @@ interface CityPickViewModel : ExternalViewModel {
     val currentlySelectedCity: LiveData<CityPlan?>
     val supportedCities: LiveData<Event<SupportedCitiesStatus>>
     val processing: LiveData<Boolean>
+}
+
+internal interface InternalCityPickViewModel: ExternalViewModel {
+    val currentlySelectedCityChangedEvent: LiveData<Event<CitySelection>>
 
     fun selectCity(city: CityPlan)
 }
