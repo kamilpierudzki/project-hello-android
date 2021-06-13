@@ -2,9 +2,8 @@ package com.project.hallo.vehicle.prediction.framework.internal
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.project.hallo.city.plan.domain.VehicleType
+import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.domain.model.Line
-import com.project.hallo.city.plan.framework.internal.datamodel.CityPlanParcelable
-import com.project.hallo.city.plan.framework.internal.datamodel.LineParcelable
 import com.project.hallo.commons.domain.test.CoroutinesTestRule
 import com.project.hallo.commons.framework.ui.IText
 import com.project.hallo.vehicle.domain.VehiclePrediction
@@ -30,10 +29,10 @@ internal class PredictionViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    val cityPlan = CityPlanParcelable(
+    val cityPlan = CityPlan(
         "A",
-        listOf(LineParcelable("T1", ""), LineParcelable("T2", "")),
-        listOf(LineParcelable("B1", ""), LineParcelable("B2", ""))
+        listOf(Line("T1", ""), Line("T2", "")),
+        listOf(Line("B1", ""), Line("B2", ""))
     )
     val initialData = PredictionViewModelInitialData(
         listOf(VehicleType.TRAM, VehicleType.BUS),
@@ -51,8 +50,6 @@ internal class PredictionViewModelTest {
         countryCharactersEmitter,
         coroutinesTestRule.testDispatcher
     )
-
-    // todo zweryfikowanie działania setInitialData(...)
 
     @Test
     fun `when setInitialData is called then country characters are emitted`() =
@@ -84,8 +81,6 @@ internal class PredictionViewModelTest {
                 Assert.assertEquals(cityLines[3].number, "B2")
             }
         }
-
-    // todo zweryfikowanie działania processRecognisedTexts(...)
 
     @Test
     fun `when processRecognisedTexts is called then vehicle prediction is called`() =
