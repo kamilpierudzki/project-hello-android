@@ -50,8 +50,12 @@ class SettingsFragment : Fragment() {
 
     private fun setupCitySelection() {
         binding.pickCityRow.root.setOnClickListener {
-            it.findNavController().navigate(R.id.city_picker_screen) // todo fix it
+            goToCityPickerScreen(it)
         }
+    }
+
+    private fun goToCityPickerScreen(view: View) {
+        view.findNavController().navigate(R.id.city_plan_nav_graph)
     }
 
     private fun setupBinding() {
