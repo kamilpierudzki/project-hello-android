@@ -12,4 +12,5 @@
     <string name="vehicle_type_picker_vehicle_bus">Autobus</string>
     <string name="vehicle_type_picker_help_title"></string>
     <string name="vehicle_type_picker_help_message">Zawężenie kryterium typu pojazdu poprawia dokładność rozpoznawania numeru i kierunku.</string>
+    <string name="action_settings">Ustawienia</string>
 </resources>

@@ -1,9 +1,7 @@
 package com.project.hallo.vehicle.prediction.framework.api
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
@@ -15,25 +13,24 @@ import com.project.hallo.vehicle.prediction.framework.internal.ui.showNeutralDia
 
 class VehicleTypePickerFragment : Fragment() {
 
-    private var _binding: VehicleTypePickerFragmentBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: VehicleTypePickerFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = VehicleTypePickerFragmentBinding.inflate(inflater, container, false)
+        binding = VehicleTypePickerFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_prediction, menu)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         setupViews()
     }
 
