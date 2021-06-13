@@ -78,7 +78,7 @@ class CityPickerFragment : Fragment() {
     }
 
     private fun observeCurrentlySelectedCity() {
-        cityPickViewModel.currentlySelectedCity.observe(viewLifecycleOwner, {
+        cityPickViewModel.currentlySelectedCityEvent.observe(viewLifecycleOwner, {
             when (val selection = it.getContentOrNull()) {
                 is CitySelection.NotSelected -> showErrorMessage(selection.message)
                 is CitySelection.Selected -> returnSelectedCity(selection.cityPlan)

@@ -1,13 +1,13 @@
 package com.project.hallo.city.plan.framework.api
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.commons.framework.livedata.Event
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModel
 
 interface CityPickViewModel : ExternalViewModel {
-    val currentlySelectedCity: LiveData<Event<CitySelection>>
+    val currentlySelectedCityEvent: LiveData<Event<CitySelection>>
+    val currentlySelectedCity: LiveData<CityPlan?>
     val supportedCities: LiveData<Event<SupportedCitiesStatus>>
     val processing: LiveData<Boolean>
 

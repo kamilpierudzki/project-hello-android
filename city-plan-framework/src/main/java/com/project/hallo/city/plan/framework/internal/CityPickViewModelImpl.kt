@@ -1,9 +1,7 @@
 package com.project.hallo.city.plan.framework.internal
 
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.domain.model.SupportedCitiesData
 import com.project.hallo.city.plan.domain.usecase.CitySelectionUseCase
@@ -33,7 +31,15 @@ internal class CityPickViewModelImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel(), CityPickViewModel {
 
-    override val currentlySelectedCity = MutableLiveData<Event<CitySelection>>()
+    override val currentlySelectedCityEvent = MutableLiveData<Event<CitySelection>>()
+    override val currentlySelectedCity = currentlySelectedCityEvent.map {
+        val event = it.content
+        return@map if (event is CitySelection.Selected) {
+            event.cityPlan
+        } else {
+            null
+        }
+    }
     override val supportedCities = MutableLiveData<Event<SupportedCitiesStatus>>()
     override val processing = MutableLiveData<Boolean>()
 
@@ -82,13 +88,13 @@ internal class CityPickViewModelImpl @Inject constructor(
 
     private fun selectedCityFailed(result: Response.Error<CityPlan>) {
         val selection = CitySelection.NotSelected(result.errorMessage)
-        currentlySelectedCity.postValue(Event(selection))
+        currentlySelectedCityEvent.postValue(Event(selection))
         processing.postValue(false)
     }
 
     private fun selectedCitySucceeded(result: Response.Success<CityPlan>) {
         val selection = CitySelection.Selected(result.successData)
-        currentlySelectedCity.postValue(Event(selection))
+        currentlySelectedCityEvent.postValue(Event(selection))
         processing.postValue(false)
     }
 
@@ -103,7 +109,7 @@ internal class CityPickViewModelImpl @Inject constructor(
     private fun fetchSupportedCitiesSucceeded(result: Response.Success<SupportedCitiesData>) {
         val data: SupportedCitiesData = result.successData
         val currentlySelectedCity: CitySelection.Selected? =
-            currentlySelectedCity.value?.content as? CitySelection.Selected
+            currentlySelectedCityEvent.value?.content as? CitySelection.Selected
         val supportedCities = data.supportedCities.map {
             val isCurrentlySelected = currentlySelectedCity?.cityPlan == it
             SupportedCitiesStatus.Success.City(it, isCurrentlySelected)

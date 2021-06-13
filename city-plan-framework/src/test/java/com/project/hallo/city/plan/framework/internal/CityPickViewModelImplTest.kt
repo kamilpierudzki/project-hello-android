@@ -98,7 +98,7 @@ internal class CityPickViewModelImplTest {
             // when
             val tested = tested(selectedCityUseCase = selectedCityUseCase)
             lateinit var selection: CitySelection.Selected
-            tested.currentlySelectedCity.observeForever {
+            tested.currentlySelectedCityEvent.observeForever {
                 selection = it.getContentOrNull() as CitySelection.Selected
             }
 
@@ -120,7 +120,7 @@ internal class CityPickViewModelImplTest {
             // when
             val tested = tested(selectedCityUseCase = selectedCityUseCase)
             lateinit var selection: CitySelection
-            tested.currentlySelectedCity.observeForever {
+            tested.currentlySelectedCityEvent.observeForever {
                 selection = it.content
             }
 
@@ -285,7 +285,7 @@ internal class CityPickViewModelImplTest {
 
             val tested = tested()
             val events = mutableListOf<Event<CitySelection>>()
-            tested.currentlySelectedCity.observeForever { events.add(it) }
+            tested.currentlySelectedCityEvent.observeForever { events.add(it) }
 
             // when
             events.clear()
@@ -310,7 +310,7 @@ internal class CityPickViewModelImplTest {
 
             val tested = tested()
             val events = mutableListOf<Event<CitySelection>>()
-            tested.currentlySelectedCity.observeForever { events.add(it) }
+            tested.currentlySelectedCityEvent.observeForever { events.add(it) }
 
             // when
             events.clear()

@@ -49,7 +49,7 @@ class SplashFragment : Fragment() {
     }
 
     private fun observeCurrentlySelectedCity() {
-        cityPickViewModel.currentlySelectedCity.observe(viewLifecycleOwner, { event ->
+        cityPickViewModel.currentlySelectedCityEvent.observe(viewLifecycleOwner, { event ->
             when (val selection = event.getContentOrNull()) {
                 is CitySelection.NotSelected -> goToCityPickerScreen()
                 is CitySelection.Selected -> handleSelectedCity(selection.cityPlan)

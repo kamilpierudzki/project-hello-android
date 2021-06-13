@@ -6,14 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.project.hallo.city.plan.framework.api.CityPickViewModel
+import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
+import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
+import com.project.hallo.commons.framework.viewmodel.ViewModelType
+import com.project.hallo.commons.framework.viewmodel.externalViewModels
 import com.projekt.hallo.settings.framework.R
 import com.projekt.hallo.settings.framework.databinding.SettingsFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
 
     private lateinit var binding: SettingsFragmentBinding
+
+    @Inject
+    @ViewModelProvider(ViewModelType.ACTIVITY)
+    lateinit var cityPickViewModelProvider: ExternalViewModelProvider<CityPickViewModel>
+
+    private val cityPickViewModel by externalViewModels {
+        cityPickViewModelProvider
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +41,7 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
+        setupBinding()
     }
 
     private fun setupViews() {
@@ -35,7 +50,13 @@ class SettingsFragment : Fragment() {
 
     private fun setupCitySelection() {
         binding.pickCityRow.root.setOnClickListener {
-            it.findNavController().navigate(R.id.city_picker_screen)
+            it.findNavController().navigate(R.id.city_picker_screen) // todo fix it
+        }
+    }
+
+    private fun setupBinding() {
+        cityPickViewModel.currentlySelectedCity.observe(viewLifecycleOwner) {
+            binding.pickCityRow.selected.text = it?.city ?: return@observe
         }
     }
 }
