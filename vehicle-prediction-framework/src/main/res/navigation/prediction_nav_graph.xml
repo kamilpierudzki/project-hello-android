@@ -4,6 +4,8 @@
     android:id="@+id/prediction_nav_graph"
     app:startDestination="@id/vehicle_type_picker_fragment">
 
+    <include app:graph="@navigation/settings_nav_graph" />
+
     <fragment
         android:id="@+id/vehicle_type_picker_fragment"
         android:name="com.project.hallo.vehicle.prediction.framework.api.VehicleTypePickerFragment"
@@ -11,12 +13,11 @@
 
         <action
             android:id="@+id/go_to_prediction_screen"
-            app:destination="@id/prediction_fragment">
+            app:destination="@id/prediction_fragment" />
 
-            <argument
-                android:name="vehicleDataParcelable"
-                app:argType="com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable" />
-        </action>
+        <action
+            android:id="@+id/go_to_settings_screen"
+            app:destination="@id/settings_nav_graph" />
 
     </fragment>
 

@@ -10,8 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
+import com.project.hallo.city.plan.framework.api.CitySelection
 import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable
+import com.project.hallo.commons.framework.livedata.Event
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType
@@ -112,12 +115,15 @@ class PredictionFragment : Fragment() {
     }
 
     private fun passInitialInfoToViewModel() {
-        val initialData = PredictionViewModelInitialData(
-            targetVehicleTypes = initialVehicleData.vehicleTypes,
-            countryCharacters = resourceCountryCharacters.get(),
-            selectedCity = cityPickViewModel.currentlySelectedCity.value!!
-        )
-        predictionViewModel.setInitialData(initialData)
+        val currentlySelectedCity: CityPlan? = cityPickViewModel.currentlySelectedCity
+        if (currentlySelectedCity != null) {
+            val initialData = PredictionViewModelInitialData(
+                targetVehicleTypes = initialVehicleData.vehicleTypes,
+                countryCharacters = resourceCountryCharacters.get(),
+                selectedCity = currentlySelectedCity
+            )
+            predictionViewModel.setInitialData(initialData)
+        }
     }
 
     private fun observePredictedLines() {

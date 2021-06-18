@@ -360,6 +360,21 @@ internal class CityPickViewModelImplTest {
             Assert.assertEquals(false, events[1])
         }
 
+    @Test
+    fun `when currentlySelectedCityEvent changes currentlySelectedCity is available`() =
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+            val tested = tested()
+
+            // when
+            tested.currentlySelectedCityEvent.postValue(Event(CitySelection.Selected(cityA)))
+
+            // then
+            val currentlySelectedCity = tested.currentlySelectedCity
+            Assert.assertEquals(true, currentlySelectedCity != null)
+            Assert.assertEquals(cityA, currentlySelectedCity)
+        }
+
     fun tested(
         supportedCitiesUseCase: SupportedCitiesUseCase = this.supportedCitiesUseCase,
         citySelectionUseCase: CitySelectionUseCase = this.citySelectionUseCase,

@@ -49,7 +49,7 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.3.0'
     testImplementation "androidx.arch.core:core-testing:2.1.0"
-    testImplementation "org.mockito.kotlin:mockito-kotlin:3.0.0"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -61,11 +61,12 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:16.2.0'
 
-    implementation project(path: ':commons-framework')
+    implementation project(path: ':commons-domain')
     implementation project(path: ':vehicle-prediction-domain')
     implementation project(path: ':city-plan-domain')
+
+    implementation project(path: ':commons-framework')
     implementation project(path: ':city-plan-framework')
     implementation project(path: ':country-resources-framework')
-    implementation project(path: ':commons-domain')
     implementation project(path: ':settings-framework')
 }

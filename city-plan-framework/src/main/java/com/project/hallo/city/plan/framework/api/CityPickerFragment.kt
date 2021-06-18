@@ -129,7 +129,7 @@ class CityPickerFragment : Fragment() {
     }
 
     private fun fetchingSupportedCitiesSucceeded(status: SupportedCitiesStatus.Success) {
-        val currentlySelected: CityPlan? = cityPickViewModel.currentlySelectedCity.value
+        val currentlySelected: CityPlan? = cityPickViewModel.currentlySelectedCity
         val cities = status.supportedCities.map {
             City(cityPlan = it, selected = currentlySelected?.city == it.city)
         }

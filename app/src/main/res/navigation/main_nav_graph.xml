@@ -4,9 +4,6 @@
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/splash_nav_graph">
 
-    <include app:graph="@navigation/prediction_nav_graph" />
-    <include app:graph="@navigation/settings_nav_graph" />
     <include app:graph="@navigation/splash_nav_graph" />
-    <include app:graph="@navigation/city_plan_nav_graph" />
 
 </navigation>

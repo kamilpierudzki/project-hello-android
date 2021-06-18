@@ -34,9 +34,9 @@ internal class CityPickViewModelImpl @Inject constructor(
 
     override val currentlySelectedCityEvent = MutableLiveData<Event<CitySelection>>()
     override val currentlySelectedCityChangedEvent = MutableLiveData<Event<CitySelection>>()
-    override val currentlySelectedCity = currentlySelectedCityEvent.map {
-        val event = it.content
-        return@map if (event is CitySelection.Selected) {
+    override val currentlySelectedCity: CityPlan? get() {
+        val event = currentlySelectedCityEvent.value?.content
+        return if (event is CitySelection.Selected) {
             event.cityPlan
         } else {
             null

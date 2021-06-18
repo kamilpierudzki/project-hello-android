@@ -7,9 +7,9 @@ import com.project.hallo.commons.framework.viewmodel.ExternalViewModel
 
 interface CityPickViewModel : ExternalViewModel {
     val currentlySelectedCityEvent: LiveData<Event<CitySelection>>
-    val currentlySelectedCity: LiveData<CityPlan?>
     val supportedCities: LiveData<Event<SupportedCitiesStatus>>
     val processing: LiveData<Boolean>
+    val currentlySelectedCity: CityPlan?
 }
 
 internal interface InternalCityPickViewModel: ExternalViewModel {

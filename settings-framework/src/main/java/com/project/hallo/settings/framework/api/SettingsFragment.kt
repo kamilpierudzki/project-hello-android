@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
@@ -59,8 +60,9 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupBinding() {
-        cityPickViewModel.currentlySelectedCity.observe(viewLifecycleOwner) {
-            binding.pickCityRow.selected.text = it?.city ?: return@observe
+        val currentlySelectedCity: CityPlan? = cityPickViewModel.currentlySelectedCity
+        if (currentlySelectedCity != null) {
+            binding.pickCityRow.selected.text = currentlySelectedCity.city
         }
     }
 }

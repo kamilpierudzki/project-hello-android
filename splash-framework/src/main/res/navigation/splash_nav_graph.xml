@@ -4,15 +4,18 @@
     android:id="@+id/splash_nav_graph"
     app:startDestination="@id/splash_fragment">
 
+    <include app:graph="@navigation/prediction_nav_graph" />
+
     <fragment
         android:id="@+id/splash_fragment"
         android:name="com.project.hallo.splash.framework.api.SplashFragment">
 
         <action
             android:id="@+id/go_to_vehicle_type_picker_screen"
-            app:destination="@id/prediction_nav_graph">
+            app:destination="@id/prediction_nav_graph"
+            app:popUpTo="@id/splash_fragment"
+            app:popUpToInclusive="true" />
 
-        </action>
     </fragment>
 
 </navigation>

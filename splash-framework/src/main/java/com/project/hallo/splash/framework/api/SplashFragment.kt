@@ -48,7 +48,7 @@ class SplashFragment : Fragment() {
         cityPickViewModel.currentlySelectedCityEvent.observe(viewLifecycleOwner, { event ->
             when (event.getContentOrNull()) {
                 is CitySelection.NotSelected -> goToCityPickerScreen()
-                is CitySelection.Selected -> handleSelectedCity()
+                is CitySelection.Selected -> goToVehicleTypePickerScreen()
             }
         })
     }
@@ -57,12 +57,10 @@ class SplashFragment : Fragment() {
         findNavController().navigate(R.id.city_plan_nav_graph)
     }
 
-    private fun handleSelectedCity() {
-        goToVehicleTypePickerScreen()
-    }
-
     private fun goToVehicleTypePickerScreen() {
         val action = SplashFragmentDirections.goToVehicleTypePickerScreen()
         findNavController().navigate(action)
     }
+
+
 }
