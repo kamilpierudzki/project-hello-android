@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/vehicle_type_picker_fragment"
         android:name="com.project.hallo.vehicle.prediction.framework.api.VehicleTypePickerFragment"
-        android:label="@string/vehicle_type_picker_fragment_lable">
+        android:label="@string/vehicle_type_picker_fragment_label">
 
         <action
             android:id="@+id/go_to_prediction_screen"

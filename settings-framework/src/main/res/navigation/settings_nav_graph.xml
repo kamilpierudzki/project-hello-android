@@ -8,7 +8,8 @@
 
     <fragment
         android:id="@+id/settings_screen"
-        android:name="com.project.hallo.settings.framework.api.SettingsFragment">
+        android:name="com.project.hallo.settings.framework.api.SettingsFragment"
+        android:label="@string/settings_screen_label">
 
         <action
             android:id="@+id/go_to_city_picker_screen"

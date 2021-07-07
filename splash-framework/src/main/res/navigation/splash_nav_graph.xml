@@ -8,7 +8,8 @@
 
     <fragment
         android:id="@+id/splash_fragment"
-        android:name="com.project.hallo.splash.framework.api.SplashFragment">
+        android:name="com.project.hallo.splash.framework.api.SplashFragment"
+        android:label="@string/splash_screen_label">
 
         <action
             android:id="@+id/go_to_vehicle_type_picker_screen"

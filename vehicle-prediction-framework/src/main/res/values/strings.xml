@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="prediction_fragment_label"></string>
+    <string name="prediction_fragment_label">Predicting a vehicle</string>
     <string name="help_icon_description">Help</string>
     <string name="help_dialog_title"></string>
     <string name="help_dialog_message"></string>
     <string name="probably"></string>
-    <string name="vehicle_type_picker_fragment_lable"></string>
+    <string name="vehicle_type_picker_fragment_label">Select vehicle type</string>
     <string name="vehicle_type_picker_header">Select vehicle type</string>
     <string name="vehicle_type_picker_vehicle_all">All kind of vehicles</string>
     <string name="vehicle_type_picker_vehicle_tram">Tram</string>

@@ -3,4 +3,5 @@
     <string name="currently_selected">Currently selected</string>
     <string name="city_picker_loading">Loading</string>
     <string name="city_selection_error">Error during selecting city.</string>
+    <string name="city_picker_label">Select a city</string>
 </resources>
