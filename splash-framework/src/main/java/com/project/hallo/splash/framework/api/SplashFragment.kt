@@ -54,13 +54,12 @@ class SplashFragment : Fragment() {
     }
 
     private fun goToCityPickerScreen() {
-        findNavController().navigate(R.id.city_plan_nav_graph)
+        val action = SplashFragmentDirections.goToCityPickerScreen()
+        findNavController().navigate(action)
     }
 
     private fun goToVehicleTypePickerScreen() {
         val action = SplashFragmentDirections.goToVehicleTypePickerScreen()
         findNavController().navigate(action)
     }
-
-
 }

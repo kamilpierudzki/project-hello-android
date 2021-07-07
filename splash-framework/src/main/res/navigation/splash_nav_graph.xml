@@ -5,6 +5,7 @@
     app:startDestination="@id/splash_fragment">
 
     <include app:graph="@navigation/prediction_nav_graph" />
+    <include app:graph="@navigation/city_plan_nav_graph" />
 
     <fragment
         android:id="@+id/splash_fragment"
@@ -16,6 +17,12 @@
             app:destination="@id/prediction_nav_graph"
             app:popUpTo="@id/splash_fragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/go_to_city_picker_screen"
+            app:destination="@id/city_plan_nav_graph"
+            app:popUpTo="@id/splash_fragment"
+            app:popUpToInclusive="true"/>
 
     </fragment>
 

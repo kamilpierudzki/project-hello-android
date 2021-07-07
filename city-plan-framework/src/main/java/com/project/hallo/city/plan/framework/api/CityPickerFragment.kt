@@ -12,6 +12,7 @@ import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.databinding.CityPickerFragmentBinding
 import com.project.hallo.city.plan.framework.internal.ui.City
 import com.project.hallo.city.plan.framework.internal.ui.CityPickerAdapter
+import com.project.hallo.commons.framework.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType
@@ -43,6 +44,9 @@ class CityPickerFragment : Fragment() {
         internalCityPickViewModelProvider
     }
 
+    @Inject
+    lateinit var actionBarUpIndicatorVisibility: ActionBarUpIndicatorVisibility
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,6 +58,7 @@ class CityPickerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        actionBarUpIndicatorVisibility.disableUpButtonIfPossible(activity)
         setUpViews()
         observeProgress()
         observeSupportedCities()

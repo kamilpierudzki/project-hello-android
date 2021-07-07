@@ -1,21 +1,30 @@
 package com.project.hallo.vehicle.prediction.framework.api
 
+import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.project.hallo.city.plan.domain.VehicleType
 import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable
+import com.project.hallo.commons.framework.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hallo.vehicle.prediction.framework.R
 import com.project.hallo.vehicle.prediction.framework.databinding.VehicleTypePickerFragmentBinding
 import com.project.hallo.vehicle.prediction.framework.internal.ui.showNeutralDialog
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@RequiresApi(Build.VERSION_CODES.HONEYCOMB)
+@AndroidEntryPoint
 class VehicleTypePickerFragment : Fragment() {
 
     private lateinit var binding: VehicleTypePickerFragmentBinding
+
+    @Inject
+    lateinit var actionBarUpIndicatorVisibility: ActionBarUpIndicatorVisibility
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +53,7 @@ class VehicleTypePickerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        actionBarUpIndicatorVisibility.disableUpButtonIfPossible(activity)
         setupViews()
     }
 
