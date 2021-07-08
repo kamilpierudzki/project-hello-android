@@ -56,7 +56,8 @@ class SettingsFragment : Fragment() {
     }
 
     private fun goToCityPickerScreen(view: View) {
-        view.findNavController().navigate(R.id.city_plan_nav_graph)
+        val action = SettingsFragmentDirections.goToCityPickerScreen(backButtonDisabled = false)
+        view.findNavController().navigate(action)
     }
 
     private fun setupBinding() {

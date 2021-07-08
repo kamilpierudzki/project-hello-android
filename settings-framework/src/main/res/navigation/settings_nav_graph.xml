@@ -13,7 +13,13 @@
 
         <action
             android:id="@+id/go_to_city_picker_screen"
-            app:destination="@id/city_picker_screen" />
+            app:destination="@id/city_plan_nav_graph">
+
+            <argument
+                android:name="backButtonDisabled"
+                app:argType="boolean" />
+
+        </action>
 
     </fragment>
 

@@ -54,7 +54,7 @@ class SplashFragment : Fragment() {
     }
 
     private fun goToCityPickerScreen() {
-        val action = SplashFragmentDirections.goToCityPickerScreen()
+        val action = SplashFragmentDirections.goToCityPickerScreen(backButtonDisabled = true)
         findNavController().navigate(action)
     }
 

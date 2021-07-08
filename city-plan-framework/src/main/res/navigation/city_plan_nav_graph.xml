@@ -7,6 +7,12 @@
     <fragment
         android:id="@+id/city_picker_screen"
         android:name="com.project.hallo.city.plan.framework.api.CityPickerFragment"
-        android:label="@string/city_picker_label"/>
+        android:label="@string/city_picker_label">
+
+        <argument
+            android:name="backButtonDisabled"
+            app:argType="boolean" />
+
+    </fragment>
 
 </navigation>

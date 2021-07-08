@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.databinding.CityPickerFragmentBinding
@@ -24,6 +25,8 @@ import javax.inject.Inject
 class CityPickerFragment : Fragment() {
 
     private lateinit var binding: CityPickerFragmentBinding
+    private val safeArgs: CityPickerFragmentArgs by navArgs()
+    private val backButtonDisabled: Boolean get() = safeArgs.backButtonDisabled
 
     @Inject
     internal lateinit var cityPickerAdapter: CityPickerAdapter
@@ -58,12 +61,18 @@ class CityPickerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        actionBarUpIndicatorVisibility.disableUpButtonIfPossible(activity)
+        disableUpButtonIfPossible()
         setUpViews()
         observeProgress()
         observeSupportedCities()
         observeCitySelection()
         observeCurrentlySelectedCityEvent()
+    }
+
+    private fun disableUpButtonIfPossible() {
+        if (backButtonDisabled) {
+            actionBarUpIndicatorVisibility.disableUpButtonIfPossible(activity)
+        }
     }
 
     private fun setUpViews() {
