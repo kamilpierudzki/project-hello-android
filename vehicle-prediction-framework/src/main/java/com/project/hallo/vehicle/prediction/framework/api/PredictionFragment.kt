@@ -1,20 +1,24 @@
 package com.project.hallo.vehicle.prediction.framework.api
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
-import com.project.hallo.city.plan.framework.api.CitySelection
 import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable
-import com.project.hallo.commons.framework.livedata.Event
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType
@@ -28,7 +32,8 @@ import com.project.hallo.vehicle.prediction.framework.internal.PredictionViewMod
 import com.project.hallo.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hallo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import com.project.hallo.vehicle.prediction.framework.internal.ui.PredictedLinesAdapter
-import com.project.hallo.vehicle.prediction.framework.internal.ui.showNeutralDialog
+import com.project.hallo.vehicle.prediction.framework.internal.ui.showBinaryDialog
+import com.project.hallo.vehicle.prediction.framework.internal.ui.showInformationDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -61,6 +66,7 @@ class PredictionFragment : Fragment() {
     private lateinit var binding: PredictionFragmentBinding
     private lateinit var predictedLinesAdapter: PredictedLinesAdapter
     private val predictionViewModel: PredictionViewModel by viewModels()
+    private lateinit var requestCameraPermissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +85,8 @@ class PredictionFragment : Fragment() {
         observeRecognisedTexts()
         observeFpsCounter()
         observeScreenContentDescription()
-        startCameraAnalysis()
+        initRequestCameraPermissionLauncher()
+        processPermissionLogic()
     }
 
     override fun onDestroy() {
@@ -102,7 +109,11 @@ class PredictionFragment : Fragment() {
 
     private fun setupHelpIconClicks() {
         binding.helpIcon.setOnClickListener {
-            showNeutralDialog(it.context, R.string.help_dialog_title, R.string.help_dialog_message)
+            showInformationDialog(
+                it.context,
+                R.string.help_dialog_title,
+                R.string.help_dialog_message
+            )
         }
     }
 
@@ -147,7 +158,55 @@ class PredictionFragment : Fragment() {
         })
     }
 
+    private fun initRequestCameraPermissionLauncher() {
+        requestCameraPermissionLauncher = registerForActivityResult(
+            RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                startCameraAnalysis()
+            } else {
+                showExplanatoryWhyPermissionIsRequired()
+            }
+        }
+    }
+
+    private fun processPermissionLogic() {
+        if (!isCameraPermissionGranted()) {
+            requestCameraPermission()
+        } else {
+            startCameraAnalysis()
+        }
+    }
+
+    private fun isCameraPermissionGranted(): Boolean =
+        ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+
+    private fun requestCameraPermission() {
+        requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+    }
+
     private fun startCameraAnalysis() {
         cameraAnalysis.startCameraAnalysis(textAnalyzer, binding.cameraPreview.surfaceProvider)
+    }
+
+    private fun showExplanatoryWhyPermissionIsRequired() {
+        showBinaryDialog(
+            requireContext(),
+            R.string.camera_permission_explanatory_title,
+            R.string.camera_permission_explanatory_message,
+            positiveAction = {
+                processPermissionLogic()
+            },
+            negativeAction = {
+                goBackToPreviousScreen()
+            }
+        )
+    }
+
+    private fun goBackToPreviousScreen() {
+        findNavController().navigateUp()
     }
 }

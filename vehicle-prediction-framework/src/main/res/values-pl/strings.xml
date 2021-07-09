@@ -13,4 +13,6 @@
     <string name="vehicle_type_picker_help_title"></string>
     <string name="vehicle_type_picker_help_message">Zawężenie kryterium typu pojazdu poprawia dokładność rozpoznawania numeru i kierunku.</string>
     <string name="action_settings">Ustawienia</string>
+    <string name="camera_permission_explanatory_title">Dlaczego kamera jest potrzebna?</string>
+    <string name="camera_permission_explanatory_message">Podstawą rozpoznania pojazdu jest obraz z kamery. Bez niej aplikacja nie będzie w stanie rozpoznać pojazdu. Czy chcesz spróbować jeszcze raz?</string>
 </resources>

@@ -13,4 +13,6 @@
     <string name="vehicle_type_picker_help_title"></string>
     <string name="vehicle_type_picker_help_message"></string>
     <string name="action_settings">Settings</string>
+    <string name="camera_permission_explanatory_title">Why a camera is required?</string>
+    <string name="camera_permission_explanatory_message">To recognize a vehicle the app requires a camera. Without it the app will not be able to recognize the vehicle at all. Do you want to try again?</string>
 </resources>

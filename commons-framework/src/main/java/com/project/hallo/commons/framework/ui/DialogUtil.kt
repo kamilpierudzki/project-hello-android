@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.project.hallo.commons.R
 
-fun showNeutralDialog(context: Context, title: String, message: String) {
+fun showInformationDialog(context: Context, title: String, message: String) {
     val dialog = AlertDialog.Builder(context)
         .apply {
             setTitle(title)
@@ -18,6 +18,46 @@ fun showNeutralDialog(context: Context, title: String, message: String) {
     dialog.show()
 }
 
-fun showNeutralDialog(context: Context, @StringRes title: Int, @StringRes message: Int) {
-    showNeutralDialog(context, context.getString(title), context.getString(message))
+fun showInformationDialog(context: Context, @StringRes title: Int, @StringRes message: Int) {
+    showInformationDialog(context, context.getString(title), context.getString(message))
+}
+
+fun showBinaryDialog(
+    context: Context,
+    title: String,
+    message: String,
+    positiveAction: () -> Unit,
+    negativeAction: () -> Unit
+) {
+    val dialog = AlertDialog.Builder(context)
+        .apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton(R.string.dialog_positive_button) { dialog, _ ->
+                dialog.dismiss()
+                positiveAction.invoke()
+            }
+            setNegativeButton(R.string.dialog_negative_button) { dialog, _ ->
+                dialog.dismiss()
+                negativeAction.invoke()
+            }
+        }
+        .create()
+    dialog.show()
+}
+
+fun showBinaryDialog(
+    context: Context,
+    @StringRes title: Int,
+    @StringRes message: Int,
+    positiveAction: () -> Unit,
+    negativeAction: () -> Unit
+) {
+    showBinaryDialog(
+        context,
+        context.getString(title),
+        context.getString(message),
+        positiveAction,
+        negativeAction
+    )
 }

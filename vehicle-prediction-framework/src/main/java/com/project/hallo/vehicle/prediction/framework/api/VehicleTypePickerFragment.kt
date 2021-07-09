@@ -13,7 +13,7 @@ import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParce
 import com.project.hallo.commons.framework.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hallo.vehicle.prediction.framework.R
 import com.project.hallo.vehicle.prediction.framework.databinding.VehicleTypePickerFragmentBinding
-import com.project.hallo.vehicle.prediction.framework.internal.ui.showNeutralDialog
+import com.project.hallo.vehicle.prediction.framework.internal.ui.showInformationDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -64,7 +64,7 @@ class VehicleTypePickerFragment : Fragment() {
 
     private fun setupHelpIconClicks() {
         binding.helpIcon.setOnClickListener {
-            showNeutralDialog(
+            showInformationDialog(
                 it.context,
                 R.string.vehicle_type_picker_help_title,
                 R.string.vehicle_type_picker_help_message

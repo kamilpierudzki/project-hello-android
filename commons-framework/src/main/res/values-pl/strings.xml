@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dialog_neutral_button">Rozumiem</string>
+    <string name="dialog_positive_button">Tak</string>
+    <string name="dialog_negative_button">Nie</string>
 </resources>
