@@ -41,6 +41,7 @@ fun showBinaryDialog(
                 dialog.dismiss()
                 negativeAction.invoke()
             }
+            setCancelable(false)
         }
         .create()
     dialog.show()
