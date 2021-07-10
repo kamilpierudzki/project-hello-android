@@ -8,4 +8,4 @@ include ':commons-framework'
 include ':vehicle-prediction-framework'
 include ':vehicle-prediction-domain'
 include ':app'
-rootProject.name = "project-hallo-android"
+rootProject.name = "project-hello-android"
