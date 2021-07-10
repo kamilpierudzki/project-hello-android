@@ -11,9 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.project.hallo.city.plan.domain.VehicleType
 import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hallo.commons.framework.actionbar.ActionBarUpIndicatorVisibility
+import com.project.hallo.commons.framework.ui.showInformationDialog
 import com.project.hallo.vehicle.prediction.framework.R
 import com.project.hallo.vehicle.prediction.framework.databinding.VehicleTypePickerFragmentBinding
-import com.project.hallo.vehicle.prediction.framework.internal.ui.showInformationDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

@@ -102,15 +102,15 @@ class CityPickerFragment : Fragment() {
         cityPickViewModel.currentlySelectedCityEvent.observe(viewLifecycleOwner) {
             val content = it.content
             if (it.consumed.not() && content is CitySelection.NotSelected) {
-                showErrorMessage(content.message)
+                currentlySelectedCityFailed(content)
             } else if (it.consumed.not() && content is CitySelection.Selected) {
                 goBackToPreviousScreen()
             }
         }
     }
 
-    private fun showErrorMessage(@StringRes message: Int) {
-        // todo
+    private fun currentlySelectedCityFailed(status: CitySelection.NotSelected) {
+        showErrorMessage(status.message)
     }
 
     private fun goBackToPreviousScreen() {
@@ -148,9 +148,5 @@ class CityPickerFragment : Fragment() {
             City(cityPlan = it, selected = currentlySelected?.city == it.city)
         }
         cityPickerAdapter.updateSupportedCities(cities)
-    }
-
-    companion object {
-        const val RESULT_KEY = "CityPickerFragment_RESULT_KEY"
     }
 }

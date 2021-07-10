@@ -61,7 +61,7 @@ internal class CityPickViewModelImpl @Inject constructor(
                         .onEach {
                             handleSupportedCitiesResult(it)
                         }
-                        .collect { }
+                        .collect()
                 }
                 .collect()
         }

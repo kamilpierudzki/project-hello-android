@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable
+import com.project.hallo.commons.framework.ui.showBinaryDialog
+import com.project.hallo.commons.framework.ui.showInformationDialog
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType
@@ -32,8 +34,6 @@ import com.project.hallo.vehicle.prediction.framework.internal.PredictionViewMod
 import com.project.hallo.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hallo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import com.project.hallo.vehicle.prediction.framework.internal.ui.PredictedLinesAdapter
-import com.project.hallo.vehicle.prediction.framework.internal.ui.showBinaryDialog
-import com.project.hallo.vehicle.prediction.framework.internal.ui.showInformationDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

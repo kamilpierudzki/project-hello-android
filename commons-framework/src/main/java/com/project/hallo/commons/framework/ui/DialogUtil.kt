@@ -1,4 +1,4 @@
-package com.project.hallo.vehicle.prediction.framework.internal.ui
+package com.project.hallo.commons.framework.ui
 
 import android.content.Context
 import androidx.annotation.StringRes
@@ -61,4 +61,8 @@ fun showBinaryDialog(
         positiveAction,
         negativeAction
     )
+}
+
+fun showErrorDialog() {
+
 }
