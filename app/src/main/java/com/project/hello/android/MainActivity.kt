@@ -1,4 +1,4 @@
-package com.project.hallo.android
+package com.project.hello.android
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
