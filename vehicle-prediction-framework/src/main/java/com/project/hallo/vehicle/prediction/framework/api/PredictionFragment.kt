@@ -17,8 +17,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hallo.city.plan.domain.model.CityPlan
-import com.project.hallo.city.plan.framework.api.CityPickViewModel
-import com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hallo.commons.framework.ui.showBinaryDialog
 import com.project.hallo.commons.framework.ui.showInformationDialog
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
@@ -26,14 +24,16 @@ import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType
 import com.project.hallo.commons.framework.viewmodel.externalViewModels
 import com.project.hallo.country.api.ResourceCountryCharacters
-import com.project.hallo.vehicle.prediction.framework.R
-import com.project.hallo.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.hallo.vehicle.prediction.framework.internal.FpsCounterWrapper
 import com.project.hallo.vehicle.prediction.framework.internal.PredictionViewModel
 import com.project.hallo.vehicle.prediction.framework.internal.PredictionViewModelInitialData
 import com.project.hallo.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hallo.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import com.project.hallo.vehicle.prediction.framework.internal.ui.PredictedLinesAdapter
+import com.project.hello.city.plan.framework.api.CityPickViewModel
+import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable
+import com.project.hello.vehicle.prediction.framework.R
+import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

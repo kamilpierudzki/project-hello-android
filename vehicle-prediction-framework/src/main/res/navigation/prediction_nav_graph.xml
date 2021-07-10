@@ -28,7 +28,7 @@
 
         <argument
             android:name="vehicleDataParcelable"
-            app:argType="com.project.hallo.city.plan.framework.internal.datamodel.VehicleDataParcelable" />
+            app:argType="com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable" />
 
     </fragment>
 

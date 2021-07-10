@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/city_picker_screen"
-        android:name="com.project.hallo.city.plan.framework.api.CityPickerFragment"
+        android:name="com.project.hello.city.plan.framework.api.CityPickerFragment"
         android:label="@string/city_picker_label">
 
         <argument

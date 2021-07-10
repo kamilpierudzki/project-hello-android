@@ -1,11 +1,14 @@
 package com.project.hallo.vehicle.prediction.framework.internal.ui
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.project.hallo.vehicle.domain.analysis.LineWithProbability
-import com.project.hallo.vehicle.prediction.framework.databinding.PredictedItemBinding
+import com.project.hello.vehicle.prediction.framework.databinding.PredictedItemBinding
 
+@RequiresApi(Build.VERSION_CODES.DONUT)
 internal class PredictedLinesAdapter : RecyclerView.Adapter<PredictedLineViewHolder>() {
 
     private var dataset: List<LineWithProbability> = emptyList()

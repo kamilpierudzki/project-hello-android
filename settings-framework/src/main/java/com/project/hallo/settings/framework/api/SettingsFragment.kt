@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.project.hallo.city.plan.domain.model.CityPlan
-import com.project.hallo.city.plan.framework.api.CityPickViewModel
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType
 import com.project.hallo.commons.framework.viewmodel.externalViewModels
-import com.projekt.hallo.settings.framework.R
+import com.project.hello.city.plan.framework.api.CityPickViewModel
 import com.projekt.hallo.settings.framework.databinding.SettingsFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

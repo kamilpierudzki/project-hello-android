@@ -4,7 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.project.hallo.vehicle.domain.analysis.LineWithProbability
-import com.project.hallo.vehicle.prediction.framework.databinding.PredictedItemBinding
+import com.project.hello.vehicle.prediction.framework.databinding.PredictedItemBinding
 
 internal class PredictedLineViewHolder(private val viewBinding: PredictedItemBinding) :
     RecyclerView.ViewHolder(viewBinding.root) {

@@ -11,7 +11,7 @@ import com.project.hallo.vehicle.domain.VehiclePrediction
 import com.project.hallo.vehicle.domain.analysis.LineWithProbability
 import com.project.hallo.vehicle.domain.analysis.PredictedLinesAnalysis
 import com.project.hallo.vehicle.domain.steps.CountryCharactersEmitter
-import com.project.hallo.vehicle.prediction.framework.R
+import com.project.hello.vehicle.prediction.framework.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
