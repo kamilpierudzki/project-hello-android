@@ -1,0 +1,6 @@
+apply from: rootProject.file("gradle/commonVersion.gradle")
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+}

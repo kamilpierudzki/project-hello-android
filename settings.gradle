@@ -1,11 +1,11 @@
+rootProject.name = "project-hello-android"
+include ':app'
 include ':splash-framework'
 include ':settings-framework'
 include ':country-resources-framework'
-include ':commons-domain'
-include ':city-plan-framework'
-include ':city-plan-domain'
 include ':commons-framework'
+include ':city-plan-framework'
 include ':vehicle-prediction-framework'
+include ':commons-domain'
+include ':city-plan-domain'
 include ':vehicle-prediction-domain'
-include ':app'
-rootProject.name = "project-hello-android"
