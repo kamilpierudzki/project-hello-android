@@ -1,0 +1,6 @@
+ext {
+    coroutines_version = "1.4.1"
+    junit_version = "4.13.2"
+    mockito_kotlin_version = "3.2.0"
+    kotlin_coroutines_test_version = "1.4.3"
+}
