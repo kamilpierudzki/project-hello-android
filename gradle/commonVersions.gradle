@@ -18,9 +18,8 @@ ext {
     lifecycle_runtime_ktx_version = "$lifecycle_ktx_version_main"
     lifecycle_livedata_ktx_version = "$lifecycle_ktx_version_main"
 
-    navigation_ktx_version_main = "2.3.5"
-    navigation_fragment_ktx_version = "$navigation_ktx_version_main"
-    navigation_ui_ktx_version = "$navigation_ktx_version_main"
+    navigation_fragment_ktx_version = "$navigation_ktx_version"
+    navigation_ui_ktx_version = "$navigation_ktx_version"
 
     hilt_android_version = "$hilt_version"
     hilt_compiler_version = "$hilt_version"
