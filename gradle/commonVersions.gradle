@@ -22,9 +22,9 @@ ext {
     navigation_fragment_ktx_version = "$navigation_ktx_version_main"
     navigation_ui_ktx_version = "$navigation_ktx_version_main"
 
-    hilt_version_main = "2.33-beta"
-    hilt_android_version = "$hilt_version_main"
-    hilt_compiler_version = "$hilt_version_main"
+    hilt_android_version = "$hilt_version"
+    hilt_compiler_version = "$hilt_version"
+    hilt_android_gradle_plugin_version = "$hilt_version"
 
     room_ktx_version_main = "2.3.0"
     room_ktx_version = "$room_ktx_version_main"
