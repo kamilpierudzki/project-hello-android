@@ -17,6 +17,12 @@ android {
         }
     }
 
+    defaultConfig {
+        versionCode version_code_version
+        versionName version_name_version
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
