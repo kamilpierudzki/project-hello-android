@@ -32,4 +32,8 @@ dependencies {
 
     implementation "com.google.dagger:hilt-android:$hilt_android_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_compiler_version"
+
+    implementation "com.google.code.gson:gson:$gson_version"
+
+    implementation project(path: ':commons-domain')
 }
