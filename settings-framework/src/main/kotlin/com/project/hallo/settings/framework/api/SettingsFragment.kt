@@ -12,7 +12,7 @@ import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType
 import com.project.hallo.commons.framework.viewmodel.externalViewModels
 import com.project.hello.city.plan.framework.api.CityPickViewModel
-import com.projekt.hallo.settings.framework.databinding.SettingsFragmentBinding
+import com.project.hallo.settings.framework.databinding.SettingsFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
