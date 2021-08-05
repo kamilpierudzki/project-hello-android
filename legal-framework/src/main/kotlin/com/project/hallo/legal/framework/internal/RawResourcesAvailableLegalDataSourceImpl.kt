@@ -6,9 +6,9 @@ import com.project.hallo.commons.framework.resources.JsonResourceReader
 import com.project.hallo.legal.framework.R
 import javax.inject.Inject
 
-internal class RawResourcesLegalDataSourceImpl @Inject constructor(
+internal class RawResourcesAvailableLegalDataSourceImpl @Inject constructor(
     private val resources: Resources
-) : LegalDataSource {
+) : AvailableLegalDataSource {
 
     override fun fetchAvailableLegal(): Response<LegalApi> {
         val jsonReader = JsonResourceReader<LegalApi>(resources)
