@@ -1,3 +1,5 @@
 <resources>
     <string name="legal_screen_label">Warning</string>
+    <string name="error_load_latest_available_legal">Couldn\'t load latest available legal warning.</string>
+    <string name="error_load_latest_accepted_legal">Couldn\'t load latest accepted legal warning.</string>
 </resources>

@@ -8,7 +8,7 @@ import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCaseErrorMap
 import com.project.hallo.commons.domain.repository.Response
 
 class SupportedCitiesUseCaseErrorMapperImpl(private val resources: Resources) :
-    SupportedCitiesUseCaseErrorMapper {
+    SupportedCitiesUseCaseErrorMapper { // todo move into a framework module
 
     override fun mapError(error: Response.Error<SupportedCitiesData>) {
         error.errorMessage = when (error.errorMessage) {

@@ -1,6 +1,7 @@
 package com.project.hallo.commons.framework.hilt
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Resources
 import dagger.Module
 import dagger.Provides
@@ -26,4 +27,10 @@ internal class CommonsModule {
     @DefaultDispatcher
     @Provides
     fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+
+    @Provides
+    @AppSharedPreferences
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext appContext: Context): SharedPreferences =
+        appContext.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
 }

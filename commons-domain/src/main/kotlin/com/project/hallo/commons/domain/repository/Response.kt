@@ -9,5 +9,5 @@ sealed class Response<T>(
 
     class Loading<T>(data: T? = null) : Response<T>(data)
 
-    class Error<T>(var errorMessage: String, data: T? = null) : Response<T>(data)
+    class Error<T>(var errorMessage: String) : Response<T>()
 }
