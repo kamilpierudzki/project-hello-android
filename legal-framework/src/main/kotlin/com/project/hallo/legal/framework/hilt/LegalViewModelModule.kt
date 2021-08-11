@@ -1,7 +1,9 @@
 package com.project.hallo.legal.framework.hilt
 
+import com.project.hallo.legal.framework.internal.datasaver.PrefsLatestAcceptedLegalDataSaverImpl
 import com.project.hallo.legal.framework.internal.datasource.PrefsLatestAcceptedLegalDataSourceImpl
 import com.project.hallo.legal.framework.internal.datasource.RawResourcesLatestAvailableLegalDataSourceImpl
+import com.project.hello.legal.domain.datasaver.LatestAcceptedLegalDataSaver
 import com.project.hello.legal.domain.datasource.AvailableLegalDataSource
 import com.project.hello.legal.domain.datasource.LatestAcceptedLegalDataSource
 import com.project.hello.legal.domain.repository.LegalRepository
@@ -24,6 +26,11 @@ internal abstract class LegalViewModelModule {
     abstract fun bindsLatestAcceptedLegalDataSource(
         impl: PrefsLatestAcceptedLegalDataSourceImpl
     ): LatestAcceptedLegalDataSource
+
+    @Binds
+    abstract fun bindLatestAcceptedLegalDataSaver(
+        impl: PrefsLatestAcceptedLegalDataSaverImpl
+    ): LatestAcceptedLegalDataSaver
 
     @Binds
     abstract fun bindLegalRepository(impl: LegalRepositoryImpl): LegalRepository

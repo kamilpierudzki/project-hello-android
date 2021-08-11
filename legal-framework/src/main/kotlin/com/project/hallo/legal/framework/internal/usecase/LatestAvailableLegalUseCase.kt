@@ -7,7 +7,6 @@ import com.project.hello.legal.domain.model.api.toLatestAvailableLegal
 import com.project.hello.legal.domain.repository.LegalRepository
 import com.project.hello.legal.domain.usecase.LatestAvailableLegalUseCaseErrorMapper
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 internal class LatestAvailableLegalUseCase @Inject constructor(
@@ -23,7 +22,7 @@ internal class LatestAvailableLegalUseCase @Inject constructor(
                 val data = responseApi.successData
                 Response.Success(data.toLatestAvailableLegal())
             } else if (responseApi is Response.Error) {
-                Response.Error<LatestAvailableLegal>(responseApi.errorMessage)
+                Response.Error<LatestAvailableLegal>(responseApi.rawErrorMessage)
                     .also {
                         errorMapper.mapError(it)
                     }

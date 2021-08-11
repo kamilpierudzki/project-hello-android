@@ -9,5 +9,7 @@ sealed class Response<T>(
 
     class Loading<T>(data: T? = null) : Response<T>(data)
 
-    class Error<T>(var errorMessage: String) : Response<T>()
+    class Error<T>(val rawErrorMessage: String) : Response<T>() {
+        var localisedErrorMessage: String = ""
+    }
 }
