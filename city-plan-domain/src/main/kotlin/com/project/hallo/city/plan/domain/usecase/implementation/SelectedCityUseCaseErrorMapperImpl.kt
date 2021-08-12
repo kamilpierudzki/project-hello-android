@@ -11,10 +11,10 @@ class SelectedCityUseCaseErrorMapperImpl(private val resources: Resources) :
     SelectedCityUseCaseErrorMapper {
 
     override fun mapError(error: Response.Error<CityPlan>) {
-        error.errorMessage = when (error.errorMessage) {
+        error.localisedErrorMessage = when (error.rawErrorMessage) {
             ErrorCode.SelectedCity.SELECTED_CITY_ERROR ->
                 resources.getString(R.string.error_load_selected_city)
-            else -> error.errorMessage
+            else -> error.rawErrorMessage
         }
     }
 }

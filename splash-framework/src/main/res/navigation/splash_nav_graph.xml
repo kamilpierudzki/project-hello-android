@@ -6,6 +6,7 @@
 
     <include app:graph="@navigation/prediction_nav_graph" />
     <include app:graph="@navigation/city_plan_nav_graph" />
+    <include app:graph="@navigation/legal_nav_graph" />
 
     <fragment
         android:id="@+id/splash_fragment"
@@ -29,6 +30,12 @@
                 app:argType="boolean" />
 
         </action>
+
+        <action
+            android:id="@+id/go_to_legal_screen"
+            app:destination="@id/legal_nav_graph"
+            app:popUpTo="@id/splash_fragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 

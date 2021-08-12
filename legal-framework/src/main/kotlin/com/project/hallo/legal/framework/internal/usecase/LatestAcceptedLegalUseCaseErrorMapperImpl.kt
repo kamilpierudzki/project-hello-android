@@ -12,9 +12,9 @@ internal class LatestAcceptedLegalUseCaseErrorMapperImpl @Inject constructor(
 ) : LatestAcceptedLegalUseCaseErrorMapper {
 
     override fun mapError(error: Response.Error<Int>) {
-        error.errorMessage = when (error.errorMessage) {
+        error.localisedErrorMessage = when (error.rawErrorMessage) {
             LATEST_ACCEPTED_LEGAL_ERROR -> resources.getString(R.string.error_load_latest_accepted_legal)
-            else -> error.errorMessage
+            else -> error.rawErrorMessage
         }
     }
 }

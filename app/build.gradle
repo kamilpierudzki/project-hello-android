@@ -59,6 +59,7 @@ dependencies {
 
     implementation project(path: ':city-plan-domain')
     implementation project(path: ':vehicle-prediction-domain')
+    implementation project(path: ':legal-domain')
 
     implementation project(path: ':commons-framework')
     implementation project(path: ':city-plan-framework')
@@ -66,4 +67,5 @@ dependencies {
     implementation project(path: ':country-resources-framework')
     implementation project(path: ':settings-framework')
     implementation project(path: ':splash-framework')
+    implementation project(path: ':legal-framework')
 }

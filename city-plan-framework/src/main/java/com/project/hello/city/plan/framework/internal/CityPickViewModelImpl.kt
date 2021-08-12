@@ -87,7 +87,7 @@ internal class CityPickViewModelImpl @Inject constructor(
     }
 
     private fun selectedCityFailed(result: Response.Error<CityPlan>) {
-        val selection: CitySelection = CitySelection.NotSelected(result.errorMessage)
+        val selection: CitySelection = CitySelection.NotSelected(result.localisedErrorMessage)
         currentlySelectedCityEvent.postValue(Event(selection))
         currentlySelectedCityChangedEvent.postValue(Event(selection))
         processing.postValue(false)
@@ -116,7 +116,7 @@ internal class CityPickViewModelImpl @Inject constructor(
     }
 
     private fun fetchSupportedCitiesFailed(result: Response.Error<SupportedCitiesData>) {
-        val status = SupportedCitiesStatus.Error(result.errorMessage)
+        val status = SupportedCitiesStatus.Error(result.localisedErrorMessage)
         supportedCities.postValue(Event(status))
         processing.postValue(false)
     }

@@ -11,10 +11,10 @@ class SupportedCitiesUseCaseErrorMapperImpl(private val resources: Resources) :
     SupportedCitiesUseCaseErrorMapper { // todo move into a framework module
 
     override fun mapError(error: Response.Error<SupportedCitiesData>) {
-        error.errorMessage = when (error.errorMessage) {
+        error.localisedErrorMessage = when (error.rawErrorMessage) {
             ErrorCode.SupportedCities.SUPPORTED_CITIES_ERROR ->
                 resources.getString(R.string.error_load_supported_cities)
-            else -> error.errorMessage
+            else -> error.rawErrorMessage
         }
     }
 }

@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/legal_nav_graph">
-
-    <include app:graph="@navigation/splash_nav_graph" />
+    android:id="@+id/legal_nav_graph"
+    app:startDestination="@id/legal_fragment">
 
     <fragment
-        android:id="@+id/legal_screen"
-        android:name="com.project.hallo.legal.framework.LegalFragment"
-        android:label="@string/legal_screen_label">
-
-        <action
-            android:id="@+id/go_to_splash_screen"
-            app:destination="@id/splash_nav_graph" />
-
-    </fragment>
+        android:id="@+id/legal_fragment"
+        android:name="com.project.hallo.legal.framework.internal.LegalFragment"
+        android:label="@string/legal_screen_label" />
 
 </navigation>

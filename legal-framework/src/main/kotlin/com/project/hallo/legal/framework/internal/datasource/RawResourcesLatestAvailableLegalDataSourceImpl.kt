@@ -1,6 +1,7 @@
 package com.project.hallo.legal.framework.internal.datasource
 
 import android.content.res.Resources
+import com.google.gson.reflect.TypeToken
 import com.project.hallo.commons.domain.repository.Response
 import com.project.hallo.commons.framework.resources.JsonResourceReader
 import com.project.hallo.legal.framework.R
@@ -12,7 +13,10 @@ internal class RawResourcesLatestAvailableLegalDataSourceImpl @Inject constructo
     resources: Resources
 ) : AvailableLegalDataSource {
 
-    private val jsonResourceReader = JsonResourceReader<LatestAvailableLegalApi>(resources)
+    private val jsonResourceReader = JsonResourceReader(
+        resources,
+        object : TypeToken<LatestAvailableLegalApi>() {}
+    )
 
     override fun fetchAvailableLegal(): Response<LatestAvailableLegalApi> {
         return jsonResourceReader.readFile(R.raw.legal_data)

@@ -3,4 +3,5 @@
     <string name="legal_screen_label">Ostrzeżenie</string>
     <string name="error_load_latest_available_legal">Nie udało się załadować aktualnego ostrzeżenia użytkownika.</string>
     <string name="error_load_latest_accepted_legal">Nie udało się załadować ostatnio zaakceptowanego ostrzeżenia.</string>
+    <string name="legal_confirmation_button">Rozumiem</string>
 </resources>

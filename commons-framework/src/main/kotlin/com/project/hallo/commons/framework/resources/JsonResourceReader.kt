@@ -10,7 +10,8 @@ import java.io.InputStreamReader
 import java.lang.reflect.Type
 
 class JsonResourceReader<T>(
-    private val resources: Resources
+    private val resources: Resources,
+    private val token: TypeToken<T>
 ) {
 
     fun readFile(resFile: Int): Response<T> {
@@ -24,10 +25,10 @@ class JsonResourceReader<T>(
         inputStream.close()
 
         return try {
-            val fooType: Type = object : TypeToken<JsonResourceReader<T?>?>() {}.type
-            val cityApi: T? = Gson().fromJson(json, fooType)
-            if (cityApi != null) {
-                Response.Success(cityApi)
+            val type: Type = token.type
+            val data: T? = Gson().fromJson<T>(json, type)
+            if (data != null) {
+                Response.Success(data)
             } else {
                 Response.Error("json is empty")
             }

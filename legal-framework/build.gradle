@@ -44,7 +44,8 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_compiler_version"
     androidTestImplementation "androidx.room:room-testing:$room_testing_version"
 
-    implementation project(path: ':splash-framework')
+    implementation "com.google.code.gson:gson:$gson_version"
+
     implementation project(path: ':commons-framework')
     implementation project(path: ':commons-domain')
     implementation project(path: ':legal-domain')

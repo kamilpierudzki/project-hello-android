@@ -10,6 +10,7 @@ import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType
 import com.project.hallo.commons.framework.viewmodel.externalViewModels
+import com.project.hallo.legal.framework.api.LegalViewModel
 import com.project.hallo.splash.framework.databinding.SplashFragmentBinding
 import com.project.hello.city.plan.framework.api.CityPickViewModel
 import com.project.hello.city.plan.framework.api.CitySelection
@@ -29,6 +30,14 @@ class SplashFragment : Fragment() {
         cityPickViewModelProvider
     }
 
+    @Inject
+    @ViewModelProvider(ViewModelType.ACTIVITY)
+    lateinit var legalViewModelProvider: ExternalViewModelProvider<LegalViewModel>
+
+    private val legalViewModel by externalViewModels {
+        legalViewModelProvider
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +49,16 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeCurrentlySelectedCity()
+        observeIfLatestAvailableLegalIsAccepted()
+    }
+
+    private fun observeIfLatestAvailableLegalIsAccepted() {
+        legalViewModel.isLatestAvailableLegalAccepted.observe(viewLifecycleOwner, { event ->
+            when (event.getContentOrNull()) {
+                true -> observeCurrentlySelectedCity()
+                false -> goToLegalScreen()
+            }
+        })
     }
 
     private fun observeCurrentlySelectedCity() {
@@ -60,5 +78,11 @@ class SplashFragment : Fragment() {
     private fun goToVehicleTypePickerScreen() {
         val action = SplashFragmentDirections.goToVehicleTypePickerScreen()
         findNavController().navigate(action)
+    }
+
+    private fun goToLegalScreen() {
+        val action = SplashFragmentDirections.goToLegalScreen()
+        findNavController().navigate(action)
+
     }
 }
