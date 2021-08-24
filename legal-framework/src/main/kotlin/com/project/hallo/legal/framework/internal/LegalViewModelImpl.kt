@@ -19,6 +19,14 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
+private class LatestLegalNotAcceptedException(
+    localisedErrorMessage: String
+) : IllegalStateException(localisedErrorMessage)
+
+private class LatestLegalNotAvailableException(
+    localisedErrorMessage: String
+) : IllegalStateException(localisedErrorMessage)
+
 @HiltViewModel
 internal class LegalViewModelImpl @Inject constructor(
     private val latestAcceptedLegalVersionUseCase: LatestAcceptedLegalVersionUseCase,
@@ -76,8 +84,17 @@ internal class LegalViewModelImpl @Inject constructor(
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+            .subscribe({
                 isLatestAvailableLegalAccepted.value = Event(it)
+            }) {
+                when (it) {
+                    is LatestLegalNotAcceptedException -> {
+                        isLatestAvailableLegalAccepted.value = Event(false)
+                    }
+                    is LatestLegalNotAvailableException -> {
+                        // todo currently it is impossible path
+                    }
+                }
             }
         )
     }
@@ -88,7 +105,7 @@ internal class LegalViewModelImpl @Inject constructor(
                 when (response) {
                     is Response.Success -> Observable.just(response)
                     is Response.Error -> Observable.error(
-                        IllegalStateException(response.localisedErrorMessage)
+                        LatestLegalNotAvailableException(response.localisedErrorMessage)
                     )
                     else -> Observable.never()
                 }
@@ -98,13 +115,14 @@ internal class LegalViewModelImpl @Inject constructor(
             }
 
     private fun fetchLatestAcceptedLegalVersion(): Observable<Response.Success<Int>> =
-        latestAcceptedLegalVersionUseCase.execute().flatMap { response ->
-            when (response) {
-                is Response.Success -> Observable.just(response)
-                is Response.Error -> Observable.error(
-                    IllegalStateException(response.localisedErrorMessage)
-                )
-                else -> Observable.never()
+        latestAcceptedLegalVersionUseCase.execute()
+            .flatMap { response ->
+                when (response) {
+                    is Response.Success -> Observable.just(response)
+                    is Response.Error -> Observable.error(
+                        LatestLegalNotAcceptedException(response.localisedErrorMessage)
+                    )
+                    else -> Observable.never()
+                }
             }
-        }
 }
