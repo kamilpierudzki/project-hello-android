@@ -5,7 +5,7 @@ import com.project.hallo.city.plan.domain.R
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.domain.model.ErrorCode
 import com.project.hallo.city.plan.domain.usecase.SelectedCityUseCaseErrorMapper
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.Response
 
 class SelectedCityUseCaseErrorMapperImpl(private val resources: Resources) :
     SelectedCityUseCaseErrorMapper {

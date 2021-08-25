@@ -1,6 +1,6 @@
 package com.project.hello.legal.domain.repository.implementation
 
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.ResponseApi
 import com.project.hello.legal.domain.datasaver.LatestAcceptedLegalDataSaver
 import com.project.hello.legal.domain.datasource.AvailableLegalDataSource
 import com.project.hello.legal.domain.datasource.LatestAcceptedLegalDataSource
@@ -17,15 +17,15 @@ class LegalRepositoryImpl(
 ) : LegalRepository {
 
     override fun getLegalDataResource() = object : LegalDataResource {
-        override fun latestAcceptedLegalVersion(): Response<Int> {
+        override fun latestAcceptedLegalVersion(): ResponseApi<Int> {
             return latestAcceptedLegalDataSource.fetchLatestAcceptedLegalVersion()
         }
 
-        override fun latestAvailableLegal(): Response<LatestAvailableLegalApi> {
+        override fun latestAvailableLegal(): ResponseApi<LatestAvailableLegalApi> {
             return availableLegalDataSource.fetchAvailableLegal()
         }
 
-        override fun saveLatestAcceptedLegal(latestAvailableLegal: LatestAvailableLegal): Response<Unit> {
+        override fun saveLatestAcceptedLegal(latestAvailableLegal: LatestAvailableLegal): ResponseApi<Unit> {
             val latestAvailableLegalApi = latestAvailableLegal.toLatestAvailableLegalApi()
             return latestAcceptedLegalDataSaver.saveLatestAcceptedLegal(latestAvailableLegalApi)
         }

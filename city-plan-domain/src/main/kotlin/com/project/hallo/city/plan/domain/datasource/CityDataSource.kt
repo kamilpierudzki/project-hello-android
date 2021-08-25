@@ -1,8 +1,8 @@
 package com.project.hallo.city.plan.domain.datasource
 
 import com.project.hallo.city.plan.domain.model.api.CityPlanAPI
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.ResponseApi
 
 interface CityDataSource {
-    fun fetchCityData(resFile: Int): Response<CityPlanAPI>
+    fun fetchCityData(resFile: Int): ResponseApi<CityPlanAPI>
 }

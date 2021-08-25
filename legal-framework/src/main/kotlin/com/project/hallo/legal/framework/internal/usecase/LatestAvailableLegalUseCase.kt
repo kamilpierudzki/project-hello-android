@@ -1,6 +1,7 @@
 package com.project.hallo.legal.framework.internal.usecase
 
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.Response
+import com.project.hallo.commons.domain.data.ResponseApi
 import com.project.hello.legal.domain.model.LatestAvailableLegal
 import com.project.hello.legal.domain.model.api.LatestAvailableLegalApi
 import com.project.hello.legal.domain.model.api.toLatestAvailableLegal
@@ -16,17 +17,24 @@ internal class LatestAvailableLegalUseCase @Inject constructor(
 
     fun execute(): Observable<Response<LatestAvailableLegal>> {
         return Observable.create {
+            it.onNext(Response.Loading())
             val dataResource = legalRepository.getLegalDataResource()
-            val responseApi: Response<LatestAvailableLegalApi> = dataResource.latestAvailableLegal()
-            if (responseApi is Response.Success) {
-                val data = responseApi.successData
-                Response.Success(data.toLatestAvailableLegal())
-            } else if (responseApi is Response.Error) {
-                Response.Error<LatestAvailableLegal>(responseApi.rawErrorMessage)
-                    .also {
-                        errorMapper.mapError(it)
-                    }
+            val responseApi: ResponseApi<LatestAvailableLegalApi> =
+                dataResource.latestAvailableLegal()
+            val responseEvent = when (responseApi) {
+                is ResponseApi.Success -> {
+                    val data = responseApi.successData
+                    Response.Success(data.toLatestAvailableLegal())
+                }
+                is ResponseApi.Error -> {
+                    Response.Error<LatestAvailableLegal>(responseApi.rawErrorMessage)
+                        .also { errorResponse ->
+                            errorMapper.mapError(errorResponse)
+                        }
+                }
             }
+            it.onNext(responseEvent)
+            it.onComplete()
         }
     }
 }

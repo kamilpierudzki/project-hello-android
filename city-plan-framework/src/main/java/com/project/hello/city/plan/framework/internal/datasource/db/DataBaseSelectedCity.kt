@@ -3,7 +3,7 @@ package com.project.hello.city.plan.framework.internal.datasource.db
 import com.project.hallo.city.plan.domain.datasource.SelectedCityDataSource
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.domain.model.ErrorCode.SelectedCity
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.ResponseApi
 import com.project.hello.city.plan.framework.internal.db.CityDatabase
 import javax.inject.Inject
 
@@ -18,11 +18,11 @@ internal class DataBaseSelectedCity @Inject constructor(
         dao.insertCity(entity)
     }
 
-    override fun loadCity(): Response<CityPlan> {
+    override fun loadCity(): ResponseApi<CityPlan> {
         val dao = database.cityDao()
         val cityPlanEntity = dao.getCities().firstOrNull()
-            ?: return Response.Error(SelectedCity.SELECTED_CITY_ERROR)
+            ?: return ResponseApi.Error(SelectedCity.SELECTED_CITY_ERROR)
         val cityPlan = CityPlanEntity.toCityPlan(cityPlanEntity)
-        return Response.Success(cityPlan)
+        return ResponseApi.Success(cityPlan)
     }
 }

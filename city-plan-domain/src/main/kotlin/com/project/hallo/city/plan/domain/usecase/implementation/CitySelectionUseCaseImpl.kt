@@ -3,7 +3,7 @@ package com.project.hallo.city.plan.domain.usecase.implementation
 import com.project.hallo.city.plan.domain.model.CityPlan
 import com.project.hallo.city.plan.domain.repository.CityPlanRepository
 import com.project.hallo.city.plan.domain.usecase.CitySelectionUseCase
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.Response
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

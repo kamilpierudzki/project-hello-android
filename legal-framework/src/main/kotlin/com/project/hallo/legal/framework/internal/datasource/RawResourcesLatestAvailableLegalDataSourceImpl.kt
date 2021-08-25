@@ -2,7 +2,7 @@ package com.project.hallo.legal.framework.internal.datasource
 
 import android.content.res.Resources
 import com.google.gson.reflect.TypeToken
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.ResponseApi
 import com.project.hallo.commons.framework.resources.JsonResourceReader
 import com.project.hallo.legal.framework.R
 import com.project.hello.legal.domain.datasource.AvailableLegalDataSource
@@ -18,7 +18,7 @@ internal class RawResourcesLatestAvailableLegalDataSourceImpl @Inject constructo
         object : TypeToken<LatestAvailableLegalApi>() {}
     )
 
-    override fun fetchAvailableLegal(): Response<LatestAvailableLegalApi> {
+    override fun fetchAvailableLegal(): ResponseApi<LatestAvailableLegalApi> {
         return jsonResourceReader.readFile(R.raw.legal_data)
     }
 }

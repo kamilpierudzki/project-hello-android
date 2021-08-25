@@ -9,7 +9,7 @@ import com.project.hallo.city.plan.domain.model.SupportedCitiesData
 import com.project.hallo.city.plan.domain.usecase.CitySelectionUseCase
 import com.project.hallo.city.plan.domain.usecase.SelectedCityUseCase
 import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCase
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.Response
 import com.project.hallo.commons.framework.hilt.IoDispatcher
 import com.project.hallo.commons.framework.livedata.Event
 import com.project.hello.city.plan.framework.api.CityPickViewModel

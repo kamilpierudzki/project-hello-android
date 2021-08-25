@@ -2,7 +2,7 @@ package com.project.hallo.legal.framework.internal.datasaver
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.ResponseApi
 import com.project.hallo.commons.framework.hilt.AppSharedPreferences
 import com.project.hallo.legal.framework.internal.LegalPreferencesConstants.LATEST_ACCEPTED_LEGAL_VERSION
 import com.project.hello.legal.domain.datasaver.LatestAcceptedLegalDataSaver
@@ -14,11 +14,11 @@ internal class PrefsLatestAcceptedLegalDataSaverImpl @Inject constructor(
 ) : LatestAcceptedLegalDataSaver {
 
     @SuppressLint("ApplySharedPref")
-    override fun saveLatestAcceptedLegal(latestAvailableLegalApi: LatestAvailableLegalApi): Response<Unit> {
+    override fun saveLatestAcceptedLegal(latestAvailableLegalApi: LatestAvailableLegalApi): ResponseApi<Unit> {
         sharedPreferences.edit().apply {
             putInt(LATEST_ACCEPTED_LEGAL_VERSION, latestAvailableLegalApi.version)
             commit()
         }
-        return Response.Success(Unit)
+        return ResponseApi.Success(Unit)
     }
 }

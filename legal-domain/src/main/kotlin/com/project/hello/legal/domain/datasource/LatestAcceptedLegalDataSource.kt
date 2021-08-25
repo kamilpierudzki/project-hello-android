@@ -1,7 +1,7 @@
 package com.project.hello.legal.domain.datasource
 
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.ResponseApi
 
 interface LatestAcceptedLegalDataSource {
-    fun fetchLatestAcceptedLegalVersion(): Response<Int>
+    fun fetchLatestAcceptedLegalVersion(): ResponseApi<Int>
 }

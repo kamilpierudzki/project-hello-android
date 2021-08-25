@@ -1,6 +1,7 @@
 package com.project.hallo.legal.framework.internal.usecase
 
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.Response
+import com.project.hallo.commons.domain.data.ResponseApi
 import com.project.hello.legal.domain.repository.LegalRepository
 import com.project.hello.legal.domain.usecase.LatestAcceptedLegalUseCaseErrorMapper
 import io.reactivex.rxjava3.core.Observable
@@ -15,11 +16,16 @@ internal class LatestAcceptedLegalVersionUseCase @Inject constructor(
         return Observable.create {
             it.onNext(Response.Loading())
             val dataResource = legalRepository.getLegalDataResource()
-            val repositoryResponse = dataResource.latestAcceptedLegalVersion()
-            if (repositoryResponse is Response.Error) {
-                errorMapper.mapError(repositoryResponse)
-            }
-            it.onNext(repositoryResponse)
+            val response =
+                when (val repositoryResponseApi = dataResource.latestAcceptedLegalVersion()) {
+                    is ResponseApi.Error -> Response.Error<Int>(repositoryResponseApi.rawErrorMessage)
+                        .also {
+                            errorMapper.mapError(it)
+                        }
+                    is ResponseApi.Success -> Response.Success(repositoryResponseApi.successData)
+                }
+            it.onNext(response)
+            it.onComplete()
         }
     }
 }

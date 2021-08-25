@@ -7,7 +7,8 @@ import com.project.hallo.city.plan.domain.model.api.toCityPlan
 import com.project.hallo.city.plan.domain.repository.CityPlanRepository
 import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCase
 import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCaseErrorMapper
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.Response
+import com.project.hallo.commons.domain.data.ResponseApi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +26,7 @@ class SupportedCitiesUseCaseImpl(
         val cityDataResource = cityPlanRepository.getCityDataResource()
         val supportedCities: List<CityPlan> = cityPlanRepository.getSupportedCityFileResources()
             .map { supportedCityFile -> cityDataResource.load(supportedCityFile) }
-            .mapNotNull { cityPlanResponse -> (cityPlanResponse as? Response.Success)?.successData }
+            .mapNotNull { (it as? ResponseApi.Success)?.successData }
             .map { it.toCityPlan() }
 
         if (supportedCities.isEmpty()) {

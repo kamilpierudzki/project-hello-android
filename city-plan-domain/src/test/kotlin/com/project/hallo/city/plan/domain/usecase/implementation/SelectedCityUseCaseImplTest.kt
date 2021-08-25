@@ -6,7 +6,7 @@ import com.project.hallo.city.plan.domain.model.api.LineAPI
 import com.project.hallo.city.plan.domain.repository.CityPlanRepository
 import com.project.hallo.city.plan.domain.repository.resource.CityDataResource
 import com.project.hallo.city.plan.domain.usecase.SelectedCityUseCaseErrorMapper
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.Response
 import com.project.hallo.commons.domain.test.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect

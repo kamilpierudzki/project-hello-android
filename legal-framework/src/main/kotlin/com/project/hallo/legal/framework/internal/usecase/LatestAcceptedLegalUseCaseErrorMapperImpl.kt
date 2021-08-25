@@ -1,7 +1,7 @@
 package com.project.hallo.legal.framework.internal.usecase
 
 import android.content.res.Resources
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.Response
 import com.project.hallo.legal.framework.R
 import com.project.hello.legal.domain.model.LegalErrorCode.LatestAcceptedLegal.LATEST_ACCEPTED_LEGAL_ERROR
 import com.project.hello.legal.domain.usecase.LatestAcceptedLegalUseCaseErrorMapper

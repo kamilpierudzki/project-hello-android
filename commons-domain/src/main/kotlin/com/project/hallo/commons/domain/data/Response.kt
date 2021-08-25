@@ -1,4 +1,4 @@
-package com.project.hallo.commons.domain.repository
+package com.project.hallo.commons.domain.data
 
 sealed class Response<T>(
     val data: T? = null

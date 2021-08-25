@@ -2,7 +2,7 @@ package com.project.hallo.legal.framework.internal
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.project.hallo.commons.domain.repository.Response
+import com.project.hallo.commons.domain.data.Response
 import com.project.hallo.commons.framework.livedata.Event
 import com.project.hallo.legal.framework.api.LatestAvailableLegalResult
 import com.project.hallo.legal.framework.api.LegalViewModel
@@ -73,30 +73,27 @@ internal class LegalViewModelImpl @Inject constructor(
     }
 
     private fun updateInfoAboutAcceptedLegal() {
-        disposable.add(Observable.zip(
-            fetchLatestAvailableLegal(),
-            fetchLatestAcceptedLegalVersion(),
-            { latestAvailableLegalResponse, latestAcceptedLegalVersionResponse ->
-                val latestAcceptedVersion = latestAcceptedLegalVersionResponse.successData
-                val latestAvailableLegal = latestAvailableLegalResponse.successData
-                return@zip latestAcceptedVersion >= latestAvailableLegal.version
-            }
-        )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                isLatestAvailableLegalAccepted.value = Event(it)
-            }) {
-                when (it) {
-                    is LatestLegalNotAcceptedException -> {
-                        isLatestAvailableLegalAccepted.value = Event(false)
+        disposable.add(
+            fetchLatestAvailableLegal()
+                .doOnNext { latestAvailableLegal.postValue(it.successData) }
+                .flatMap { fetchLatestAcceptedLegalVersion() }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ latestAcceptedLegalVersionResponse ->
+                    val latestAcceptedVersion = latestAcceptedLegalVersionResponse.successData
+                    val latestAvailableLegal = latestAvailableLegal.value!!
+                    val isLatestAccepted = latestAcceptedVersion >= latestAvailableLegal.version
+                    isLatestAvailableLegalAccepted.value = Event(isLatestAccepted)
+                }) {
+                    when (it) {
+                        is LatestLegalNotAcceptedException -> {
+                            isLatestAvailableLegalAccepted.value = Event(false)
+                        }
+                        is LatestLegalNotAvailableException -> {
+                            // todo currently it is impossible path
+                        }
                     }
-                    is LatestLegalNotAvailableException -> {
-                        // todo currently it is impossible path
-                    }
-                }
-            }
-        )
+                })
     }
 
     private fun fetchLatestAvailableLegal(): Observable<Response.Success<LatestAvailableLegal>> =
@@ -109,9 +106,6 @@ internal class LegalViewModelImpl @Inject constructor(
                     )
                     else -> Observable.never()
                 }
-            }
-            .doOnNext {
-                latestAvailableLegal.value = it.successData
             }
 
     private fun fetchLatestAcceptedLegalVersion(): Observable<Response.Success<Int>> =
