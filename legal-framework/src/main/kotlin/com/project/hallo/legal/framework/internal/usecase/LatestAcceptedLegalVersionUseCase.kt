@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 internal class LatestAcceptedLegalVersionUseCase @Inject constructor(
     private val legalRepository: LegalRepository,
-    private val errorMapper: LatestAcceptedLegalUseCaseErrorMapper
+    private val latestAcceptedLegalUseCaseErrorMapper: LatestAcceptedLegalUseCaseErrorMapper
 ) {
 
     fun execute(): Observable<Response<Int>> {
@@ -19,8 +19,8 @@ internal class LatestAcceptedLegalVersionUseCase @Inject constructor(
             val response =
                 when (val repositoryResponseApi = dataResource.latestAcceptedLegalVersion()) {
                     is ResponseApi.Error -> Response.Error<Int>(repositoryResponseApi.rawErrorMessage)
-                        .also {
-                            errorMapper.mapError(it)
+                        .also { error ->
+                            latestAcceptedLegalUseCaseErrorMapper.mapError(error)
                         }
                     is ResponseApi.Success -> Response.Success(repositoryResponseApi.successData)
                 }
