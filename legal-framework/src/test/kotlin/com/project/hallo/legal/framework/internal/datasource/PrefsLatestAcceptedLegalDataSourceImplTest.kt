@@ -31,9 +31,9 @@ internal class PrefsLatestAcceptedLegalDataSourceImplTest {
         whenever(sharedPreferences.getInt(any(), any())).thenReturn(-1)
 
         // when
-        val respose = tested.fetchLatestAcceptedLegalVersion()
+        val response = tested.fetchLatestAcceptedLegalVersion()
 
         // then
-        assert(respose is ResponseApi.Error)
+        assert(response is ResponseApi.Error)
     }
 }
