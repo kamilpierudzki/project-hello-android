@@ -1,6 +1,5 @@
 package com.project.hallo.legal.framework.internal.usecase
 
-import com.project.hallo.commons.domain.data.Response
 import com.project.hallo.commons.domain.data.ResponseApi
 import com.project.hello.legal.domain.model.LatestAvailableLegal
 import com.project.hello.legal.domain.repository.LegalRepository
