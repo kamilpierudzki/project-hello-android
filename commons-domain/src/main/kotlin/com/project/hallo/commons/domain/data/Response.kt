@@ -13,3 +13,5 @@ sealed class Response<T>(
         var localisedErrorMessage: String = ""
     }
 }
+
+fun <T> T.toSuccessResponse(): Response.Success<T> = Response.Success(this)

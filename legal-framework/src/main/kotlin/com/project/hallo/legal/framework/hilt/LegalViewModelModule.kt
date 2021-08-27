@@ -3,8 +3,10 @@ package com.project.hallo.legal.framework.hilt
 import com.project.hallo.legal.framework.internal.datasaver.PrefsLatestAcceptedLegalDataSaverImpl
 import com.project.hallo.legal.framework.internal.datasource.PrefsLatestAcceptedLegalDataSourceImpl
 import com.project.hallo.legal.framework.internal.datasource.RawResourcesLatestAvailableLegalDataSourceImpl
-import com.project.hallo.legal.framework.internal.usecase.LatestAcceptedLegalUseCaseErrorMapperImpl
-import com.project.hallo.legal.framework.internal.usecase.LatestAvailableLegalUseCaseErrorMapperImpl
+import com.project.hallo.legal.framework.internal.usecase.*
+import com.project.hallo.legal.framework.internal.usecase.implementation.LatestAcceptedLegalVersionUseCaseImpl
+import com.project.hallo.legal.framework.internal.usecase.implementation.LatestAvailableLegalSaverUseCaseImpl
+import com.project.hallo.legal.framework.internal.usecase.implementation.LatestAvailableLegalUseCaseImpl
 import com.project.hello.legal.domain.datasaver.LatestAcceptedLegalDataSaver
 import com.project.hello.legal.domain.datasource.AvailableLegalDataSource
 import com.project.hello.legal.domain.datasource.LatestAcceptedLegalDataSource
@@ -46,6 +48,18 @@ internal abstract class LegalViewModelModule {
     abstract fun bindLatestAvailableLegalUseCaseErrorMapper(
         impl: LatestAvailableLegalUseCaseErrorMapperImpl
     ): LatestAvailableLegalUseCaseErrorMapper
+
+    @Binds
+    abstract fun bindLatestAvailableLegalSaverUseCase(impl: LatestAvailableLegalSaverUseCaseImpl)
+            : LatestAvailableLegalSaverUseCase
+
+    @Binds
+    abstract fun bindLatestAcceptedLegalVersionUseCase(impl: LatestAcceptedLegalVersionUseCaseImpl):
+            LatestAcceptedLegalVersionUseCase
+
+    @Binds
+    abstract fun bindLatestAvailableLegalUseCase(impl: LatestAvailableLegalUseCaseImpl):
+            LatestAvailableLegalUseCase
 
     companion object {
 

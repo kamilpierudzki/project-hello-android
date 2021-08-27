@@ -2,31 +2,36 @@ package com.project.hallo.legal.framework.internal.usecase
 
 import com.project.hallo.commons.domain.data.Response
 import com.project.hallo.commons.domain.data.ResponseApi
+import com.project.hallo.legal.framework.internal.usecase.implementation.LatestAvailableLegalUseCaseImpl
+import com.project.hello.legal.domain.model.api.LatestAvailableLegalApi
 import com.project.hello.legal.domain.repository.LegalDataResource
 import com.project.hello.legal.domain.repository.LegalRepository
-import com.project.hello.legal.domain.usecase.LatestAcceptedLegalUseCaseErrorMapper
+import com.project.hello.legal.domain.usecase.LatestAvailableLegalUseCaseErrorMapper
 import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
-internal class LatestAcceptedLegalVersionUseCaseTest {
+internal class LatestAvailableLegalUseCaseImplTest {
 
     val legalDataResource: LegalDataResource = mock()
     val legalRepository: LegalRepository = mock {
         on { getLegalDataResource() } doReturn legalDataResource
     }
-    val latestAcceptedLegalUseCaseErrorMapper: LatestAcceptedLegalUseCaseErrorMapper = mock()
+    val latestAvailableLegalUseCaseErrorMapper: LatestAvailableLegalUseCaseErrorMapper = mock()
 
-    val tested = LatestAcceptedLegalVersionUseCase(
+    val tested = LatestAvailableLegalUseCaseImpl(
         legalRepository,
-        latestAcceptedLegalUseCaseErrorMapper
+        latestAvailableLegalUseCaseErrorMapper
     )
 
     @Test
-    fun `given latest accepted version is saved when execute is called then both loading event and successful event are sent`() {
+    fun `given legal info is available when execute is called both loading event and successful event are sent`() {
         // given
-        whenever(legalDataResource.latestAcceptedLegalVersion()).thenReturn(ResponseApi.Success(1))
+        val legalApi = LatestAvailableLegalApi(1, "")
+        whenever(legalDataResource.latestAvailableLegal()).thenReturn(
+            ResponseApi.Success(legalApi)
+        )
 
         // when
         val observer = tested.execute().test()
@@ -38,9 +43,11 @@ internal class LatestAcceptedLegalVersionUseCaseTest {
     }
 
     @Test
-    fun `given latest accepted version is NOT saved when execute is called then both loading event and error event are sent`() {
+    fun `given legal info is NOT available when execute is called both loading event and error event are sent`() {
         // given
-        whenever(legalDataResource.latestAcceptedLegalVersion()).thenReturn(ResponseApi.Error(""))
+        whenever(legalDataResource.latestAvailableLegal()).thenReturn(
+            ResponseApi.Error("error")
+        )
 
         // when
         val observer = tested.execute().test()
