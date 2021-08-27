@@ -1,6 +1,6 @@
 package com.project.hello.legal.domain.repository.implementation
 
-import com.project.hallo.commons.domain.data.ResponseApi
+import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.legal.domain.datasaver.LatestAcceptedLegalDataSaver
 import com.project.hello.legal.domain.datasource.AvailableLegalDataSource
 import com.project.hello.legal.domain.datasource.LatestAcceptedLegalDataSource

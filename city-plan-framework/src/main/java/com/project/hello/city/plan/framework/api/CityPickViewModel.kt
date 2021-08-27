@@ -1,9 +1,9 @@
 package com.project.hello.city.plan.framework.api
 
 import androidx.lifecycle.LiveData
-import com.project.hallo.city.plan.domain.model.CityPlan
-import com.project.hallo.commons.framework.livedata.Event
-import com.project.hallo.commons.framework.viewmodel.ExternalViewModel
+import com.project.hello.city.plan.domain.model.CityPlan
+import com.project.hello.commons.framework.livedata.Event
+import com.project.hello.commons.framework.viewmodel.ExternalViewModel
 
 interface CityPickViewModel : ExternalViewModel {
     val currentlySelectedCityEvent: LiveData<Event<CitySelection>>

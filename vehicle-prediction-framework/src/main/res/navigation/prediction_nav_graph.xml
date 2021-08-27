@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/vehicle_type_picker_fragment"
-        android:name="com.project.hallo.vehicle.prediction.framework.api.VehicleTypePickerFragment"
+        android:name="com.project.hello.vehicle.prediction.framework.api.VehicleTypePickerFragment"
         android:label="@string/vehicle_type_picker_fragment_label">
 
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/prediction_fragment"
-        android:name="com.project.hallo.vehicle.prediction.framework.api.PredictionFragment"
+        android:name="com.project.hello.vehicle.prediction.framework.api.PredictionFragment"
         android:label="@string/prediction_fragment_label">
 
         <argument

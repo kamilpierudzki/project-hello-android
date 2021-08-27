@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/splash_fragment"
-        android:name="com.project.hallo.splash.framework.api.SplashFragment"
+        android:name="com.project.hello.splash.framework.api.SplashFragment"
         android:label="@string/splash_screen_label">
 
         <action

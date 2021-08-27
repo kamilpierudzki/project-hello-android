@@ -4,7 +4,7 @@ import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.project.hallo.city.plan.domain.model.CityPlan
+import com.project.hello.city.plan.domain.model.CityPlan
 import com.project.hello.city.plan.framework.R
 import com.project.hello.city.plan.framework.databinding.CityItemBinding
 

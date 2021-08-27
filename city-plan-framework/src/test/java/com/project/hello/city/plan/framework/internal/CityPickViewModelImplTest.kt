@@ -1,14 +1,14 @@
 package com.project.hello.city.plan.framework.internal
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.project.hallo.city.plan.domain.model.CityPlan
-import com.project.hallo.city.plan.domain.model.SupportedCitiesData
-import com.project.hallo.city.plan.domain.usecase.CitySelectionUseCase
-import com.project.hallo.city.plan.domain.usecase.SelectedCityUseCase
-import com.project.hallo.city.plan.domain.usecase.SupportedCitiesUseCase
-import com.project.hallo.commons.domain.data.Response
-import com.project.hallo.commons.domain.test.CoroutinesTestRule
-import com.project.hallo.commons.framework.livedata.Event
+import com.project.hello.city.plan.domain.model.CityPlan
+import com.project.hello.city.plan.domain.model.SupportedCitiesData
+import com.project.hello.city.plan.domain.usecase.CitySelectionUseCase
+import com.project.hello.city.plan.domain.usecase.SelectedCityUseCase
+import com.project.hello.city.plan.domain.usecase.SupportedCitiesUseCase
+import com.project.hello.commons.domain.data.Response
+import com.project.hello.commons.domain.test.CoroutinesTestRule
+import com.project.hello.commons.framework.livedata.Event
 import com.project.hello.city.plan.framework.api.CitySelection
 import com.project.hello.city.plan.framework.api.SupportedCitiesStatus
 import kotlinx.coroutines.CoroutineDispatcher

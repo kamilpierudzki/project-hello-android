@@ -1,12 +1,12 @@
 package com.project.hello.city.plan.framework.hilt
 
 import android.content.res.Resources
-import com.project.hallo.city.plan.domain.datasource.CityDataSource
-import com.project.hallo.city.plan.domain.datasource.SelectedCityDataSource
-import com.project.hallo.city.plan.domain.repository.CityPlanRepository
-import com.project.hallo.city.plan.domain.repository.implementation.CityPlanRepositoryImpl
-import com.project.hallo.city.plan.domain.usecase.*
-import com.project.hallo.city.plan.domain.usecase.implementation.*
+import com.project.hello.city.plan.domain.datasource.CityDataSource
+import com.project.hello.city.plan.domain.datasource.SelectedCityDataSource
+import com.project.hello.city.plan.domain.repository.CityPlanRepository
+import com.project.hello.city.plan.domain.repository.implementation.CityPlanRepositoryImpl
+import com.project.hello.city.plan.domain.usecase.*
+import com.project.hello.city.plan.domain.usecase.implementation.*
 import com.project.hello.city.plan.framework.internal.datasource.RawResourcesCityDataSourceImpl
 import com.project.hello.city.plan.framework.internal.datasource.db.DataBaseSelectedCity
 import com.project.hello.city.plan.framework.internal.db.CityDatabase

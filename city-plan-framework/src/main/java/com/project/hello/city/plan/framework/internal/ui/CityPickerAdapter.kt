@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.project.hallo.city.plan.domain.model.CityPlan
+import com.project.hello.city.plan.domain.model.CityPlan
 import com.project.hello.city.plan.framework.databinding.CityItemBinding
 import javax.inject.Inject
 

@@ -2,8 +2,7 @@ package com.project.hello.city.plan.framework.internal.datasource.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.project.hallo.city.plan.domain.model.CityPlan
-import java.util.ArrayList
+import com.project.hello.city.plan.domain.model.CityPlan
 
 @Entity
 internal data class CityPlanEntity(

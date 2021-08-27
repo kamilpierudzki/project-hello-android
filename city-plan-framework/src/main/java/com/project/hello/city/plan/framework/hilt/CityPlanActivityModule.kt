@@ -2,9 +2,9 @@ package com.project.hello.city.plan.framework.hilt
 
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
-import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
-import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
-import com.project.hallo.commons.framework.viewmodel.ViewModelType
+import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
+import com.project.hello.commons.framework.viewmodel.ViewModelProvider
+import com.project.hello.commons.framework.viewmodel.ViewModelType
 import com.project.hello.city.plan.framework.api.CityPickViewModel
 import com.project.hello.city.plan.framework.api.InternalCityPickViewModel
 import com.project.hello.city.plan.framework.internal.CityPickViewModelImpl
