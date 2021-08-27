@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="currently_selected">Aktualnie zaznaczono</string>
-    <string name="fetching_supported_cities">Ładowanie</string>
+    <string name="city_picker_loading">Ładowanie</string>
     <string name="city_selection_error">Błąd podczas wybierania miasta.</string>
     <string name="city_picker_label">Wybierz miasto</string>
 </resources>
