@@ -73,5 +73,5 @@ class FindingLinesImpl : FindingLines {
     private fun transformedText(input: String): String =
         input
             .replace(" ", "")
-            .toLowerCase()
+            .lowercase()
 }

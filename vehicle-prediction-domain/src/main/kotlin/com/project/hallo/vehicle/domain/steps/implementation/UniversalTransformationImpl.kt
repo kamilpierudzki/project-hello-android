@@ -13,10 +13,10 @@ class UniversalTransformationImpl(
         } else {
             input
                 .replace(" ", "", ignoreCase = true)
-                .toLowerCase()
+                .lowercase()
                 .map { c ->
                     val stringCharacter = c.toString()
-                    countryCharactersProvider.get().getOrDefault(stringCharacter, stringCharacter)
+                    countryCharactersProvider.get().getOrElse(stringCharacter, { stringCharacter })
                 }
                 .reduce { acc: String, s: String -> acc + s }
         }
