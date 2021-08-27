@@ -7,6 +7,12 @@
     <fragment
         android:id="@+id/legal_fragment"
         android:name="com.project.hallo.legal.framework.internal.LegalFragment"
-        android:label="@string/legal_screen_label" />
+        android:label="@string/legal_screen_label">
+
+        <argument
+            android:name="backButtonDisabled"
+            app:argType="boolean" />
+
+    </fragment>
 
 </navigation>

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.project.hallo.commons.framework.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hallo.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelProvider
 import com.project.hallo.commons.framework.viewmodel.ViewModelType
@@ -20,6 +22,8 @@ import javax.inject.Inject
 internal class LegalFragment : Fragment() {
 
     private lateinit var binding: LegalFragmentBinding
+    private val safeArgs: LegalFragmentArgs by navArgs()
+    private val backButtonDisabled: Boolean get() = safeArgs.backButtonDisabled
 
     @Inject
     @ViewModelProvider(ViewModelType.ACTIVITY)
@@ -28,6 +32,9 @@ internal class LegalFragment : Fragment() {
     private val legalViewModel by externalViewModels {
         legalViewModelProvider
     }
+
+    @Inject
+    lateinit var actionBarUpIndicatorVisibility: ActionBarUpIndicatorVisibility
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +46,15 @@ internal class LegalFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        disableUpButtonIfPossible()
         setupViews()
         observeAcceptationResult()
+    }
+
+    private fun disableUpButtonIfPossible() {
+        if (backButtonDisabled) {
+            actionBarUpIndicatorVisibility.disableUpButtonIfPossible(activity)
+        }
     }
 
     private fun setupViews() {

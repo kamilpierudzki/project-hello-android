@@ -81,8 +81,7 @@ class SplashFragment : Fragment() {
     }
 
     private fun goToLegalScreen() {
-        val action = SplashFragmentDirections.goToLegalScreen()
+        val action = SplashFragmentDirections.goToLegalScreen(backButtonDisabled = true)
         findNavController().navigate(action)
-
     }
 }
