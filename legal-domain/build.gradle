@@ -20,5 +20,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation "junit:junit:$junit_version"
 
+    implementation "androidx.annotation:annotation:$annotation_version"
+
     implementation project(path: ':commons-domain')
 }
