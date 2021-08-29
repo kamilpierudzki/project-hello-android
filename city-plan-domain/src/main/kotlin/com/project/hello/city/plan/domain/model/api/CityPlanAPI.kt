@@ -14,7 +14,8 @@ data class CityPlanAPI(
 )
 
 fun CityPlanAPI.toCityPlan() = CityPlan(
-    city = city ?: "",
+    city = city,
+    lastUpdateDate = humanReadableLastUpdateTimestamp,
     trams = trams.map { it.toLine() },
     buses = buses.map { it.toLine() }
 )

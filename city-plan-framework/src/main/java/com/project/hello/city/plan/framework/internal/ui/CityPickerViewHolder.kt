@@ -15,6 +15,7 @@ internal class CityPickerViewHolder(private val viewBinding: CityItemBinding) :
     fun setupView(city: City, selectionListener: () -> Unit) {
         val cityName = city.cityPlan.city
         viewBinding.city.text = cityName
+        viewBinding.lastUpdate.text = city.cityPlan.lastUpdateDate
         viewBinding.selected.visibility = if (city.selected) View.VISIBLE else View.GONE
         val contentDescription = if (city.selected) {
             val context = viewBinding.selected.context

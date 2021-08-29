@@ -7,6 +7,7 @@ import com.project.hello.city.plan.domain.model.CityPlan
 @Entity
 internal data class CityPlanEntity(
     val city: String,
+    val lastUpdateDate: String,
     val trams: String,
     val buses: String,
     @PrimaryKey(autoGenerate = true) val cityPlanId: Int = 0
@@ -15,6 +16,7 @@ internal data class CityPlanEntity(
         fun fromCityPlan(cityPlan: CityPlan): CityPlanEntity {
             return CityPlanEntity(
                 city = cityPlan.city,
+                lastUpdateDate =cityPlan.lastUpdateDate,
                 trams = CityDatabaseConverters.linesToString(cityPlan.trams),
                 buses = CityDatabaseConverters.linesToString(cityPlan.buses),
             )
@@ -23,6 +25,7 @@ internal data class CityPlanEntity(
         fun toCityPlan(cityPlanEntity: CityPlanEntity) =
             CityPlan(
                 city = cityPlanEntity.city,
+                lastUpdateDate =cityPlanEntity.lastUpdateDate,
                 trams = CityDatabaseConverters.stringToLines(cityPlanEntity.trams),
                 buses = CityDatabaseConverters.stringToLines(cityPlanEntity.buses),
             )

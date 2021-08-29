@@ -4,4 +4,5 @@
     <string name="city_picker_loading">Loading</string>
     <string name="city_selection_error">Error during selecting city.</string>
     <string name="city_picker_label">Select a city</string>
+    <string name="city_item_last_update_label">Last update</string>
 </resources>
