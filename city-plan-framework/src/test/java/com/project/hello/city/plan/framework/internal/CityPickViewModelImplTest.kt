@@ -31,8 +31,8 @@ internal class CityPickViewModelImplTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    val cityA = CityPlan("A", emptyList(), emptyList())
-    val cityB = CityPlan("B", emptyList(), emptyList())
+    val cityA = createCityPlan("A")
+    val cityB = createCityPlan("B")
 
     val supportedCitiesUseCase: SupportedCitiesUseCase = mock {
         on { execute() } doReturn flow {
@@ -386,4 +386,6 @@ internal class CityPickViewModelImplTest {
         selectedCityUseCase,
         ioDispatcher
     )
+
+    private fun createCityPlan(city: String) = CityPlan(city = city, lastUpdateDate = "", trams = emptyList(), buses = emptyList())
 }

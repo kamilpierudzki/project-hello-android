@@ -32,7 +32,8 @@ internal class PredictionViewModelTest {
     val instantExecutorRule = InstantTaskExecutorRule()
 
     val cityPlan = CityPlan(
-        "A",
+        city = "A",
+        lastUpdateDate = "",
         listOf(Line("T1", ""), Line("T2", "")),
         listOf(Line("B1", ""), Line("B2", ""))
     )

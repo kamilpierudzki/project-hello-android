@@ -23,7 +23,7 @@ internal class CitySelectionUseCaseImplTest {
     @get:Rule
     var coroutinesTestRule = CoroutinesTestRule()
 
-    val cityPlan = CityPlan("A", emptyList(), emptyList())
+    val cityPlan = createCityPlan("A")
 
     val cityDataResource: CityDataResource<CityPlan, CityPlanAPI> = mock()
     val cityPlanRepository: CityPlanRepository = mock {
@@ -69,4 +69,11 @@ internal class CitySelectionUseCaseImplTest {
             val cityPlanResponse = events[1] as Response.Success<CityPlan>
             Assert.assertEquals(cityPlan, cityPlanResponse.successData)
         }
+
+    private fun createCityPlan(city: String): CityPlan = CityPlan(
+        city = city,
+        lastUpdateDate = "",
+        trams = emptyList(),
+        buses = emptyList()
+    )
 }

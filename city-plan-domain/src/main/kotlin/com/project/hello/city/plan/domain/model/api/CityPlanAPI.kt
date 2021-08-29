@@ -6,7 +6,7 @@ import com.project.hello.city.plan.domain.model.CityPlan
 @Keep
 data class CityPlanAPI(
     val city: String,
-    val lastUpdateTimestampInMillis: String,
+    val lastUpdateTimestampInMillis: Long,
     val humanReadableLastUpdateTimestamp: String,
     val appVersion: String,
     val trams: List<LineAPI>,

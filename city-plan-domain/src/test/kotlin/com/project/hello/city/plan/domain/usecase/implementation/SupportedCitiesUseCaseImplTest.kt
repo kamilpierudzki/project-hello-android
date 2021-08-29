@@ -7,6 +7,7 @@ import com.project.hello.city.plan.domain.repository.CityPlanRepository
 import com.project.hello.city.plan.domain.repository.resource.CityDataResource
 import com.project.hello.city.plan.domain.usecase.SupportedCitiesUseCaseErrorMapper
 import com.project.hello.commons.domain.data.Response
+import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.commons.domain.test.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -26,12 +27,12 @@ internal class SupportedCitiesUseCaseImplTest {
     var coroutinesTestRule = CoroutinesTestRule()
 
     val successfulResource: CityDataResource<CityPlan, CityPlanAPI> = mock {
-        on { load(0) } doReturn Response.Success(CityPlanAPI(city = "A"))
-        on { load(1) } doReturn Response.Success(CityPlanAPI(city = "B"))
+        on { load(0) } doReturn ResponseApi.Success(createCityPlanApi(city = "A"))
+        on { load(1) } doReturn ResponseApi.Success(createCityPlanApi(city = "B"))
     }
 
     val failureResource: CityDataResource<CityPlan, CityPlanAPI> = mock {
-        on { load(any()) } doReturn Response.Error("error")
+        on { load(any()) } doReturn ResponseApi.Error("error")
     }
 
     val repository: CityPlanRepository = mock {
@@ -77,4 +78,13 @@ internal class SupportedCitiesUseCaseImplTest {
             Assert.assertEquals(true, events[0] is Response.Loading)
             Assert.assertEquals(true, events[1] is Response.Error)
         }
+
+    private fun createCityPlanApi(city: String): CityPlanAPI = CityPlanAPI(
+        city = city,
+        lastUpdateTimestampInMillis = 0,
+        humanReadableLastUpdateTimestamp = "",
+        appVersion = "",
+        trams = emptyList(),
+        buses = emptyList()
+    )
 }

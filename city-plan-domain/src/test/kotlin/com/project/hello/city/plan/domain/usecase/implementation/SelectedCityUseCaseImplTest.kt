@@ -6,8 +6,8 @@ import com.project.hello.city.plan.domain.model.api.LineAPI
 import com.project.hello.city.plan.domain.repository.CityPlanRepository
 import com.project.hello.city.plan.domain.repository.resource.CityDataResource
 import com.project.hello.city.plan.domain.usecase.SelectedCityUseCaseErrorMapper
-import com.project.hello.city.plan.domain.usecase.implementation.SelectedCityUseCaseImpl
 import com.project.hello.commons.domain.data.Response
+import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.commons.domain.test.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -25,16 +25,19 @@ internal class SelectedCityUseCaseImplTest {
     @get:Rule
     var coroutinesTestRule = CoroutinesTestRule()
 
-    val cityPlan = CityPlan("a", emptyList(), emptyList())
-    val cityPlanApi1 = CityPlanAPI(city = "a", trams = listOf(LineAPI("x", "y")))
-    val cityPlanApi2 = CityPlanAPI(city = "b")
+    val cityPlan = CityPlan("a", "", emptyList(), emptyList())
+    val cityPlanApi1 = createCityPlanApi(
+        city = "a",
+        trams = listOf(LineAPI("x", "y"))
+    )
+    val cityPlanApi2 = createCityPlanApi(city = "b")
     val successfulResource: CityDataResource<CityPlan, CityPlanAPI> = mock {
-        on { getCurrentlySelectedCity() } doReturn Response.Success(cityPlan)
-        on { load(1) } doReturn Response.Success(cityPlanApi1)
-        on { load(2) } doReturn Response.Success(cityPlanApi2)
+        on { getCurrentlySelectedCity() } doReturn ResponseApi.Success(cityPlan)
+        on { load(1) } doReturn ResponseApi.Success(cityPlanApi1)
+        on { load(2) } doReturn ResponseApi.Success(cityPlanApi2)
     }
     val failedResource: CityDataResource<CityPlan, CityPlanAPI> = mock {
-        on { getCurrentlySelectedCity() } doReturn Response.Error<CityPlan>("error")
+        on { getCurrentlySelectedCity() } doReturn ResponseApi.Error("error")
     }
 
     val cityPlanRepository: CityPlanRepository = mock()
@@ -108,4 +111,13 @@ internal class SelectedCityUseCaseImplTest {
             val selectedCityResponse = events[1] as Response.Success
             Assert.assertEquals(true, selectedCityResponse.successData.trams.size == 1)
         }
+
+    private fun createCityPlanApi(city: String, trams: List<LineAPI> = emptyList()): CityPlanAPI = CityPlanAPI(
+        city = city,
+        lastUpdateTimestampInMillis = 0,
+        humanReadableLastUpdateTimestamp = "",
+        appVersion = "",
+        trams = trams,
+        buses = emptyList()
+    )
 }
