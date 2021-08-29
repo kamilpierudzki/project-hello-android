@@ -5,11 +5,12 @@ import com.project.hello.city.plan.domain.model.CityPlan
 
 @Keep
 data class CityPlanAPI(
-    val city: String? = null,
-    val lastUpdateTimestampInMillis: String? = null,
-    val appVersion: String? = null,
-    val trams: List<LineAPI> = emptyList(),
-    val buses: List<LineAPI> = emptyList()
+    val city: String,
+    val lastUpdateTimestampInMillis: String,
+    val humanReadableLastUpdateTimestamp: String,
+    val appVersion: String,
+    val trams: List<LineAPI>,
+    val buses: List<LineAPI>
 )
 
 fun CityPlanAPI.toCityPlan() = CityPlan(

@@ -1,6 +1,7 @@
 {
   "city": "Warszawa",
   "lastUpdateTimestampInMillis": "1618155330",
+  "humanReadableLastUpdateTimestamp": "29-08-2021",
   "appVersion": "1",
   "trams": [
     {
