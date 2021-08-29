@@ -54,7 +54,7 @@ class SplashFragment : Fragment() {
 
     private fun observeIfLatestAvailableLegalIsAccepted() {
         legalViewModel.isLatestAvailableLegalAccepted.observe(viewLifecycleOwner, { event ->
-            when (event.getContentOrNull()) {
+            when (event.consumeAndReturn()) {
                 true -> observeCurrentlySelectedCity()
                 false -> goToLegalScreen()
             }
@@ -63,7 +63,7 @@ class SplashFragment : Fragment() {
 
     private fun observeCurrentlySelectedCity() {
         cityPickViewModel.currentlySelectedCityEvent.observe(viewLifecycleOwner, { event ->
-            when (event.getContentOrNull()) {
+            when (event.consumeAndReturn()) {
                 is CitySelection.NotSelected -> goToCityPickerScreen()
                 is CitySelection.Selected -> goToVehicleTypePickerScreen()
             }

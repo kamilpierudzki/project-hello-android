@@ -26,6 +26,7 @@ class CityPickerFragment : Fragment() {
     private lateinit var binding: CityPickerFragmentBinding
     private val safeArgs: CityPickerFragmentArgs by navArgs()
     private val backButtonDisabled: Boolean get() = safeArgs.backButtonDisabled
+    private var isCitySelectionProcessing = false
 
     @Inject
     internal lateinit var cityPickerAdapter: CityPickerAdapter
@@ -87,6 +88,7 @@ class CityPickerFragment : Fragment() {
 
     private fun observeCitySelection() {
         cityPickerAdapter.citySelection.observe(viewLifecycleOwner, { selectedCity ->
+            isCitySelectionProcessing = true
             internalCityPickViewModel.selectCity(selectedCity)
         })
     }
@@ -99,11 +101,14 @@ class CityPickerFragment : Fragment() {
 
     private fun observeCurrentlySelectedCityEvent() {
         cityPickViewModel.currentlySelectedCityEvent.observe(viewLifecycleOwner) {
-            val content = it.content
-            if (it.consumed.not() && content is CitySelection.NotSelected) {
-                currentlySelectedCityFailed(content)
-            } else if (it.consumed.not() && content is CitySelection.Selected) {
-                goBackToPreviousScreen()
+            if (isCitySelectionProcessing) {
+                isCitySelectionProcessing = false
+                val content = it.content
+                if (!it.consumed && content is CitySelection.NotSelected) {
+                    currentlySelectedCityFailed(content)
+                } else if (!it.consumed && content is CitySelection.Selected) {
+                    goBackToPreviousScreen()
+                }
             }
         }
     }

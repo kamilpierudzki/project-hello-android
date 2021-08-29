@@ -80,7 +80,7 @@ internal class LegalFragment : Fragment() {
 
     private fun observeAcceptationResult() {
         legalViewModel.latestAvailableLegalSavedResult.observe(viewLifecycleOwner, { event ->
-            when (event.getContentOrNull()) {
+            when (event.consumeAndReturn()) {
                 is LatestAvailableLegalResult.Error -> {
                     setProgressVisibility(false)
                 }

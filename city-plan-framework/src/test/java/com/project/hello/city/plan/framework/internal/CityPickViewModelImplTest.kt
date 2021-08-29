@@ -100,10 +100,10 @@ internal class CityPickViewModelImplTest {
             lateinit var selection1: CitySelection.Selected
             lateinit var selection2: CitySelection.Selected
             tested.currentlySelectedCityEvent.observeForever {
-                selection1 = it.getContentOrNull() as CitySelection.Selected
+                selection1 = it.consumeAndReturn() as CitySelection.Selected
             }
             tested.currentlySelectedCityChangedEvent.observeForever {
-                selection2 = it.getContentOrNull() as CitySelection.Selected
+                selection2 = it.consumeAndReturn() as CitySelection.Selected
             }
 
             // then
