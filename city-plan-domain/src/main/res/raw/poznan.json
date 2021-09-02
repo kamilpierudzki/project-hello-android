@@ -1,8 +1,8 @@
 {
   "city": "Poznań",
-  "lastUpdateTimestampInMillis": 1630321290,
-  "humanReadableLastUpdateTimestamp": "30-08-2021",
-  "appVersion": "1",
+  "lastUpdateTimestampInMillis": 1630613076,
+  "humanReadableLastUpdateTimestamp": "02-09-2021",
+  "appVersion": 1,
   "trams": [
     {
       "number": "1",
@@ -62,7 +62,7 @@
     },
     {
       "number": "9",
-      "destination": "Unii Lubelskiej"
+      "destination": "Starołęka Mała"
     },
     {
       "number": "9",
@@ -82,7 +82,7 @@
     },
     {
       "number": "11",
-      "destination": "Połabska"
+      "destination": "Piątkowska"
     },
     {
       "number": "12",
@@ -90,11 +90,11 @@
     },
     {
       "number": "12",
-      "destination": "Starołęka Mała"
+      "destination": "Starołęka PKM"
     },
     {
       "number": "13",
-      "destination": "Unii Lubelskiej"
+      "destination": "Starołęka PKM"
     },
     {
       "number": "13",
@@ -130,7 +130,7 @@
     },
     {
       "number": "17",
-      "destination": "Starołęka Mała"
+      "destination": "Starołęka PKM"
     },
     {
       "number": "18",
@@ -138,7 +138,31 @@
     },
     {
       "number": "18",
+      "destination": "Piątkowska"
+    },
+    {
+      "number": "36",
       "destination": "Os. Sobieskiego"
+    },
+    {
+      "number": "36",
+      "destination": "Pl. Wielkopolski"
+    },
+    {
+      "number": "201",
+      "destination": "Os. Sobieskiego"
+    },
+    {
+      "number": "201",
+      "destination": "Unii Lubelskiej"
+    },
+    {
+      "number": "202",
+      "destination": "Os. Sobieskiego"
+    },
+    {
+      "number": "202",
+      "destination": "Franowo"
     }
   ],
   "buses": [
@@ -149,6 +173,22 @@
     {
       "number": "121",
       "destination": "Meissnera"
+    },
+    {
+      "number": "124",
+      "destination": "Instytut Technologiczno-Przyrodniczy"
+    },
+    {
+      "number": "124",
+      "destination": "Safony"
+    },
+    {
+      "number": "125",
+      "destination": "Starołęka PKM"
+    },
+    {
+      "number": "125",
+      "destination": "Starołęka PKM"
     },
     {
       "number": "144",
@@ -172,7 +212,7 @@
     },
     {
       "number": "146",
-      "destination": "Strzeszynek"
+      "destination": "Stary Strzeszyn"
     },
     {
       "number": "148",
@@ -259,6 +299,10 @@
       "destination": "Rondo Rataje"
     },
     {
+      "number": "162",
+      "destination": "Rondo Rataje"
+    },
+    {
       "number": "163",
       "destination": "Górczyn PKM"
     },
@@ -280,7 +324,7 @@
     },
     {
       "number": "166",
-      "destination": "Zieleniec"
+      "destination": "Zieliniec"
     },
     {
       "number": "167",
@@ -328,7 +372,7 @@
     },
     {
       "number": "173",
-      "destination": "Junikowo"
+      "destination": "Janikowo"
     },
     {
       "number": "174",
@@ -447,6 +491,10 @@
       "destination": "Starołęka PKM"
     },
     {
+      "number": "189",
+      "destination": "Starołęka PKM"
+    },
+    {
       "number": "190",
       "destination": "Os. Sobieskiego"
     },
@@ -475,12 +523,20 @@
       "destination": "Starołęka PKM"
     },
     {
+      "number": "194",
+      "destination": "Starołęka PKM"
+    },
+    {
       "number": "195",
       "destination": "Kiekrz"
     },
     {
       "number": "195",
       "destination": "Ogrody"
+    },
+    {
+      "number": "196",
+      "destination": "Rondo Rataje"
     },
     {
       "number": "196",
@@ -500,7 +556,7 @@
     },
     {
       "number": "320",
-      "destination": "Kosiegłowy/Zakłady Drobierskie"
+      "destination": "Koziegłowy/Zakłady Drobiarskie"
     },
     {
       "number": "321",
@@ -524,7 +580,7 @@
     },
     {
       "number": "348",
-      "destination": "Przebedowo/Pętla"
+      "destination": "Przebędowo/Pętla"
     },
     {
       "number": "425",
@@ -556,7 +612,7 @@
     },
     {
       "number": "833",
-      "destination": "Starzyne/Rynkowa"
+      "destination": "Starzyny/Rynkowa"
     },
     {
       "number": "834",
@@ -568,11 +624,171 @@
     },
     {
       "number": "911",
-      "destination": "Biedrusko/park"
+      "destination": "Biedrusko/Park"
     },
     {
       "number": "911",
       "destination": "Rondo Śródka"
+    },
+    {
+      "number": "211",
+      "destination": "Garbary PKM"
+    },
+    {
+      "number": "211",
+      "destination": "Starołęka PKM"
+    },
+    {
+      "number": "212",
+      "destination": "Kacza"
+    },
+    {
+      "number": "212",
+      "destination": "Szwajcarska Szpital"
+    },
+    {
+      "number": "213",
+      "destination": "Mogileńska"
+    },
+    {
+      "number": "213",
+      "destination": "Dębiec PKM"
+    },
+    {
+      "number": "214",
+      "destination": "Radojewo"
+    },
+    {
+      "number": "214",
+      "destination": "Junikowo"
+    },
+    {
+      "number": "215",
+      "destination": "Os. Sobieskiego"
+    },
+    {
+      "number": "215",
+      "destination": "Os. Dębina"
+    },
+    {
+      "number": "216",
+      "destination": "Poznań Główny"
+    },
+    {
+      "number": "216",
+      "destination": "Poznań Główny"
+    },
+    {
+      "number": "218",
+      "destination": "Franowo"
+    },
+    {
+      "number": "218",
+      "destination": "Os. Sobieskiego"
+    },
+    {
+      "number": "219",
+      "destination": "Poznań Główny"
+    },
+    {
+      "number": "219",
+      "destination": "Wichrowa"
+    },
+    {
+      "number": "220",
+      "destination": "Garbary PKM"
+    },
+    {
+      "number": "220",
+      "destination": "Garbary PKM"
+    },
+    {
+      "number": "221",
+      "destination": "Garbary PKM"
+    },
+    {
+      "number": "221",
+      "destination": "Sypniewo"
+    },
+    {
+      "number": "222",
+      "destination": "Port Lotniczy Ławica"
+    },
+    {
+      "number": "222",
+      "destination": "Mogileńska"
+    },
+    {
+      "number": "223",
+      "destination": "Zieliniec"
+    },
+    {
+      "number": "223",
+      "destination": "Kacza"
+    },
+    {
+      "number": "224",
+      "destination": "Boranta"
+    },
+    {
+      "number": "224",
+      "destination": "Malwowa"
+    },
+    {
+      "number": "226",
+      "destination": "Poznań Główny"
+    },
+    {
+      "number": "226",
+      "destination": "Poznań Główny"
+    },
+    {
+      "number": "227",
+      "destination": "Rondo Rataje"
+    },
+    {
+      "number": "227",
+      "destination": "Koziegłowy/Os. Leśne"
+    },
+    {
+      "number": "231",
+      "destination": "Poznań Główny"
+    },
+    {
+      "number": "231",
+      "destination": "Unii Lubelskiej"
+    },
+    {
+      "number": "250",
+      "destination": "Głuchowo/Stawna"
+    },
+    {
+      "number": "250",
+      "destination": "Górczyn PKM"
+    },
+    {
+      "number": "253",
+      "destination": "Chludowo/Szkoła"
+    },
+    {
+      "number": "253",
+      "destination": "Os. Sobieskiego"
+    },
+    {
+      "number": "257",
+      "destination": "Junikowo"
+    },
+    {
+      "number": "257",
+      "destination": "Dopiewo/Dworzec Kolejowy"
+    },
+    {
+      "number": "258",
+      "destination": "Tarnowo Pdg/Centrum"
+    },
+    {
+      "number": "258",
+      "destination": "Poznań Główny"
     }
   ]
 }

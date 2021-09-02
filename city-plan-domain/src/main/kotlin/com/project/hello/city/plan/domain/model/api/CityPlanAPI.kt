@@ -8,7 +8,7 @@ data class CityPlanAPI(
     val city: String,
     val lastUpdateTimestampInMillis: Long,
     val humanReadableLastUpdateTimestamp: String,
-    val appVersion: String,
+    val appVersion: Int,
     val trams: List<LineAPI>,
     val buses: List<LineAPI>
 )
