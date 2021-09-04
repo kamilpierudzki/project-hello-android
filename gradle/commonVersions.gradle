@@ -30,11 +30,11 @@ ext {
     room_compiler_version = "$room_ktx_version_main"
     room_testing_version = "$room_ktx_version_main"
 
-    play_services_mlkit_text_recognition_version = "16.2.0"
+    play_services_mlkit_text_recognition_version = "17.0.0"
 
-    camera_camera2_version = "1.1.0-alpha02"
-    camera_lifecycle_version = "1.0.0-rc04"
-    camera_view_version = "1.0.0-alpha23"
+    camera_camera2_version = "1.1.0-alpha08"
+    camera_lifecycle_version = "1.1.0-alpha08"
+    camera_view_version = "1.0.0-alpha28"
 
     multidex_version = "2.0.1"
     rxjava3_version = "3.0.0"

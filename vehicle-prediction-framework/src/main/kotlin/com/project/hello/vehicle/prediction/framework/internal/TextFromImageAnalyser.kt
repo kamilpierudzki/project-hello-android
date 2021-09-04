@@ -1,28 +1,22 @@
 package com.project.hello.vehicle.prediction.framework.internal
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.camera.core.ImageProxy
 import androidx.lifecycle.MutableLiveData
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import dagger.hilt.android.scopes.FragmentScoped
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.produce
 import javax.inject.Inject
 
 @FragmentScoped
 internal class TextFromImageAnalyser @Inject constructor() : DisposableImageAnalyzer {
 
-    private val textRecognizer: TextRecognizer = TextRecognition.getClient()
+    private val textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
     override val textsObserver = MutableLiveData<List<String>>()
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun analyze(imageProxy: ImageProxy) {
         recognizeText(imageProxy)
     }
@@ -31,8 +25,7 @@ internal class TextFromImageAnalyser @Inject constructor() : DisposableImageAnal
         textRecognizer.close()
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    @SuppressLint("UnsafeExperimentalUsageError")
+    @SuppressLint("UnsafeOptInUsageError")
     private fun recognizeText(imageProxy: ImageProxy) {
         val mediaImage = imageProxy.image
         if (mediaImage != null) {
