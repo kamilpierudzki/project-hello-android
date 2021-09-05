@@ -39,7 +39,7 @@ import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.DONUT)
 @AndroidEntryPoint
-class PredictionFragment : Fragment() {
+internal class PredictionFragment : Fragment() {
 
     @Inject
     lateinit var textAnalyzer: DisposableImageAnalyzer

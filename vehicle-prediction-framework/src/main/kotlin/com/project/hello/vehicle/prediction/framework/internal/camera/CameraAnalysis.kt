@@ -14,9 +14,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import kotlin.math.min
 
-class CameraAnalysis(
-    private val fragment: Fragment
-) {
+internal class CameraAnalysis(private val fragment: Fragment) {
 
     private val cameraProviderFuture: ListenableFuture<ProcessCameraProvider> =
         ProcessCameraProvider.getInstance(fragment.requireContext())
@@ -27,16 +25,19 @@ class CameraAnalysis(
         surfaceProvider: Preview.SurfaceProvider,
     ) {
         cameraProviderFuture.addListener({
-            val cameraSelector = createCameraSelector()
-            val targetResolution = createTargetResolution()
-            val imageAnalysisUseCase = createImageAnalysisUseCase(targetResolution, imageAnalyzer)
-            val previewUseCase = createPreviewUseCase(targetResolution, surfaceProvider)
+            val imageAnalysisUseCase = createImageAnalysisUseCase(
+                createAnalysisTargetResolution(),
+                imageAnalyzer
+            )
+            val previewUseCase = createPreviewUseCase(
+                createPreviewTargetResolution(),
+                surfaceProvider
+            )
 
             try {
                 val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
                 bindCameraProviderToLifecycle(
                     cameraProvider,
-                    cameraSelector,
                     imageAnalysisUseCase,
                     previewUseCase
                 )
@@ -50,7 +51,7 @@ class CameraAnalysis(
         targetResolution: Size,
         imageAnalyzer: DisposableImageAnalyzer
     ) = ImageAnalysis.Builder()
-        .setTargetResolution(targetResolution)
+//        .setTargetResolution(targetResolution)
         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
         .build()
         .apply {
@@ -62,33 +63,29 @@ class CameraAnalysis(
         return Executors.newFixedThreadPool(min(2, availableProcessors))
     }
 
-    private fun createTargetResolution(): Size = Size(1280, 720)
+    private fun createPreviewTargetResolution(): Size = Size(1280, 720)
+
+    private fun createAnalysisTargetResolution(): Size = Size(1280, 720)
 
     private fun createPreviewUseCase(
         targetResolution: Size,
         surfaceProvider: Preview.SurfaceProvider
     ) = Preview.Builder()
-        .setTargetResolution(targetResolution)
+//        .setTargetResolution(targetResolution)
         .build()
         .apply {
             setSurfaceProvider(surfaceProvider)
         }
 
-    private fun createCameraSelector() =
-        CameraSelector.Builder()
-            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-            .build()
-
     private fun bindCameraProviderToLifecycle(
         cameraProvider: ProcessCameraProvider,
-        cameraSelector: CameraSelector,
         imageAnalysisUseCase: ImageAnalysis,
         previewUseCase: Preview
     ) {
         cameraProvider.unbindAll()
         cameraProvider.bindToLifecycle(
             fragment,
-            cameraSelector,
+            CameraSelector.DEFAULT_BACK_CAMERA,
             imageAnalysisUseCase,
             previewUseCase
         )
