@@ -7,12 +7,23 @@ import com.project.hello.vehicle.prediction.framework.databinding.PredictedItemB
 internal class PredictedLineViewHolder(private val viewBinding: PredictedItemBinding) :
     RecyclerView.ViewHolder(viewBinding.root) {
 
-    fun setUpView(data: LineWithAccuracyAndProbability) {
-        val lineNumber = data.lineWithAccuracy.line.number
-        val direction = data.lineWithAccuracy.line.destination
+    fun setUpView(position: Int, data: List<LineWithAccuracyAndProbability>) {
+        val lineNumber = data[position].lineWithAccuracy.line.number
+        val direction = data[position].lineWithAccuracy.line.destination
         viewBinding.predictedNumber.text = lineNumber
-        viewBinding.predictedDirection.text = direction
-        viewBinding.predictedProbability.text = "${data.probability}"
+        viewBinding.predictedDirection.text =
+            direction.takeIf { isMoreThanOneNumberInCollection(it, data) } ?: "-"
+        viewBinding.predictedProbability.text = "${data[position].probability}"
         viewBinding.root.contentDescription = "$lineNumber, $direction"
+    }
+
+    private fun isMoreThanOneNumberInCollection(
+        number: String,
+        data: List<LineWithAccuracyAndProbability>
+    ): Boolean {
+        val count = data.count {
+            number == it.lineWithAccuracy.line.number
+        }
+        return count > 1
     }
 }
