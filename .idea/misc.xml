@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.37916666666666665" />
+        <entry key="city-plan-framework/src/main/res/layout/city_item.xml" value="0.125" />
         <entry key="legal-framework/src/main/res/layout/legal_fragment.xml" value="0.19546157813305828" />
+        <entry key="vehicle-prediction-framework/src/main/res/layout/prediction_fragment.xml" value="0.440625" />
       </map>
     </option>
   </component>
