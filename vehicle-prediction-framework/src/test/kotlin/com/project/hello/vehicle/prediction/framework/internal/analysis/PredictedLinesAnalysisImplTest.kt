@@ -1,15 +1,17 @@
 package com.project.hello.vehicle.prediction.framework.internal.analysis
 
 import com.project.hello.city.plan.domain.model.Line
+import com.project.hello.vehicle.domain.steps.AccuracyLevel
+import com.project.hello.vehicle.domain.steps.LineWithAccuracy
 import com.project.hello.vehicle.prediction.framework.internal.analysis.PredictedLinesAnalysisImpl
 import org.junit.Assert
 import org.junit.Test
 
 internal class PredictedLinesAnalysisImplTest {
 
-    val line_A = Line("A", "aaa")
-    val line_B = Line("B", "bbb")
-    val line_C = Line("C", "ccc")
+    val line_A = LineWithAccuracy(Line("A", "aaa"), AccuracyLevel.NUMBER_MATCHED)
+    val line_B = LineWithAccuracy(Line("B", "bbb"), AccuracyLevel.NUMBER_MATCHED)
+    val line_C = LineWithAccuracy(Line("C", "ccc"), AccuracyLevel.NUMBER_MATCHED)
 
     val tested = PredictedLinesAnalysisImpl()
 

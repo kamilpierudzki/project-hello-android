@@ -48,18 +48,18 @@ internal abstract class VehiclePredictionViewModelModule {
 
         @Provides
         @ViewModelScoped
-        fun provideFindingLines(textMatching: TextMatching): FindingLines =
-            FindingLinesExtendedImpl(textMatching)
+        fun provideFindingLines(textMatching: TextMatching): MatchingCityLines =
+            MatchingCityLinesImpl(textMatching)
 
         @Provides
         @ViewModelScoped
-        fun provideReduction(universalTransformation: UniversalTransformation): Reduction =
-            ReductionExperimentalImpl(universalTransformation)
+        fun provideReduction(): Reduction =
+            ReductionImpl()
 
         @Provides
         @ViewModelScoped
-        fun provideFragmentation(universalTransformation: UniversalTransformation): Fragmentation =
-            FragmentationImpl(universalTransformation)
+        fun provideFragmentation(): Fragmentation =
+            FragmentationImpl()
 
         @Provides
         @ViewModelScoped
@@ -68,11 +68,18 @@ internal abstract class VehiclePredictionViewModelModule {
         @Provides
         @ViewModelScoped
         fun provideVehiclePrediction(
-            findingLines: FindingLines,
+            matchingCityLines: MatchingCityLines,
             reduction: Reduction,
             fragmentation: Fragmentation,
-            outputAnalysis: OutputAnalysis
+            outputAnalysis: OutputAnalysis,
+            universalTransformation: UniversalTransformation
         ): VehiclePrediction =
-            VehiclePredictionImpl(findingLines, reduction, fragmentation, outputAnalysis)
+            VehiclePredictionImpl(
+                matchingCityLines,
+                reduction,
+                fragmentation,
+                outputAnalysis,
+                universalTransformation
+            )
     }
 }

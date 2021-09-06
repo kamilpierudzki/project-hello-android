@@ -5,34 +5,29 @@ import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.steps.*
 
 class VehiclePredictionImpl(
-    private val findingLines: FindingLines,
+    private val matchingCityLines: MatchingCityLines,
     private val reduction: Reduction,
     private val fragmentation: Fragmentation,
-    private val outputAnalysis: OutputAnalysis
+    private val outputAnalysis: OutputAnalysis,
+    private val universalTransformation: UniversalTransformation
 ) : VehiclePrediction {
 
-    override fun processInput(rawInput: String, cityLines: List<Line>): List<Line> {
-        val inputs = listOf(rawInput)
-        val outputs = matchedLines(inputs, cityLines)
-        return outputAnalysis.analyseOutput(outputs)
+    override fun processInput(rawInput: String, cityLines: List<Line>): List<LineWithAccuracy> {
+        val transformedRawInput = universalTransformation.transformedText(rawInput)
+        val transformedInput = listOf(transformedRawInput)
+        val outputs = matchedLines(transformedInput, cityLines)
+        return outputAnalysis.analysedOutputMatrix(outputs)
     }
 
     private fun matchedLines(
-        inputs: List<String>,
+        input: List<String>,
         cityLines: List<Line>,
         numbersNotMatched: MutableList<String> = mutableListOf()
     ): MutableList<MutableList<LineWithAccuracy>> {
-        val foundLinesData = findingLines.foundLinesData(inputs, cityLines)
-        val output: MutableList<MutableList<LineWithAccuracy>> =
-            mutableListOf(foundLinesData.matchedLines)
-
-        val reducedInput = reduction.reduceInput(
-            inputs,
-            foundLinesData.textsUsedInMatch,
-            numbersNotMatched
-        )
-        val fragmentedInput = fragmentation.fragmentedInput(reducedInput)
-        val reducedFragmentedInput = reduction.reduceInput(
+        val matchingInfo = matchingCityLines.matchingLinesInfo(input, cityLines)
+        val mutableOutputMatrix = mutableListOf(matchingInfo.linesMatchedBasedOnInput)
+        val fragmentedInput = fragmentation.fragmentedInput(input)
+        val reducedFragmentedInput = reduction.reducedInputs(
             fragmentedInput,
             emptyList(),
             numbersNotMatched
@@ -40,10 +35,10 @@ class VehiclePredictionImpl(
         if (reducedFragmentedInput.isNotEmpty()) {
             val matchedLines = matchedLines(reducedFragmentedInput, cityLines, numbersNotMatched)
             for (matchedLine in matchedLines) {
-                output.add(matchedLine)
+                mutableOutputMatrix.add(matchedLine)
             }
         }
 
-        return output
+        return mutableOutputMatrix
     }
 }

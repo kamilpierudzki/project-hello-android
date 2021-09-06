@@ -1,19 +1,16 @@
 package com.project.hello.vehicle.prediction.framework.internal.ui
 
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.project.hello.vehicle.domain.analysis.LineWithProbability
+import com.project.hello.vehicle.domain.analysis.LineWithAccuracyAndProbability
 import com.project.hello.vehicle.prediction.framework.databinding.PredictedItemBinding
 
-@RequiresApi(Build.VERSION_CODES.DONUT)
 internal class PredictedLinesAdapter : RecyclerView.Adapter<PredictedLineViewHolder>() {
 
-    private var dataset: List<LineWithProbability> = emptyList()
+    private var dataset: List<LineWithAccuracyAndProbability> = emptyList()
 
-    fun updateData(newData: List<LineWithProbability>) {
+    fun updateData(newData: List<LineWithAccuracyAndProbability>) {
         dataset = newData
         notifyDataSetChanged()
     }

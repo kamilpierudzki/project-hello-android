@@ -2,7 +2,8 @@ package com.project.hello.vehicle.domain.steps
 
 enum class AccuracyLevel {
     NUMBER_MATCHED,
+    NUMBER_SLICE,
     DESTINATION_MATCHED,
-    SLICE_MATCHED,
+    DESTINATION_SLICE,
     NOT_MATCHED,
 }

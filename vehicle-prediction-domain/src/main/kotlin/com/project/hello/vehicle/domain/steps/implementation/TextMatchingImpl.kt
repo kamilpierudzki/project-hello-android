@@ -8,22 +8,35 @@ class TextMatchingImpl(
     private val universalTransformation: UniversalTransformation
 ) : TextMatching {
 
-    override fun didNumberMatch(input: String, cityLine: Line): Boolean =
+    override fun isNumberMatching(input: String, cityLine: Line): Boolean =
         universalTransformation.transformedText(cityLine.number) ==
                 universalTransformation.transformedText(input)
 
-    override fun didDestinationMatch(input: String, cityLine: Line): Boolean =
+    override fun isNumberSliceMatching(input: String, cityLine: Line): Boolean =
+        isNumberContainingInput(input, cityLine) ||
+                isInputContainingNumber(input, cityLine)
+
+    override fun isDestinationMatching(input: String, cityLine: Line): Boolean =
         universalTransformation.transformedText(cityLine.destination) ==
                 universalTransformation.transformedText(input)
 
-    override fun didNumberContains(input: String, cityLine: Line): Boolean =
+    override fun isDestinationSliceMatching(input: String, cityLine: Line): Boolean =
+        isDestinationContainingInput(input, cityLine) ||
+                isInputContainingDestination(input, cityLine)
+
+    private fun isNumberContainingInput(input: String, cityLine: Line): Boolean =
         universalTransformation.transformedText(cityLine.number)
             .contains(universalTransformation.transformedText(input))
 
-    override fun didDestinationContain(input: String, cityLine: Line): Boolean =
+    private fun isInputContainingNumber(input: String, cityLine: Line): Boolean =
+        universalTransformation.transformedText(input)
+            .contains(universalTransformation.transformedText(cityLine.number))
+
+    private fun isDestinationContainingInput(input: String, cityLine: Line): Boolean =
         universalTransformation.transformedText(cityLine.destination)
             .contains(universalTransformation.transformedText(input))
 
-    override fun didSliceMatch(input: String, cityLine: Line): Boolean =
-        didNumberContains(input, cityLine) || didDestinationContain(input, cityLine)
+    private fun isInputContainingDestination(input: String, cityLine: Line): Boolean =
+        universalTransformation.transformedText(input)
+            .contains(universalTransformation.transformedText(cityLine.destination))
 }

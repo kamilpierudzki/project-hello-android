@@ -17,17 +17,23 @@ internal class VehiclePredictionImplTest {
     )
 
     val polishCharactersProvider = object : CountryCharactersProvider {
-        override fun get(): Map<String, String> = mapOf("ą" to "a", "ł" to "l")
+        override fun get() = mapOf("ą" to "a", "ł" to "l")
     }
     val universalTransformation = UniversalTransformationImpl(polishCharactersProvider)
 
     val textMatching = TextMatchingImpl(universalTransformation)
-    val fragmentation = FragmentationImpl(universalTransformation)
-    val findingLines = FindingLinesExtendedImpl(textMatching)
-    val reduction = ReductionExperimentalImpl(universalTransformation)
+    val fragmentation = FragmentationImpl()
+    val findingLines = MatchingCityLinesImpl(textMatching)
+    val reduction = ReductionImpl()
     val outputAnalysis = OutputAnalysisImpl()
 
-    val tested = VehiclePredictionImpl(findingLines, reduction, fragmentation, outputAnalysis)
+    val tested = VehiclePredictionImpl(
+        findingLines,
+        reduction,
+        fragmentation,
+        outputAnalysis,
+        universalTransformation
+    )
 
     @Test
     fun `test 1`() {
@@ -39,7 +45,7 @@ internal class VehiclePredictionImplTest {
 
         // then
         Assert.assertEquals(1, predicted.size)
-        Assert.assertEquals(globalCityLines1[1].number, predicted[0].number)
+        Assert.assertEquals("16", predicted[0].line.number)
     }
 
     @Test
@@ -52,7 +58,7 @@ internal class VehiclePredictionImplTest {
 
         // then
         Assert.assertEquals(1, predicted.size)
-        Assert.assertEquals(globalCityLines1[1].number, predicted[0].number)
+        Assert.assertEquals("16", predicted[0].line.number)
     }
 
     @Test
@@ -65,10 +71,10 @@ internal class VehiclePredictionImplTest {
 
         // then
         Assert.assertEquals(4, predicted.size)
-        Assert.assertEquals(globalCityLines1[0].number, predicted[0].number)
-        Assert.assertEquals(globalCityLines1[1].number, predicted[1].number)
-        Assert.assertEquals(globalCityLines1[2].number, predicted[2].number)
-        Assert.assertEquals(globalCityLines1[3].number, predicted[3].number)
+        Assert.assertEquals(globalCityLines1[0].number, predicted[0].line.number)
+        Assert.assertEquals(globalCityLines1[1].number, predicted[1].line.number)
+        Assert.assertEquals(globalCityLines1[2].number, predicted[2].line.number)
+        Assert.assertEquals(globalCityLines1[3].number, predicted[3].line.number)
     }
 
     @Test
@@ -81,10 +87,10 @@ internal class VehiclePredictionImplTest {
 
         // then
         Assert.assertEquals(4, predicted.size)
-        Assert.assertEquals(globalCityLines1[0].number, predicted[0].number)
-        Assert.assertEquals(globalCityLines1[1].number, predicted[1].number)
-        Assert.assertEquals(globalCityLines1[2].number, predicted[2].number)
-        Assert.assertEquals(globalCityLines1[3].number, predicted[3].number)
+        Assert.assertEquals(globalCityLines1[0].number, predicted[0].line.number)
+        Assert.assertEquals(globalCityLines1[1].number, predicted[1].line.number)
+        Assert.assertEquals(globalCityLines1[2].number, predicted[2].line.number)
+        Assert.assertEquals(globalCityLines1[3].number, predicted[3].line.number)
     }
 
     @Test
@@ -145,7 +151,7 @@ internal class VehiclePredictionImplTest {
 
         // then
         Assert.assertEquals(1, predicted.size)
-        Assert.assertEquals("12", predicted[0].number)
+        Assert.assertEquals("12", predicted[0].line.number)
     }
 
     @Test
@@ -162,6 +168,23 @@ internal class VehiclePredictionImplTest {
 
         // then
         Assert.assertEquals(1, predicted.size)
-        Assert.assertEquals("12", predicted[0].number)
+        Assert.assertEquals("12", predicted[0].line.number)
+    }
+
+    @Test
+    fun `test 11`() {
+        // given
+        val cityLines = listOf(
+            Line("15", "Os. Sobieskiego"),
+            Line("16", "Os. Sobieskiego")
+        )
+        val rawInput = "150s. Scbieskiego"
+
+        // when
+        val predicted = tested.processInput(rawInput, cityLines)
+
+        // then
+        Assert.assertEquals(1, predicted.size)
+        Assert.assertEquals("15", predicted[0].line.number)
     }
 }

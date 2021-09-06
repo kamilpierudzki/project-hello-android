@@ -1,19 +1,12 @@
 package com.project.hello.vehicle.domain.implementation
 
-import com.project.hello.vehicle.domain.steps.CountryCharactersProvider
 import com.project.hello.vehicle.domain.steps.implementation.FragmentationImpl
-import com.project.hello.vehicle.domain.steps.implementation.UniversalTransformationImpl
 import org.junit.Assert
 import org.junit.Test
 
 internal class FragmentationImplTest {
 
-    val countryCharactersProvider = object : CountryCharactersProvider {
-        override fun get(): Map<String, String> = emptyMap()
-    }
-    val universalTransformation = UniversalTransformationImpl(countryCharactersProvider)
-
-    val tested = FragmentationImpl(universalTransformation)
+    val tested = FragmentationImpl()
 
     @Test
     fun `test 1`() {
@@ -103,17 +96,17 @@ internal class FragmentationImplTest {
         val input = listOf("1")
 
         // when
-        val divided = tested.fragmentedInput(input)
+        val fragmented = tested.fragmentedInput(input)
 
         // given
-        Assert.assertEquals(1, divided.size)
-        Assert.assertEquals("1", divided[0])
+        Assert.assertEquals(1, fragmented.size)
+        Assert.assertEquals("1", fragmented[0])
     }
 
     @Test
     fun `test 8`() {
         // given
-        val input = listOf(" o")
+        val input = listOf("o")
 
         // when
         val divided = tested.fragmentedInput(input)
@@ -126,7 +119,7 @@ internal class FragmentationImplTest {
     @Test
     fun `test 9`() {
         // given
-        val input = listOf("1 6 o")
+        val input = listOf("16o")
 
         // when
         val divided = tested.fragmentedInput(input)
@@ -140,15 +133,15 @@ internal class FragmentationImplTest {
     @Test
     fun `test 10`() {
         // given
-        val input = listOf("a a1 6a a")
+        val input = listOf("aa16aa")
 
         // when
-        val divided = tested.fragmentedInput(input)
+        val fragmented = tested.fragmentedInput(input)
 
         // given
-        Assert.assertEquals(2, divided.size)
-        Assert.assertEquals("aa", divided[0])
-        Assert.assertEquals("16aa", divided[1])
+        Assert.assertEquals(2, fragmented.size)
+        Assert.assertEquals("aa", fragmented[0])
+        Assert.assertEquals("16aa", fragmented[1])
     }
 
     @Test
@@ -161,5 +154,20 @@ internal class FragmentationImplTest {
 
         // given
         Assert.assertEquals(0, divided.size)
+    }
+
+    @Test
+    fun `test 12`() {
+        // given
+        val input = listOf("16os.sobieskiego")
+
+        // when
+        val f1 = tested.fragmentedInput(input)
+        val f2 = tested.fragmentedInput(f1)
+        val f3 = tested.fragmentedInput(f2)
+
+        // then
+        Assert.assertEquals(8, f3.size)
+        Assert.assertEquals("16", f3[0])
     }
 }

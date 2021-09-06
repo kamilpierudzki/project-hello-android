@@ -1,19 +1,12 @@
 package com.project.hello.vehicle.domain.implementation
 
-import com.project.hello.vehicle.domain.steps.CountryCharactersProvider
-import com.project.hello.vehicle.domain.steps.implementation.ReductionExperimentalImpl
-import com.project.hello.vehicle.domain.steps.implementation.UniversalTransformationImpl
+import com.project.hello.vehicle.domain.steps.implementation.ReductionImpl
 import org.junit.Assert
 import org.junit.Test
 
-class ReductionExperimentalImplTest {
+class ReductionImplTest {
 
-    val countryCharactersProvider = object : CountryCharactersProvider {
-        override fun get(): Map<String, String> = emptyMap()
-    }
-    val universalTransformation = UniversalTransformationImpl(countryCharactersProvider)
-
-    val tested = ReductionExperimentalImpl(universalTransformation)
+    val tested = ReductionImpl()
 
     @Test
     fun `test 1`() {
@@ -21,27 +14,12 @@ class ReductionExperimentalImplTest {
         val input = listOf("16", "ab", "abc", "abcd")
 
         // when
-        val reduced = tested.reduceInput(input, emptyList())
+        val reduced = tested.reducedInputs(input, emptyList())
 
         // then
         Assert.assertEquals(2, reduced.size)
         Assert.assertEquals("16", reduced[0])
         Assert.assertEquals("abcd", reduced[1])
-    }
-
-    @Test
-    fun `test 2`() {
-        // given
-        val input = listOf("aaaa", "bbbb", "cccc", "dddd")
-        val foundSpecs = listOf("bbbb", "cccc")
-
-        // when
-        val reduced = tested.reduceInput(input, foundSpecs)
-
-        // then
-        Assert.assertEquals(2, reduced.size)
-        Assert.assertEquals("aaaa", reduced[0])
-        Assert.assertEquals("dddd", reduced[1])
     }
 
     @Test
@@ -51,7 +29,7 @@ class ReductionExperimentalImplTest {
         val specs = listOf("xxx", "yyy")
 
         // when
-        val reduced = tested.reduceInput(input, specs)
+        val reduced = tested.reducedInputs(input, specs)
 
         // then
         Assert.assertEquals(2, reduced.size)
@@ -65,7 +43,7 @@ class ReductionExperimentalImplTest {
         val input = listOf("aaa", "bbbb", "cccc", "ddd")
 
         // when
-        val reduced = tested.reduceInput(input, emptyList())
+        val reduced = tested.reducedInputs(input, emptyList())
 
         // then
         Assert.assertEquals(2, reduced.size)
@@ -76,10 +54,10 @@ class ReductionExperimentalImplTest {
     @Test
     fun `test 5`() {
         // given
-        val input = listOf("a aa", "  bbbb", "cccc  ", "ddd", "   ")
+        val input = listOf("aaa", "bbbb", "cccc", "ddd", "")
 
         // when
-        val reduced = tested.reduceInput(input, emptyList())
+        val reduced = tested.reducedInputs(input, emptyList())
 
         // then
         Assert.assertEquals(2, reduced.size)
@@ -93,7 +71,7 @@ class ReductionExperimentalImplTest {
         val input = emptyList<String>()
 
         // when
-        val reduced = tested.reduceInput(input, emptyList())
+        val reduced = tested.reducedInputs(input, emptyList())
 
         // then
         Assert.assertEquals(0, reduced.size)
@@ -105,7 +83,7 @@ class ReductionExperimentalImplTest {
         val input = listOf("169", "16", "1", "loadx", "bies", "1xao", "1xe", "abc")
 
         // when
-        val reduced = tested.reduceInput(input, emptyList())
+        val reduced = tested.reducedInputs(input, emptyList())
 
         // then
         Assert.assertEquals(7, reduced.size)

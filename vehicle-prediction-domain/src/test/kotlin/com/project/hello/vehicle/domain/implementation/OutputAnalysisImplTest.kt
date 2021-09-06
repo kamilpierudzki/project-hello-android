@@ -16,20 +16,20 @@ internal class OutputAnalysisImplTest {
         // given
         val input = listOf(
             listOf(
-                LineWithAccuracy(Line("12", "aaa"), AccuracyLevel.SLICE_MATCHED),
+                LineWithAccuracy(Line("12", "aaa"), AccuracyLevel.NUMBER_SLICE),
                 LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED)
             ),
             listOf(
                 LineWithAccuracy(Line("169", "ccc"), AccuracyLevel.NUMBER_MATCHED),
-                LineWithAccuracy(Line("179", "ddd"), AccuracyLevel.SLICE_MATCHED)
+                LineWithAccuracy(Line("179", "ddd"), AccuracyLevel.DESTINATION_SLICE)
             )
         )
 
         // when
-        val analysed = tested.analyseOutput(input)
+        val analysed = tested.analysedOutputMatrix(input)
 
         Assert.assertEquals(1, analysed.size)
-        Assert.assertEquals("169", analysed[0].number)
+        Assert.assertEquals("169", analysed[0].line.number)
     }
 
     @Test
@@ -37,13 +37,13 @@ internal class OutputAnalysisImplTest {
         // given
         val input = listOf(
             listOf(
-                LineWithAccuracy(Line("12", "aaa"), AccuracyLevel.SLICE_MATCHED),
+                LineWithAccuracy(Line("12", "aaa"), AccuracyLevel.NUMBER_SLICE),
                 LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
                 LineWithAccuracy(Line("1", "eee"), AccuracyLevel.NUMBER_MATCHED)
             ),
             listOf(
                 LineWithAccuracy(Line("169", "ccc"), AccuracyLevel.NUMBER_MATCHED),
-                LineWithAccuracy(Line("179", "ddd"), AccuracyLevel.SLICE_MATCHED)
+                LineWithAccuracy(Line("179", "ddd"), AccuracyLevel.NUMBER_SLICE)
             ),
             listOf(
                 LineWithAccuracy(Line("1", "eee"), AccuracyLevel.NUMBER_MATCHED)
@@ -51,10 +51,10 @@ internal class OutputAnalysisImplTest {
         )
 
         // when
-        val analysed = tested.analyseOutput(input)
+        val analysed = tested.analysedOutputMatrix(input)
 
         Assert.assertEquals(1, analysed.size)
-        Assert.assertEquals("1", analysed[0].number)
+        Assert.assertEquals("1", analysed[0].line.number)
     }
 
     @Test
@@ -62,13 +62,13 @@ internal class OutputAnalysisImplTest {
         // given
         val input = listOf(
             listOf(
-                LineWithAccuracy(Line("12", "aaa"), AccuracyLevel.SLICE_MATCHED),
+                LineWithAccuracy(Line("12", "aaa"), AccuracyLevel.NUMBER_SLICE),
                 LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
                 LineWithAccuracy(Line("1", "eee"), AccuracyLevel.NUMBER_MATCHED)
             ),
             listOf(
                 LineWithAccuracy(Line("169", "ccc"), AccuracyLevel.NUMBER_MATCHED),
-                LineWithAccuracy(Line("179", "ddd"), AccuracyLevel.SLICE_MATCHED),
+                LineWithAccuracy(Line("179", "ddd"), AccuracyLevel.NUMBER_SLICE),
                 LineWithAccuracy(Line("16", "bbb"), AccuracyLevel.DESTINATION_MATCHED),
             ),
             listOf(
@@ -78,10 +78,10 @@ internal class OutputAnalysisImplTest {
         )
 
         // when
-        val analysed = tested.analyseOutput(input)
+        val analysed = tested.analysedOutputMatrix(input)
 
         Assert.assertEquals(1, analysed.size)
-        Assert.assertEquals("1", analysed[0].number)
+        Assert.assertEquals("1", analysed[0].line.number)
     }
 
     @Test
@@ -105,9 +105,29 @@ internal class OutputAnalysisImplTest {
         )
 
         // when
-        val analysed = tested.analyseOutput(input)
+        val analysed = tested.analysedOutputMatrix(input)
 
+        // then
         Assert.assertEquals(1, analysed.size)
-        Assert.assertEquals("1", analysed[0].number)
+        Assert.assertEquals("1", analysed[0].line.number)
+    }
+
+    @Test
+    fun `test 5`() {
+        // given
+        val input = listOf(
+            listOf(
+                LineWithAccuracy(Line("16", "a"), AccuracyLevel.NUMBER_SLICE),
+                LineWithAccuracy(Line("169", "a"), AccuracyLevel.NUMBER_MATCHED),
+                LineWithAccuracy(Line("1", "a"), AccuracyLevel.NUMBER_SLICE)
+            )
+        )
+
+        //when
+        val analysed = tested.analysedOutputMatrix(input)
+
+        // then
+        Assert.assertEquals(1, analysed.size)
+        Assert.assertEquals("169", analysed[0].line.number)
     }
 }

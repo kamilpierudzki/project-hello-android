@@ -7,11 +7,11 @@ class UniversalTransformationImpl(
     private val countryCharactersProvider: CountryCharactersProvider
 ) : UniversalTransformation {
 
-    override fun transformedText(input: String): String =
-        if (input.isBlank()) {
-            input
+    override fun transformedText(text: String): String =
+        if (text.isBlank()) {
+            text
         } else {
-            input
+            text
                 .replace(" ", "", ignoreCase = true)
                 .lowercase()
                 .map { c ->

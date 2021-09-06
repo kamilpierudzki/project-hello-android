@@ -1,9 +1,9 @@
 package com.project.hello.vehicle.domain.steps
 
 interface Reduction {
-    fun reduceInput(
+    fun reducedInputs(
         inputs: List<String>,
-        textsUsedInMatch: List<String> = emptyList(),
+        textsFromInputUsedToMatch: List<String> = emptyList(),
         numbersNotMatched: MutableList<String> = mutableListOf()
     ): List<String>
 }

@@ -1,6 +1,5 @@
 package com.project.hello.vehicle.domain.steps.implementation
 
-import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.vehicle.domain.steps.AccuracyLevel
 import com.project.hello.vehicle.domain.steps.LineWithAccuracy
 import com.project.hello.vehicle.domain.steps.OutputAnalysis
@@ -9,38 +8,42 @@ class OutputAnalysisImpl : OutputAnalysis {
 
     private val priorities = listOf(
         AccuracyLevel.NUMBER_MATCHED,
+        AccuracyLevel.NUMBER_SLICE,
         AccuracyLevel.DESTINATION_MATCHED,
-        AccuracyLevel.SLICE_MATCHED
+        AccuracyLevel.DESTINATION_SLICE
     )
 
-    override fun analyseOutput(outputs: List<List<LineWithAccuracy>>): List<Line> {
-        var winner = AccuracyAnalysisData.EMPTY
+    override fun analysedOutputMatrix(outputMatrix: List<List<LineWithAccuracy>>): List<LineWithAccuracy> {
+        val elementWithHighestAccuracy = getInfoOfElementWithHighestAccuracy(outputMatrix)
+
+        val maxNumberOfRepetitions = elementWithHighestAccuracy.maxNumberOfRepetitions
+        return elementWithHighestAccuracy.analysed.entries
+            .asSequence()
+            .filter { it.value == maxNumberOfRepetitions }
+            .map { it.key }
+            .toList()
+    }
+
+    private fun getInfoOfElementWithHighestAccuracy(outputs: List<List<LineWithAccuracy>>): AccuracyAnalysisInfo {
         for (priority in priorities) {
             val analysisData = createAnalysisForAccuracy(priority, outputs)
             if (analysisData.anyFound) {
-                winner = analysisData
-                break
+                return analysisData
             }
         }
-
-        val maxNumberOfRepetitions = winner.maxNumberOfRepetitions
-        return winner.analysed.entries
-            .asSequence()
-            .filter { it.value == maxNumberOfRepetitions }
-            .map { it.key.line }
-            .toList()
+        return AccuracyAnalysisInfo.EMPTY
     }
 
     private fun createAnalysisForAccuracy(
         accuracyLevel: AccuracyLevel,
         outputs: List<List<LineWithAccuracy>>
-    ): AccuracyAnalysisData {
+    ): AccuracyAnalysisInfo {
         val bucket: MutableMap<LineWithAccuracy, Int> = mutableMapOf()
         var maxNumberOfRepetitions = 0
-        for (row: List<LineWithAccuracy> in outputs) {
-            for (element: LineWithAccuracy in row) {
+        for (rows: List<LineWithAccuracy> in outputs) {
+            for (element: LineWithAccuracy in rows) {
                 if (element.accuracyLevel == accuracyLevel) {
-                    val elementCount = bucket.getOrDefault(element, 1) + 1
+                    val elementCount = bucket.getOrElse(element, { 0 }) + 1
                     bucket[element] = elementCount
 
                     if (elementCount > maxNumberOfRepetitions) {
@@ -49,11 +52,11 @@ class OutputAnalysisImpl : OutputAnalysis {
                 }
             }
         }
-        return AccuracyAnalysisData(bucket, maxNumberOfRepetitions)
+        return AccuracyAnalysisInfo(bucket, maxNumberOfRepetitions)
     }
 }
 
-private data class AccuracyAnalysisData(
+private data class AccuracyAnalysisInfo(
     val analysed: Map<LineWithAccuracy, Int>,
     val maxNumberOfRepetitions: Int
 ) {
@@ -61,6 +64,6 @@ private data class AccuracyAnalysisData(
     val anyFound = analysed.isNotEmpty()
 
     companion object {
-        val EMPTY = AccuracyAnalysisData(emptyMap(), 0)
+        val EMPTY = AccuracyAnalysisInfo(emptyMap(), 0)
     }
 }
