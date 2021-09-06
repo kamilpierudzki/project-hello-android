@@ -7,16 +7,10 @@ private const val MIN_SIZE_OF_INPUT_TEXT = 4
 class ReductionImpl : Reduction {
 
     override fun reducedInputs(
-        inputs: List<String>,
-        textsFromInputUsedToMatch: List<String>,
+        input: List<String>,
         numbersNotMatched: MutableList<String>
     ): List<String> {
-        /*val reducedInputs1 = transformedInput
-            .filter {
-                textsFromInputUsedToMatch.contains(it).not()
-            }*/
-
-        val reducedInputs2 = /*reducedInputs1*/inputs.filter {
+        val reducedInput = input.filter {
             if (containsNumber(it)) {
                 if (allCharactersAreDigits(it)) {
                     if (!numbersNotMatched.contains(it)) {
@@ -33,7 +27,7 @@ class ReductionImpl : Reduction {
             }
         }
 
-        return reducedInputs2
+        return reducedInput
     }
 
     private fun allCharactersAreDigits(input: String): Boolean = input.toIntOrNull() != null

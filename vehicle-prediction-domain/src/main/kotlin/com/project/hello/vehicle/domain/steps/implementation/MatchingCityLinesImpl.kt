@@ -8,15 +8,18 @@ class MatchingCityLinesImpl(
     private val textMatching: TextMatching
 ) : MatchingCityLines {
 
-    override fun matchingLinesInfo(input: List<String>, cityLines: List<Line>): MatchingInfo {
+    override fun cityLinesMatchedBasedOnInput(
+        input: List<String>,
+        cityLines: List<Line>
+    ): List<LineWithAccuracy> {
         val inputsForWhichThereIsAnyMatch = mutableListOf<String>()
         val foundMatrix: List<List<LineWithAccuracy>> = input
             .asSequence()
-            .filter { it.isNotEmpty() }
-            .map { input ->
+            .filter { it.isNotBlank() }
+            .map { text ->
                 cityLines
                     .map { cityLine ->
-                        transformedInput(input, cityLine, inputsForWhichThereIsAnyMatch)
+                        transformedInput(text, cityLine, inputsForWhichThereIsAnyMatch)
                     }
                     .filter { lineWithExtra -> lineWithExtra.anyMatched }
             }
@@ -29,10 +32,7 @@ class MatchingCityLinesImpl(
             }
         }
 
-        return MatchingInfo(
-            linesMatchedBasedOnInput = found,
-            textsFromInputUsedToMatch = inputsForWhichThereIsAnyMatch
-        )
+        return found
     }
 
     private fun transformedInput(

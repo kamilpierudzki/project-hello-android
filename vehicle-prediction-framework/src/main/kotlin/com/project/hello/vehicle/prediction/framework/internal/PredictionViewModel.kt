@@ -54,7 +54,7 @@ internal class PredictionViewModel @Inject constructor(
         val lines = predictedLinesAnalysis
             .analysedSortedLines(predictedLines, currentTimeInMillis)
             .also {
-                android.util.Log.d("test_predicted", "predicted: ${it.map { f -> "$f\n" }}")
+                android.util.Log.d("test_predicted", "predicted: \n${it.map { f -> "$f\n" }}")
             }
             .take(NUM_OF_PREDICTED_LINES_TO_SHOW)
         lines.firstOrNull()?.let { updateScreenContentDescription(it) }

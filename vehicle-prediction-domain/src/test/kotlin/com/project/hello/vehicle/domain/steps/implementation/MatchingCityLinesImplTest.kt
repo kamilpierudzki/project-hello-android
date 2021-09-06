@@ -33,11 +33,10 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("16", "os.sobieskiego")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(7, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(2, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(7, linesMatchedBasedOnInput.size)
     }
 
     @Test
@@ -46,28 +45,27 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("16")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(3, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(1, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(3, linesMatchedBasedOnInput.size)
 
-        Assert.assertEquals("16", matchingInfo.linesMatchedBasedOnInput[0].line.number)
+        Assert.assertEquals("16", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_MATCHED,
-            matchingInfo.linesMatchedBasedOnInput[0].accuracyLevel
+            linesMatchedBasedOnInput[0].accuracyLevel
         )
 
-        Assert.assertEquals("169", matchingInfo.linesMatchedBasedOnInput[1].line.number)
+        Assert.assertEquals("169", linesMatchedBasedOnInput[1].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[1].accuracyLevel
+            linesMatchedBasedOnInput[1].accuracyLevel
         )
 
-        Assert.assertEquals("1", matchingInfo.linesMatchedBasedOnInput[2].line.number)
+        Assert.assertEquals("1", linesMatchedBasedOnInput[2].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[2].accuracyLevel
+            linesMatchedBasedOnInput[2].accuracyLevel
         )
     }
 
@@ -77,22 +75,21 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("6")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(2, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(1, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(2, linesMatchedBasedOnInput.size)
 
-        Assert.assertEquals("16", matchingInfo.linesMatchedBasedOnInput[0].line.number)
+        Assert.assertEquals("16", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[0].accuracyLevel
+            linesMatchedBasedOnInput[0].accuracyLevel
         )
 
-        Assert.assertEquals("169", matchingInfo.linesMatchedBasedOnInput[1].line.number)
+        Assert.assertEquals("169", linesMatchedBasedOnInput[1].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[1].accuracyLevel
+            linesMatchedBasedOnInput[1].accuracyLevel
         )
     }
 
@@ -102,34 +99,33 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("ego")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(4, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(1, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(4, linesMatchedBasedOnInput.size)
 
-        Assert.assertEquals("12", matchingInfo.linesMatchedBasedOnInput[0].line.number)
+        Assert.assertEquals("12", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(
             AccuracyLevel.DESTINATION_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[0].accuracyLevel
+            linesMatchedBasedOnInput[0].accuracyLevel
         )
 
-        Assert.assertEquals("16", matchingInfo.linesMatchedBasedOnInput[1].line.number)
+        Assert.assertEquals("16", linesMatchedBasedOnInput[1].line.number)
         Assert.assertEquals(
             AccuracyLevel.DESTINATION_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[1].accuracyLevel
+            linesMatchedBasedOnInput[1].accuracyLevel
         )
 
-        Assert.assertEquals("169", matchingInfo.linesMatchedBasedOnInput[2].line.number)
+        Assert.assertEquals("169", linesMatchedBasedOnInput[2].line.number)
         Assert.assertEquals(
             AccuracyLevel.DESTINATION_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[2].accuracyLevel
+            linesMatchedBasedOnInput[2].accuracyLevel
         )
 
-        Assert.assertEquals("174", matchingInfo.linesMatchedBasedOnInput[3].line.number)
+        Assert.assertEquals("174", linesMatchedBasedOnInput[3].line.number)
         Assert.assertEquals(
             AccuracyLevel.DESTINATION_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[3].accuracyLevel
+            linesMatchedBasedOnInput[3].accuracyLevel
         )
     }
 
@@ -139,11 +135,10 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("789", "blaskiego")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(0, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(0, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(0, linesMatchedBasedOnInput.size)
     }
 
     @Test
@@ -152,11 +147,10 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("16", "os.sobieskiego")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(7, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(2, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(7, linesMatchedBasedOnInput.size)
     }
 
     @Test
@@ -165,11 +159,10 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("16", "os.sobieskiego")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, emptyList())
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, emptyList())
 
         // then
-        Assert.assertEquals(0, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(0, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(0, linesMatchedBasedOnInput.size)
     }
 
     @Test
@@ -178,11 +171,10 @@ internal class MatchingCityLinesImplTest {
         val input = emptyList<String>()
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, emptyList())
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, emptyList())
 
         // then
-        Assert.assertEquals(0, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(0, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(0, linesMatchedBasedOnInput.size)
     }
 
     @Test
@@ -191,11 +183,10 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(0, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(0, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(0, linesMatchedBasedOnInput.size)
     }
 
     @Test
@@ -209,16 +200,15 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("160s.Scbieskiego")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, cityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, cityLines)
 
         // then
-        Assert.assertEquals(1, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(1, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(1, linesMatchedBasedOnInput.size)
 
-        Assert.assertEquals("16", matchingInfo.linesMatchedBasedOnInput[0].line.number)
+        Assert.assertEquals("16", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[0].accuracyLevel
+            linesMatchedBasedOnInput[0].accuracyLevel
         )
 
     }
@@ -229,22 +219,21 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("16O")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(2, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(1, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(2, linesMatchedBasedOnInput.size)
 
-        Assert.assertEquals("16", matchingInfo.linesMatchedBasedOnInput[0].line.number)
+        Assert.assertEquals("16", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[0].accuracyLevel
+            linesMatchedBasedOnInput[0].accuracyLevel
         )
 
-        Assert.assertEquals("1", matchingInfo.linesMatchedBasedOnInput[1].line.number)
+        Assert.assertEquals("1", linesMatchedBasedOnInput[1].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            matchingInfo.linesMatchedBasedOnInput[1].accuracyLevel
+            linesMatchedBasedOnInput[1].accuracyLevel
         )
     }
 
@@ -254,11 +243,10 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("16os.sobieskiego")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(5, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(1, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(5, linesMatchedBasedOnInput.size)
     }
 
     @Test
@@ -267,11 +255,10 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("169")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(3, matchingInfo.linesMatchedBasedOnInput.size)
-        Assert.assertEquals(1, matchingInfo.textsFromInputUsedToMatch.size)
+        Assert.assertEquals(3, linesMatchedBasedOnInput.size)
     }
 
     @Test
@@ -280,9 +267,9 @@ internal class MatchingCityLinesImplTest {
         val input = listOf("16os.soelbieskiego")
 
         // when
-        val matchingInfo = tested.matchingLinesInfo(input, globalCityLines)
+        val linesMatchedBasedOnInput = tested.cityLinesMatchedBasedOnInput(input, globalCityLines)
 
         // then
-        Assert.assertEquals(2, matchingInfo.linesMatchedBasedOnInput.size)
+        Assert.assertEquals(2, linesMatchedBasedOnInput.size)
     }
 }

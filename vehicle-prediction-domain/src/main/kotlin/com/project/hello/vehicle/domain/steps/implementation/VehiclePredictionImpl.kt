@@ -23,22 +23,19 @@ class VehiclePredictionImpl(
         input: List<String>,
         cityLines: List<Line>,
         numbersNotMatched: MutableList<String> = mutableListOf()
-    ): MutableList<MutableList<LineWithAccuracy>> {
-        val matchingInfo = matchingCityLines.matchingLinesInfo(input, cityLines)
-        val mutableOutputMatrix = mutableListOf(matchingInfo.linesMatchedBasedOnInput)
+    ): MutableList<List<LineWithAccuracy>> {
+        val linesMatchedBasedOnInput = matchingCityLines.cityLinesMatchedBasedOnInput(input, cityLines)
+        val mutableOutput = mutableListOf(linesMatchedBasedOnInput)
         val fragmentedInput = fragmentation.fragmentedInput(input)
-        val reducedFragmentedInput = reduction.reducedInputs(
-            fragmentedInput,
-            emptyList(),
-            numbersNotMatched
-        )
+        val reducedFragmentedInput = reduction.reducedInputs(fragmentedInput, numbersNotMatched)
+
         if (reducedFragmentedInput.isNotEmpty()) {
             val matchedLines = matchedLines(reducedFragmentedInput, cityLines, numbersNotMatched)
             for (matchedLine in matchedLines) {
-                mutableOutputMatrix.add(matchedLine)
+                mutableOutput.add(matchedLine)
             }
         }
 
-        return mutableOutputMatrix
+        return mutableOutput
     }
 }

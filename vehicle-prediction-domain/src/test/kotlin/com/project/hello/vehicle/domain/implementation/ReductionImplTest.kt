@@ -14,7 +14,7 @@ class ReductionImplTest {
         val input = listOf("16", "ab", "abc", "abcd")
 
         // when
-        val reduced = tested.reducedInputs(input, emptyList())
+        val reduced = tested.reducedInputs(input)
 
         // then
         Assert.assertEquals(2, reduced.size)
@@ -26,7 +26,7 @@ class ReductionImplTest {
     fun `test 3`() {
         // given
         val input = listOf("aaa", "bbbb", "cccc", "ddd")
-        val specs = listOf("xxx", "yyy")
+        val specs = mutableListOf("xxx", "yyy")
 
         // when
         val reduced = tested.reducedInputs(input, specs)
@@ -43,7 +43,7 @@ class ReductionImplTest {
         val input = listOf("aaa", "bbbb", "cccc", "ddd")
 
         // when
-        val reduced = tested.reducedInputs(input, emptyList())
+        val reduced = tested.reducedInputs(input)
 
         // then
         Assert.assertEquals(2, reduced.size)
@@ -57,7 +57,7 @@ class ReductionImplTest {
         val input = listOf("aaa", "bbbb", "cccc", "ddd", "")
 
         // when
-        val reduced = tested.reducedInputs(input, emptyList())
+        val reduced = tested.reducedInputs(input)
 
         // then
         Assert.assertEquals(2, reduced.size)
@@ -71,7 +71,7 @@ class ReductionImplTest {
         val input = emptyList<String>()
 
         // when
-        val reduced = tested.reducedInputs(input, emptyList())
+        val reduced = tested.reducedInputs(input)
 
         // then
         Assert.assertEquals(0, reduced.size)
@@ -83,7 +83,7 @@ class ReductionImplTest {
         val input = listOf("169", "16", "1", "loadx", "bies", "1xao", "1xe", "abc")
 
         // when
-        val reduced = tested.reducedInputs(input, emptyList())
+        val reduced = tested.reducedInputs(input)
 
         // then
         Assert.assertEquals(7, reduced.size)
