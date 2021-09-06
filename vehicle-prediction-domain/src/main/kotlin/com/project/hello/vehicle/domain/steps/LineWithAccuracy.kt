@@ -6,5 +6,5 @@ data class LineWithAccuracy(val line: Line, val accuracyLevel: AccuracyLevel) {
 
     val anyMatched = accuracyLevel != AccuracyLevel.NOT_MATCHED
 
-    override fun toString(): String = "$line, $accuracyLevel"
+    override fun toString(): String = "$line, ${accuracyLevel.name}"
 }

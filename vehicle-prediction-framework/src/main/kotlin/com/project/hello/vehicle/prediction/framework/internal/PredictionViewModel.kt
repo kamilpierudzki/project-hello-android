@@ -8,7 +8,7 @@ import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.commons.framework.hilt.DefaultDispatcher
 import com.project.hello.commons.framework.ui.Text
 import com.project.hello.vehicle.domain.VehiclePrediction
-import com.project.hello.vehicle.domain.analysis.LineWithAccuracyAndProbability
+import com.project.hello.vehicle.domain.analysis.LineWithProbability
 import com.project.hello.vehicle.domain.analysis.PredictedLinesAnalysis
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
 import com.project.hello.vehicle.prediction.framework.R
@@ -30,7 +30,7 @@ internal class PredictionViewModel @Inject constructor(
 
     private val cityLines = CopyOnWriteArrayList<Line>()
 
-    val predictedLines = MutableLiveData<List<LineWithAccuracyAndProbability>>()
+    val predictedLines = MutableLiveData<List<LineWithProbability>>()
     val screenContentDescription = MutableLiveData(Text.empty())
 
     fun setInitialData(initialData: PredictionViewModelInitialData) {
@@ -61,11 +61,11 @@ internal class PredictionViewModel @Inject constructor(
         this.predictedLines.postValue(lines)
     }
 
-    private fun updateScreenContentDescription(data: LineWithAccuracyAndProbability) {
+    private fun updateScreenContentDescription(data: LineWithProbability) {
         val contentDescription = Text.of(
             listOf(
                 Text.of(R.string.probably),
-                Text.of("${data.lineWithAccuracy.line.number}, ${data.lineWithAccuracy.line.destination}")
+                Text.of("${data.line.number}, ${data.line.destination}")
             ),
             separator = " "
         )

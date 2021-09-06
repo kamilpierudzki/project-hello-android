@@ -1,27 +1,28 @@
 package com.project.hello.vehicle.prediction.framework.internal.analysis
 
-import com.project.hello.vehicle.domain.analysis.LineWithAccuracyAndProbability
+import com.project.hello.city.plan.domain.model.Line
+import com.project.hello.vehicle.domain.analysis.LineWithProbability
 import com.project.hello.vehicle.domain.analysis.PredictedLinesAnalysis
+import com.project.hello.vehicle.domain.steps.AccuracyLevel
 import com.project.hello.vehicle.domain.steps.LineWithAccuracy
 import dagger.hilt.android.scopes.ViewModelScoped
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 
-private const val LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS = 2_000L
-private const val ELEMENT_NOT_FOUND_IN_MEMORY = Long.MAX_VALUE
+private const val LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS = 1_500L
 
 @ViewModelScoped
 internal class PredictedLinesAnalysisImpl @Inject constructor() : PredictedLinesAnalysis {
 
-    private val linesInMemory = ConcurrentHashMap<LineWithAccuracy, AnalysisSpecs>()
+    private val linesInMemory = ConcurrentHashMap<Line, AnalysisInfo>()
 
     override fun analysedSortedLines(
         newLines: List<LineWithAccuracy>,
         currentTimeInMillis: Long
-    ): List<LineWithAccuracyAndProbability> {
+    ): List<LineWithProbability> {
         removeExpiredLinesFromMemory(currentTimeInMillis)
-        updateMemoryIfPossible(currentTimeInMillis, newLines)
+        analyseNewLines(currentTimeInMillis, newLines)
         return createSortedOutputOfMemory()
     }
 
@@ -35,59 +36,81 @@ internal class PredictedLinesAnalysisImpl @Inject constructor() : PredictedLines
         }
     }
 
-    private fun isElementExpired(currentTimeInMillis: Long, analysisSpecs: AnalysisSpecs): Boolean =
-        (currentTimeInMillis - analysisSpecs.latestTimestampOfOccurrence) >= LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS
+    private fun isElementExpired(currentTimeInMillis: Long, analysisInfo: AnalysisInfo): Boolean =
+        (currentTimeInMillis - analysisInfo.latestTimestampOfOccurrence) >= LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS
 
-    private fun updateMemoryIfPossible(currentTimeInMillis: Long, newLines: List<LineWithAccuracy>) {
-        for (line in newLines) {
-            val elementSpecs = linesInMemory.getOrElse(line, { AnalysisSpecs.EMPTY })
+    private fun analyseNewLines(
+        currentTimeInMillis: Long,
+        newLinesWithAccuracy: List<LineWithAccuracy>
+    ) {
+        for (lineWithAccuracy in newLinesWithAccuracy) {
+            val infoFromMemory: AnalysisInfo? =
+                linesInMemory.getOrElse(lineWithAccuracy.line, { null })
 
-            if (isElementExpired(currentTimeInMillis, elementSpecs)) {
-                linesInMemory.remove(line)
+            if (infoFromMemory != null) {
+                if (isElementExpired(currentTimeInMillis, infoFromMemory)) {
+                    linesInMemory.remove(infoFromMemory.line)
+                } else {
+                    val scoreFromMemory = infoFromMemory.score
+                    updateMemory(lineWithAccuracy, currentTimeInMillis, scoreFromMemory)
+                }
             } else {
-                val howManyTimesOccurred = elementSpecs.howManyTimesOccurred
-                val newElementSpecs = elementSpecs.copy(
-                    latestTimestampOfOccurrence = currentTimeInMillis,
-                    howManyTimesOccurred = howManyTimesOccurred + 1
-                )
-                linesInMemory[line] = newElementSpecs
+                updateMemory(lineWithAccuracy, currentTimeInMillis)
             }
         }
     }
 
-    private fun createSortedOutputOfMemory(): List<LineWithAccuracyAndProbability> {
-        val result = LinkedList<LineWithAccuracyAndProbability>()
-        val numberOfAllOccurrences = getNumberOfAllOccurrences()
+    private fun updateMemory(
+        lineWithAccuracy: LineWithAccuracy,
+        currentTimeInMillis: Long,
+        scoreFromMemory: Int = 0
+    ) {
+        val scoreFromIncomingElement = getScoreForAccuracyLevel(lineWithAccuracy.accuracyLevel)
+        val newAnalysisInfo = AnalysisInfo(
+            line = lineWithAccuracy.line,
+            latestTimestampOfOccurrence = currentTimeInMillis,
+            score = scoreFromMemory + scoreFromIncomingElement
+        )
+        linesInMemory[lineWithAccuracy.line] = newAnalysisInfo
+    }
+
+    private fun createSortedOutputOfMemory(): List<LineWithProbability> {
+        val result = LinkedList<LineWithProbability>()
+        val sumOfScore = getSumOfScoreInMemory()
         val iterator = linesInMemory.iterator()
         while (iterator.hasNext()) {
-            val entry = iterator.next()
+            val entry: MutableMap.MutableEntry<Line, AnalysisInfo> = iterator.next()
             val probability: Float =
-                entry.value.howManyTimesOccurred / (numberOfAllOccurrences * 1.0f)
-            result.add(LineWithAccuracyAndProbability(entry.key, probability))
+                entry.value.score / (sumOfScore * 1.0f)
+            result.add(LineWithProbability(entry.key, probability))
         }
 
         result.sortByDescending { it.probability }
         return result
     }
 
-    private fun getNumberOfAllOccurrences(): Int {
+    private fun getSumOfScoreInMemory(): Int {
+        var sumOfScore = 0
         val iterator = linesInMemory.iterator()
-        var numberOfAllOccurrences = 0
         while (iterator.hasNext()) {
             val entry = iterator.next()
-            numberOfAllOccurrences += entry.value.howManyTimesOccurred
+            sumOfScore += entry.value.score
         }
-        return numberOfAllOccurrences
+        return sumOfScore
     }
 
+    private fun getScoreForAccuracyLevel(accuracy: AccuracyLevel): Int =
+        when (accuracy) {
+            AccuracyLevel.NUMBER_MATCHED -> 4
+            AccuracyLevel.DESTINATION_MATCHED -> 3
+            AccuracyLevel.NUMBER_SLICE -> 2
+            AccuracyLevel.DESTINATION_SLICE -> 1
+            AccuracyLevel.NOT_MATCHED -> 0
+        }
 }
 
-private data class AnalysisSpecs(
+private data class AnalysisInfo(
+    val line: Line,
     val latestTimestampOfOccurrence: Long,
-    val howManyTimesOccurred: Int
-) {
-
-    companion object {
-        val EMPTY = AnalysisSpecs(ELEMENT_NOT_FOUND_IN_MEMORY, 0)
-    }
-}
+    val score: Int
+)

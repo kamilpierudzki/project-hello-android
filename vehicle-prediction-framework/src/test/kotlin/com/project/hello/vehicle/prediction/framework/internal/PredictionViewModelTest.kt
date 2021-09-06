@@ -7,7 +7,7 @@ import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.commons.domain.test.CoroutinesTestRule
 import com.project.hello.commons.framework.ui.IText
 import com.project.hello.vehicle.domain.VehiclePrediction
-import com.project.hello.vehicle.domain.analysis.LineWithAccuracyAndProbability
+import com.project.hello.vehicle.domain.analysis.LineWithProbability
 import com.project.hello.vehicle.domain.analysis.PredictedLinesAnalysis
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -113,7 +113,7 @@ internal class PredictionViewModelTest {
     fun `given observing predicted lines updates when processInput is called then event predicted lines are updated`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            val events = mutableListOf<List<LineWithAccuracyAndProbability>>()
+            val events = mutableListOf<List<LineWithProbability>>()
             tested.predictedLines.observeForever { events.add(it) }
             tested.setInitialData(initialData)
 
