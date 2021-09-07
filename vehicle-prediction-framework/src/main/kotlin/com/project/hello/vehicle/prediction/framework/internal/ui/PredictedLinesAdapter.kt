@@ -22,7 +22,7 @@ internal class PredictedLinesAdapter : RecyclerView.Adapter<PredictedLineViewHol
     }
 
     override fun onBindViewHolder(holder: PredictedLineViewHolder, position: Int) {
-        holder.setUpView(position, dataset)
+        holder.setUpView(dataset[position])
     }
 
     override fun getItemCount(): Int = dataset.size

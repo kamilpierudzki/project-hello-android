@@ -11,7 +11,9 @@ import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 @FragmentScoped
-internal class TextFromImageAnalyser @Inject constructor() : DisposableImageAnalyzer {
+internal class TextFromImageAnalyser @Inject constructor(
+    private val predictionConsoleLogger: PredictionConsoleLogger
+) : DisposableImageAnalyzer {
 
     private val textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
@@ -27,7 +29,7 @@ internal class TextFromImageAnalyser @Inject constructor() : DisposableImageAnal
 
     @SuppressLint("UnsafeOptInUsageError")
     private fun recognizeText(imageProxy: ImageProxy) {
-        android.util.Log.d("test_resolution", "width: ${imageProxy.width}, height: ${imageProxy.height}")
+        predictionConsoleLogger.logAnalysedResolution(imageProxy.width, imageProxy.height)
         val mediaImage = imageProxy.image
         if (mediaImage != null) {
             val rotationDegrees = imageProxy.imageInfo.rotationDegrees
@@ -45,7 +47,7 @@ internal class TextFromImageAnalyser @Inject constructor() : DisposableImageAnal
     }
 
     private fun postTexts(texts: List<String>) {
-        android.util.Log.d("test_raw", "raw texts: $texts")
+        predictionConsoleLogger.logRawRecognisedTexts(texts)
         textsObserver.postValue(texts)
     }
 }

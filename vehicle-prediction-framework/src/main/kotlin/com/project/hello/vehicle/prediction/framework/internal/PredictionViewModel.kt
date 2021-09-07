@@ -18,14 +18,15 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.CopyOnWriteArrayList
 import javax.inject.Inject
 
-private const val NUM_OF_PREDICTED_LINES_TO_SHOW = 3
+private const val NUM_OF_PREDICTED_LINES_TO_SHOW = 1
 
 @HiltViewModel
 internal class PredictionViewModel @Inject constructor(
     private val vehiclePrediction: VehiclePrediction,
     private val predictedLinesAnalysis: PredictedLinesAnalysis,
     private val countryCharactersEmitter: CountryCharactersEmitter,
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
+    private val predictionConsoleLogger: PredictionConsoleLogger
 ) : ViewModel() {
 
     private val cityLines = CopyOnWriteArrayList<Line>()
@@ -54,11 +55,36 @@ internal class PredictionViewModel @Inject constructor(
         val lines = predictedLinesAnalysis
             .analysedSortedLines(predictedLines, currentTimeInMillis)
             .also {
-                android.util.Log.d("test_predicted", "predicted: \n${it.map { f -> "$f\n" }}")
+                predictionConsoleLogger.logPredictedLines(it)
+            }
+            .let {
+                mergedLinesWithTheSameNumber(it)
             }
             .take(NUM_OF_PREDICTED_LINES_TO_SHOW)
         lines.firstOrNull()?.let { updateScreenContentDescription(it) }
         this.predictedLines.postValue(lines)
+    }
+
+    private fun mergedLinesWithTheSameNumber(predicted: List<LineWithProbability>): List<LineWithProbability> {
+        val result = hashMapOf<String, LineWithProbability>()
+        for (line in predicted) {
+            val lineFromResult: LineWithProbability? = result.getOrElse(line.line.number, { null })
+            val probabilityFromResult: Float = lineFromResult?.probability ?: 0f
+            val lineNumber = line.line.number
+
+            result[lineNumber] = LineWithProbability(
+                line = line.line.copy(destination = ""),
+                probability = probabilityFromResult + line.probability
+            )
+        }
+
+        return result.entries
+            .sortedByDescending {
+                it.value.probability
+            }
+            .map {
+                it.value
+            }
     }
 
     private fun updateScreenContentDescription(data: LineWithProbability) {
