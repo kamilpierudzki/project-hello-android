@@ -6,60 +6,63 @@ import org.junit.Test
 
 internal class PredictedLinesAnalysisImplTest {
 
-    val line_A = Line("A", "aaa")
-    val line_B = Line("B", "bbb")
-    val line_C = Line("C", "ccc")
-
     val tested = PredictedLinesAnalysisImpl()
 
     @Test
     fun `test 1`() {
         // given
-        val iteration0 = 1_000L
-        val iteration1 = 1_001L
-        val iteration2 = 1_002L
+        val line0 = Line("0", "A")
+        val line1 = Line("1", "B")
+        val line2 = Line("2", "C")
+        val line3 = Line("3", "D")
 
         // when
-        val analysed0 = tested.bufferedLine(iteration0, line_A)
+        // 1st cycle
+        val buffered0 = tested.bufferedLine(1_001, line1)
+        val buffered1 = tested.bufferedLine(1_002, line0)
+        val buffered2 = tested.bufferedLine(1_003, line3)
+        val buffered3 = tested.bufferedLine(1_004, line0)
 
-        val analysed1 = tested.bufferedLine(iteration1, line_A)
-        val analysed2 = tested.bufferedLine(iteration1, line_B)
-
-        val analysed3 = tested.bufferedLine(iteration2, line_A)
-        val analysed4 = tested.bufferedLine(iteration2, line_B)
-        val analysed5 = tested.bufferedLine(iteration2, line_C)
+        // 2nd cycle
+        val buffered4 = tested.bufferedLine(5_000L, line2)
 
         // then
-        Assert.assertEquals(analysed0!!.line, line_A)
-        Assert.assertEquals(analysed1!!.line, line_A)
-        Assert.assertEquals(analysed2!!.line, line_A)
-        Assert.assertEquals(analysed3!!.line, line_A)
-        Assert.assertEquals(analysed4!!.line, line_A)
-        Assert.assertEquals(analysed5!!.line, line_A)
+        // 1st cycle
+        Assert.assertEquals("1", buffered0!!.line.number)
+        Assert.assertEquals(null, buffered1)
+        Assert.assertEquals(null, buffered2)
+        Assert.assertEquals("0", buffered3!!.line.number)
+        // 2nd cycle
+        Assert.assertEquals("2", buffered4!!.line.number)
     }
 
     @Test
     fun `test 2`() {
         // given
-        val line0 = Line("15", "A")
-        val line1 = Line("5", "A")
-        val line2 = Line("15", "B")
-        val line3 = Line("5", "B")
-        val iteration0 = 1_000L
-        val iteration1 = 1_001L
-        val iteration2 = 1_002L
-        val iteration3 = 4_000L
+        val line0 = Line("0", "A")
+        val line1 = Line("1", "B")
+        val line2 = Line("2", "C")
+        val line3 = Line("3", "D")
 
         // when
-        val analysed0 = tested.bufferedLine(iteration0, line0)
-        val analysed1 = tested.bufferedLine(iteration1, line1)
-        val analysed2 = tested.bufferedLine(iteration2, line2)
-        val analysed3 = tested.bufferedLine(iteration3, line3)
+        // 1st cycle
+        val buffered0 = tested.bufferedLine(1_001, line1)
+        val buffered1 = tested.bufferedLine(1_002, line0)
+        val buffered2 = tested.bufferedLine(1_003, null)
+        val buffered3 = tested.bufferedLine(1_004, line0)
+        val buffered4 = tested.bufferedLine(1_005, null)
+
+        // 2nd cycle
+        val buffered5 = tested.bufferedLine(5_000L, line2)
 
         // then
-        Assert.assertEquals("15", analysed0!!.line.number)
-        Assert.assertEquals("15", analysed1!!.line.number)
-        Assert.assertEquals("15", analysed2!!.line.number)
-        Assert.assertEquals("5", analysed3!!.line.number)
+        // 1st cycle
+        Assert.assertEquals("1", buffered0!!.line.number)
+        Assert.assertEquals(null, buffered1)
+        Assert.assertEquals(null, buffered2)
+        Assert.assertEquals("0", buffered3!!.line.number)
+        Assert.assertEquals("0", buffered4!!.line.number)
+        // 2nd cycle
+        Assert.assertEquals("2", buffered5!!.line.number)
     }
 }

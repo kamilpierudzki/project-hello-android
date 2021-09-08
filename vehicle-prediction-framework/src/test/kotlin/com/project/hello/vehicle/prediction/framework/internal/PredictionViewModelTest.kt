@@ -78,7 +78,7 @@ internal class PredictionViewModelTest {
 
             //  then
             argumentCaptor<List<Line>> {
-                verify(vehiclePrediction).processInput(any(), capture())
+                verify(vehiclePrediction).mostProbableLine(any(), capture())
                 val cityLines: List<Line> = firstValue
                 Assert.assertEquals(4, cityLines.size)
                 Assert.assertEquals(cityLines[0].number, "T1")
@@ -98,7 +98,7 @@ internal class PredictionViewModelTest {
             tested.processRecognisedTexts(listOf("a"))
 
             // then
-            verify(vehiclePrediction).processInput(any(), any())
+            verify(vehiclePrediction).mostProbableLine(any(), any())
         }
 
     @Test
@@ -111,18 +111,18 @@ internal class PredictionViewModelTest {
             tested.processRecognisedTexts(listOf("a"))
 
             // then
-            verify(predictedLinesAnalysis).bufferedLine(any(), any())
+            verify(predictedLinesAnalysis).bufferedLine(any(), anyOrNull())
         }
 
     @Test
     fun `given observing predicted lines updates when processInput is called then event predicted lines are updated`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(vehiclePrediction.processInput(any(), any())).thenReturn(tram1)
+            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
             whenever(predictedLinesAnalysis.bufferedLine(any(), any()))
-                .thenReturn(LineWithProbability(tram1, 0f))
-            val events = mutableListOf<LineWithProbability>()
-            tested.predictedLine.observeForever { events.add(it) }
+                .thenReturn(LineWithProbability(tram1, 0))
+            val events = mutableListOf<PredictedLineEvent>()
+            tested.predictedLineEvent.observeForever { events.add(it) }
             tested.setInitialData(initialData)
 
             // when

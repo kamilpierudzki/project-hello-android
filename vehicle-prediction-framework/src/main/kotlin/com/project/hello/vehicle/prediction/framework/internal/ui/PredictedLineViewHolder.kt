@@ -12,7 +12,7 @@ internal class PredictedLineViewHolder(private val viewBinding: PredictedItemBin
         val lineNumber = data.line.number
 
         viewBinding.predictedNumber.text = lineNumber
-        viewBinding.predictedProbability.text = String.format("%.2f", data.probability)
+        viewBinding.predictedProbability.text = "${data.probability}%"
         viewBinding.root.contentDescription = lineNumber
     }
 }

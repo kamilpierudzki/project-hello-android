@@ -6,8 +6,17 @@ interface PredictedLinesAnalysis {
 
     fun bufferedLine(
         currentTimeInMillis: Long,
-        newPrediction: Line?,
+        newPrediction: Line?
     ): LineWithProbability?
 }
 
-data class LineWithProbability(val line: Line, val probability: Float)
+data class LineWithProbability(
+    val line: Line,
+    val probability: Int
+) {
+    init {
+        if (probability > 100) {
+            throw IllegalStateException("probability value can not be greater than 100")
+        }
+    }
+}

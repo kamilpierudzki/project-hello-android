@@ -12,7 +12,7 @@ class VehiclePredictionImpl(
     private val universalTransformation: UniversalTransformation
 ) : VehiclePrediction {
 
-    override fun processInput(rawInput: String, cityLines: List<Line>): Line? {
+    override fun mostProbableLine(rawInput: String, cityLines: List<Line>): Line? {
         val transformedInput = universalTransformation.transformedText(rawInput)
         val fragmentedInput = fragmentation.fragmentedInput(transformedInput)
         val reducedFragmentedInput = reduction.reducedInput(fragmentedInput)

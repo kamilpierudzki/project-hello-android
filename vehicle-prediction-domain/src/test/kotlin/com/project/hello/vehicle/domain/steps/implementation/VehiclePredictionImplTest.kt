@@ -40,7 +40,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "16 os.sobieskiego"
 
         // when
-        val predicted = tested.processInput(rawInput, globalCityLines1)
+        val predicted = tested.mostProbableLine(rawInput, globalCityLines1)
 
         // then
         Assert.assertEquals("16", predicted!!.number)
@@ -52,7 +52,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "16 os.soelbieskiego"
 
         // when
-        val predicted = tested.processInput(rawInput, globalCityLines1)
+        val predicted = tested.mostProbableLine(rawInput, globalCityLines1)
 
         // then
         Assert.assertEquals("16", predicted!!.number)
@@ -64,7 +64,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "777 os.sobieskiego"
 
         // when
-        val predicted = tested.processInput(rawInput, globalCityLines1)
+        val predicted = tested.mostProbableLine(rawInput, globalCityLines1)
 
         // then
         Assert.assertEquals("174", predicted!!.number)
@@ -76,7 +76,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "789 blaskiego"
 
         // when
-        val predicted = tested.processInput(rawInput, globalCityLines1)
+        val predicted = tested.mostProbableLine(rawInput, globalCityLines1)
 
         // then
         Assert.assertEquals("174", predicted!!.number)
@@ -88,7 +88,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = ""
 
         // when
-        val predicted = tested.processInput(rawInput, globalCityLines1)
+        val predicted = tested.mostProbableLine(rawInput, globalCityLines1)
 
         // then
         Assert.assertEquals(null, predicted)
@@ -100,7 +100,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = ""
 
         // when
-        val predicted = tested.processInput(rawInput, emptyList())
+        val predicted = tested.mostProbableLine(rawInput, emptyList())
 
         // then
         Assert.assertEquals(null, predicted)
@@ -112,7 +112,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "Oo ittextBlocks.map f itlines"
 
         // when
-        val predicted = tested.processInput(rawInput, globalCityLines1)
+        val predicted = tested.mostProbableLine(rawInput, globalCityLines1)
 
         // then
         Assert.assertEquals(null, predicted)
@@ -124,7 +124,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "7777"
 
         // when
-        val predicted = tested.processInput(rawInput, globalCityLines1)
+        val predicted = tested.mostProbableLine(rawInput, globalCityLines1)
 
         // then
         Assert.assertEquals("174", predicted!!.number)
@@ -136,7 +136,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "12"
 
         // when
-        val predicted = tested.processInput(rawInput, globalCityLines1)
+        val predicted = tested.mostProbableLine(rawInput, globalCityLines1)
 
         // then
         Assert.assertEquals("12", predicted!!.number)
@@ -152,7 +152,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "Lakowa"
 
         // when
-        val predicted = tested.processInput(rawInput, cityLines)
+        val predicted = tested.mostProbableLine(rawInput, cityLines)
 
         // then
         Assert.assertEquals("12", predicted!!.number)
@@ -168,7 +168,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "150s. Scbieskiego"
 
         // when
-        val predicted = tested.processInput(rawInput, cityLines)
+        val predicted = tested.mostProbableLine(rawInput, cityLines)
 
         // then
         Assert.assertEquals("15", predicted!!.number)
@@ -188,7 +188,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "180 Piąterowska"
 
         // when
-        val predicted = tested.processInput(rawInput, cityLines)
+        val predicted = tested.mostProbableLine(rawInput, cityLines)
 
         // then
         Assert.assertEquals("18", predicted!!.number)
@@ -209,7 +209,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "18 Ogrody"
 
         // when
-        val predicted = tested.processInput(rawInput, cityLines)
+        val predicted = tested.mostProbableLine(rawInput, cityLines)
 
         // then
         Assert.assertEquals("18", predicted!!.number)
@@ -230,7 +230,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "18 Piątkowska"
 
         // when
-        val predicted = tested.processInput(rawInput, cityLines)
+        val predicted = tested.mostProbableLine(rawInput, cityLines)
 
         // then
         Assert.assertEquals("18", predicted!!.number)
@@ -251,7 +251,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "Ogrody"
 
         // when
-        val predicted = tested.processInput(rawInput, cityLines)
+        val predicted = tested.mostProbableLine(rawInput, cityLines)
 
         // then
         Assert.assertEquals("18", predicted!!.number)
@@ -272,7 +272,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "stowo"
 
         // when
-        val predicted = tested.processInput(rawInput, cityLines)
+        val predicted = tested.mostProbableLine(rawInput, cityLines)
 
         // then
         Assert.assertEquals("8", predicted!!.number)
@@ -291,7 +291,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "ogrody 7"
 
         // when
-        val predicted = tested.processInput(rawInput, cityLines)
+        val predicted = tested.mostProbableLine(rawInput, cityLines)
 
         // then
         Assert.assertEquals("7", predicted!!.number)
@@ -307,7 +307,7 @@ internal class VehiclePredictionImplTest {
         val rawInput = "wloda"
 
         // when
-        val predicted = tested.processInput(rawInput, cityLines)
+        val predicted = tested.mostProbableLine(rawInput, cityLines)
 
         // then
         Assert.assertEquals("3", predicted!!.number)

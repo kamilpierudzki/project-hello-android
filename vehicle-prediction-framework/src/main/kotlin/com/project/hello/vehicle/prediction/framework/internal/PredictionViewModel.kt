@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.project.hello.city.plan.domain.VehicleType
 import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.commons.framework.hilt.DefaultDispatcher
+import com.project.hello.commons.framework.ui.IText
 import com.project.hello.commons.framework.ui.Text
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.LineWithProbability
@@ -30,7 +31,7 @@ internal class PredictionViewModel @Inject constructor(
     private val cityLines = CopyOnWriteArrayList<Line>()
 
     val predictedLineEvent = MutableLiveData<PredictedLineEvent>()
-    val screenContentDescription = MutableLiveData(Text.empty())
+    val screenContentDescription = MutableLiveData<IText>()
 
     fun setInitialData(initialData: PredictionViewModelInitialData) {
         countryCharactersEmitter.emmit(initialData.countryCharacters)
@@ -48,15 +49,16 @@ internal class PredictionViewModel @Inject constructor(
     }
 
     private fun processInput(input: String) {
-        val predictedLine = vehiclePrediction.processInput(input, cityLines)
+        val predictedLine = vehiclePrediction.mostProbableLine(input, cityLines)
         predictionConsoleLogger.logPredictedLine(predictedLine)
 
         val currentTimeInMillis = System.currentTimeMillis()
-        predictedLinesAnalysis.bufferedLine(currentTimeInMillis, predictedLine).also { bufferedLine ->
-            predictionConsoleLogger.logBufferedLine(bufferedLine)
-            updateScreenContentDescription(bufferedLine?.line)
-            postBufferedLine(bufferedLine)
-        }
+        predictedLinesAnalysis.bufferedLine(currentTimeInMillis, predictedLine)
+            .also { bufferedLine ->
+                predictionConsoleLogger.logBufferedLine(bufferedLine)
+                updateScreenContentDescription(bufferedLine?.line)
+                postBufferedLine(bufferedLine)
+            }
     }
 
     private fun postBufferedLine(bufferedLine: LineWithProbability?) {
