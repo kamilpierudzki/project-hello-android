@@ -34,6 +34,7 @@ import com.project.hello.city.plan.framework.api.CityPickViewModel
 import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
+import com.project.hello.vehicle.prediction.framework.internal.PredictedLineEvent
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -138,11 +139,13 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun observePredictedLines() {
-        predictionViewModel.predictedLines.observe(viewLifecycleOwner, { lines ->
-            if (lines.isNotEmpty()) {
-                predictedLinesAdapter.updateData(lines)
-                fpsCounterWrapper.newFrameProcessed(System.currentTimeMillis())
+        predictionViewModel.predictedLineEvent.observe(viewLifecycleOwner, { lineEvent ->
+            val data = when (lineEvent) {
+                PredictedLineEvent.Negative -> emptyList()
+                is PredictedLineEvent.Positive -> listOf(lineEvent.lineWithProbability)
             }
+            predictedLinesAdapter.updateData(data)
+            fpsCounterWrapper.newFrameProcessed(System.currentTimeMillis())
         })
     }
 

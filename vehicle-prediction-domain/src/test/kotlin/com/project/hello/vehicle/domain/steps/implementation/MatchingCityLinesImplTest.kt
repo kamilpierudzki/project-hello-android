@@ -53,19 +53,19 @@ internal class MatchingCityLinesImplTest {
         Assert.assertEquals("16", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_MATCHED,
-            linesMatchedBasedOnInput[0].accuracyLevel
+            linesMatchedBasedOnInput[0].accuracyInfo.accuracyLevel
         )
 
         Assert.assertEquals("169", linesMatchedBasedOnInput[1].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            linesMatchedBasedOnInput[1].accuracyLevel
+            linesMatchedBasedOnInput[1].accuracyInfo.accuracyLevel
         )
 
         Assert.assertEquals("1", linesMatchedBasedOnInput[2].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            linesMatchedBasedOnInput[2].accuracyLevel
+            linesMatchedBasedOnInput[2].accuracyInfo.accuracyLevel
         )
     }
 
@@ -83,13 +83,13 @@ internal class MatchingCityLinesImplTest {
         Assert.assertEquals("16", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            linesMatchedBasedOnInput[0].accuracyLevel
+            linesMatchedBasedOnInput[0].accuracyInfo.accuracyLevel
         )
 
         Assert.assertEquals("169", linesMatchedBasedOnInput[1].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            linesMatchedBasedOnInput[1].accuracyLevel
+            linesMatchedBasedOnInput[1].accuracyInfo.accuracyLevel
         )
     }
 
@@ -107,25 +107,25 @@ internal class MatchingCityLinesImplTest {
         Assert.assertEquals("12", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(
             AccuracyLevel.DESTINATION_SLICE,
-            linesMatchedBasedOnInput[0].accuracyLevel
+            linesMatchedBasedOnInput[0].accuracyInfo.accuracyLevel
         )
 
         Assert.assertEquals("16", linesMatchedBasedOnInput[1].line.number)
         Assert.assertEquals(
             AccuracyLevel.DESTINATION_SLICE,
-            linesMatchedBasedOnInput[1].accuracyLevel
+            linesMatchedBasedOnInput[1].accuracyInfo.accuracyLevel
         )
 
         Assert.assertEquals("169", linesMatchedBasedOnInput[2].line.number)
         Assert.assertEquals(
             AccuracyLevel.DESTINATION_SLICE,
-            linesMatchedBasedOnInput[2].accuracyLevel
+            linesMatchedBasedOnInput[2].accuracyInfo.accuracyLevel
         )
 
         Assert.assertEquals("174", linesMatchedBasedOnInput[3].line.number)
         Assert.assertEquals(
             AccuracyLevel.DESTINATION_SLICE,
-            linesMatchedBasedOnInput[3].accuracyLevel
+            linesMatchedBasedOnInput[3].accuracyInfo.accuracyLevel
         )
     }
 
@@ -208,9 +208,8 @@ internal class MatchingCityLinesImplTest {
         Assert.assertEquals("16", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            linesMatchedBasedOnInput[0].accuracyLevel
+            linesMatchedBasedOnInput[0].accuracyInfo.accuracyLevel
         )
-
     }
 
     @Test
@@ -227,13 +226,13 @@ internal class MatchingCityLinesImplTest {
         Assert.assertEquals("16", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            linesMatchedBasedOnInput[0].accuracyLevel
+            linesMatchedBasedOnInput[0].accuracyInfo.accuracyLevel
         )
 
         Assert.assertEquals("1", linesMatchedBasedOnInput[1].line.number)
         Assert.assertEquals(
             AccuracyLevel.NUMBER_SLICE,
-            linesMatchedBasedOnInput[1].accuracyLevel
+            linesMatchedBasedOnInput[1].accuracyInfo.accuracyLevel
         )
     }
 
@@ -247,6 +246,25 @@ internal class MatchingCityLinesImplTest {
 
         // then
         Assert.assertEquals(5, linesMatchedBasedOnInput.size)
+        Assert.assertEquals("12", linesMatchedBasedOnInput[0].line.number)
+        Assert.assertEquals(AccuracyLevel.DESTINATION_SLICE, linesMatchedBasedOnInput[0].accuracyInfo.accuracyLevel)
+        Assert.assertEquals(87, linesMatchedBasedOnInput[0].accuracyInfo.percentage)
+
+        Assert.assertEquals("16", linesMatchedBasedOnInput[1].line.number)
+        Assert.assertEquals(AccuracyLevel.NUMBER_SLICE, linesMatchedBasedOnInput[1].accuracyInfo.accuracyLevel)
+        Assert.assertEquals(12, linesMatchedBasedOnInput[1].accuracyInfo.percentage)
+
+        Assert.assertEquals("169", linesMatchedBasedOnInput[2].line.number)
+        Assert.assertEquals(AccuracyLevel.DESTINATION_SLICE, linesMatchedBasedOnInput[2].accuracyInfo.accuracyLevel)
+        Assert.assertEquals(87, linesMatchedBasedOnInput[2].accuracyInfo.percentage)
+
+        Assert.assertEquals("174", linesMatchedBasedOnInput[3].line.number)
+        Assert.assertEquals(AccuracyLevel.DESTINATION_SLICE, linesMatchedBasedOnInput[3].accuracyInfo.accuracyLevel)
+        Assert.assertEquals(87, linesMatchedBasedOnInput[3].accuracyInfo.percentage)
+
+        Assert.assertEquals("1", linesMatchedBasedOnInput[4].line.number)
+        Assert.assertEquals(AccuracyLevel.NUMBER_SLICE, linesMatchedBasedOnInput[4].accuracyInfo.accuracyLevel)
+        Assert.assertEquals(6, linesMatchedBasedOnInput[4].accuracyInfo.percentage)
     }
 
     @Test
@@ -259,6 +277,17 @@ internal class MatchingCityLinesImplTest {
 
         // then
         Assert.assertEquals(3, linesMatchedBasedOnInput.size)
+        Assert.assertEquals("16", linesMatchedBasedOnInput[0].line.number)
+        Assert.assertEquals(AccuracyLevel.NUMBER_SLICE, linesMatchedBasedOnInput[0].accuracyInfo.accuracyLevel)
+        Assert.assertEquals(66, linesMatchedBasedOnInput[0].accuracyInfo.percentage)
+
+        Assert.assertEquals("169", linesMatchedBasedOnInput[1].line.number)
+        Assert.assertEquals(AccuracyLevel.NUMBER_MATCHED, linesMatchedBasedOnInput[1].accuracyInfo.accuracyLevel)
+        Assert.assertEquals(100, linesMatchedBasedOnInput[1].accuracyInfo.percentage)
+
+        Assert.assertEquals("1", linesMatchedBasedOnInput[2].line.number)
+        Assert.assertEquals(AccuracyLevel.NUMBER_SLICE, linesMatchedBasedOnInput[2].accuracyInfo.accuracyLevel)
+        Assert.assertEquals(33, linesMatchedBasedOnInput[2].accuracyInfo.percentage)
     }
 
     @Test
@@ -271,5 +300,12 @@ internal class MatchingCityLinesImplTest {
 
         // then
         Assert.assertEquals(2, linesMatchedBasedOnInput.size)
+        Assert.assertEquals("16", linesMatchedBasedOnInput[0].line.number)
+        Assert.assertEquals(AccuracyLevel.NUMBER_SLICE, linesMatchedBasedOnInput[0].accuracyInfo.accuracyLevel)
+        Assert.assertEquals(11, linesMatchedBasedOnInput[0].accuracyInfo.percentage)
+
+        Assert.assertEquals("1", linesMatchedBasedOnInput[1].line.number)
+        Assert.assertEquals(AccuracyLevel.NUMBER_SLICE, linesMatchedBasedOnInput[1].accuracyInfo.accuracyLevel)
+        Assert.assertEquals(5, linesMatchedBasedOnInput[1].accuracyInfo.percentage)
     }
 }

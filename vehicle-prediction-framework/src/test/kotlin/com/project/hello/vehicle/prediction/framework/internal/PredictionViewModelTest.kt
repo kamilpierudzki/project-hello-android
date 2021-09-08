@@ -26,11 +26,17 @@ internal class PredictionViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
+    val tram1 = Line("T1", "")
+    val tram2 = Line("T2", "")
+
+    val bus1 = Line("B1", "")
+    val bus2 = Line("B2", "")
+
     val cityPlan = CityPlan(
         city = "A",
         lastUpdateDate = "",
-        listOf(Line("T1", ""), Line("T2", "")),
-        listOf(Line("B1", ""), Line("B2", ""))
+        listOf(tram1, tram2),
+        listOf(bus1, bus2)
     )
     val initialData = PredictionViewModelInitialData(
         listOf(VehicleType.TRAM, VehicleType.BUS),
@@ -105,15 +111,18 @@ internal class PredictionViewModelTest {
             tested.processRecognisedTexts(listOf("a"))
 
             // then
-            verify(predictedLinesAnalysis).analysedSortedLines(any(), any())
+            verify(predictedLinesAnalysis).bufferedLine(any(), any())
         }
 
     @Test
     fun `given observing predicted lines updates when processInput is called then event predicted lines are updated`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            val events = mutableListOf<List<LineWithProbability>>()
-            tested.predictedLines.observeForever { events.add(it) }
+            whenever(vehiclePrediction.processInput(any(), any())).thenReturn(tram1)
+            whenever(predictedLinesAnalysis.bufferedLine(any(), any()))
+                .thenReturn(LineWithProbability(tram1, 0f))
+            val events = mutableListOf<LineWithProbability>()
+            tested.predictedLine.observeForever { events.add(it) }
             tested.setInitialData(initialData)
 
             // when
@@ -136,32 +145,5 @@ internal class PredictionViewModelTest {
 
             // then
             Assert.assertEquals(1, events.size)
-        }
-
-    @Test
-    fun `given observing predicted lines updates and predicted lines are recognised when processInput is called then correct number should be recognised`() =
-        coroutinesTestRule.testDispatcher.runBlockingTest {
-            // given
-            val events = mutableListOf<List<LineWithProbability>>()
-            tested.predictedLines.observeForever { events.add(it) }
-            tested.setInitialData(initialData)
-
-            whenever(vehiclePrediction.processInput(any(), any())).thenReturn(emptyList())
-
-            val analysedLines = listOf(
-                LineWithProbability(Line("A", "desA"), 0.3f),
-                LineWithProbability(Line("B", "desA"), 0.1f),
-                LineWithProbability(Line("A", "desB"), 0.3f)
-            )
-            whenever(predictedLinesAnalysis.analysedSortedLines(any(), any()))
-                .thenReturn(analysedLines)
-
-            // when
-            tested.processRecognisedTexts(listOf("a"))
-
-            // then
-            Assert.assertEquals(1, events[0].size)
-            Assert.assertEquals("A", events[0][0].line.number)
-            Assert.assertEquals(0.6f, events[0][0].probability)
         }
 }

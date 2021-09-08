@@ -13,26 +13,15 @@ class MatchingCityLinesImpl(
         cityLines: List<Line>
     ): List<LineWithAccuracy> {
         val inputsForWhichThereIsAnyMatch = mutableListOf<String>()
-        val foundMatrix: List<List<LineWithAccuracy>> = input
-            .asSequence()
-            .filter { it.isNotBlank() }
+        return input
             .map { text ->
                 cityLines
                     .map { cityLine ->
                         transformedInput(text, cityLine, inputsForWhichThereIsAnyMatch)
                     }
-                    .filter { lineWithExtra -> lineWithExtra.anyMatched }
+                    .filter { lineWithAccuracy -> lineWithAccuracy.anyMatched }
             }
-            .toList()
-
-        val found: MutableList<LineWithAccuracy> = mutableListOf()
-        for (row: List<LineWithAccuracy> in foundMatrix) {
-            for (item: LineWithAccuracy in row) {
-                found.addElementIfNotContains(item)
-            }
-        }
-
-        return found
+            .flatMap { it.toList() }
     }
 
     private fun transformedInput(
@@ -40,19 +29,37 @@ class MatchingCityLinesImpl(
         cityLine: Line,
         inputsForWhichThereIsAnyMatch: MutableList<String>
     ): LineWithAccuracy {
-        val accuracy = when {
-            textMatching.isNumberMatching(input, cityLine) -> AccuracyLevel.NUMBER_MATCHED
-            textMatching.isNumberSliceMatching(input, cityLine) -> AccuracyLevel.NUMBER_SLICE
-            textMatching.isDestinationMatching(input, cityLine) -> AccuracyLevel.DESTINATION_MATCHED
-            textMatching.isDestinationSliceMatching(input, cityLine) ->
-                AccuracyLevel.DESTINATION_SLICE
-            else -> AccuracyLevel.NOT_MATCHED
+        val numberMatchingResult = textMatching.isNumberMatching(input, cityLine)
+        val numberSliceMatchingResult = textMatching.isNumberSliceMatching(input, cityLine)
+        val destinationMatchingResult = textMatching.isDestinationMatching(input, cityLine)
+        val destinationSliceMatchingResult =
+            textMatching.isDestinationSliceMatching(input, cityLine)
+
+        val accuracyInfo = when {
+            numberMatchingResult.isPositive ->
+                AccuracyInfo(AccuracyLevel.NUMBER_MATCHED, numberMatchingResult.percentage)
+            numberSliceMatchingResult.isPositive ->
+                AccuracyInfo(AccuracyLevel.NUMBER_SLICE, numberSliceMatchingResult.percentage)
+            destinationMatchingResult.isPositive ->
+                AccuracyInfo(
+                    AccuracyLevel.DESTINATION_MATCHED,
+                    destinationMatchingResult.percentage
+                )
+            destinationSliceMatchingResult.isPositive ->
+                AccuracyInfo(
+                    AccuracyLevel.DESTINATION_SLICE,
+                    destinationSliceMatchingResult.percentage
+                )
+            else -> AccuracyInfo(AccuracyLevel.NOT_MATCHED, 0)
         }
 
-        val lineWithBonus = LineWithAccuracy(cityLine, accuracy)
-        if (lineWithBonus.anyMatched) {
+        val lineWithAccuracy = LineWithAccuracy(input, cityLine, accuracyInfo)
+        if (lineWithAccuracy.anyMatched) {
             inputsForWhichThereIsAnyMatch.addElementIfNotContains(input)
         }
-        return lineWithBonus
+        return lineWithAccuracy
     }
+
+    private val TextMatchingResult.percentage: Int
+        get() = (this as TextMatchingResult.Positive).percentage
 }

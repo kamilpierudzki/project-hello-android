@@ -12,30 +12,14 @@ class VehiclePredictionImpl(
     private val universalTransformation: UniversalTransformation
 ) : VehiclePrediction {
 
-    override fun processInput(rawInput: String, cityLines: List<Line>): List<LineWithAccuracy> {
-        val transformedRawInput = universalTransformation.transformedText(rawInput)
-        val transformedInput = listOf(transformedRawInput)
-        val outputs = matchedLines(transformedInput, cityLines)
-        return outputAnalysis.analysedOutputMatrix(outputs)
-    }
-
-    private fun matchedLines(
-        input: List<String>,
-        cityLines: List<Line>,
-        numbersNotMatched: MutableList<String> = mutableListOf()
-    ): MutableList<List<LineWithAccuracy>> {
-        val linesMatchedBasedOnInput = matchingCityLines.cityLinesMatchedBasedOnInput(input, cityLines)
-        val mutableOutput = mutableListOf(linesMatchedBasedOnInput)
-        val fragmentedInput = fragmentation.fragmentedInput(input)
-        val reducedFragmentedInput = reduction.reducedInputs(fragmentedInput, numbersNotMatched)
-
-        if (reducedFragmentedInput.isNotEmpty()) {
-            val matchedLines = matchedLines(reducedFragmentedInput, cityLines, numbersNotMatched)
-            for (matchedLine in matchedLines) {
-                mutableOutput.add(matchedLine)
-            }
-        }
-
-        return mutableOutput
+    override fun processInput(rawInput: String, cityLines: List<Line>): Line? {
+        val transformedInput = universalTransformation.transformedText(rawInput)
+        val fragmentedInput = fragmentation.fragmentedInput(transformedInput)
+        val reducedFragmentedInput = reduction.reducedInput(fragmentedInput)
+        val linesMatchedBasedOnInput = matchingCityLines.cityLinesMatchedBasedOnInput(
+            reducedFragmentedInput,
+            cityLines
+        )
+        return outputAnalysis.mostProbableLine(linesMatchedBasedOnInput)
     }
 }

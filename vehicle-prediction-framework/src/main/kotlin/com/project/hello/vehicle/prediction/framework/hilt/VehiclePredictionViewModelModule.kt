@@ -2,10 +2,9 @@ package com.project.hello.vehicle.prediction.framework.hilt
 
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.PredictedLinesAnalysis
+import com.project.hello.vehicle.domain.analysis.implementation.PredictedLinesAnalysisImpl
 import com.project.hello.vehicle.domain.steps.*
 import com.project.hello.vehicle.domain.steps.implementation.*
-import com.project.hello.vehicle.prediction.framework.internal.analysis.PredictedLinesAnalysisImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,10 +15,11 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @InstallIn(ViewModelComponent::class)
 internal abstract class VehiclePredictionViewModelModule {
 
-    @Binds
-    abstract fun bindPredictedLinesAnalysis(impl: PredictedLinesAnalysisImpl): PredictedLinesAnalysis
-
     companion object {
+
+        @Provides
+        @ViewModelScoped
+        fun providePredictedLinesAnalysis(): PredictedLinesAnalysis = PredictedLinesAnalysisImpl()
 
         @Provides
         @ViewModelScoped
@@ -57,9 +57,7 @@ internal abstract class VehiclePredictionViewModelModule {
             ReductionImpl()
 
         @Provides
-        @ViewModelScoped
-        fun provideFragmentation(): Fragmentation =
-            FragmentationImpl()
+        fun provideFragmentation(): Fragmentation = FragmentationImpl()
 
         @Provides
         @ViewModelScoped

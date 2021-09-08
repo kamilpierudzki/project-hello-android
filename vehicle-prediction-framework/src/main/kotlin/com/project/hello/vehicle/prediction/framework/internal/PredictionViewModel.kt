@@ -18,8 +18,6 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.CopyOnWriteArrayList
 import javax.inject.Inject
 
-private const val NUM_OF_PREDICTED_LINES_TO_SHOW = 1
-
 @HiltViewModel
 internal class PredictionViewModel @Inject constructor(
     private val vehiclePrediction: VehiclePrediction,
@@ -31,7 +29,7 @@ internal class PredictionViewModel @Inject constructor(
 
     private val cityLines = CopyOnWriteArrayList<Line>()
 
-    val predictedLines = MutableLiveData<List<LineWithProbability>>()
+    val predictedLineEvent = MutableLiveData<PredictedLineEvent>()
     val screenContentDescription = MutableLiveData(Text.empty())
 
     fun setInitialData(initialData: PredictionViewModelInitialData) {
@@ -50,51 +48,32 @@ internal class PredictionViewModel @Inject constructor(
     }
 
     private fun processInput(input: String) {
-        val predictedLines = vehiclePrediction.processInput(input, cityLines)
+        val predictedLine = vehiclePrediction.processInput(input, cityLines)
+        predictionConsoleLogger.logPredictedLine(predictedLine)
+
         val currentTimeInMillis = System.currentTimeMillis()
-        val lines = predictedLinesAnalysis
-            .analysedSortedLines(predictedLines, currentTimeInMillis)
-            .also {
-                predictionConsoleLogger.logPredictedLines(it)
-            }
-            .let {
-                mergedLinesWithTheSameNumber(it)
-            }
-            .take(NUM_OF_PREDICTED_LINES_TO_SHOW)
-        lines.firstOrNull()?.let { updateScreenContentDescription(it) }
-        this.predictedLines.postValue(lines)
-    }
-
-    private fun mergedLinesWithTheSameNumber(predicted: List<LineWithProbability>): List<LineWithProbability> {
-        val result = hashMapOf<String, LineWithProbability>()
-        for (line in predicted) {
-            val lineFromResult: LineWithProbability? = result.getOrElse(line.line.number, { null })
-            val probabilityFromResult: Float = lineFromResult?.probability ?: 0f
-            val lineNumber = line.line.number
-
-            result[lineNumber] = LineWithProbability(
-                line = line.line.copy(destination = ""),
-                probability = probabilityFromResult + line.probability
-            )
+        predictedLinesAnalysis.bufferedLine(currentTimeInMillis, predictedLine).also { bufferedLine ->
+            predictionConsoleLogger.logBufferedLine(bufferedLine)
+            updateScreenContentDescription(bufferedLine?.line)
+            postBufferedLine(bufferedLine)
         }
-
-        return result.entries
-            .sortedByDescending {
-                it.value.probability
-            }
-            .map {
-                it.value
-            }
     }
 
-    private fun updateScreenContentDescription(data: LineWithProbability) {
-        val contentDescription = Text.of(
-            listOf(
-                Text.of(R.string.probably),
-                Text.of("${data.line.number}, ${data.line.destination}")
-            ),
-            separator = " "
-        )
+    private fun postBufferedLine(bufferedLine: LineWithProbability?) {
+        val valueToPost = if (bufferedLine != null) {
+            PredictedLineEvent.Positive(bufferedLine)
+        } else {
+            PredictedLineEvent.Negative
+        }
+        predictedLineEvent.postValue(valueToPost)
+    }
+
+    private fun updateScreenContentDescription(line: Line?) {
+        val contentDescription = if (line != null) {
+            Text.of(listOf(Text.of(R.string.probably), Text.of(line.number)), separator = " ")
+        } else {
+            Text.empty()
+        }
         screenContentDescription.postValue(contentDescription)
     }
 
