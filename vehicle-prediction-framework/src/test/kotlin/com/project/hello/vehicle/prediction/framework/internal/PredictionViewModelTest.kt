@@ -8,7 +8,7 @@ import com.project.hello.commons.domain.test.CoroutinesTestRule
 import com.project.hello.commons.framework.ui.IText
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.LineWithProbability
-import com.project.hello.vehicle.domain.analysis.PredictedLinesAnalysis
+import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -45,13 +45,13 @@ internal class PredictionViewModelTest {
     )
 
     val vehiclePrediction: VehiclePrediction = mock()
-    val predictedLinesAnalysis: PredictedLinesAnalysis = mock()
+    val buffering: Buffering = mock()
     val countryCharactersEmitter: CountryCharactersEmitter = mock()
     val predictionConsoleLogger: PredictionConsoleLogger = mock()
 
     val tested = PredictionViewModel(
         vehiclePrediction,
-        predictedLinesAnalysis,
+        buffering,
         countryCharactersEmitter,
         coroutinesTestRule.testDispatcher,
         predictionConsoleLogger
@@ -111,7 +111,7 @@ internal class PredictionViewModelTest {
             tested.processRecognisedTexts(listOf("a"))
 
             // then
-            verify(predictedLinesAnalysis).bufferedLine(any(), anyOrNull())
+            verify(buffering).bufferedLine(any(), anyOrNull())
         }
 
     @Test
@@ -119,7 +119,7 @@ internal class PredictionViewModelTest {
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
-            whenever(predictedLinesAnalysis.bufferedLine(any(), any()))
+            whenever(buffering.bufferedLine(any(), any()))
                 .thenReturn(LineWithProbability(tram1, 0))
             val events = mutableListOf<PredictedLineEvent>()
             tested.predictedLineEvent.observeForever { events.add(it) }

@@ -2,11 +2,11 @@ package com.project.hello.vehicle.domain.analysis.implementation
 
 import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.vehicle.domain.analysis.LineWithProbability
-import com.project.hello.vehicle.domain.analysis.PredictedLinesAnalysis
+import com.project.hello.vehicle.domain.analysis.Buffering
 
 private const val LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS = 2_000L
 
-class PredictedLinesAnalysisImpl : PredictedLinesAnalysis {
+class BufferingImpl : Buffering {
 
     private val memory: MutableList<LineWithBufferedInfo> = mutableListOf()
 
@@ -22,20 +22,22 @@ class PredictedLinesAnalysisImpl : PredictedLinesAnalysis {
     }
 
     private fun calculatedResultWithProbability(): LineWithProbability? {
-        val linesWithShare = linesWithShare()
-        val indexesOfDuplicatedElements = indexesOfDuplicatedElements()
-        val reducedLinesWithShare = reducedLinesWithShare(
-            indexesOfDuplicatedElements,
-            linesWithShare
-        )
+        synchronized(this) {
+            val linesWithShare = linesWithShare()
+            val indexesOfDuplicatedElements = indexesOfDuplicatedElements()
+            val reducedLinesWithShare = reducedLinesWithShare(
+                indexesOfDuplicatedElements,
+                linesWithShare
+            )
 
-        val allConditionsMet =
-            thereAreMoreThanOneElements(reducedLinesWithShare) &&
-                    allElementHaveTheSameValue(reducedLinesWithShare)
-        return if (allConditionsMet) {
-            null
-        } else {
-            sortedReducedLineWithProbability(reducedLinesWithShare)
+            val allConditionsMet =
+                thereAreMoreThanOneElements(reducedLinesWithShare) &&
+                        allElementHaveTheSameValue(reducedLinesWithShare)
+            return if (allConditionsMet) {
+                null
+            } else {
+                sortedReducedLineWithProbability(reducedLinesWithShare)
+            }
         }
     }
 
@@ -103,8 +105,10 @@ class PredictedLinesAnalysisImpl : PredictedLinesAnalysis {
     }
 
     private fun saveNewElementInMemorySynchronised(line: Line, insertionTimestampInMillis: Long) {
-        val newElement = LineWithBufferedInfo(line, insertionTimestampInMillis)
-        memory.add(newElement)
+        synchronized(this) {
+            val newElement = LineWithBufferedInfo(line, insertionTimestampInMillis)
+            memory.add(newElement)
+        }
     }
 
     private fun removeExpiredElementsFromMemorySynchronized(currentTimeInMillis: Long) {

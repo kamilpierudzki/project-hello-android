@@ -2,7 +2,7 @@ package com.project.hello.vehicle.domain.analysis
 
 import com.project.hello.city.plan.domain.model.Line
 
-interface PredictedLinesAnalysis {
+interface Buffering {
 
     fun bufferedLine(
         currentTimeInMillis: Long,
@@ -15,8 +15,8 @@ data class LineWithProbability(
     val probability: Int
 ) {
     init {
-        if (probability > 100) {
-            throw IllegalStateException("probability value can not be greater than 100")
+        if (probability in 101 downTo -1) {
+            throw IllegalStateException("probability value cannot be greater than 100 or less than 0")
         }
     }
 }

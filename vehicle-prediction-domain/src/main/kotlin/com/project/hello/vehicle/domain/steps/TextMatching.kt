@@ -13,8 +13,8 @@ sealed class TextMatchingResult {
     data class Positive(val percentage: Int) : TextMatchingResult() {
 
         init {
-            if (percentage > 100) {
-                throw IllegalStateException("percentage value can not be greater than 100")
+            if (percentage in 101 downTo -1) {
+                throw IllegalStateException("percentage value cannot be greater than 100 or less than 0")
             }
         }
     }

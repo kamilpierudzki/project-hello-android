@@ -1,8 +1,8 @@
 package com.project.hello.vehicle.prediction.framework.hilt
 
 import com.project.hello.vehicle.domain.VehiclePrediction
-import com.project.hello.vehicle.domain.analysis.PredictedLinesAnalysis
-import com.project.hello.vehicle.domain.analysis.implementation.PredictedLinesAnalysisImpl
+import com.project.hello.vehicle.domain.analysis.Buffering
+import com.project.hello.vehicle.domain.analysis.implementation.BufferingImpl
 import com.project.hello.vehicle.domain.steps.*
 import com.project.hello.vehicle.domain.steps.implementation.*
 import dagger.Module
@@ -19,7 +19,7 @@ internal abstract class VehiclePredictionViewModelModule {
 
         @Provides
         @ViewModelScoped
-        fun providePredictedLinesAnalysis(): PredictedLinesAnalysis = PredictedLinesAnalysisImpl()
+        fun providePredictedLinesAnalysis(): Buffering = BufferingImpl()
 
         @Provides
         @ViewModelScoped

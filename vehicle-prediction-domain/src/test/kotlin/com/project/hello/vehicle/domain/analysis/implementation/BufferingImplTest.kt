@@ -4,9 +4,9 @@ import com.project.hello.city.plan.domain.model.Line
 import org.junit.Assert
 import org.junit.Test
 
-internal class PredictedLinesAnalysisImplTest {
+internal class BufferingImplTest {
 
-    val tested = PredictedLinesAnalysisImpl()
+    val tested = BufferingImpl()
 
     @Test
     fun `test 1`() {
@@ -42,7 +42,6 @@ internal class PredictedLinesAnalysisImplTest {
         val line0 = Line("0", "A")
         val line1 = Line("1", "B")
         val line2 = Line("2", "C")
-        val line3 = Line("3", "D")
 
         // when
         // 1st cycle

@@ -10,7 +10,7 @@ import com.project.hello.commons.framework.ui.IText
 import com.project.hello.commons.framework.ui.Text
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.LineWithProbability
-import com.project.hello.vehicle.domain.analysis.PredictedLinesAnalysis
+import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
 import com.project.hello.vehicle.prediction.framework.R
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class PredictionViewModel @Inject constructor(
     private val vehiclePrediction: VehiclePrediction,
-    private val predictedLinesAnalysis: PredictedLinesAnalysis,
+    private val buffering: Buffering,
     private val countryCharactersEmitter: CountryCharactersEmitter,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
     private val predictionConsoleLogger: PredictionConsoleLogger
@@ -53,7 +53,7 @@ internal class PredictionViewModel @Inject constructor(
         predictionConsoleLogger.logPredictedLine(predictedLine)
 
         val currentTimeInMillis = System.currentTimeMillis()
-        predictedLinesAnalysis.bufferedLine(currentTimeInMillis, predictedLine)
+        buffering.bufferedLine(currentTimeInMillis, predictedLine)
             .also { bufferedLine ->
                 predictionConsoleLogger.logBufferedLine(bufferedLine)
                 updateScreenContentDescription(bufferedLine?.line)
