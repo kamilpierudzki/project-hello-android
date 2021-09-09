@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:textColor="@android:color/black"
+            android:textColor="?attr/colorPrimary"
             android:textSize="16sp"
             tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
 
@@ -30,12 +30,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/city_picker_loading"
-        android:textColor="@android:color/black"
+        android:text="@string/legal_loading_label"
+        android:textColor="?attr/colorPrimary"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/progress"
         app:layout_constraintStart_toStartOf="@+id/progress"
-        app:layout_constraintTop_toBottomOf="@+id/progress" />
+        app:layout_constraintTop_toBottomOf="@+id/progress"
+        tools:visibility="visible"/>
 
     <ProgressBar
         android:id="@+id/progress"
@@ -55,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="@string/legal_confirmation_button"
-        android:textColor="@android:color/black"
+        android:textColor="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

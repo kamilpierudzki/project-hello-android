@@ -15,28 +15,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/help_icon_container"
+    <ImageView
+        android:id="@+id/help_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:background="@android:color/white"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:contentDescription="@string/help_icon_description"
+        android:focusable="true"
+        android:padding="8dp"
+        android:src="@drawable/ic_help"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/help_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:contentDescription="@string/help_icon_description"
-            android:focusable="true"
-            android:padding="8dp"
-            android:src="@drawable/ic_help"
-            tools:targetApi="donut" />
-
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/colorPrimary" />
 
     <TextView
         android:id="@+id/fps_counter"
@@ -56,7 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:background="#B3FFFFFF"
+        android:background="?attr/colorSecondary"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
