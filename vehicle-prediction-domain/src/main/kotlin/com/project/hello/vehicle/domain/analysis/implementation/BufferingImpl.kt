@@ -31,7 +31,7 @@ class BufferingImpl : Buffering {
             )
 
             val allConditionsMet =
-                thereAreMoreThanOneElements(reducedLinesWithShare) &&
+                thereAreMoreThanOneElement(reducedLinesWithShare) &&
                         allElementHaveTheSameValue(reducedLinesWithShare)
             return if (allConditionsMet) {
                 null
@@ -72,7 +72,7 @@ class BufferingImpl : Buffering {
         return reducedLinesWithShare
     }
 
-    private fun thereAreMoreThanOneElements(reducedLinesWithShare: Map<Line, Int>): Boolean =
+    private fun thereAreMoreThanOneElement(reducedLinesWithShare: Map<Line, Int>): Boolean =
         reducedLinesWithShare.size > 1
 
     private fun allElementHaveTheSameValue(reducedLinesWithShare: Map<Line, Int>): Boolean =
