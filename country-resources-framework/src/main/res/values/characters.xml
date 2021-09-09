@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="country_characters" />
+    <string-array name="country_characters">
+        <!--Polish Characters-->
+        <item>ą-a</item>
+        <item>ć-c</item>
+        <item>ę-e</item>
+        <item>ł-l</item>
+        <item>ń-n</item>
+        <item>ó-o</item>
+        <item>ź-z</item>
+        <item>ż-z</item>
+    </string-array>
 </resources>
