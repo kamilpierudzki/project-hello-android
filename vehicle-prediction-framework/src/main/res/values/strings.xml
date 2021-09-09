@@ -9,7 +9,7 @@
     <string name="line">Line</string>
     <string name="vehicle_type_picker_fragment_label">Select vehicle type</string>
     <string name="vehicle_type_picker_header">Select vehicle type</string>
-    <string name="vehicle_type_picker_vehicle_all">All kind of vehicles</string>
+    <string name="vehicle_type_picker_vehicle_all">Tram and Bus</string>
     <string name="vehicle_type_picker_vehicle_tram">Tram</string>
     <string name="vehicle_type_picker_vehicle_bus">Bus</string>
     <string name="vehicle_type_picker_help_title"></string>

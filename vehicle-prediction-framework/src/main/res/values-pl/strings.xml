@@ -9,7 +9,7 @@
     <string name="line">Linia</string>
     <string name="vehicle_type_picker_fragment_label">Typ Pojazdu</string>
     <string name="vehicle_type_picker_header">Wybierz typ pojazdu</string>
-    <string name="vehicle_type_picker_vehicle_all">Wszystkie</string>
+    <string name="vehicle_type_picker_vehicle_all">Tramwaj i Autobus</string>
     <string name="vehicle_type_picker_vehicle_tram">Tramwaj</string>
     <string name="vehicle_type_picker_vehicle_bus">Autobus</string>
     <string name="vehicle_type_picker_help_title"></string>
