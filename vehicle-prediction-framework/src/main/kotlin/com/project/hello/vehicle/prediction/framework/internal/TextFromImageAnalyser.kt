@@ -17,7 +17,7 @@ internal class TextFromImageAnalyser @Inject constructor(
 
     private val textRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
-    override val textsObserver = MutableLiveData<List<String>>()
+    override val recognisedTexts = MutableLiveData<List<String>>()
 
     override fun analyze(imageProxy: ImageProxy) {
         recognizeText(imageProxy)
@@ -47,7 +47,6 @@ internal class TextFromImageAnalyser @Inject constructor(
     }
 
     private fun postTexts(texts: List<String>) {
-        predictionConsoleLogger.logRawRecognisedTexts(texts)
-        textsObserver.postValue(texts)
+        recognisedTexts.postValue(texts)
     }
 }

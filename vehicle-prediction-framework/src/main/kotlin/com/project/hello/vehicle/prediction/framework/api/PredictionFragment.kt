@@ -125,7 +125,7 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun observeRecognisedTexts() {
-        textAnalyzer.textsObserver.observe(viewLifecycleOwner, { texts ->
+        textAnalyzer.recognisedTexts.observe(viewLifecycleOwner, { texts ->
             if (texts.isNotEmpty()) {
                 predictionViewModel.processRecognisedTexts(texts)
             }

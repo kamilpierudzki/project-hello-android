@@ -4,7 +4,7 @@ import androidx.camera.core.ImageAnalysis
 import androidx.lifecycle.LiveData
 
 interface DisposableImageAnalyzer : ImageAnalysis.Analyzer {
-    val textsObserver: LiveData<List<String>>
+    val recognisedTexts: LiveData<List<String>>
 
     fun dispose()
 }

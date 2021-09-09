@@ -7,5 +7,5 @@ interface PredictionConsoleLogger {
     fun logPredictedLine(predicted: Line?)
     fun logBufferedLine(buffered: LineWithProbability?)
     fun logAnalysedResolution(width: Int, height: Int)
-    fun logRawRecognisedTexts(texts: List<String>)
+    fun logRawRecognisedText(recognisedText: String)
 }
