@@ -15,7 +15,7 @@ data class LineWithProbability(
     val probability: Int
 ) {
     init {
-        if (probability in 101 downTo -1) {
+        if (probability > 100 && probability < 0) {
             throw IllegalStateException("probability value cannot be greater than 100 or less than 0")
         }
     }
