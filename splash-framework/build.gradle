@@ -39,6 +39,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_android_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_compiler_version"
 
+    implementation project(path: ':top-level-resources-framework')
     implementation project(path: ':commons-framework')
     implementation project(path: ':city-plan-framework')
     implementation project(path: ':vehicle-prediction-framework')

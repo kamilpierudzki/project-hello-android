@@ -157,7 +157,7 @@ internal class PredictionFragment : Fragment() {
 
     private fun observeFpsCounter() {
         fpsCounterWrapper.currentValue.observe(viewLifecycleOwner, { fps ->
-            binding.fpsCounter.text = "${fps}FPS"
+            binding.fpsCounter.text = "$fps"
         })
     }
 
