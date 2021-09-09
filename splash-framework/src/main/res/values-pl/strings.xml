@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="splash_screen_label">Ładowanie</string>
+    <string name="splash_screen_label">Ekran Ładowania</string>
 </resources>

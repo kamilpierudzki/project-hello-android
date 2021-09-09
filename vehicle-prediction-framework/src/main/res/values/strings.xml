@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="prediction_fragment_label">Predicting a vehicle</string>
+    <string name="prediction_fragment_label">Predict A Vehicle Screen</string>
     <string name="help_icon_description">Help</string>
     <string name="help_dialog_title">How to use recognition</string>
     <string name="help_dialog_message">Point the camera lens towards the vehicle. If the system screen reader is turned on, touch the center of the screen to find out the recognized line number. You can also find information about the recognized line at the bottom of the screen. </string>
     <string name="probably">Probability</string>
     <string name="percent">percent</string>
     <string name="line">Line</string>
-    <string name="vehicle_type_picker_fragment_label">Select vehicle type</string>
+    <string name="vehicle_type_picker_fragment_label">Select Vehicle Type Screen</string>
     <string name="vehicle_type_picker_header">Select vehicle type</string>
     <string name="vehicle_type_picker_vehicle_all">Tram and Bus</string>
     <string name="vehicle_type_picker_vehicle_tram">Tram</string>

@@ -12,6 +12,7 @@ import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelType
 import com.project.hello.commons.framework.viewmodel.externalViewModels
+import com.project.hello.legal.framework.R
 import com.project.hello.legal.framework.api.LatestAvailableLegalResult
 import com.project.hello.legal.framework.api.LegalViewModel
 import com.project.hello.legal.framework.databinding.LegalFragmentBinding
@@ -46,9 +47,14 @@ internal class LegalFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        announceScreenNameByScreenReader()
         disableUpButtonIfPossible()
         setupViews()
         observeAcceptationResult()
+    }
+
+    private fun announceScreenNameByScreenReader() {
+        binding.root.announceForAccessibility(getString(R.string.legal_screen_label))
     }
 
     private fun disableUpButtonIfPossible() {

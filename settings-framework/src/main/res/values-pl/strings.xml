@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_select_city">Wybierz miasto</string>
-    <string name="settings_screen_label">Ustawienia</string>
+    <string name="settings_screen_label">Ekran Ustawień</string>
 </resources>

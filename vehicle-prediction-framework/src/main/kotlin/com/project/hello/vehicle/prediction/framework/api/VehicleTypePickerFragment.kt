@@ -1,23 +1,20 @@
 package com.project.hello.vehicle.prediction.framework.api
 
-import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.project.hello.city.plan.domain.VehicleType
+import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.commons.framework.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hello.commons.framework.ui.showInformationDialog
-import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.VehicleTypePickerFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@RequiresApi(Build.VERSION_CODES.HONEYCOMB)
 @AndroidEntryPoint
 class VehicleTypePickerFragment : Fragment() {
 
@@ -52,9 +49,14 @@ class VehicleTypePickerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        announceScreenNameByScreenReader()
         setHasOptionsMenu(true)
         actionBarUpIndicatorVisibility.disableUpButtonIfPossible(activity)
         setupViews()
+    }
+
+    private fun announceScreenNameByScreenReader() {
+        binding.root.announceForAccessibility(getString(R.string.vehicle_type_picker_fragment_label))
     }
 
     private fun setupViews() {

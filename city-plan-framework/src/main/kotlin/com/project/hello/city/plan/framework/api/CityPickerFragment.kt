@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hello.city.plan.domain.model.CityPlan
+import com.project.hello.city.plan.framework.R
 import com.project.hello.commons.framework.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelProvider
@@ -61,12 +62,17 @@ class CityPickerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        announceScreenNameByScreenReader()
         disableUpButtonIfPossible()
         setUpViews()
         observeProgress()
         observeSupportedCities()
         observeCitySelection()
         observeCurrentlySelectedCityEvent()
+    }
+
+    private fun announceScreenNameByScreenReader() {
+        binding.root.announceForAccessibility(getString(R.string.city_picker_label))
     }
 
     private fun disableUpButtonIfPossible() {

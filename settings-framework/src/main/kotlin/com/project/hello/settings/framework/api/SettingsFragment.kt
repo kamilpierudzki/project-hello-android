@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.project.hello.city.plan.domain.model.CityPlan
+import com.project.hello.city.plan.framework.api.CityPickViewModel
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelType
 import com.project.hello.commons.framework.viewmodel.externalViewModels
-import com.project.hello.city.plan.framework.api.CityPickViewModel
+import com.project.hello.settings.framework.R
 import com.project.hello.settings.framework.databinding.SettingsFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -40,8 +41,13 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        announceScreenNameByScreenReader()
         setupViews()
         setupBinding()
+    }
+
+    private fun announceScreenNameByScreenReader() {
+        binding.root.announceForAccessibility(getString(R.string.settings_screen_label))
     }
 
     private fun setupViews() {

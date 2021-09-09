@@ -2,14 +2,12 @@ package com.project.hello.vehicle.prediction.framework.api
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hello.city.plan.domain.model.CityPlan
+import com.project.hello.city.plan.framework.api.CityPickViewModel
+import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.commons.framework.ui.showBinaryDialog
 import com.project.hello.commons.framework.ui.showInformationDialog
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
@@ -24,22 +24,19 @@ import com.project.hello.commons.framework.viewmodel.ViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelType
 import com.project.hello.commons.framework.viewmodel.externalViewModels
 import com.project.hello.country.api.ResourceCountryCharacters
+import com.project.hello.vehicle.prediction.framework.R
+import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.hello.vehicle.prediction.framework.internal.FpsCounterWrapper
+import com.project.hello.vehicle.prediction.framework.internal.PredictedLineEvent
 import com.project.hello.vehicle.prediction.framework.internal.PredictionViewModel
 import com.project.hello.vehicle.prediction.framework.internal.PredictionViewModelInitialData
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import com.project.hello.vehicle.prediction.framework.internal.ui.PredictedLinesAdapter
-import com.project.hello.city.plan.framework.api.CityPickViewModel
-import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable
-import com.project.hello.vehicle.prediction.framework.R
-import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
-import com.project.hello.vehicle.prediction.framework.internal.PredictedLineEvent
 import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionScreenContentDescription
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@RequiresApi(Build.VERSION_CODES.DONUT)
 @AndroidEntryPoint
 internal class PredictionFragment : Fragment() {
 
@@ -84,6 +81,7 @@ internal class PredictionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        announceScreenNameByScreenReader()
         setupViews()
         passInitialInfoToViewModel()
         observePredictedLines()
@@ -97,6 +95,10 @@ internal class PredictionFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         textAnalyzer.dispose()
+    }
+
+    private fun announceScreenNameByScreenReader() {
+        binding.root.announceForAccessibility(getString(R.string.prediction_fragment_label))
     }
 
     private fun setupViews() {

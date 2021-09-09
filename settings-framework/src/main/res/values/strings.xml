@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_select_city">Select city</string>
-    <string name="settings_screen_label">Settings</string>
+    <string name="settings_screen_label">Settings Screen</string>
 </resources>
