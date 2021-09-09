@@ -35,6 +35,7 @@ import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParce
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.hello.vehicle.prediction.framework.internal.PredictedLineEvent
+import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionScreenContentDescription
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -61,6 +62,9 @@ internal class PredictionFragment : Fragment() {
     private val cityPickViewModel by externalViewModels {
         cityPickViewModelProvider
     }
+
+    @Inject
+    lateinit var predictionScreenContentDescription: PredictionScreenContentDescription
 
     private val safeArgs: PredictionFragmentArgs by navArgs()
     private val initialVehicleData: VehicleDataParcelable get() = safeArgs.vehicleDataParcelable
@@ -101,7 +105,7 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun setupPredictedLinesView() {
-        predictedLinesAdapter = PredictedLinesAdapter()
+        predictedLinesAdapter = PredictedLinesAdapter(predictionScreenContentDescription)
         binding.predictedLines.also {
             it.adapter = predictedLinesAdapter
             it.layoutManager = LinearLayoutManager(requireContext())

@@ -7,12 +7,11 @@ import com.project.hello.city.plan.domain.VehicleType
 import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.commons.framework.hilt.DefaultDispatcher
 import com.project.hello.commons.framework.ui.IText
-import com.project.hello.commons.framework.ui.Text
 import com.project.hello.vehicle.domain.VehiclePrediction
-import com.project.hello.vehicle.domain.analysis.LineWithProbability
 import com.project.hello.vehicle.domain.analysis.Buffering
+import com.project.hello.vehicle.domain.analysis.LineWithProbability
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
-import com.project.hello.vehicle.prediction.framework.R
+import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionScreenContentDescription
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -25,7 +24,8 @@ internal class PredictionViewModel @Inject constructor(
     private val buffering: Buffering,
     private val countryCharactersEmitter: CountryCharactersEmitter,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
-    private val predictionConsoleLogger: PredictionConsoleLogger
+    private val predictionConsoleLogger: PredictionConsoleLogger,
+    private val predictionScreenContentDescription: PredictionScreenContentDescription
 ) : ViewModel() {
 
     private val cityLines = CopyOnWriteArrayList<Line>()
@@ -56,7 +56,7 @@ internal class PredictionViewModel @Inject constructor(
         buffering.bufferedLine(currentTimeInMillis, predictedLine)
             .also { bufferedLine ->
                 predictionConsoleLogger.logBufferedLine(bufferedLine)
-                updateScreenContentDescription(bufferedLine?.line)
+                updateScreenContentDescription(bufferedLine)
                 postBufferedLine(bufferedLine)
             }
     }
@@ -70,12 +70,10 @@ internal class PredictionViewModel @Inject constructor(
         predictedLineEvent.postValue(valueToPost)
     }
 
-    private fun updateScreenContentDescription(line: Line?) {
-        val contentDescription = if (line != null) {
-            Text.of(listOf(Text.of(R.string.probably), Text.of(line.number)), separator = " ")
-        } else {
-            Text.empty()
-        }
+    private fun updateScreenContentDescription(lineWithProbability: LineWithProbability?) {
+        val contentDescription = predictionScreenContentDescription.createContentDescription(
+            lineWithProbability
+        )
         screenContentDescription.postValue(contentDescription)
     }
 
