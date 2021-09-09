@@ -13,7 +13,7 @@
     <string name="vehicle_type_picker_vehicle_tram">Tram</string>
     <string name="vehicle_type_picker_vehicle_bus">Bus</string>
     <string name="vehicle_type_picker_help_title"></string>
-    <string name="vehicle_type_picker_help_message">Narrowing down the vehicle type criterion improves the accuracy of line number recognition. </string>
+    <string name="vehicle_type_picker_help_message">Narrowing down the vehicle type criterion improves the accuracy of the line number recognition.</string>
     <string name="action_settings">Settings</string>
     <string name="camera_permission_explanatory_title">Why a camera is required?</string>
     <string name="camera_permission_explanatory_message">To recognize a vehicle the app requires a camera. Without it the app will not be able to recognize the vehicle at all. Do you want to try again?</string>

@@ -10,6 +10,7 @@
         android:id="@+id/app_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:text="@string/settings_app_name"

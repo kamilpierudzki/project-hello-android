@@ -10,21 +10,28 @@ internal class CityPickerViewHolder(private val viewBinding: CityItemBinding) :
     RecyclerView.ViewHolder(viewBinding.root) {
 
     fun setupView(city: City, selectionListener: () -> Unit) {
-        val cityName = city.cityPlan.city
-        viewBinding.city.text = cityName
+        viewBinding.city.text = city.cityPlan.city
         viewBinding.lastUpdate.text = city.cityPlan.lastUpdateDate
         viewBinding.selected.visibility = if (city.selected) View.VISIBLE else View.GONE
-        val contentDescription = if (city.selected) {
-            val context = viewBinding.selected.context
-            val textSelectedFromRes = context.getString(R.string.currently_selected)
-            "${cityName}, $textSelectedFromRes"
-        } else {
-            cityName
-        }
-        viewBinding.root.contentDescription = contentDescription
         viewBinding.root.setOnClickListener {
             selectionListener.invoke()
         }
+        updateContentDescription(city)
+    }
+
+    private fun updateContentDescription(city: City) {
+        val context = viewBinding.selected.context
+        val cityName = city.cityPlan.city
+        val lastUpdateValue = city.cityPlan.lastUpdateDate
+        val lastUpdateLabel = context.getString(R.string.city_item_last_update_label)
+
+        val selectionText = if (city.selected) {
+            "${context.getString(R.string.currently_selected)}"
+        } else {
+            ""
+        }
+        val contentDescription = "$cityName, $lastUpdateLabel $lastUpdateValue, $selectionText"
+        viewBinding.root.contentDescription = contentDescription
     }
 }
 

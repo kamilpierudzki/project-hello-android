@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@android:color/white"
-        android:focusable="false"
+        android:importantForAccessibility="no"
         android:textColor="@android:color/black"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
