@@ -150,7 +150,7 @@ internal class TextMatchingImplTest {
         // then
         Assert.assertEquals(true, result.isPositive)
         val percentage = (result as TextMatchingResult.Positive).percentage
-        Assert.assertEquals(12, percentage)
+        Assert.assertEquals(13, percentage)
     }
 
     @Test

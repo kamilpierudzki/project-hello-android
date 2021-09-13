@@ -248,19 +248,19 @@ internal class MatchingCityLinesImplTest {
         Assert.assertEquals(5, linesMatchedBasedOnInput.size)
         Assert.assertEquals("12", linesMatchedBasedOnInput[0].line.number)
         Assert.assertEquals(AccuracyLevel.DESTINATION_SLICE, linesMatchedBasedOnInput[0].accuracyInfo.accuracyLevel)
-        Assert.assertEquals(87, linesMatchedBasedOnInput[0].accuracyInfo.percentage)
+        Assert.assertEquals(86, linesMatchedBasedOnInput[0].accuracyInfo.percentage)
 
         Assert.assertEquals("16", linesMatchedBasedOnInput[1].line.number)
         Assert.assertEquals(AccuracyLevel.NUMBER_SLICE, linesMatchedBasedOnInput[1].accuracyInfo.accuracyLevel)
-        Assert.assertEquals(12, linesMatchedBasedOnInput[1].accuracyInfo.percentage)
+        Assert.assertEquals(13, linesMatchedBasedOnInput[1].accuracyInfo.percentage)
 
         Assert.assertEquals("169", linesMatchedBasedOnInput[2].line.number)
         Assert.assertEquals(AccuracyLevel.DESTINATION_SLICE, linesMatchedBasedOnInput[2].accuracyInfo.accuracyLevel)
-        Assert.assertEquals(87, linesMatchedBasedOnInput[2].accuracyInfo.percentage)
+        Assert.assertEquals(86, linesMatchedBasedOnInput[2].accuracyInfo.percentage)
 
         Assert.assertEquals("174", linesMatchedBasedOnInput[3].line.number)
         Assert.assertEquals(AccuracyLevel.DESTINATION_SLICE, linesMatchedBasedOnInput[3].accuracyInfo.accuracyLevel)
-        Assert.assertEquals(87, linesMatchedBasedOnInput[3].accuracyInfo.percentage)
+        Assert.assertEquals(86, linesMatchedBasedOnInput[3].accuracyInfo.percentage)
 
         Assert.assertEquals("1", linesMatchedBasedOnInput[4].line.number)
         Assert.assertEquals(AccuracyLevel.NUMBER_SLICE, linesMatchedBasedOnInput[4].accuracyInfo.accuracyLevel)

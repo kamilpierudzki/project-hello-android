@@ -18,6 +18,19 @@ class UniversalTransformationImpl(
                     val stringCharacter = c.toString()
                     countryCharactersProvider.get().getOrElse(stringCharacter, { stringCharacter })
                 }
-                .reduce { acc: String, s: String -> acc + s }
+                .asSequence()
+                .filter { character -> character.length == 1 }
+                .map { stringCharacter -> stringCharacter.toCharArray() }
+                .filter { characters -> characters.size == 1 }
+                .map { characters -> characters.first() }
+                .filter { character ->
+                    val code = character.code
+                    val isDigit = code in 48..57
+                    val isAsciiCharacter = code in 97..122
+                    isDigit || isAsciiCharacter
+                }
+                .map { character -> character.toString() }
+                .reduceOrNull { acc: String, s: String -> acc + s }
+                .orEmpty()
         }
 }
