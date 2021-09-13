@@ -41,7 +41,7 @@ internal class PredictionViewModel @Inject constructor(
     fun processRecognisedTexts(inputs: List<String>) {
         if (inputs.isNotEmpty() && cityLines.isNotEmpty()) {
             viewModelScope.launch(defaultDispatcher) {
-                val input = inputs.reduce { acc, text -> "$acc, $text" }
+                val input = inputs.reduce { acc, text -> "$acc$text" }
                 predictionConsoleLogger.logRawRecognisedText(input)
                 processInput(input)
             }
