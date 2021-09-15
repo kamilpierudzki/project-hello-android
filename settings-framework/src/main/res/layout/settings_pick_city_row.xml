@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/right_icon"
         app:layout_constraintStart_toStartOf="parent"
