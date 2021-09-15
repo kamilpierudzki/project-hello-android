@@ -75,10 +75,6 @@ class VehicleTypePickerFragment : Fragment() {
     }
 
     private fun setupButtonClicks() {
-        binding.allTypesButton.setOnClickListener {
-            val action = provideAction(listOf(VehicleType.TRAM, VehicleType.BUS))
-            it.findNavController().navigate(action)
-        }
         binding.tramTypesButton.setOnClickListener {
             val action = provideAction(listOf(VehicleType.TRAM))
             it.findNavController().navigate(action)
