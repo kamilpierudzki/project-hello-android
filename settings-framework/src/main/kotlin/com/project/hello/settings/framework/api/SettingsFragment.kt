@@ -51,10 +51,11 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupViews() {
-        setupCitySelection()
+        setupCityPickerClicks()
+        setupIntroductionRowClicks()
     }
 
-    private fun setupCitySelection() {
+    private fun setupCityPickerClicks() {
         binding.pickCityRow.root.setOnClickListener {
             goToCityPickerScreen(it)
         }
@@ -62,6 +63,17 @@ class SettingsFragment : Fragment() {
 
     private fun goToCityPickerScreen(view: View) {
         val action = SettingsFragmentDirections.goToCityPickerScreen(backButtonDisabled = false)
+        view.findNavController().navigate(action)
+    }
+
+    private fun setupIntroductionRowClicks() {
+        binding.introductionScreen.setOnClickListener {
+            goToIntroductionScreen(it)
+        }
+    }
+
+    private fun goToIntroductionScreen(view: View) {
+        val action = SettingsFragmentDirections.goToIntroductionScreen()
         view.findNavController().navigate(action)
     }
 

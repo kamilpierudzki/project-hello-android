@@ -69,4 +69,5 @@ dependencies {
     implementation project(path: ':settings-framework')
     implementation project(path: ':splash-framework')
     implementation project(path: ':legal-framework')
+    implementation project(path: ':welcome-framework')
 }

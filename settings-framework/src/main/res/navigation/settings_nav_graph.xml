@@ -5,6 +5,7 @@
     app:startDestination="@id/settings_screen">
 
     <include app:graph="@navigation/city_plan_nav_graph" />
+    <include app:graph="@navigation/introduction_nav_graph" />
 
     <fragment
         android:id="@+id/settings_screen"
@@ -20,6 +21,10 @@
                 app:argType="boolean" />
 
         </action>
+
+        <action
+            android:id="@+id/go_to_introduction_screen"
+            app:destination="@id/introduction_nav_graph" />
 
     </fragment>
 

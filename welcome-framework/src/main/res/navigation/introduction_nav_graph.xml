@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/introduction_nav_graph"
+    app:startDestination="@id/introduction_fragment">
+
+    <fragment
+        android:id="@+id/introduction_fragment"
+        android:name="com.project.hello.welcome.framework.internal.IntroductionFragment"
+        android:label="@string/introduction_screen_label" />
+
+</navigation>

@@ -4,39 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/help_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:contentDescription="@string/help_icon_description"
-        android:focusable="true"
-        android:padding="8dp"
-        android:src="@drawable/ic_help"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="?attr/colorPrimary" />
-
     <TextView
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/vehicle_type_picker_header"
+        android:layout_margin="8dp"
+        android:text="@string/welcome_screen_header"
         android:textColor="?attr/colorPrimary"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/tram_types_button"
+        app:layout_constraintBottom_toTopOf="@+id/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/help_icon"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/welcome_screen_description"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/introduction_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/tram_types_button"
+        android:id="@+id/introduction_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -44,13 +40,13 @@
         android:layout_marginBottom="8dp"
         android:drawableEnd="@drawable/ic_right"
         android:drawableTint="?attr/colorSecondary"
-        android:text="@string/vehicle_type_picker_vehicle_tram"
-        app:layout_constraintBottom_toTopOf="@+id/bus_types_button"
+        android:text="@string/welcome_screen_show_introduction"
+        app:layout_constraintBottom_toTopOf="@+id/next_screen_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/bus_types_button"
+        android:id="@+id/next_screen_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -58,7 +54,7 @@
         android:layout_marginBottom="16dp"
         android:drawableEnd="@drawable/ic_right"
         android:drawableTint="?attr/colorSecondary"
-        android:text="@string/vehicle_type_picker_vehicle_bus"
+        android:text="@string/welcome_screen_go_to_next_screen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

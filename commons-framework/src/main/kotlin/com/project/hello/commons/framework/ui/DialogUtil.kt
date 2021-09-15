@@ -5,7 +5,12 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.project.hello.commons.R
 
-fun showInformationDialog(context: Context, title: String, message: String) {
+fun showInformationDialog(
+    context: Context,
+    title: String,
+    message: String,
+    dialogDismissed: () -> Unit = {}
+) {
     val dialog = AlertDialog.Builder(context)
         .apply {
             setTitle(title)
@@ -13,13 +18,24 @@ fun showInformationDialog(context: Context, title: String, message: String) {
             setNeutralButton(R.string.dialog_neutral_button) { dialog, _ ->
                 dialog.dismiss()
             }
+            setOnDismissListener { dialogDismissed.invoke() }
         }
         .create()
     dialog.show()
 }
 
-fun showInformationDialog(context: Context, @StringRes title: Int, @StringRes message: Int) {
-    showInformationDialog(context, context.getString(title), context.getString(message))
+fun showInformationDialog(
+    context: Context,
+    @StringRes title: Int,
+    @StringRes message: Int,
+    dialogDismissed: () -> Unit = {}
+) {
+    showInformationDialog(
+        context,
+        context.getString(title),
+        context.getString(message),
+        dialogDismissed
+    )
 }
 
 fun showBinaryDialog(

@@ -2,4 +2,5 @@
 <resources>
     <string name="settings_select_city">Wybierz miasto</string>
     <string name="settings_screen_label">Ekran Ustawień</string>
+    <string name="settings_introduction_screen">Ekran wprowadzenia</string>
 </resources>

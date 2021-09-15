@@ -2,4 +2,5 @@
 <resources>
     <string name="settings_select_city">Select city</string>
     <string name="settings_screen_label">Settings Screen</string>
+    <string name="settings_introduction_screen">Introduction screen</string>
 </resources>

@@ -45,4 +45,5 @@ dependencies {
     implementation project(path: ':vehicle-prediction-framework')
     implementation project(path: ':city-plan-domain')
     implementation project(path: ':legal-framework')
+    implementation project(path: ':welcome-framework')
 }
