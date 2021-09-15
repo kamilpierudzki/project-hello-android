@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.hello.city.plan.domain.model.CityPlan
 import com.project.hello.city.plan.framework.api.CityPickViewModel
 import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable
@@ -27,13 +26,10 @@ import com.project.hello.country.api.ResourceCountryCharacters
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.hello.vehicle.prediction.framework.internal.FpsCounterWrapper
-import com.project.hello.vehicle.prediction.framework.internal.PredictedLineEvent
 import com.project.hello.vehicle.prediction.framework.internal.PredictionViewModel
 import com.project.hello.vehicle.prediction.framework.internal.PredictionViewModelInitialData
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
-import com.project.hello.vehicle.prediction.framework.internal.ui.PredictedLinesAdapter
-import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionScreenContentDescription
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -60,13 +56,9 @@ internal class PredictionFragment : Fragment() {
         cityPickViewModelProvider
     }
 
-    @Inject
-    lateinit var predictionScreenContentDescription: PredictionScreenContentDescription
-
     private val safeArgs: PredictionFragmentArgs by navArgs()
     private val initialVehicleData: VehicleDataParcelable get() = safeArgs.vehicleDataParcelable
     private lateinit var binding: PredictionFragmentBinding
-    private lateinit var predictedLinesAdapter: PredictedLinesAdapter
     private val predictionViewModel: PredictionViewModel by viewModels()
     private lateinit var requestCameraPermissionLauncher: ActivityResultLauncher<String>
 
@@ -84,10 +76,11 @@ internal class PredictionFragment : Fragment() {
         announceScreenNameByScreenReader()
         setupViews()
         passInitialInfoToViewModel()
-        observePredictedLines()
         observeRecognisedTexts()
         observeFpsCounter()
-        observeScreenContentDescription()
+        observeNewFrameEvent()
+        observePredictedNumber()
+        observePredictedConfidenceInfo()
         initRequestCameraPermissionLauncher()
         processPermissionLogic()
     }
@@ -102,16 +95,7 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun setupViews() {
-        setupPredictedLinesView()
         setupHelpIconClicks()
-    }
-
-    private fun setupPredictedLinesView() {
-        predictedLinesAdapter = PredictedLinesAdapter(predictionScreenContentDescription)
-        binding.predictedLines.also {
-            it.adapter = predictedLinesAdapter
-            it.layoutManager = LinearLayoutManager(requireContext())
-        }
     }
 
     private fun setupHelpIconClicks() {
@@ -144,26 +128,34 @@ internal class PredictionFragment : Fragment() {
         }
     }
 
-    private fun observePredictedLines() {
-        predictionViewModel.predictedLineEvent.observe(viewLifecycleOwner, { lineEvent ->
-            val data = when (lineEvent) {
-                PredictedLineEvent.Negative -> emptyList()
-                is PredictedLineEvent.Positive -> listOf(lineEvent.lineWithProbability)
-            }
-            predictedLinesAdapter.updateData(data)
+    private fun observeNewFrameEvent() {
+        predictionViewModel.newFrame.observe(viewLifecycleOwner, {
             fpsCounterWrapper.newFrameProcessed(System.currentTimeMillis())
+        })
+    }
+
+    private fun observePredictedNumber() {
+        predictionViewModel.predictedNumberLabel.observe(viewLifecycleOwner, { numberInfo ->
+            binding.predictedNumber.text = numberInfo.text.get(resources)
+            binding.predictedNumber.contentDescription =
+                numberInfo.contentDescription.get(resources)
+            numberInfo.announceForAccessibility?.get(resources)?.let {
+                binding.predictedNumber.announceForAccessibility(it)
+            }
+        })
+    }
+
+    private fun observePredictedConfidenceInfo() {
+        predictionViewModel.predictedConfidenceInfo.observe(viewLifecycleOwner, { confidenceInfo ->
+            binding.predictionConfidence.text = confidenceInfo.text.get(resources)
+            binding.predictionConfidence.contentDescription =
+                confidenceInfo.contentDescription.get(resources)
         })
     }
 
     private fun observeFpsCounter() {
         fpsCounterWrapper.currentValue.observe(viewLifecycleOwner, { fps ->
             binding.fpsCounter.text = "$fps"
-        })
-    }
-
-    private fun observeScreenContentDescription() {
-        predictionViewModel.screenContentDescription.observe(viewLifecycleOwner, {
-            binding.cameraPreview.contentDescription = it.get(resources)
         })
     }
 

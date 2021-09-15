@@ -6,12 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.project.hello.city.plan.domain.VehicleType
 import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.commons.framework.hilt.DefaultDispatcher
-import com.project.hello.commons.framework.ui.IText
+import com.project.hello.commons.framework.ui.Text
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.analysis.LineWithProbability
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
-import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionScreenContentDescription
+import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionLabelInfo
+import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionInfoTextCreation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -25,13 +26,15 @@ internal class PredictionViewModel @Inject constructor(
     private val countryCharactersEmitter: CountryCharactersEmitter,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
     private val predictionConsoleLogger: PredictionConsoleLogger,
-    private val predictionScreenContentDescription: PredictionScreenContentDescription
+    private val predictionInfoTextCreation: PredictionInfoTextCreation,
 ) : ViewModel() {
 
     private val cityLines = CopyOnWriteArrayList<Line>()
+    private var previousPrediction: LineWithProbability? = null
 
-    val predictedLineEvent = MutableLiveData<PredictedLineEvent>()
-    val screenContentDescription = MutableLiveData<IText>()
+    val predictedNumberLabel = MutableLiveData(PredictionLabelInfo.EMPTY)
+    val predictedConfidenceInfo = MutableLiveData(PredictionLabelInfo.EMPTY)
+    val newFrame = MutableLiveData<Unit>()
 
     fun setInitialData(initialData: PredictionViewModelInitialData) {
         countryCharactersEmitter.emmit(initialData.countryCharacters)
@@ -56,25 +59,64 @@ internal class PredictionViewModel @Inject constructor(
         buffering.bufferedLine(currentTimeInMillis, predictedLine)
             .also { bufferedLine ->
                 predictionConsoleLogger.logBufferedLine(bufferedLine)
-                updateScreenContentDescription(bufferedLine)
-                postBufferedLine(bufferedLine)
+                newFrame.postValue(Unit)
+                processBufferedLine(bufferedLine)
             }
     }
 
-    private fun postBufferedLine(bufferedLine: LineWithProbability?) {
-        val valueToPost = if (bufferedLine != null) {
-            PredictedLineEvent.Positive(bufferedLine)
-        } else {
-            PredictedLineEvent.Negative
+    private fun processBufferedLine(bufferedLine: LineWithProbability?) {
+        when (val predictedLineResult = getPredictedLineResult(bufferedLine)) {
+            PredictedLineResult.Negative -> handleNegativeResultOfCurrentPrediction()
+            is PredictedLineResult.Positive ->
+                handlePositiveResultOfCurrentPrediction(predictedLineResult)
         }
-        predictedLineEvent.postValue(valueToPost)
+        previousPrediction = bufferedLine
     }
 
-    private fun updateScreenContentDescription(lineWithProbability: LineWithProbability?) {
-        val contentDescription = predictionScreenContentDescription.createContentDescription(
+    private fun getPredictedLineResult(bufferedLine: LineWithProbability?): PredictedLineResult {
+        return if (bufferedLine != null) {
+            PredictedLineResult.Positive(bufferedLine)
+        } else {
+            PredictedLineResult.Negative
+        }
+    }
+
+    private fun handleNegativeResultOfCurrentPrediction() {
+        predictedNumberLabel.postValue(PredictionLabelInfo.EMPTY)
+        predictedConfidenceInfo.postValue(PredictionLabelInfo.EMPTY)
+    }
+
+    private fun handlePositiveResultOfCurrentPrediction(currentResult: PredictedLineResult.Positive) {
+        updatePredictedNumberLabelIfPossible(previousPrediction, currentResult)
+        updatePredictedConfidenceInfo(currentResult.lineWithProbability)
+    }
+
+    private fun updatePredictedNumberLabelIfPossible(
+        previousLine: LineWithProbability?,
+        currentResult: PredictedLineResult.Positive
+    ) {
+        val isCurrentTheSameAsPrevious = isCurrentPredictionTheSameAsPrevious(
+            previousPrediction = previousLine?.line,
+            currentPrediction = currentResult.lineWithProbability.line
+        )
+        if (!isCurrentTheSameAsPrevious) {
+            val labelInfo = predictionInfoTextCreation.createTextForNumberLabel(
+                currentResult.lineWithProbability
+            )
+            predictedNumberLabel.postValue(labelInfo)
+        }
+    }
+
+    private fun isCurrentPredictionTheSameAsPrevious(
+        previousPrediction: Line?,
+        currentPrediction: Line
+    ): Boolean = previousPrediction == currentPrediction
+
+    private fun updatePredictedConfidenceInfo(lineWithProbability: LineWithProbability) {
+        val labelInfo = predictionInfoTextCreation.createTextForConfidenceLabel(
             lineWithProbability
         )
-        screenContentDescription.postValue(contentDescription)
+        predictedConfidenceInfo.postValue(labelInfo)
     }
 
     private fun updateCityLines(initialData: PredictionViewModelInitialData) {

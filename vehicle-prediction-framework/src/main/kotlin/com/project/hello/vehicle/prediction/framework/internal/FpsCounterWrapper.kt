@@ -3,8 +3,10 @@ package com.project.hello.vehicle.prediction.framework.internal
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.project.hello.vehicle.domain.FpsCounter
+import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
+@FragmentScoped
 class FpsCounterWrapper @Inject constructor() {
 
     private val fpsCounter = FpsCounter(::onFpsChanged)

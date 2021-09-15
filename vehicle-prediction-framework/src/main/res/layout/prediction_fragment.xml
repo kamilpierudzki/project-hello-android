@@ -21,9 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
         android:contentDescription="@string/help_icon_description"
-        android:focusable="true"
         android:padding="8dp"
         android:src="@drawable/ic_help"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,17 +39,50 @@
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="10FPS" />
+        tools:text="10" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/predicted_lines"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <TextView
+        android:id="@+id/predicted_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="16dp"
         android:background="?attr/colorSecondary"
-        android:focusable="true"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="16" />
+
+    <TextView
+        android:id="@+id/prediction_confidence"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="?attr/colorSecondary"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="32sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_goneMarginStart="4dp"
+        tools:text="94%" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

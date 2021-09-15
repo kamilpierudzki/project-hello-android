@@ -6,10 +6,13 @@ import com.project.hello.city.plan.domain.model.CityPlan
 import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.commons.domain.test.CoroutinesTestRule
 import com.project.hello.commons.framework.ui.IText
+import com.project.hello.commons.framework.ui.Text
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.LineWithProbability
 import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
+import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionLabelInfo
+import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionInfoTextCreation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
@@ -43,6 +46,7 @@ internal class PredictionViewModelTest {
         emptyMap(),
         cityPlan
     )
+    val predictionConfidenceInfoText = PredictionInfoTextCreation()
 
     val vehiclePrediction: VehiclePrediction = mock()
     val buffering: Buffering = mock()
@@ -54,7 +58,8 @@ internal class PredictionViewModelTest {
         buffering,
         countryCharactersEmitter,
         coroutinesTestRule.testDispatcher,
-        predictionConsoleLogger
+        predictionConsoleLogger,
+        predictionConfidenceInfoText
     )
 
     @Test
@@ -115,35 +120,119 @@ internal class PredictionViewModelTest {
         }
 
     @Test
-    fun `given observing predicted lines updates when processInput is called then event predicted lines are updated`() =
+    fun `given observing predictedNumberLabel and predictedConfidenceInfo, previousPrediction is NULL and bufferedLine is NULL when processInput is called then events are sent accordingly`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
-            whenever(buffering.bufferedLine(any(), any()))
-                .thenReturn(LineWithProbability(tram1, 0))
-            val events = mutableListOf<PredictedLineEvent>()
-            tested.predictedLineEvent.observeForever { events.add(it) }
+            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(null)
+            whenever(buffering.bufferedLine(any(), any())).thenReturn(null)
+
+            val predictedNumberLabelEvents = mutableListOf<IText>()
+            tested.predictedNumberLabel.observeForever { predictedNumberLabelEvents.add(it) }
+            val predictedConfidenceInfoEvents = mutableListOf<PredictionLabelInfo>()
+            tested.predictedConfidenceInfo.observeForever { predictedConfidenceInfoEvents.add(it) }
+
+
             tested.setInitialData(initialData)
 
             // when
             tested.processRecognisedTexts(listOf("a"))
 
             // then
-            Assert.assertEquals(1, events.size)
+            Assert.assertEquals(1, predictedNumberLabelEvents.size)
+            Assert.assertEquals(Text.empty(), predictedNumberLabelEvents[0])
+            Assert.assertEquals(1, predictedConfidenceInfoEvents.size)
+            Assert.assertEquals(PredictionLabelInfo.EMPTY, predictedConfidenceInfoEvents[0])
         }
 
     @Test
-    fun `given observing content description updates when processInput is called then screen content description is updated`() =
+    fun `given observing predictedNumberLabel and predictedConfidenceInfo, previousPrediction is NULL and bufferedLine is NOT NULL when processInput is called then events are sent accordingly`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            val events = mutableListOf<IText>()
-            tested.screenContentDescription.observeForever { events.add(it) }
+            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
+            val lineWithProbability = LineWithProbability(tram1, 99)
+            whenever(buffering.bufferedLine(any(), any()))
+                .thenReturn(lineWithProbability)
+
+            val predictedNumberLabelEvents = mutableListOf<IText>()
+            tested.predictedNumberLabel.observeForever { predictedNumberLabelEvents.add(it) }
+            val predictedConfidenceInfoEvents = mutableListOf<PredictionLabelInfo>()
+            tested.predictedConfidenceInfo.observeForever { predictedConfidenceInfoEvents.add(it) }
+
+
             tested.setInitialData(initialData)
 
             // when
             tested.processRecognisedTexts(listOf("a"))
 
             // then
-            Assert.assertEquals(1, events.size)
+            Assert.assertEquals(1, predictedNumberLabelEvents.size)
+            Assert.assertEquals(Text.of(tram1.number), predictedNumberLabelEvents[0])
+            Assert.assertEquals(1, predictedConfidenceInfoEvents.size)
+            val expectedConfidenceInfo =
+                predictionConfidenceInfoText.creteConfidenceLabelText(lineWithProbability)
+            Assert.assertEquals(expectedConfidenceInfo, predictedConfidenceInfoEvents[0])
+        }
+
+    @Test
+    fun `given observing predictedNumberLabel and predictedConfidenceInfo, previousPrediction is NOT NULL and bufferedLine is NULL when processInput is called then events are sent accordingly`() =
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
+            val lineWithProbability = LineWithProbability(tram1, 99)
+            whenever(buffering.bufferedLine(any(), any()))
+                .thenReturn(lineWithProbability)
+
+            tested.setInitialData(initialData)
+            tested.processRecognisedTexts(listOf("a")) // saving previous prediction
+
+            val predictedNumberLabelEvents = mutableListOf<IText>()
+            tested.predictedNumberLabel.observeForever { predictedNumberLabelEvents.add(it) }
+            val predictedConfidenceInfoEvents = mutableListOf<PredictionLabelInfo>()
+            tested.predictedConfidenceInfo.observeForever { predictedConfidenceInfoEvents.add(it) }
+
+            whenever(buffering.bufferedLine(any(), any())).thenReturn(null)
+
+            predictedNumberLabelEvents.clear()
+            predictedConfidenceInfoEvents.clear()
+
+            // when
+            tested.processRecognisedTexts(listOf("a"))
+
+            // then
+            Assert.assertEquals(1, predictedNumberLabelEvents.size)
+            Assert.assertEquals(Text.empty(), predictedNumberLabelEvents[0])
+            Assert.assertEquals(1, predictedConfidenceInfoEvents.size)
+            Assert.assertEquals(PredictionLabelInfo.EMPTY, predictedConfidenceInfoEvents[0])
+        }
+
+    @Test
+    fun `given observing predictedNumberLabel and predictedConfidenceInfo, previousPrediction is NOT NULL and bufferedLine is NOT NULL when processInput is called then events are sent accordingly`() =
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
+            val lineWithProbability = LineWithProbability(tram1, 99)
+            whenever(buffering.bufferedLine(any(), any()))
+                .thenReturn(lineWithProbability)
+
+            tested.setInitialData(initialData)
+            tested.processRecognisedTexts(listOf("a")) // saving previous prediction
+
+            val predictedNumberLabelEvents = mutableListOf<IText>()
+            tested.predictedNumberLabel.observeForever { predictedNumberLabelEvents.add(it) }
+            val predictedConfidenceInfoEvents = mutableListOf<PredictionLabelInfo>()
+            tested.predictedConfidenceInfo.observeForever { predictedConfidenceInfoEvents.add(it) }
+
+            predictedNumberLabelEvents.clear()
+            predictedConfidenceInfoEvents.clear()
+
+            // when
+            tested.processRecognisedTexts(listOf("a"))
+
+            // then
+            Assert.assertEquals(0, predictedNumberLabelEvents.size)
+            Assert.assertEquals(1, predictedConfidenceInfoEvents.size)
+            val expectedConfidenceInfo =
+                predictionConfidenceInfoText.creteConfidenceLabelText(lineWithProbability)
+            Assert.assertEquals(expectedConfidenceInfo, predictedConfidenceInfoEvents[0])
         }
 }

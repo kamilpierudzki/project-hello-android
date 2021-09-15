@@ -3,12 +3,10 @@ package com.project.hello.country.internal
 import android.content.res.Resources
 import com.project.hello.country.R
 import com.project.hello.country.api.ResourceCountryCharacters
-import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 private const val SPLIT_CHARACTER = "-"
 
-@FragmentScoped
 internal class ResourceCountryCharactersImpl @Inject constructor(
     private val resources: Resources
 ) : ResourceCountryCharacters {
