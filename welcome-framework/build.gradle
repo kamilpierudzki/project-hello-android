@@ -36,6 +36,14 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_compiler_version"
 
     testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin_version"
+
+    implementation "io.reactivex.rxjava3:rxandroid:$rxjava3_version"
+    implementation "io.reactivex.rxjava3:rxjava:$rxjava3_version"
+
+    testImplementation "androidx.arch.core:core-testing:$core_testing_version"
 
     implementation project(path: ':commons-framework')
+    implementation project(path: ':commons-domain')
+    implementation project(path: ':welcome-domain')
 }

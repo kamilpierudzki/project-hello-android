@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.project.hello.city.plan.framework.api.CityPickViewModel
+import com.project.hello.city.plan.framework.api.CitySelection
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelType
 import com.project.hello.commons.framework.viewmodel.externalViewModels
 import com.project.hello.legal.framework.api.LegalViewModel
 import com.project.hello.splash.framework.databinding.SplashFragmentBinding
-import com.project.hello.city.plan.framework.api.CityPickViewModel
-import com.project.hello.city.plan.framework.api.CitySelection
+import com.project.hello.welcome.framework.api.WelcomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,6 +39,14 @@ class SplashFragment : Fragment() {
         legalViewModelProvider
     }
 
+    @Inject
+    @ViewModelProvider(ViewModelType.ACTIVITY)
+    lateinit var welcomeViewModelProvider: ExternalViewModelProvider<WelcomeViewModel>
+
+    private val welcomeViewModel by externalViewModels {
+        welcomeViewModelProvider
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +64,7 @@ class SplashFragment : Fragment() {
     private fun observeIfLatestAvailableLegalIsAccepted() {
         legalViewModel.isLatestAvailableLegalAccepted.observe(viewLifecycleOwner, { event ->
             when (event.consumeAndReturn()) {
-                true -> observeCurrentlySelectedCity()
+                true -> observeIfFirstLaunch()
                 false -> goToLegalScreen()
             }
         })
@@ -66,6 +75,16 @@ class SplashFragment : Fragment() {
             when (event.consumeAndReturn()) {
                 is CitySelection.NotSelected -> goToCityPickerScreen()
                 is CitySelection.Selected -> goToVehicleTypePickerScreen()
+            }
+        })
+    }
+
+    private fun observeIfFirstLaunch() {
+        welcomeViewModel.isFirstLaunch.observe(viewLifecycleOwner, { event ->
+            if (event) {
+                goToWelcomeScreen()
+            } else {
+                observeCurrentlySelectedCity()
             }
         })
     }

@@ -1,0 +1,26 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+apply from: rootProject.file("gradle/androidKotlin.gradle")
+apply from: rootProject.file("gradle/sdkSetup.gradle")
+apply from: rootProject.file("gradle/commonVersions.gradle")
+
+android {
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testImplementation "junit:junit:$junit_version"
+
+    implementation "androidx.annotation:annotation:$annotation_version"
+
+    implementation project(path: ':commons-domain')
+}
