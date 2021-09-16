@@ -65,7 +65,10 @@ class SplashFragment : Fragment() {
         legalViewModel.isLatestAvailableLegalAccepted.observe(viewLifecycleOwner, { event ->
             when (event.consumeAndReturn()) {
                 false -> goToLegalScreen()
-                else -> observeIfFirstLaunch()
+                else -> when (event.content) {
+                    true -> observeIfFirstLaunch()
+                    false -> finishActivity()
+                }
             }
         })
     }
@@ -74,7 +77,10 @@ class SplashFragment : Fragment() {
         welcomeViewModel.isFirstLaunch.observe(viewLifecycleOwner, { event ->
             when (event.consumeAndReturn()) {
                 true -> goToWelcomeScreen()
-                else -> observeCurrentlySelectedCity()
+                else -> when (event.content) {
+                    true -> finishActivity()
+                    false -> observeCurrentlySelectedCity()
+                }
             }
         })
     }
