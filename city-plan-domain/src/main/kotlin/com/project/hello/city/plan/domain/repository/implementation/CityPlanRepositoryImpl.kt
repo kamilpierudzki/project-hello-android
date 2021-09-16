@@ -14,7 +14,8 @@ class CityPlanRepositoryImpl(
     private val selectedCityDataSource: SelectedCityDataSource
 ) : CityPlanRepository {
 
-    override fun getSupportedCityFileResources(): List<Int> = City.values().map { it.file }
+    override fun getSupportedCityFileResources(): List<Int> =
+        City.values().sortedBy { it.name }.map { it.file }
 
     override fun getCityDataResource() = object : CityDataResource<CityPlan, CityPlanAPI> {
         override fun load(fileRes: Int): ResponseApi<CityPlanAPI> {
