@@ -23,8 +23,6 @@ import javax.inject.Inject
 internal class LegalFragment : Fragment() {
 
     private lateinit var binding: LegalFragmentBinding
-    private val safeArgs: LegalFragmentArgs by navArgs()
-    private val backButtonDisabled: Boolean get() = safeArgs.backButtonDisabled
 
     @Inject
     @ViewModelProvider(ViewModelType.ACTIVITY)
@@ -47,20 +45,14 @@ internal class LegalFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        actionBarUpIndicatorVisibility.disableUpButtonIfPossible(activity)
         announceScreenNameByScreenReader()
-        disableUpButtonIfPossible()
         setupViews()
         observeAcceptationResult()
     }
 
     private fun announceScreenNameByScreenReader() {
         binding.root.announceForAccessibility(getString(R.string.legal_screen_label))
-    }
-
-    private fun disableUpButtonIfPossible() {
-        if (backButtonDisabled) {
-            actionBarUpIndicatorVisibility.disableUpButtonIfPossible(activity)
-        }
     }
 
     private fun setupViews() {

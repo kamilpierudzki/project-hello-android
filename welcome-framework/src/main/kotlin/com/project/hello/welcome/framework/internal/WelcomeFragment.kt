@@ -84,7 +84,7 @@ internal class WelcomeFragment : Fragment() {
 
     private fun observeIfFirstLaunch() {
         welcomeViewModel.isFirstLaunch.observe(viewLifecycleOwner, { event ->
-            if (!event) {
+            if (!event.content) {
                 goBackToPreviousScreen()
             }
         })

@@ -64,8 +64,17 @@ class SplashFragment : Fragment() {
     private fun observeIfLatestAvailableLegalIsAccepted() {
         legalViewModel.isLatestAvailableLegalAccepted.observe(viewLifecycleOwner, { event ->
             when (event.consumeAndReturn()) {
-                true -> observeIfFirstLaunch()
                 false -> goToLegalScreen()
+                else -> observeIfFirstLaunch()
+            }
+        })
+    }
+
+    private fun observeIfFirstLaunch() {
+        welcomeViewModel.isFirstLaunch.observe(viewLifecycleOwner, { event ->
+            when (event.consumeAndReturn()) {
+                true -> goToWelcomeScreen()
+                else -> observeCurrentlySelectedCity()
             }
         })
     }
@@ -75,16 +84,7 @@ class SplashFragment : Fragment() {
             when (event.consumeAndReturn()) {
                 is CitySelection.NotSelected -> goToCityPickerScreen()
                 is CitySelection.Selected -> goToVehicleTypePickerScreen()
-            }
-        })
-    }
-
-    private fun observeIfFirstLaunch() {
-        welcomeViewModel.isFirstLaunch.observe(viewLifecycleOwner, { event ->
-            if (event) {
-                goToWelcomeScreen()
-            } else {
-                observeCurrentlySelectedCity()
+                else -> finishActivity()
             }
         })
     }
@@ -100,12 +100,16 @@ class SplashFragment : Fragment() {
     }
 
     private fun goToLegalScreen() {
-        val action = SplashFragmentDirections.goToLegalScreen(backButtonDisabled = true)
+        val action = SplashFragmentDirections.goToLegalScreen()
         findNavController().navigate(action)
     }
 
     private fun goToWelcomeScreen() {
         val action = SplashFragmentDirections.goToWelcomeScreen()
         findNavController().navigate(action)
+    }
+
+    private fun finishActivity() {
+        requireActivity().finish()
     }
 }

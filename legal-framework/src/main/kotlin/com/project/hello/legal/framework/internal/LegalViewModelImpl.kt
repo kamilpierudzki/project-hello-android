@@ -12,10 +12,8 @@ import com.project.hello.legal.framework.internal.usecase.LatestAvailableLegalUs
 import com.project.hello.legal.domain.model.LatestAvailableLegal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.CompletableObserver
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -51,25 +49,28 @@ internal class LegalViewModelImpl @Inject constructor(
 
     override fun onLatestAvailableLegalAccepted() {
         latestAvailableLegal.value?.let {
-            latestAvailableLegalSaverUseCase.execute(it)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : CompletableObserver {
-                    override fun onSubscribe(d: Disposable) {
-                        disposable.add(d)
-                    }
-
-                    override fun onComplete() {
-                        latestAvailableLegalSavedResult.value =
-                            Event(LatestAvailableLegalResult.Success)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        latestAvailableLegalSavedResult.value =
-                            Event(LatestAvailableLegalResult.Error(e.message!!))
-                    }
-                })
+            disposable.add(
+                latestAvailableLegalSaverUseCase.execute(it)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        { handleSuccessfulSave() },
+                        { handleFailedSave(it) }
+                    )
+            )
         }
+    }
+
+    private fun handleSuccessfulSave() {
+        latestAvailableLegalSavedResult.value =
+            Event(LatestAvailableLegalResult.Success)
+        isLatestAvailableLegalAccepted.value = Event(true)
+    }
+
+    private fun handleFailedSave(error: Throwable) {
+        latestAvailableLegalSavedResult.value =
+            Event(LatestAvailableLegalResult.Error(error.message ?: ""))
+        isLatestAvailableLegalAccepted.value = Event(false)
     }
 
     private fun updateInfoAboutAcceptedLegal() {
@@ -79,21 +80,29 @@ internal class LegalViewModelImpl @Inject constructor(
                 .flatMap { fetchLatestAcceptedLegalVersion() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ latestAcceptedLegalVersionResponse ->
-                    val latestAcceptedVersion = latestAcceptedLegalVersionResponse.successData
-                    val latestAvailableLegal = latestAvailableLegal.value!!
-                    val isLatestAccepted = latestAcceptedVersion >= latestAvailableLegal.version
-                    isLatestAvailableLegalAccepted.value = Event(isLatestAccepted)
-                }) {
-                    when (it) {
-                        is LatestLegalNotAcceptedException -> {
-                            isLatestAvailableLegalAccepted.value = Event(false)
-                        }
-                        is LatestLegalNotAvailableException -> {
-                            // todo currently it is impossible path
-                        }
-                    }
-                })
+                .subscribe(
+                    { handleSuccessfulLegalResult(it) },
+                    { handleFailedLegalResult(it) }
+                )
+        )
+    }
+
+    private fun handleSuccessfulLegalResult(response: Response.Success<Int>) {
+        val latestAcceptedVersion = response.successData
+        val latestAvailableLegal = latestAvailableLegal.value!!
+        val isLatestAccepted = latestAcceptedVersion >= latestAvailableLegal.version
+        isLatestAvailableLegalAccepted.value = Event(isLatestAccepted)
+    }
+
+    private fun handleFailedLegalResult(error: Throwable) {
+        when (error) {
+            is LatestLegalNotAcceptedException -> {
+                isLatestAvailableLegalAccepted.value = Event(false)
+            }
+            is LatestLegalNotAvailableException -> {
+                // todo currently it is impossible path
+            }
+        }
     }
 
     private fun fetchLatestAvailableLegal(): Observable<Response.Success<LatestAvailableLegal>> =

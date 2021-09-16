@@ -1,6 +1,7 @@
 package com.project.hello.welcome.framework.internal
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.project.hello.commons.framework.livedata.Event
 import com.project.hello.commons.framework.rx.ReactiveXUtils
 import com.project.hello.welcome.framework.internal.usecase.FirstLaunchSaverUseCase
 import com.project.hello.welcome.framework.internal.usecase.FirstLaunchUseCase
@@ -33,7 +34,7 @@ internal class WelcomeViewModelImplTest {
 
         val tested = tested()
 
-        val events = mutableListOf<Boolean>()
+        val events = mutableListOf<Event<Boolean>>()
         tested.isFirstLaunch.observeForever { events.add(it) }
 
         // when
@@ -42,7 +43,7 @@ internal class WelcomeViewModelImplTest {
 
         // then
         Assert.assertEquals(1, events.size)
-        Assert.assertEquals(false, events[0])
+        Assert.assertEquals(false, events[0].content)
     }
 
     @Test
@@ -52,7 +53,7 @@ internal class WelcomeViewModelImplTest {
 
         val tested = tested()
 
-        val events = mutableListOf<Boolean>()
+        val events = mutableListOf<Event<Boolean>>()
         tested.isFirstLaunch.observeForever { events.add(it) }
 
         // when
@@ -61,7 +62,7 @@ internal class WelcomeViewModelImplTest {
 
         // then
         Assert.assertEquals(1, events.size)
-        Assert.assertEquals(true, events[0])
+        Assert.assertEquals(true, events[0].content)
     }
 
     @Test
@@ -71,7 +72,7 @@ internal class WelcomeViewModelImplTest {
 
         val tested = tested()
 
-        val events = mutableListOf<Boolean>()
+        val events = mutableListOf<Event<Boolean>>()
         tested.isFirstLaunch.observeForever { events.add(it) }
 
         // when
@@ -80,7 +81,7 @@ internal class WelcomeViewModelImplTest {
 
         // then
         Assert.assertEquals(1, events.size)
-        Assert.assertEquals(true, events[0])
+        Assert.assertEquals(true, events[0].content)
     }
 
     @Test
@@ -90,7 +91,7 @@ internal class WelcomeViewModelImplTest {
 
         val tested = tested()
 
-        val events = mutableListOf<Boolean>()
+        val events = mutableListOf<Event<Boolean>>()
         tested.isFirstLaunch.observeForever { events.add(it) }
 
         // when
@@ -99,7 +100,7 @@ internal class WelcomeViewModelImplTest {
 
         // then
         Assert.assertEquals(1, events.size)
-        Assert.assertEquals(false, events[0])
+        Assert.assertEquals(false, events[0].content)
     }
 
     @Test
@@ -113,7 +114,7 @@ internal class WelcomeViewModelImplTest {
 
         val tested = tested()
 
-        val events = mutableListOf<Boolean>()
+        val events = mutableListOf<Event<Boolean>>()
         tested.isFirstLaunch.observeForever { events.add(it) }
 
         // when
@@ -122,7 +123,7 @@ internal class WelcomeViewModelImplTest {
 
         // then
         Assert.assertEquals(1, events.size)
-        Assert.assertEquals(true, events[0])
+        Assert.assertEquals(true, events[0].content)
     }
 
     fun tested(
