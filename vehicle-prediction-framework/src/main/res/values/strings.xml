@@ -16,5 +16,5 @@
     <string name="vehicle_type_picker_help_message">Narrowing down a vehicle type criterion improves accuracy of line number recognition.</string>
     <string name="action_settings">Settings</string>
     <string name="camera_permission_explanatory_title">Why a camera is required?</string>
-    <string name="camera_permission_explanatory_message">To recognize a public transportation vehicle line number the app requires a camera. Without it the app will not be able to recognize a the number at all. Do you want to try again?</string>
+    <string name="camera_permission_explanatory_message">The basis for recognizing the line number of a public transportation vehicle is the image from the camera. Without it, the application will not be able to recognize the line number. Do you want to try again?</string>
 </resources>
