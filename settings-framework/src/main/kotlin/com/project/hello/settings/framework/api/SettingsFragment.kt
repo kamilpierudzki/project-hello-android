@@ -81,6 +81,15 @@ class SettingsFragment : Fragment() {
         val currentlySelectedCity: CityPlan? = cityPickViewModel.currentlySelectedCity
         if (currentlySelectedCity != null) {
             binding.pickCityRow.selected.text = currentlySelectedCity.city
+            updateContentDescriptionForRow(currentlySelectedCity)
         }
+    }
+
+    private fun updateContentDescriptionForRow(currentlySelectedCity: CityPlan) {
+        binding.pickCityRow.root.contentDescription = """
+            ${getString(R.string.settings_select_city)}. 
+             ${getString(R.string.settings_select_city_currently_selected)}:
+             ${currentlySelectedCity.city}"
+        """.trimIndent()
     }
 }

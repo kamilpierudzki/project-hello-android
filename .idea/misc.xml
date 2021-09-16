@@ -19,9 +19,9 @@
         <entry key="commons-framework/src/main/res/drawable/ic_help.xml" value="0.1375" />
         <entry key="commons-framework/src/main/res/drawable/ic_right.xml" value="0.38125" />
         <entry key="legal-framework/src/main/res/layout/legal_fragment.xml" value="0.1" />
-        <entry key="settings-framework/src/main/res/layout/settings_fragment.xml" value="0.44067028985507245" />
+        <entry key="settings-framework/src/main/res/layout/settings_fragment.xml" value="0.1" />
         <entry key="settings-framework/src/main/res/layout/settings_introduction_row.xml" value="0.33489583333333334" />
-        <entry key="settings-framework/src/main/res/layout/settings_pick_city_row.xml" value="0.26766304347826086" />
+        <entry key="settings-framework/src/main/res/layout/settings_pick_city_row.xml" value="0.1" />
         <entry key="splash-framework/src/main/res/layout/splash_fragment.xml" value="0.4741847826086957" />
         <entry key="top-level-resources-framework/src/main/res/drawable/ic_launcher_background.xml" value="0.4786458333333333" />
         <entry key="top-level-resources-framework/src/main/res/drawable/ic_launcher_foreground.xml" value="0.42592592592592593" />
