@@ -11,7 +11,7 @@ import java.lang.reflect.Type
 
 class JsonResourceReader<T>(
     private val resources: Resources,
-    private val token: TypeToken<T>
+    private val objectCreator: (String) -> T?
 ) {
 
     fun readFile(resFile: Int): ResponseApi<T> {
@@ -25,8 +25,7 @@ class JsonResourceReader<T>(
         inputStream.close()
 
         return try {
-            val type: Type = token.type
-            val data: T? = Gson().fromJson<T>(json, type)
+            val data: T? = objectCreator.invoke(json)
             if (data != null) {
                 ResponseApi.Success(data)
             } else {
