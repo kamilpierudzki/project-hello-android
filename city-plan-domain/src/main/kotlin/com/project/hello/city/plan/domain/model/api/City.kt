@@ -10,4 +10,5 @@ internal enum class City(val file: Int) {
     LODZ(R.raw.lodz),
     GDANSK(R.raw.gdansk),
     SZCZECIN(R.raw.szczecin),
+    BYDGOSZCZ(R.raw.bydgoszcz),
 }
