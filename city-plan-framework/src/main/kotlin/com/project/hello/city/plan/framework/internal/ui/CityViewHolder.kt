@@ -6,10 +6,10 @@ import com.project.hello.city.plan.domain.model.CityPlan
 import com.project.hello.city.plan.framework.R
 import com.project.hello.city.plan.framework.databinding.CityItemBinding
 
-internal class CityPickerViewHolder(private val viewBinding: CityItemBinding) :
+internal class CityViewHolder(private val viewBinding: CityItemBinding) :
     RecyclerView.ViewHolder(viewBinding.root) {
 
-    fun setupView(city: City, selectionListener: () -> Unit) {
+    fun setupView(city: CityPickerRow.City, selectionListener: () -> Unit) {
         viewBinding.city.text = city.cityPlan.city
         viewBinding.lastUpdate.text = city.cityPlan.lastUpdateDate
         viewBinding.selected.visibility = if (city.selected) View.VISIBLE else View.GONE
@@ -19,7 +19,7 @@ internal class CityPickerViewHolder(private val viewBinding: CityItemBinding) :
         updateContentDescription(city)
     }
 
-    private fun updateContentDescription(city: City) {
+    private fun updateContentDescription(city: CityPickerRow.City) {
         val context = viewBinding.selected.context
         val cityName = city.cityPlan.city
         val lastUpdateValue = city.cityPlan.lastUpdateDate
@@ -34,5 +34,3 @@ internal class CityPickerViewHolder(private val viewBinding: CityItemBinding) :
         viewBinding.root.contentDescription = contentDescription
     }
 }
-
-internal data class City(val cityPlan: CityPlan, val selected: Boolean)

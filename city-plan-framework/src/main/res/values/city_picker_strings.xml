@@ -5,4 +5,7 @@
     <string name="city_selection_error">Error during selecting city.</string>
     <string name="city_picker_label">Select a city screen</string>
     <string name="city_item_last_update_label">Last update</string>
+    <string name="no_city">My city is not listed</string>
+    <string name="no_city_dialog_title"></string>
+    <string name="no_city_dialog_message">If you did not find your city on the list, you can write a comment in the Play Store and ask the author to add your city to the app.</string>
 </resources>

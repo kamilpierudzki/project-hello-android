@@ -16,8 +16,9 @@ import com.project.hello.commons.framework.viewmodel.ViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelType
 import com.project.hello.commons.framework.viewmodel.externalViewModels
 import com.project.hello.city.plan.framework.databinding.CityPickerFragmentBinding
-import com.project.hello.city.plan.framework.internal.ui.City
 import com.project.hello.city.plan.framework.internal.ui.CityPickerAdapter
+import com.project.hello.city.plan.framework.internal.ui.CityPickerRow
+import com.project.hello.commons.framework.ui.showInformationDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -52,9 +53,9 @@ class CityPickerFragment : Fragment() {
     lateinit var actionBarUpIndicatorVisibility: ActionBarUpIndicatorVisibility
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = CityPickerFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -68,6 +69,7 @@ class CityPickerFragment : Fragment() {
         observeProgress()
         observeSupportedCities()
         observeCitySelection()
+        observeInfoSelection()
         observeCurrentlySelectedCityEvent()
     }
 
@@ -97,6 +99,20 @@ class CityPickerFragment : Fragment() {
             isCitySelectionProcessing = true
             internalCityPickViewModel.selectCity(selectedCity)
         })
+    }
+
+    private fun observeInfoSelection() {
+        cityPickerAdapter.infoSelection.observe(viewLifecycleOwner, { infoSelectedEvent ->
+            showInfoDialog()
+        })
+    }
+
+    private fun showInfoDialog() {
+        showInformationDialog(
+                requireContext(),
+                R.string.no_city_dialog_title,
+                R.string.no_city_dialog_message
+        )
     }
 
     private fun observeProgress() {
@@ -155,7 +171,7 @@ class CityPickerFragment : Fragment() {
     private fun fetchingSupportedCitiesSucceeded(status: SupportedCitiesStatus.Success) {
         val currentlySelected: CityPlan? = cityPickViewModel.currentlySelectedCity
         val cities = status.supportedCities.map {
-            City(cityPlan = it, selected = currentlySelected?.city == it.city)
+            CityPickerRow.City(cityPlan = it, selected = currentlySelected?.city == it.city)
         }
         cityPickerAdapter.updateSupportedCities(cities)
     }

@@ -5,4 +5,7 @@
     <string name="city_selection_error">Błąd podczas wybierania miasta.</string>
     <string name="city_picker_label">Ekran wyboru miasta</string>
     <string name="city_item_last_update_label">Ostatnia aktualizacja</string>
+    <string name="no_city">Mojego miasta nie ma na liście</string>
+    <string name="no_city_dialog_title"></string>
+    <string name="no_city_dialog_message">Jeśli nie znalazłeś swojego miasta na liście, możesz napisać komentarz w sklepie Play i poprosić autora o dodanie twojego miasta do aplikacji.</string>
 </resources>
