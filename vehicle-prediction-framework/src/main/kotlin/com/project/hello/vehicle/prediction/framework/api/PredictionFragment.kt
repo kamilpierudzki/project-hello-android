@@ -25,12 +25,11 @@ import com.project.hello.commons.framework.viewmodel.externalViewModels
 import com.project.hello.country.api.ResourceCountryCharacters
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
-import com.project.hello.vehicle.prediction.framework.internal.FpsCounterWrapper
 import com.project.hello.vehicle.prediction.framework.internal.PredictionViewModel
 import com.project.hello.vehicle.prediction.framework.internal.PredictionViewModelInitialData
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis
+import com.project.hello.vehicle.prediction.framework.internal.fps.FpsCounterManager
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
-import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionLabelInfo
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -44,7 +43,7 @@ internal class PredictionFragment : Fragment() {
     lateinit var cameraAnalysis: CameraAnalysis
 
     @Inject
-    lateinit var fpsCounterWrapper: FpsCounterWrapper
+    lateinit var fpsCounterManager: FpsCounterManager
 
     @Inject
     lateinit var resourceCountryCharacters: ResourceCountryCharacters
@@ -130,7 +129,7 @@ internal class PredictionFragment : Fragment() {
 
     private fun observeNewFrameEvent() {
         predictionViewModel.newFrame.observe(viewLifecycleOwner, {
-            fpsCounterWrapper.newFrameProcessed(System.currentTimeMillis())
+            fpsCounterManager.newFrameProcessed(System.currentTimeMillis())
         })
     }
 
@@ -148,9 +147,7 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun observeFpsCounter() {
-        fpsCounterWrapper.currentValue.observe(viewLifecycleOwner, { fps ->
-            binding.fpsCounter.text = "$fps"
-        })
+        fpsCounterManager.observeFpsCounterUiChanges(viewLifecycleOwner, binding.fpsCounter)
     }
 
     private fun initRequestCameraPermissionLauncher() {
