@@ -59,8 +59,7 @@ internal class CameraAnalysis(private val fragment: Fragment) {
         }
 
     private fun createWorkerExecutor(): Executor {
-        val availableProcessors = Runtime.getRuntime().availableProcessors()
-        return Executors.newFixedThreadPool(min(2, availableProcessors))
+        return Executors.newSingleThreadExecutor()
     }
 
     private fun createPreviewTargetResolution(): Size = Size(1280, 720)
