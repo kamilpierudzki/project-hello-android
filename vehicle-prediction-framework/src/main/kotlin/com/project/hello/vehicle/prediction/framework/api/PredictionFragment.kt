@@ -30,6 +30,7 @@ import com.project.hello.vehicle.prediction.framework.internal.PredictionViewMod
 import com.project.hello.vehicle.prediction.framework.internal.PredictionViewModelInitialData
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
+import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionLabelInfo
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -80,7 +81,6 @@ internal class PredictionFragment : Fragment() {
         observeFpsCounter()
         observeNewFrameEvent()
         observePredictedNumber()
-        observePredictedConfidenceInfo()
         initRequestCameraPermissionLauncher()
         processPermissionLogic()
     }
@@ -136,20 +136,14 @@ internal class PredictionFragment : Fragment() {
 
     private fun observePredictedNumber() {
         predictionViewModel.predictedNumberLabel.observe(viewLifecycleOwner, { numberInfo ->
-            binding.predictedNumber.text = numberInfo.text.get(resources)
-            binding.predictedNumber.contentDescription =
-                numberInfo.contentDescription.get(resources)
-            numberInfo.announceForAccessibility?.get(resources)?.let {
-                binding.predictedNumber.announceForAccessibility(it)
+            val number = numberInfo.text
+            if (number != null) {
+                binding.predictedNumber.visibility = View.VISIBLE
+                binding.predictedNumber.text = number
+                binding.predictedNumber.announceForAccessibility(number)
+            } else {
+                binding.predictedNumber.visibility = View.GONE
             }
-        })
-    }
-
-    private fun observePredictedConfidenceInfo() {
-        predictionViewModel.predictedConfidenceInfo.observe(viewLifecycleOwner, { confidenceInfo ->
-            binding.predictionConfidence.text = confidenceInfo.text.get(resources)
-            binding.predictionConfidence.contentDescription =
-                confidenceInfo.contentDescription.get(resources)
         })
     }
 
