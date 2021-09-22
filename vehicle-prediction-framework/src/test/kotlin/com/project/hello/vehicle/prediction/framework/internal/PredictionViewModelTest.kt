@@ -225,8 +225,6 @@ internal class PredictionViewModelTest {
             tested.processRecognisedTexts(listOf("a"))
 
             // then
-            Assert.assertEquals(1, predictedNumberLabelEvents.size)
-            Assert.assertEquals(PredictionLabelInfo.EMPTY, predictedNumberLabelEvents[0])
-            Assert.assertEquals(null, predictedNumberLabelEvents[0].text)
+            Assert.assertEquals(0, predictedNumberLabelEvents.size)
         }
 }

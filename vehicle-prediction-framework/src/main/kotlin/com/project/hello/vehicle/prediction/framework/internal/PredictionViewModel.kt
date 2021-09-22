@@ -64,16 +64,23 @@ internal class PredictionViewModel @Inject constructor(
 
     private fun processBufferedLine(lineWithProbability: LineWithProbability?) {
         when (val predictedLineResult = getPredictedLineResult(lineWithProbability)) {
-            PredictedLineResult.Negative -> handleNegativeResultOfCurrentPrediction()
+            PredictedLineResult.Negative ->
+                handleNegativeResultOfCurrentPrediction()
             is PredictedLineResult.Positive ->
                 handlePositiveResultOfCurrentPrediction(predictedLineResult)
+            PredictedLineResult.ConfidenceTooLow ->
+                return
         }
         previousPrediction = lineWithProbability?.line
     }
 
     private fun getPredictedLineResult(lineWithProbability: LineWithProbability?): PredictedLineResult {
-        return if (lineWithProbability != null && isConfidenceSatisfying(lineWithProbability)) {
-            PredictedLineResult.Positive(lineWithProbability.line)
+        return if (lineWithProbability != null) {
+            if (isConfidenceSatisfying(lineWithProbability)) {
+                PredictedLineResult.Positive(lineWithProbability.line)
+            } else {
+                PredictedLineResult.ConfidenceTooLow
+            }
         } else {
             PredictedLineResult.Negative
         }
