@@ -206,4 +206,27 @@ internal class PredictionViewModelTest {
             // then
             Assert.assertEquals(0, predictedNumberLabelEvents.size)
         }
+
+    @Test
+    fun `given confidence level is 84 when processInput is called then events are sent accordingly`() =
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
+            val lineWithProbability = LineWithProbability(tram1, 84)
+            whenever(buffering.bufferedLine(any(), any()))
+                .thenReturn(lineWithProbability)
+
+            val predictedNumberLabelEvents = mutableListOf<PredictionLabelInfo>()
+            tested.predictedNumberLabel.observeForever { predictedNumberLabelEvents.add(it) }
+            tested.setInitialData(initialData)
+            predictedNumberLabelEvents.clear()
+
+            // when
+            tested.processRecognisedTexts(listOf("a"))
+
+            // then
+            Assert.assertEquals(1, predictedNumberLabelEvents.size)
+            Assert.assertEquals(PredictionLabelInfo.EMPTY, predictedNumberLabelEvents[0])
+            Assert.assertEquals(null, predictedNumberLabelEvents[0].text)
+        }
 }

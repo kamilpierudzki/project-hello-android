@@ -8,6 +8,7 @@ import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.commons.framework.hilt.DefaultDispatcher
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.Buffering
+import com.project.hello.vehicle.domain.analysis.LineWithProbability
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
 import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionLabelInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +16,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.util.concurrent.CopyOnWriteArrayList
 import javax.inject.Inject
+
+const val PREDICTION_CONFIDENCE_LEVEL_THRESHOLD = 85
 
 @HiltViewModel
 internal class PredictionViewModel @Inject constructor(
@@ -55,26 +58,29 @@ internal class PredictionViewModel @Inject constructor(
             .also { bufferedLine ->
                 predictionConsoleLogger.logBufferedLine(bufferedLine)
                 newFrame.postValue(Unit)
-                processBufferedLine(bufferedLine?.line)
+                processBufferedLine(bufferedLine)
             }
     }
 
-    private fun processBufferedLine(bufferedLine: Line?) {
-        when (val predictedLineResult = getPredictedLineResult(bufferedLine)) {
+    private fun processBufferedLine(lineWithProbability: LineWithProbability?) {
+        when (val predictedLineResult = getPredictedLineResult(lineWithProbability)) {
             PredictedLineResult.Negative -> handleNegativeResultOfCurrentPrediction()
             is PredictedLineResult.Positive ->
                 handlePositiveResultOfCurrentPrediction(predictedLineResult)
         }
-        previousPrediction = bufferedLine
+        previousPrediction = lineWithProbability?.line
     }
 
-    private fun getPredictedLineResult(bufferedLine: Line?): PredictedLineResult {
-        return if (bufferedLine != null) {
-            PredictedLineResult.Positive(bufferedLine)
+    private fun getPredictedLineResult(lineWithProbability: LineWithProbability?): PredictedLineResult {
+        return if (lineWithProbability != null && isConfidenceSatisfying(lineWithProbability)) {
+            PredictedLineResult.Positive(lineWithProbability.line)
         } else {
             PredictedLineResult.Negative
         }
     }
+
+    private fun isConfidenceSatisfying(lineWithProbability: LineWithProbability) =
+        lineWithProbability.probability >= PREDICTION_CONFIDENCE_LEVEL_THRESHOLD
 
     private fun handleNegativeResultOfCurrentPrediction() {
         predictedNumberLabel.postValue(PredictionLabelInfo.EMPTY)

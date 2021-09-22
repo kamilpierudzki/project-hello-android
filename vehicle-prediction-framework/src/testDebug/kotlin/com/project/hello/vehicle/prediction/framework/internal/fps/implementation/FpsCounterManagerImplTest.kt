@@ -1,27 +1,30 @@
-package com.project.hello.vehicle.prediction.framework.internal
+package com.project.hello.vehicle.prediction.framework.internal.fps.implementation
 
+import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import com.project.hello.vehicle.prediction.framework.internal.fps.implementation.FpsCounterManagerImpl
-import org.junit.Assert
+import com.project.hello.commons.framework.test.TestLifecycle
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 
-class FpsCounterManagerImplTest {
+internal class FpsCounterManagerImplTest {
 
     @get:Rule
     val liveDataRule = InstantTaskExecutorRule()
+
+    val lifecycleOwner = TestLifecycle.create()
 
     val tested = FpsCounterManagerImpl()
 
     @Test
     fun `test 1`() {
         // given
-        var counter = 0
-        tested.currentValue.observeForever { counter = it }
+        val label: TextView = mock()
+        tested.observeFpsCounterUiChanges(lifecycleOwner, label)
+        lifecycleOwner.start()
 
         // when
         tested.newFrameProcessed(1_000)
@@ -30,14 +33,15 @@ class FpsCounterManagerImplTest {
         tested.newFrameProcessed(2_000)
 
         // then
-        Assert.assertEquals(3, counter)
+        verify(label, times(2)).text = anyString()
     }
 
     @Test
     fun `test 2`() {
         // given
-        var counter = 0
-        tested.currentValue.observeForever { counter = it }
+        val label: TextView = mock()
+        tested.observeFpsCounterUiChanges(lifecycleOwner, label)
+        lifecycleOwner.start()
 
         // when
         tested.newFrameProcessed(1_000)
@@ -46,14 +50,15 @@ class FpsCounterManagerImplTest {
         tested.newFrameProcessed(2_500)
 
         // then
-        Assert.assertEquals(2, counter)
+        verify(label, times(2)).text = anyString()
     }
 
     @Test
     fun `test 3`() {
         // given
-        val observer: Observer<Int> = mock()
-        tested.currentValue.observeForever(observer)
+        val label: TextView = mock()
+        tested.observeFpsCounterUiChanges(lifecycleOwner, label)
+        lifecycleOwner.start()
 
         // when
         tested.newFrameProcessed(1_000)
@@ -62,14 +67,15 @@ class FpsCounterManagerImplTest {
         tested.newFrameProcessed(2_000)
 
         // then
-        verify(observer, times(1)).onChanged(3)
+        verify(label, times(1)).text = "3"
     }
 
     @Test
     fun `test 4`() {
         // given
-        val observer: Observer<Int> = mock()
-        tested.currentValue.observeForever(observer)
+        val label: TextView = mock()
+        tested.observeFpsCounterUiChanges(lifecycleOwner, label)
+        lifecycleOwner.start()
 
         // when
         tested.newFrameProcessed(1_000)
@@ -80,7 +86,7 @@ class FpsCounterManagerImplTest {
         tested.newFrameProcessed(3_000)
 
         // then
-        verify(observer, times(1)).onChanged(3)
-        verify(observer, times(1)).onChanged(2)
+        verify(label, times(1)).text = "3"
+        verify(label, times(1)).text = "2"
     }
 }
