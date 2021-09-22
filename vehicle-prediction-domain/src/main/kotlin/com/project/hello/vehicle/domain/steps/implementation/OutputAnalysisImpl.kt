@@ -46,27 +46,36 @@ class OutputAnalysisImpl : OutputAnalysis {
                 LineWithScore(line, score)
             }
 
-
-        val flattenLinesSortedByTotalSum: List<LineWithTotalSum> = flattenLinesSortedByScore
-            .map { lineWithScoreToSumUp: LineWithScore ->
-                LineWithTotalSum(
-                    lineWithScoreToSumUp.line,
-                    calculateTotalScoreForLine(lineWithScoreToSumUp.line, flattenLinesSortedByScore)
-                )
+        val aggregatedLinesWithTotalSum: List<LineWithScore> = flattenLinesSortedByScore
+            .groupBy { it.line }
+            .map {
+                it.key to it.value.reduce { acc, element ->
+                    LineWithScore(it.key, acc.score + element.score)
+                }
             }
-            .sortedByDescending { it.totalSum }
+            .toMap()
+            .entries
+            .map { it.value }
 
-        return flattenLinesSortedByTotalSum.firstOrNull()?.line
-    }
+        val sortedAggregatedLinesWithTotalSum: List<LineWithScore> =
+            aggregatedLinesWithTotalSum.sortedByDescending { it.score }
 
-    private fun calculateTotalScoreForLine(line: Line, linesWithScore: List<LineWithScore>): Int {
-        var sum = 0
-        linesWithScore.forEach { lineWithScore ->
-            if (line == lineWithScore.line) {
-                sum += lineWithScore.score
+        val lineWithTheHighestTotalSum: LineWithScore? =
+            sortedAggregatedLinesWithTotalSum.firstOrNull()
+
+        return if (lineWithTheHighestTotalSum != null) {
+            val thereAreMoreThanOneLine = sortedAggregatedLinesWithTotalSum.size > 1
+            val allPredictedLinesHaveTheSameScore = sortedAggregatedLinesWithTotalSum.all {
+                it.score == lineWithTheHighestTotalSum.score
             }
+            if (thereAreMoreThanOneLine && allPredictedLinesHaveTheSameScore) {
+                null
+            } else {
+                lineWithTheHighestTotalSum.line
+            }
+        } else {
+            null
         }
-        return sum
     }
 
     private fun getLineWithHighestLocalScore(input: List<LineWithAccuracyAndScore>): LineWithAccuracyAndScore {
@@ -99,11 +108,6 @@ class OutputAnalysisImpl : OutputAnalysis {
 }
 
 private data class LineWithScore(val line: Line, val score: Int)
-
-private data class LineWithTotalSum(
-    val line: Line,
-    val totalSum: Int
-)
 
 private data class LineWithAccuracyAndScore(
     val lineWithAccuracy: LineWithAccuracy,

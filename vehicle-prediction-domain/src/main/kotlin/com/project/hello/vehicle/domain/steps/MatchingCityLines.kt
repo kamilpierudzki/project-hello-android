@@ -11,14 +11,14 @@ interface MatchingCityLines {
 }
 
 data class LineWithAccuracy(
-    val inputChecked: String,
+    val debugInputChecked: String,
     val line: Line,
     val accuracyInfo: AccuracyInfo
 ) {
 
     val anyMatched = accuracyInfo.accuracyLevel != AccuracyLevel.NOT_MATCHED
 
-    override fun toString(): String = "$inputChecked, $line, $accuracyInfo"
+    override fun toString(): String = "$debugInputChecked, $line, $accuracyInfo"
 }
 
 data class AccuracyInfo(val accuracyLevel: AccuracyLevel, val percentage: Int)

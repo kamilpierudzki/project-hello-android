@@ -1,10 +1,15 @@
 package com.project.hello.vehicle.domain.steps.implementation
 
 import com.project.hello.city.plan.domain.model.Line
-import com.project.hello.vehicle.domain.steps.*
-import com.project.hello.vehicle.domain.steps.implementation.*
+import com.project.hello.vehicle.domain.steps.AccuracyInfo
+import com.project.hello.vehicle.domain.steps.AccuracyLevel
+import com.project.hello.vehicle.domain.steps.LineWithAccuracy
 import org.junit.Assert
 import org.junit.Test
+
+typealias LWA = LineWithAccuracy
+typealias AI = AccuracyInfo
+typealias AL = AccuracyLevel
 
 internal class OutputAnalysisImplTest {
 
@@ -14,26 +19,10 @@ internal class OutputAnalysisImplTest {
     fun `test 1`() {
         // given
         val input = listOf(
-            LineWithAccuracy(
-                "",
-                Line("12", "aaa"),
-                AccuracyInfo(AccuracyLevel.NUMBER_SLICE, 7)
-            ),
-            LineWithAccuracy(
-                "",
-                Line("16", "bbb"),
-                AccuracyInfo(AccuracyLevel.DESTINATION_MATCHED, 100)
-            ),
-            LineWithAccuracy(
-                "",
-                Line("169", "ccc"),
-                AccuracyInfo(AccuracyLevel.NUMBER_MATCHED, 66)
-            ),
-            LineWithAccuracy(
-                "",
-                Line("179", "ddd"),
-                AccuracyInfo(AccuracyLevel.DESTINATION_SLICE, 33)
-            )
+            LWA("", Line("12", "aaa"), AI(AL.NUMBER_SLICE, 7)),
+            LWA("", Line("16", "bbb"), AI(AL.DESTINATION_MATCHED, 100)),
+            LWA("", Line("169", "ccc"), AI(AL.NUMBER_MATCHED, 66)),
+            LWA("", Line("179", "ddd"), AI(AL.DESTINATION_SLICE, 33))
         )
 
         // when
@@ -47,30 +36,12 @@ internal class OutputAnalysisImplTest {
     fun `test 2`() {
         // given
         val input = listOf(
-            LineWithAccuracy(
-                "", Line("12", "aaa"),
-                AccuracyInfo(AccuracyLevel.NUMBER_SLICE, 50)
-            ),
-            LineWithAccuracy(
-                "", Line("16", "bbb"),
-                AccuracyInfo(AccuracyLevel.DESTINATION_MATCHED, 100)
-            ),
-            LineWithAccuracy(
-                "", Line("1", "eee"),
-                AccuracyInfo(AccuracyLevel.NUMBER_MATCHED, 30)
-            ),
-            LineWithAccuracy(
-                "", Line("169", "ccc"),
-                AccuracyInfo(AccuracyLevel.NUMBER_MATCHED, 20)
-            ),
-            LineWithAccuracy(
-                "", Line("179", "ddd"),
-                AccuracyInfo(AccuracyLevel.NUMBER_SLICE, 10)
-            ),
-            LineWithAccuracy(
-                "", Line("1", "eee"),
-                AccuracyInfo(AccuracyLevel.NUMBER_MATCHED, 100)
-            )
+            LWA("", Line("12", "aaa"), AI(AL.NUMBER_SLICE, 50)),
+            LWA("", Line("16", "bbb"), AI(AL.DESTINATION_MATCHED, 100)),
+            LWA("", Line("1", "eee"), AI(AL.NUMBER_MATCHED, 30)),
+            LWA("", Line("169", "ccc"), AI(AL.NUMBER_MATCHED, 20)),
+            LWA("", Line("179", "ddd"), AI(AL.NUMBER_SLICE, 10)),
+            LWA("", Line("1", "eee"), AI(AL.NUMBER_MATCHED, 100))
         )
 
         // when
@@ -84,22 +55,10 @@ internal class OutputAnalysisImplTest {
     fun `test 3`() {
         // given
         val input = listOf(
-            LineWithAccuracy(
-                "", Line("12", "aaa"),
-                AccuracyInfo(AccuracyLevel.NUMBER_SLICE, 10)
-            ),
-            LineWithAccuracy(
-                "", Line("179", "ddd"),
-                AccuracyInfo(AccuracyLevel.NUMBER_SLICE, 20)
-            ),
-            LineWithAccuracy(
-                "", Line("16", "bbb"),
-                AccuracyInfo(AccuracyLevel.DESTINATION_MATCHED, 100)
-            ),
-            LineWithAccuracy(
-                "", Line("1", "eee"),
-                AccuracyInfo(AccuracyLevel.NUMBER_MATCHED, 100)
-            ),
+            LWA("", Line("12", "aaa"), AI(AL.NUMBER_SLICE, 10)),
+            LWA("", Line("179", "ddd"), AI(AL.NUMBER_SLICE, 20)),
+            LWA("", Line("16", "bbb"), AI(AL.DESTINATION_MATCHED, 100)),
+            LWA("", Line("1", "eee"), AI(AL.NUMBER_MATCHED, 100)),
         )
 
         // when
@@ -113,30 +72,12 @@ internal class OutputAnalysisImplTest {
     fun `test 4`() {
         // given
         val input = listOf(
-            LineWithAccuracy(
-                "", Line("16", "bbb"),
-                AccuracyInfo(AccuracyLevel.DESTINATION_MATCHED, 100)
-            ),
-            LineWithAccuracy(
-                "", Line("16", "bbb"),
-                AccuracyInfo(AccuracyLevel.DESTINATION_MATCHED, 100)
-            ),
-            LineWithAccuracy(
-                "", Line("1", "eee"),
-                AccuracyInfo(AccuracyLevel.NUMBER_MATCHED, 100)
-            ),
-            LineWithAccuracy(
-                "", Line("16", "bbb"),
-                AccuracyInfo(AccuracyLevel.DESTINATION_MATCHED, 100)
-            ),
-            LineWithAccuracy(
-                "", Line("1", "bbb"),
-                AccuracyInfo(AccuracyLevel.NUMBER_MATCHED, 100)
-            ),
-            LineWithAccuracy(
-                "", Line("16", "bbb"),
-                AccuracyInfo(AccuracyLevel.DESTINATION_MATCHED, 100)
-            ),
+            LWA("", Line("16", "bbb"), AI(AL.DESTINATION_MATCHED, 100)),
+            LWA("", Line("16", "bbb"), AI(AL.DESTINATION_MATCHED, 100)),
+            LWA("", Line("1", "eee"), AI(AL.NUMBER_MATCHED, 100)),
+            LWA("", Line("16", "bbb"), AI(AL.DESTINATION_MATCHED, 100)),
+            LWA("", Line("1", "bbb"), AI(AL.NUMBER_MATCHED, 100)),
+            LWA("", Line("16", "bbb"), AI(AL.DESTINATION_MATCHED, 100)),
         )
 
         // when
@@ -150,18 +91,9 @@ internal class OutputAnalysisImplTest {
     fun `test 5`() {
         // given
         val input = listOf(
-            LineWithAccuracy(
-                "", Line("16", "a"),
-                AccuracyInfo(AccuracyLevel.NUMBER_SLICE, 99)
-            ),
-            LineWithAccuracy(
-                "", Line("169", "a"),
-                AccuracyInfo(AccuracyLevel.NUMBER_MATCHED, 100)
-            ),
-            LineWithAccuracy(
-                "", Line("1", "a"),
-                AccuracyInfo(AccuracyLevel.NUMBER_SLICE, 99)
-            )
+            LWA("", Line("16", "a"), AI(AL.NUMBER_SLICE, 99)),
+            LWA("", Line("169", "a"), AI(AL.NUMBER_MATCHED, 100)),
+            LWA("", Line("1", "a"), AI(AL.NUMBER_SLICE, 99))
         )
 
         //when

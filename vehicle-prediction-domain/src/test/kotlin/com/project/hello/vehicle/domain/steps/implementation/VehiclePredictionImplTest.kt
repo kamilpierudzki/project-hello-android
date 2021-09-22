@@ -313,4 +313,22 @@ internal class VehiclePredictionImplTest {
         Assert.assertEquals("3", predicted!!.number)
         Assert.assertEquals("Włodarska", predicted.destination)
     }
+
+    @Test
+    fun `test 19`() {
+        // given
+        val lines = listOf(
+            Line("12", "os.sobieskiego"),
+            Line("16", "os.sobieskiego"),
+            Line("169", "os.sobieskiego"),
+            Line("174", "os.sobieskiego"),
+        )
+        val rawInput = "sobie"
+
+        // when
+        val predicted = tested.mostProbableLine(rawInput, lines)
+
+        // then
+        Assert.assertEquals(null, predicted)
+    }
 }
