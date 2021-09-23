@@ -17,4 +17,5 @@ internal enum class City(val file: Int) {
     CZESTOCHOWA(R.raw.czestochowa),
     OLSZTYN(R.raw.olsztyn),
     GORNOSLASKO_ZAGLEBOWSKA_METROPOLIA(R.raw.gzm),
+    KOLOBRZEG(R.raw.kolobrzeg),
 }
