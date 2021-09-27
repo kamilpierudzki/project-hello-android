@@ -10,34 +10,33 @@ class BufferingImpl : Buffering {
 
     private val memory: MutableList<LineWithBufferedInfo> = mutableListOf()
 
+    @Synchronized
     override fun bufferedLine(
         currentTimeInMillis: Long,
         newPrediction: Line?
     ): LineWithProbability? {
-        removeExpiredElementsFromMemorySynchronized(currentTimeInMillis)
+        removeExpiredElementsFromMemory(currentTimeInMillis)
         if (newPrediction != null) {
-            saveNewElementInMemorySynchronised(newPrediction, currentTimeInMillis)
+            saveNewElementInMemory(newPrediction, currentTimeInMillis)
         }
         return calculatedResultWithProbability()
     }
 
     private fun calculatedResultWithProbability(): LineWithProbability? {
-        synchronized(this) {
-            val linesWithShare = linesWithShare()
-            val indexesOfDuplicatedElements = indexesOfDuplicatedElements()
-            val reducedLinesWithShare = reducedLinesWithShare(
-                indexesOfDuplicatedElements,
-                linesWithShare
-            )
+        val linesWithShare = linesWithShare()
+        val indexesOfDuplicatedElements = indexesOfDuplicatedElements()
+        val reducedLinesWithShare = reducedLinesWithShare(
+            indexesOfDuplicatedElements,
+            linesWithShare
+        )
 
-            val allConditionsMet =
-                thereAreMoreThanOneElement(reducedLinesWithShare) &&
-                        allElementHaveTheSameValue(reducedLinesWithShare)
-            return if (allConditionsMet) {
-                null
-            } else {
-                sortedReducedLineWithProbability(reducedLinesWithShare)
-            }
+        val allConditionsMet =
+            thereAreMoreThanOneElement(reducedLinesWithShare) &&
+                    allElementHaveTheSameValue(reducedLinesWithShare)
+        return if (allConditionsMet) {
+            null
+        } else {
+            sortedReducedLineWithProbability(reducedLinesWithShare)
         }
     }
 
@@ -104,21 +103,17 @@ class BufferingImpl : Buffering {
         return indexes
     }
 
-    private fun saveNewElementInMemorySynchronised(line: Line, insertionTimestampInMillis: Long) {
-        synchronized(this) {
-            val newElement = LineWithBufferedInfo(line, insertionTimestampInMillis)
-            memory.add(newElement)
-        }
+    private fun saveNewElementInMemory(line: Line, insertionTimestampInMillis: Long) {
+        val newElement = LineWithBufferedInfo(line, insertionTimestampInMillis)
+        memory.add(newElement)
     }
 
-    private fun removeExpiredElementsFromMemorySynchronized(currentTimeInMillis: Long) {
-        synchronized(this) {
-            val iterator = memory.iterator()
-            while (iterator.hasNext()) {
-                val line = iterator.next()
-                if (isMemoryExpiredNew(currentTimeInMillis, line.insertionTimestampInMillis)) {
-                    iterator.remove()
-                }
+    private fun removeExpiredElementsFromMemory(currentTimeInMillis: Long) {
+        val iterator = memory.iterator()
+        while (iterator.hasNext()) {
+            val line = iterator.next()
+            if (isMemoryExpiredNew(currentTimeInMillis, line.insertionTimestampInMillis)) {
+                iterator.remove()
             }
         }
     }
