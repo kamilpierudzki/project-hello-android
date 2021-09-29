@@ -10,13 +10,18 @@ class MatchingCityLinesImpl(
 
     override fun cityLinesMatchedBasedOnInput(
         input: List<String>,
-        cityLines: List<Line>
+        cityLines: List<Line>,
+        timeoutChecker: TimeoutChecker
     ): List<LineWithAccuracy> {
         val inputsForWhichThereIsAnyMatch = mutableListOf<String>()
         return input
             .map { text ->
                 cityLines
                     .map { cityLine ->
+                        val isTimeout = timeoutChecker.isTimeout()
+                        if (isTimeout) {
+                            return emptyList()
+                        }
                         transformedInput(text, cityLine, inputsForWhichThereIsAnyMatch)
                     }
                     .filter { lineWithAccuracy -> lineWithAccuracy.anyMatched }

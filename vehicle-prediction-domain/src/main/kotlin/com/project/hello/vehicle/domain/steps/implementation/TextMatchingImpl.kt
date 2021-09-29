@@ -11,8 +11,7 @@ class TextMatchingImpl(
 
     override fun isNumberMatching(input: String, cityLine: Line): TextMatchingResult {
         val transformedNumber = universalTransformation.transformedText(cityLine.number)
-        val transformedInput = universalTransformation.transformedText(input)
-        val isMatching = transformedNumber == transformedInput
+        val isMatching = transformedNumber.equals(input, ignoreCase = true)
         return if (isMatching && input.isNotBlank()) {
             TextMatchingResult.Positive(100)
         } else {
@@ -33,8 +32,7 @@ class TextMatchingImpl(
 
     override fun isDestinationMatching(input: String, cityLine: Line): TextMatchingResult {
         val transformedDestination = universalTransformation.transformedText(cityLine.destination)
-        val transformedInput = universalTransformation.transformedText(input)
-        val isMatching = transformedDestination == transformedInput
+        val isMatching = transformedDestination.equals(input, ignoreCase = true)
         return if (isMatching && input.isNotBlank()) {
             TextMatchingResult.Positive(100)
         } else {
@@ -55,10 +53,9 @@ class TextMatchingImpl(
 
     private fun isNumberContainingInput(input: String, cityLine: Line): TextMatchingResult {
         val transformedNumber = universalTransformation.transformedText(cityLine.number)
-        val transformedInput = universalTransformation.transformedText(input)
-        val isContaining = transformedNumber.contains(transformedInput)
+        val isContaining = transformedNumber.contains(input, ignoreCase = true)
         return if (isContaining && input.isNotBlank()) {
-            val percentage = calculatePercentage(transformedNumber, transformedInput)
+            val percentage = calculatePercentage(transformedNumber, input)
             TextMatchingResult.Positive(percentage)
         } else {
             TextMatchingResult.Negative
@@ -66,11 +63,10 @@ class TextMatchingImpl(
     }
 
     private fun isInputContainingNumber(input: String, cityLine: Line): TextMatchingResult {
-        val transformedInput = universalTransformation.transformedText(input)
         val transformedNumber = universalTransformation.transformedText(cityLine.number)
-        val isContaining = transformedInput.contains(transformedNumber)
+        val isContaining = input.contains(transformedNumber, ignoreCase = true)
         return if (isContaining && input.isNotBlank()) {
-            val percentage = calculatePercentage(transformedInput, transformedNumber)
+            val percentage = calculatePercentage(input, transformedNumber)
             TextMatchingResult.Positive(percentage)
         } else {
             TextMatchingResult.Negative
@@ -82,10 +78,9 @@ class TextMatchingImpl(
 
     private fun isDestinationContainingInput(input: String, cityLine: Line): TextMatchingResult {
         val transformedDestination = universalTransformation.transformedText(cityLine.destination)
-        val transformedInput = universalTransformation.transformedText(input)
-        val isContaining = transformedDestination.contains(transformedInput)
+        val isContaining = transformedDestination.contains(input, ignoreCase = true)
         return if (isContaining && input.isNotBlank()) {
-            val percentage = calculatePercentage(transformedDestination, transformedInput)
+            val percentage = calculatePercentage(transformedDestination, input)
             TextMatchingResult.Positive(percentage)
         } else {
             TextMatchingResult.Negative
@@ -93,11 +88,10 @@ class TextMatchingImpl(
     }
 
     private fun isInputContainingDestination(input: String, cityLine: Line): TextMatchingResult {
-        val transformedInput = universalTransformation.transformedText(input)
         val transformedDestination = universalTransformation.transformedText(cityLine.destination)
-        val isContaining = transformedInput.contains(transformedDestination)
+        val isContaining = input.contains(transformedDestination, ignoreCase = true)
         return if (isContaining && input.isNotBlank()) {
-            val percentage = calculatePercentage(transformedInput, transformedDestination)
+            val percentage = calculatePercentage(input, transformedDestination)
             TextMatchingResult.Positive(percentage)
         } else {
             TextMatchingResult.Negative

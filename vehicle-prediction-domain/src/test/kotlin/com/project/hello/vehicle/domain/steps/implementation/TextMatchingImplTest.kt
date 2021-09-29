@@ -49,7 +49,7 @@ internal class TextMatchingImplTest {
     @Test
     fun `test 4`() {
         // when
-        val result = tested.isDestinationMatching("aąa", Line("1", "aąa"))
+        val result = tested.isDestinationMatching("aaa", Line("1", "aąa"))
 
         // then
         Assert.assertEquals(true, result.isPositive)
@@ -58,7 +58,7 @@ internal class TextMatchingImplTest {
     @Test
     fun `test 5`() {
         // when
-        val result = tested.isDestinationMatching("ąąą", Line("1", "ąąą"))
+        val result = tested.isDestinationMatching("aaa", Line("1", "ąąą"))
 
         // then
         Assert.assertEquals(true, result.isPositive)
@@ -76,7 +76,7 @@ internal class TextMatchingImplTest {
     @Test
     fun `test 7`() {
         // when
-        val result = tested.isDestinationMatching("ąąą", Line("1", "aaa"))
+        val result = tested.isDestinationMatching("aaa", Line("1", "AAA"))
 
         // then
         Assert.assertEquals(true, result.isPositive)
@@ -145,7 +145,7 @@ internal class TextMatchingImplTest {
         val line = Line("16", "Os. Sobieskiego")
 
         // when
-        val result = tested.isNumberSliceMatching("160s. Scbieskiego", line)
+        val result = tested.isNumberSliceMatching("160sScbieskiego", line)
 
         // then
         Assert.assertEquals(true, result.isPositive)

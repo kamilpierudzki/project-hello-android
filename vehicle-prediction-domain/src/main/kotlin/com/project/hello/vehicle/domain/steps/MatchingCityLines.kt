@@ -6,7 +6,8 @@ interface MatchingCityLines {
 
     fun cityLinesMatchedBasedOnInput(
         input: List<String>,
-        cityLines: List<Line>
+        cityLines: List<Line>,
+        timeoutChecker: TimeoutChecker
     ): List<LineWithAccuracy>
 }
 

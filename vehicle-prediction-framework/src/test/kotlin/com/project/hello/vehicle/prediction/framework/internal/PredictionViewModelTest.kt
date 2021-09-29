@@ -78,7 +78,7 @@ internal class PredictionViewModelTest {
 
             //  then
             argumentCaptor<List<Line>> {
-                verify(vehiclePrediction).mostProbableLine(any(), capture())
+                verify(vehiclePrediction).predictLine(any(), capture())
                 val cityLines: List<Line> = firstValue
                 Assert.assertEquals(4, cityLines.size)
                 Assert.assertEquals(cityLines[0].number, "T1")
@@ -98,7 +98,7 @@ internal class PredictionViewModelTest {
             tested.processRecognisedTexts(listOf("a"))
 
             // then
-            verify(vehiclePrediction).mostProbableLine(any(), any())
+            verify(vehiclePrediction).predictLine(any(), any())
         }
 
     @Test
@@ -118,7 +118,7 @@ internal class PredictionViewModelTest {
     fun `given observing predictedNumberLabel, previousPrediction is NULL and bufferedLine is NULL when processInput is called then events are sent accordingly`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(null)
+            whenever(vehiclePrediction.predictLine(any(), any())).thenReturn(null)
             whenever(buffering.bufferedLine(any(), any())).thenReturn(null)
 
             val predictedNumberLabelEvents = mutableListOf<PredictionLabelInfo>()
@@ -138,7 +138,7 @@ internal class PredictionViewModelTest {
     fun `given observing predictedNumberLabel, previousPrediction is NULL and bufferedLine is NOT NULL when processInput is called then events are sent accordingly`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
+            whenever(vehiclePrediction.predictLine(any(), any())).thenReturn(tram1)
             val lineWithProbability = LineWithProbability(tram1, 99)
             whenever(buffering.bufferedLine(any(), any()))
                 .thenReturn(lineWithProbability)
@@ -160,7 +160,7 @@ internal class PredictionViewModelTest {
     fun `given observing predictedNumberLabel, previousPrediction is NOT NULL and bufferedLine is NULL when processInput is called then events are sent accordingly`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
+            whenever(vehiclePrediction.predictLine(any(), any())).thenReturn(tram1)
             val lineWithProbability = LineWithProbability(tram1, 99)
             whenever(buffering.bufferedLine(any(), any()))
                 .thenReturn(lineWithProbability)
@@ -187,7 +187,7 @@ internal class PredictionViewModelTest {
     fun `given observing predictedNumberLabel, previousPrediction is NOT NULL and bufferedLine is NOT NULL when processInput is called then events are sent accordingly`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
+            whenever(vehiclePrediction.predictLine(any(), any())).thenReturn(tram1)
             val lineWithProbability = LineWithProbability(tram1, 99)
             whenever(buffering.bufferedLine(any(), any()))
                 .thenReturn(lineWithProbability)
@@ -211,7 +211,7 @@ internal class PredictionViewModelTest {
     fun `given confidence level is 84 when processInput is called then events are sent accordingly`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(vehiclePrediction.mostProbableLine(any(), any())).thenReturn(tram1)
+            whenever(vehiclePrediction.predictLine(any(), any())).thenReturn(tram1)
             val lineWithProbability = LineWithProbability(tram1, 84)
             whenever(buffering.bufferedLine(any(), any()))
                 .thenReturn(lineWithProbability)

@@ -10,6 +10,8 @@ import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.analysis.LineWithProbability
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
+import com.project.hello.vehicle.prediction.framework.internal.timeoutchecker.DebugTimeoutCheckerImpl
+import com.project.hello.vehicle.prediction.framework.internal.timeoutchecker.TimeoutCheckerImpl
 import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionLabelInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -50,7 +52,9 @@ internal class PredictionViewModel @Inject constructor(
     }
 
     private fun processInput(input: String) {
-        val predictedLine = vehiclePrediction.mostProbableLine(input, cityLines)
+        val debug = false
+        val timeoutChecker = if (debug) DebugTimeoutCheckerImpl() else TimeoutCheckerImpl()
+        val predictedLine = vehiclePrediction.predictLine(input, cityLines, timeoutChecker)
         predictionConsoleLogger.logPredictedLine(predictedLine)
 
         val currentTimeInMillis = System.currentTimeMillis()
