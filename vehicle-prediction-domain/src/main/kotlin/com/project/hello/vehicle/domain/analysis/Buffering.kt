@@ -7,16 +7,16 @@ interface Buffering {
     fun bufferedLine(
         currentTimeInMillis: Long,
         newPrediction: Line?
-    ): LineWithProbability?
+    ): LineWithShare?
 }
 
-data class LineWithProbability(
+data class LineWithShare(
     val line: Line,
-    val probability: Int
+    val share: Int
 ) {
     init {
-        if (probability > 100 || probability < 0) {
-            throw IllegalStateException("probability value cannot be greater than 100 or less than 0. Current value $probability")
+        if (share > 100 || share < 0) {
+            throw IllegalStateException("Share value cannot be greater than 100 or less than 0. Current value $share")
         }
     }
 }

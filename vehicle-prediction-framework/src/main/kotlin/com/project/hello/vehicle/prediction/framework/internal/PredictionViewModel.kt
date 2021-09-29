@@ -8,7 +8,7 @@ import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.commons.framework.hilt.DefaultDispatcher
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.Buffering
-import com.project.hello.vehicle.domain.analysis.LineWithProbability
+import com.project.hello.vehicle.domain.analysis.LineWithShare
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
 import com.project.hello.vehicle.prediction.framework.internal.timeoutchecker.TimeoutCheckerFactory
 import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionLabelInfo
@@ -65,7 +65,7 @@ internal class PredictionViewModel @Inject constructor(
             }
     }
 
-    private fun processBufferedLine(lineWithProbability: LineWithProbability?) {
+    private fun processBufferedLine(lineWithProbability: LineWithShare?) {
         when (val predictedLineResult = getPredictedLineResult(lineWithProbability)) {
             PredictedLineResult.Negative ->
                 handleNegativeResultOfCurrentPrediction()
@@ -77,7 +77,7 @@ internal class PredictionViewModel @Inject constructor(
         previousPrediction = lineWithProbability?.line
     }
 
-    private fun getPredictedLineResult(lineWithProbability: LineWithProbability?): PredictedLineResult {
+    private fun getPredictedLineResult(lineWithProbability: LineWithShare?): PredictedLineResult {
         return if (lineWithProbability != null) {
             if (isConfidenceSatisfying(lineWithProbability)) {
                 PredictedLineResult.Positive(lineWithProbability.line)
@@ -89,8 +89,8 @@ internal class PredictionViewModel @Inject constructor(
         }
     }
 
-    private fun isConfidenceSatisfying(lineWithProbability: LineWithProbability) =
-        lineWithProbability.probability >= PREDICTION_CONFIDENCE_LEVEL_THRESHOLD
+    private fun isConfidenceSatisfying(lineWithProbability: LineWithShare) =
+        lineWithProbability.share >= PREDICTION_CONFIDENCE_LEVEL_THRESHOLD
 
     private fun handleNegativeResultOfCurrentPrediction() {
         predictedNumberLabel.postValue(PredictionLabelInfo.EMPTY)

@@ -1,8 +1,8 @@
 package com.project.hello.vehicle.domain.analysis.implementation
 
 import com.project.hello.city.plan.domain.model.Line
-import com.project.hello.vehicle.domain.analysis.LineWithProbability
 import com.project.hello.vehicle.domain.analysis.Buffering
+import com.project.hello.vehicle.domain.analysis.LineWithShare
 
 private const val LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS = 2_000L
 
@@ -10,97 +10,55 @@ class BufferingImpl : Buffering {
 
     private val memory: MutableList<LineWithBufferedInfo> = mutableListOf()
 
-    @Synchronized
     override fun bufferedLine(
         currentTimeInMillis: Long,
         newPrediction: Line?
-    ): LineWithProbability? {
-        removeExpiredElementsFromMemory(currentTimeInMillis)
-        if (newPrediction != null) {
-            saveNewElementInMemory(newPrediction, currentTimeInMillis)
-        }
-        return calculatedResultWithProbability()
-    }
-
-    private fun calculatedResultWithProbability(): LineWithProbability? {
-        val linesWithShare = linesWithShare()
-        val indexesOfDuplicatedElements = indexesOfDuplicatedElements()
-        val reducedLinesWithShare = reducedLinesWithShare(
-            indexesOfDuplicatedElements,
-            linesWithShare
-        )
-
-        val allConditionsMet =
-            thereAreMoreThanOneElement(reducedLinesWithShare) &&
-                    allElementHaveTheSameValue(reducedLinesWithShare)
-        return if (allConditionsMet) {
-            null
-        } else {
-            sortedReducedLineWithProbability(reducedLinesWithShare)
+    ): LineWithShare? {
+        synchronized(this) {
+            removeExpiredElementsFromMemory(currentTimeInMillis)
+            if (newPrediction != null) {
+                saveNewElementInMemory(newPrediction, currentTimeInMillis)
+            }
+            return calculatedResultWithProbability()
         }
     }
 
-    private fun linesWithShare(): List<LineWithBufferedInfoAndShare> {
-        val totalMemoryCapacity = memory.size
-        val percentageShareOfEachElement = (100f / totalMemoryCapacity).toInt()
-        return memory
-            .map { line -> LineWithBufferedInfoAndShare(line, percentageShareOfEachElement) }
-    }
-
-    private fun indexesOfDuplicatedElements(): List<LineWithBufferedInfoAndIndexes> =
-        memory.map { line -> LineWithBufferedInfoAndIndexes(line, indexesFound(line)) }
-
-    private fun reducedLinesWithShare(
-        indexesOfDuplicatedElements: List<LineWithBufferedInfoAndIndexes>,
-        linesWithShare: List<LineWithBufferedInfoAndShare>
-    ): Map<Line, Int> {
-        val reducedLinesWithShare = mutableMapOf<Line, Int>()
-        indexesOfDuplicatedElements
-            .forEach { element ->
-                val lineWithBufferedInfo = element.lineWithBufferedInfo
-                val indexes = element.indexes
-                var totalSumOfShareForElement = 0
-                indexes.forEach { index ->
-                    linesWithShare.getOrElse(index) { null }?.let { lineWithShare ->
-                        totalSumOfShareForElement += lineWithShare.share
-                    }
+    private fun calculatedResultWithProbability(): LineWithShare? {
+        val groupedLinesWithTotalShare: Map<Line, Int> =
+            memory
+                .map { it.line }
+                .map { line ->
+                    val occurrenceInMemory = memory.count { line == it.line }
+                    val shareOfEachLineInMemory = (100f / memory.size).toInt()
+                    val totalShareOfLine = occurrenceInMemory * shareOfEachLineInMemory
+                    line to totalShareOfLine
                 }
-                reducedLinesWithShare[lineWithBufferedInfo.line] =
-                    reducedLinesWithShare.getOrElse(lineWithBufferedInfo.line) { 0 } + totalSumOfShareForElement
-            }
-        return reducedLinesWithShare
-    }
+                .toMap()
 
-    private fun thereAreMoreThanOneElement(reducedLinesWithShare: Map<Line, Int>): Boolean =
-        reducedLinesWithShare.size > 1
-
-    private fun allElementHaveTheSameValue(reducedLinesWithShare: Map<Line, Int>): Boolean =
-        reducedLinesWithShare.entries.run {
-            val shareOfFirstElement = firstOrNull()?.value
-            all { it.value == shareOfFirstElement }
-        }
-
-    private fun sortedReducedLineWithProbability(
-        reducedLinesWithShare: Map<Line, Int>
-    ): LineWithProbability? =
-        reducedLinesWithShare
-            .entries
-            .sortedByDescending { it.value }
+        val aggregatedLinesWithTotalShare: List<LineWithShare> = groupedLinesWithTotalShare
             .map {
-                val line = it.key
-                val probability = it.value
-                LineWithProbability(line, probability)
+                LineWithShare(it.key, it.value)
             }
-            .firstOrNull()
 
-    private fun indexesFound(line: LineWithBufferedInfo): List<Int> {
-        val indexes = mutableListOf<Int>()
-        memory.forEachIndexed { index, filteredLine ->
-            if (line == filteredLine) {
-                indexes.add(index)
+        val sortedAggregatedLinesWithTotalShare: List<LineWithShare> =
+            aggregatedLinesWithTotalShare.sortedByDescending { it.share }
+
+        val lineWithTheHighestTotalShare: LineWithShare? =
+            sortedAggregatedLinesWithTotalShare.firstOrNull()
+
+        return if (lineWithTheHighestTotalShare != null) {
+            val thereAreMoreThanOneLine = sortedAggregatedLinesWithTotalShare.size > 1
+            val allPredictedLinesHaveTheSameScore = sortedAggregatedLinesWithTotalShare.all {
+                it.share == lineWithTheHighestTotalShare.share
             }
+            if (thereAreMoreThanOneLine && allPredictedLinesHaveTheSameScore) {
+                null
+            } else {
+                lineWithTheHighestTotalShare
+            }
+        } else {
+            null
         }
-        return indexes
     }
 
     private fun saveNewElementInMemory(line: Line, insertionTimestampInMillis: Long) {
@@ -124,16 +82,6 @@ class BufferingImpl : Buffering {
     ): Boolean =
         (currentTimeInMillis - lineFromMemoryTimestampInMillis) >= LIFETIME_ELEMENT_IN_MEMORY_IN_MILLIS
 }
-
-private data class LineWithBufferedInfoAndShare(
-    val lineWithBufferedInfo: LineWithBufferedInfo,
-    val share: Int
-)
-
-private data class LineWithBufferedInfoAndIndexes(
-    val lineWithBufferedInfo: LineWithBufferedInfo,
-    val indexes: List<Int>
-)
 
 private data class LineWithBufferedInfo(
     val line: Line,

@@ -83,4 +83,35 @@ internal class BufferingImplTest {
         Assert.assertEquals("1", buffered2!!.line.number)
         Assert.assertEquals(null, buffered3)
     }
+
+    @Test
+    fun `test 4`() {
+        // given
+        val line0 = Line("0", "A")
+
+        // when
+        // 1st cycle
+        val buffered0 = tested.bufferedLine(0, line0)
+        val buffered1 = tested.bufferedLine(0, line0)
+
+        // then
+        Assert.assertEquals("0", buffered0!!.line.number)
+        Assert.assertEquals("0", buffered1!!.line.number)
+    }
+
+    @Test
+    fun `test 5`() {
+        // given
+        val line0 = Line("16", "Os. Sobieskiego")
+
+        // when
+        val buffered0 = tested.bufferedLine(1632951714824, line0)
+        val buffered1 = tested.bufferedLine(1632951714888, line0)
+        val buffered2 = tested.bufferedLine(1632951715026, line0)
+
+        // then
+        Assert.assertEquals("16", buffered0!!.line.number)
+        Assert.assertEquals("16", buffered1!!.line.number)
+        Assert.assertEquals("16", buffered2!!.line.number)
+    }
 }
