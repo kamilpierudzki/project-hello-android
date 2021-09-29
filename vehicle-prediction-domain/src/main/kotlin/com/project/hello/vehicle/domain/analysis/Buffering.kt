@@ -16,7 +16,7 @@ data class LineWithProbability(
 ) {
     init {
         if (probability > 100 || probability < 0) {
-            throw IllegalStateException("probability value cannot be greater than 100 or less than 0")
+            throw IllegalStateException("probability value cannot be greater than 100 or less than 0. Current value $probability")
         }
     }
 }
