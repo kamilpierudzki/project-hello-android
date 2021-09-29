@@ -2,7 +2,7 @@ package com.project.hello.vehicle.prediction.framework.internal.timeoutchecker
 
 import com.project.hello.vehicle.domain.steps.TimeoutChecker
 
-private const val TIMEOUT_IN_MILLIS = 5_000
+private const val TIMEOUT_IN_MILLIS = 3_500
 
 internal class TimeoutCheckerImpl: TimeoutChecker {
 

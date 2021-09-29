@@ -5,6 +5,7 @@ import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.analysis.implementation.BufferingImpl
 import com.project.hello.vehicle.domain.steps.*
 import com.project.hello.vehicle.domain.steps.implementation.*
+import com.project.hello.vehicle.prediction.framework.internal.timeoutchecker.TimeoutCheckerFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -79,5 +80,8 @@ internal abstract class VehiclePredictionViewModelModule {
                 outputAnalysis,
                 universalTransformation
             )
+
+        @Provides
+        fun provideTimeoutCheckerFactory() = TimeoutCheckerFactory(false)
     }
 }
