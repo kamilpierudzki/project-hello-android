@@ -1,7 +1,7 @@
 {
   "city": "Górnośląsko-Zagłębowska Metropolia",
-  "lastUpdateTimestampInMillis": 1632862505,
-  "humanReadableLastUpdateTimestamp": "28-09-2021",
+  "lastUpdateTimestampInMillis": 1632951690,
+  "humanReadableLastUpdateTimestamp": "29-09-2021",
   "appVersion": 1,
   "trams": [
     {
@@ -2452,11 +2452,11 @@
     },
     {
       "number": "648",
-      "destination": "Knurów Dworcowa"
+      "destination": "Gliwice Zajezdnia"
     },
     {
       "number": "648",
-      "destination": "Gliwice Zajezdnia"
+      "destination": "Knurów Dworcowa"
     },
     {
       "number": "650",
@@ -3453,6 +3453,14 @@
     {
       "number": "926",
       "destination": "Mysłowice Poczta"
+    },
+    {
+      "number": "T-1",
+      "destination": "Zabrze Brysza"
+    },
+    {
+      "number": "T-1",
+      "destination": "Zaborze Pętla"
     },
     {
       "number": "T-11",
