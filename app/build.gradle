@@ -69,7 +69,7 @@ dependencies {
 
     implementation project(path: ':top-level-resources-framework')
     implementation project(path: ':commons-framework')
-    implementation project(path: ':city-plan-framework')
+    implementation project(path: ':transit-agency-framework')
     implementation project(path: ':vehicle-prediction-framework')
     implementation project(path: ':country-resources-framework')
     implementation project(path: ':settings-framework')

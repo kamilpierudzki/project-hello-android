@@ -38,7 +38,7 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
 
     implementation project(path: ':commons-framework')
-    implementation project(path: ':city-plan-framework')
+    implementation project(path: ':transit-agency-framework')
     implementation project(path: ':transit-agency-domain')
     implementation project(path: ':welcome-framework')
 }

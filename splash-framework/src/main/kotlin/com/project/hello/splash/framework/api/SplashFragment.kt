@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.project.hello.city.plan.framework.api.TransitAgencyPickViewModel
-import com.project.hello.city.plan.framework.api.TransitAgencySelection
+import com.project.hello.transit.agency.framework.api.TransitAgencyPickViewModel
+import com.project.hello.transit.agency.framework.api.TransitAgencySelection
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelType

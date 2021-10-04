@@ -56,7 +56,7 @@ dependencies {
     implementation project(path: ':transit-agency-domain')
 
     implementation project(path: ':commons-framework')
-    implementation project(path: ':city-plan-framework')
+    implementation project(path: ':transit-agency-framework')
     implementation project(path: ':country-resources-framework')
     implementation project(path: ':settings-framework')
 }

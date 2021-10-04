@@ -7,7 +7,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.project.hello.transit.agency.domain.VehicleType
-import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable
+import com.project.hello.transit.agency.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.commons.framework.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hello.commons.framework.ui.showInformationDialog
 import com.project.hello.vehicle.prediction.framework.R
