@@ -2,14 +2,16 @@ package com.project.hello.city.plan.framework.hilt
 
 import android.content.res.Resources
 import com.project.hello.city.plan.domain.datasource.SelectedTransitAgencyDataSource
-import com.project.hello.city.plan.domain.datasource.TransitAgencyDataSource
-import com.project.hello.city.plan.domain.repository.TransitAgencyPlanRepository
-import com.project.hello.city.plan.domain.repository.implementation.TransitAgencyPlanRepositoryImpl
+import com.project.hello.city.plan.domain.datasource.SupportedTransitAgenciesDataSource
 import com.project.hello.city.plan.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
 import com.project.hello.city.plan.domain.usecase.SupportedTransitAgenciesUseCaseErrorMapper
-import com.project.hello.city.plan.framework.internal.datasource.RawResourcesTransitAgencyDataSourceImpl
 import com.project.hello.city.plan.framework.internal.datasource.db.DataBaseSelectedTransitAgency
+import com.project.hello.city.plan.framework.internal.datasource.resources.TransitAgencyDataSource
+import com.project.hello.city.plan.framework.internal.datasource.resources.implementation.RawResourcesSupportedTransitAgenciesDataSourceImpl
+import com.project.hello.city.plan.framework.internal.datasource.resources.implementation.RawResourcesTransitAgencyDataSourceImpl
 import com.project.hello.city.plan.framework.internal.db.TransitAgencyDatabase
+import com.project.hello.city.plan.framework.internal.repository.TransitAgencyPlanRepository
+import com.project.hello.city.plan.framework.internal.repository.implementation.TransitAgencyPlanRepositoryImpl
 import com.project.hello.city.plan.framework.internal.usecase.*
 import com.project.hello.city.plan.framework.internal.usecase.implementation.SelectedTransitAgencyUseCaseImpl
 import com.project.hello.city.plan.framework.internal.usecase.implementation.SupportedTransitAgenciesUseCaseImpl
@@ -46,6 +48,15 @@ internal abstract class TransitAgencyViewModelModule {
     abstract fun bindTransitAgencySelectionUseCase(impl: TransitAgencySelectionUseCaseImpl):
             TransitAgencySelectionUseCase
 
+    @Binds
+    abstract fun bindSupportedTransitAgenciesDataSource(
+        impl: RawResourcesSupportedTransitAgenciesDataSourceImpl
+    ): SupportedTransitAgenciesDataSource
+
+    @Binds
+    abstract fun bindTransitAgencyPlanRepository(impl: TransitAgencyPlanRepositoryImpl):
+            TransitAgencyPlanRepository
+
     companion object {
         @Provides
         fun provideCityDataSource(resources: Resources): TransitAgencyDataSource =
@@ -55,15 +66,5 @@ internal abstract class TransitAgencyViewModelModule {
         fun provideSelectedCityDataSource(
             database: TransitAgencyDatabase
         ): SelectedTransitAgencyDataSource = DataBaseSelectedTransitAgency(database)
-
-        @Provides
-        fun provideTransitAgencyPlanRepositoryNew(
-            transitAgencyDataSource: TransitAgencyDataSource,
-            selectedTransitAgencyDataSource: SelectedTransitAgencyDataSource
-        ): TransitAgencyPlanRepository =
-            TransitAgencyPlanRepositoryImpl(
-                transitAgencyDataSource,
-                selectedTransitAgencyDataSource
-            )
     }
 }

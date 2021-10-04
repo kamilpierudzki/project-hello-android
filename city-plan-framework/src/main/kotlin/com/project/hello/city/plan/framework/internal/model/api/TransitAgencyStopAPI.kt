@@ -1,4 +1,4 @@
-package com.project.hello.city.plan.domain.model.api
+package com.project.hello.city.plan.framework.internal.model.api
 
 import androidx.annotation.Keep
 import com.project.hello.city.plan.domain.model.TransitAgencyStop

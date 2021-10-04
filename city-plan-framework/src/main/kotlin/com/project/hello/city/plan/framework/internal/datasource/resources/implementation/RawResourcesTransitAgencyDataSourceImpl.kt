@@ -1,9 +1,9 @@
-package com.project.hello.city.plan.framework.internal.datasource
+package com.project.hello.city.plan.framework.internal.datasource.resources.implementation
 
 import android.content.res.Resources
 import com.google.gson.Gson
-import com.project.hello.city.plan.domain.datasource.TransitAgencyDataSource
-import com.project.hello.city.plan.domain.model.api.TransitAgencyAPI
+import com.project.hello.city.plan.framework.internal.datasource.resources.TransitAgencyDataSource
+import com.project.hello.city.plan.framework.internal.model.api.TransitAgencyAPI
 import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.commons.framework.resources.JsonResourceReader
 import javax.inject.Inject

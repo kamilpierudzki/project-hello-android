@@ -3,8 +3,8 @@ package com.project.hello.city.plan.framework.internal.usecase.implementation
 import com.project.hello.city.plan.domain.model.ErrorCode.SupportedCities
 import com.project.hello.city.plan.domain.model.SupportedTransitAgenciesData
 import com.project.hello.city.plan.domain.model.TransitAgency
-import com.project.hello.city.plan.domain.model.api.toCityPlan
-import com.project.hello.city.plan.domain.repository.TransitAgencyPlanRepository
+import com.project.hello.city.plan.framework.internal.model.api.toCityPlan
+import com.project.hello.city.plan.framework.internal.repository.TransitAgencyPlanRepository
 import com.project.hello.city.plan.domain.usecase.SupportedTransitAgenciesUseCaseErrorMapper
 import com.project.hello.city.plan.framework.internal.usecase.SupportedTransitAgenciesUseCase
 import com.project.hello.commons.domain.data.Response

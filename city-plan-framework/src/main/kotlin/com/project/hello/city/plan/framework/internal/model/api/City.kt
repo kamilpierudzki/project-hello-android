@@ -1,6 +1,6 @@
-package com.project.hello.city.plan.domain.model.api
+package com.project.hello.city.plan.framework.internal.model.api
 
-import com.project.hello.city.plan.domain.R
+import com.project.hello.city.plan.framework.R
 
 internal enum class City(val file: Int) {
     POZNAN(R.raw.mpk_poznan),

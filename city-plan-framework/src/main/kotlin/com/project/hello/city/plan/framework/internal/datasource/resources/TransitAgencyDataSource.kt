@@ -1,6 +1,6 @@
-package com.project.hello.city.plan.domain.datasource
+package com.project.hello.city.plan.framework.internal.datasource.resources
 
-import com.project.hello.city.plan.domain.model.api.TransitAgencyAPI
+import com.project.hello.city.plan.framework.internal.model.api.TransitAgencyAPI
 import com.project.hello.commons.domain.data.ResponseApi
 
 interface TransitAgencyDataSource {

@@ -1,6 +1,4 @@
-package com.project.hello.city.plan.domain.repository
-
-import com.project.hello.city.plan.domain.repository.resource.TransitAgencyDataResource
+package com.project.hello.city.plan.framework.internal.repository
 
 interface TransitAgencyPlanRepository {
     fun getSupportedTransitAgenciesFileResources(): List<Int>

@@ -1,9 +1,9 @@
 package com.project.hello.city.plan.framework.internal.usecase.implementation
 
 import com.project.hello.city.plan.domain.model.SupportedTransitAgenciesData
-import com.project.hello.city.plan.domain.model.api.TransitAgencyAPI
-import com.project.hello.city.plan.domain.repository.TransitAgencyPlanRepository
-import com.project.hello.city.plan.domain.repository.resource.TransitAgencyDataResource
+import com.project.hello.city.plan.framework.internal.model.api.TransitAgencyAPI
+import com.project.hello.city.plan.framework.internal.repository.TransitAgencyPlanRepository
+import com.project.hello.city.plan.framework.internal.repository.TransitAgencyDataResource
 import com.project.hello.city.plan.domain.usecase.SupportedTransitAgenciesUseCaseErrorMapper
 import com.project.hello.commons.domain.data.Response
 import com.project.hello.commons.domain.data.ResponseApi

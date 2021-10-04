@@ -1,8 +1,8 @@
 package com.project.hello.city.plan.framework.internal.usecase.implementation
 
 import com.project.hello.city.plan.domain.model.TransitAgency
-import com.project.hello.city.plan.domain.repository.TransitAgencyPlanRepository
-import com.project.hello.city.plan.domain.repository.resource.TransitAgencyDataResource
+import com.project.hello.city.plan.framework.internal.repository.TransitAgencyDataResource
+import com.project.hello.city.plan.framework.internal.repository.TransitAgencyPlanRepository
 import com.project.hello.commons.domain.data.Response
 import com.project.hello.commons.domain.test.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
