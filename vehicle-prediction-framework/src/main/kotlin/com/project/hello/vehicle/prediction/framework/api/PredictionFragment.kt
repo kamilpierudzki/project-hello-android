@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.city.plan.framework.api.TransitAgencyPickViewModel
 import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.commons.framework.ui.showBinaryDialog

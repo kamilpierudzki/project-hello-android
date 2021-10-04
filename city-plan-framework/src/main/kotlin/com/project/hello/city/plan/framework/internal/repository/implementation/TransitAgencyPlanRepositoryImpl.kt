@@ -1,8 +1,8 @@
 package com.project.hello.city.plan.framework.internal.repository.implementation
 
-import com.project.hello.city.plan.domain.datasource.SelectedTransitAgencyDataSource
-import com.project.hello.city.plan.domain.datasource.SupportedTransitAgenciesDataSource
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.datasource.SelectedTransitAgencyDataSource
+import com.project.hello.transit.agency.domain.datasource.SupportedTransitAgenciesDataSource
+import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.city.plan.framework.internal.datasource.resources.TransitAgencyDataSource
 import com.project.hello.city.plan.framework.internal.model.api.TransitAgencyAPI
 import com.project.hello.city.plan.framework.internal.repository.TransitAgencyDataResource

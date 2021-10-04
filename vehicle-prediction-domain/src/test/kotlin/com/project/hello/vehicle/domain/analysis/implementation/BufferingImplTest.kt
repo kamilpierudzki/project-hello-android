@@ -1,6 +1,6 @@
 package com.project.hello.vehicle.domain.analysis.implementation
 
-import com.project.hello.city.plan.domain.model.Line
+import com.project.hello.transit.agency.domain.model.Line
 import org.junit.Assert
 import org.junit.Test
 

@@ -1,7 +1,7 @@
 package com.project.hello.city.plan.framework.internal.model.api
 
 import androidx.annotation.Keep
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.TransitAgency
 
 @Keep
 data class TransitAgencyAPI(

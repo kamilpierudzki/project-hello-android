@@ -1,7 +1,7 @@
 package com.project.hello.vehicle.prediction.framework.internal
 
-import com.project.hello.city.plan.domain.VehicleType
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.VehicleType
+import com.project.hello.transit.agency.domain.model.TransitAgency
 
 data class PredictionViewModelInitialData(
     val targetVehicleTypes: List<VehicleType>,

@@ -4,8 +4,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.hello.city.plan.domain.model.SupportedTransitAgenciesData
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.SupportedTransitAgenciesData
+import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.city.plan.framework.api.InternalTransitAgencyPickViewModel
 import com.project.hello.city.plan.framework.api.SupportedTransitAgenciesStatus
 import com.project.hello.city.plan.framework.api.TransitAgencyPickViewModel

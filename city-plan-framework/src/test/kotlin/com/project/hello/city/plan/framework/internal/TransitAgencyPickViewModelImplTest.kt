@@ -1,8 +1,8 @@
 package com.project.hello.city.plan.framework.internal
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.project.hello.city.plan.domain.model.SupportedTransitAgenciesData
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.SupportedTransitAgenciesData
+import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.city.plan.framework.api.SupportedTransitAgenciesStatus
 import com.project.hello.city.plan.framework.api.TransitAgencySelection
 import com.project.hello.city.plan.framework.internal.usecase.SelectedTransitAgencyUseCase

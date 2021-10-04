@@ -1,6 +1,6 @@
 package com.project.hello.vehicle.prediction.framework.internal.implementation
 
-import com.project.hello.city.plan.domain.model.Line
+import com.project.hello.transit.agency.domain.model.Line
 import com.project.hello.vehicle.domain.analysis.LineWithShare
 import com.project.hello.vehicle.prediction.framework.internal.PredictionConsoleLogger
 import javax.inject.Inject

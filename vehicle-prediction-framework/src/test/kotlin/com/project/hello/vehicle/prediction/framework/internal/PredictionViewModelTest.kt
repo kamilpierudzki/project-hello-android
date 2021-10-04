@@ -1,9 +1,9 @@
 package com.project.hello.vehicle.prediction.framework.internal
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.project.hello.city.plan.domain.VehicleType
-import com.project.hello.city.plan.domain.model.TransitAgency
-import com.project.hello.city.plan.domain.model.Line
+import com.project.hello.transit.agency.domain.VehicleType
+import com.project.hello.transit.agency.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.Line
 import com.project.hello.commons.domain.test.CoroutinesTestRule
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.Buffering

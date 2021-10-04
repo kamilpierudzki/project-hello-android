@@ -54,7 +54,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_compiler_version"
     androidTestImplementation "androidx.room:room-testing:$room_testing_version"
 
-    implementation project(path: ':city-plan-domain')
+    implementation project(path: ':transit-agency-domain')
     implementation project(path: ':commons-framework')
     implementation project(path: ':commons-domain')
 }

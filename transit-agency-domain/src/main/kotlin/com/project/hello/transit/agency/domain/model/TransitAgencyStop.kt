@@ -1,4 +1,4 @@
-package com.project.hello.city.plan.domain.model
+package com.project.hello.transit.agency.domain.model
 
 data class TransitAgencyStop(
     val transitAgency: String,

@@ -1,11 +1,11 @@
 package com.project.hello.city.plan.framework.internal.usecase
 
 import android.content.res.Resources
-import com.project.hello.city.plan.domain.R
-import com.project.hello.city.plan.domain.model.ErrorCode
-import com.project.hello.city.plan.domain.model.SupportedTransitAgenciesData
-import com.project.hello.city.plan.domain.usecase.SupportedTransitAgenciesUseCaseErrorMapper
+import com.project.hello.city.plan.framework.R
 import com.project.hello.commons.domain.data.Response
+import com.project.hello.transit.agency.domain.model.ErrorCode
+import com.project.hello.transit.agency.domain.model.SupportedTransitAgenciesData
+import com.project.hello.transit.agency.domain.usecase.SupportedTransitAgenciesUseCaseErrorMapper
 import javax.inject.Inject
 
 internal class SupportedTransitAgenciesUseCaseErrorMapperImpl @Inject constructor(

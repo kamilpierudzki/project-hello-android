@@ -1,8 +1,8 @@
 package com.project.hello.city.plan.framework.internal.datasource.db
 
-import com.project.hello.city.plan.domain.datasource.SelectedTransitAgencyDataSource
-import com.project.hello.city.plan.domain.model.TransitAgency
-import com.project.hello.city.plan.domain.model.ErrorCode.SelectedCity
+import com.project.hello.transit.agency.domain.datasource.SelectedTransitAgencyDataSource
+import com.project.hello.transit.agency.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.ErrorCode.SelectedCity
 import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.city.plan.framework.internal.db.TransitAgencyDatabase
 import javax.inject.Inject

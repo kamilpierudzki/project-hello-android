@@ -1,10 +1,10 @@
 package com.project.hello.city.plan.framework.hilt
 
 import android.content.res.Resources
-import com.project.hello.city.plan.domain.datasource.SelectedTransitAgencyDataSource
-import com.project.hello.city.plan.domain.datasource.SupportedTransitAgenciesDataSource
-import com.project.hello.city.plan.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
-import com.project.hello.city.plan.domain.usecase.SupportedTransitAgenciesUseCaseErrorMapper
+import com.project.hello.transit.agency.domain.datasource.SelectedTransitAgencyDataSource
+import com.project.hello.transit.agency.domain.datasource.SupportedTransitAgenciesDataSource
+import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
+import com.project.hello.transit.agency.domain.usecase.SupportedTransitAgenciesUseCaseErrorMapper
 import com.project.hello.city.plan.framework.internal.datasource.db.DataBaseSelectedTransitAgency
 import com.project.hello.city.plan.framework.internal.datasource.resources.TransitAgencyDataSource
 import com.project.hello.city.plan.framework.internal.datasource.resources.implementation.RawResourcesSupportedTransitAgenciesDataSourceImpl

@@ -1,10 +1,10 @@
 package com.project.hello.city.plan.framework.internal.usecase
 
 import android.content.res.Resources
-import com.project.hello.city.plan.domain.R
-import com.project.hello.city.plan.domain.model.TransitAgency
-import com.project.hello.city.plan.domain.model.ErrorCode
-import com.project.hello.city.plan.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
+import com.project.hello.city.plan.framework.R
+import com.project.hello.transit.agency.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.ErrorCode
+import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
 import com.project.hello.commons.domain.data.Response
 import javax.inject.Inject
 

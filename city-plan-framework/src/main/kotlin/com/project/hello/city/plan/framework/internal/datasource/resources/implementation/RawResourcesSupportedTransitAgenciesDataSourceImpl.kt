@@ -1,6 +1,6 @@
 package com.project.hello.city.plan.framework.internal.datasource.resources.implementation
 
-import com.project.hello.city.plan.domain.datasource.SupportedTransitAgenciesDataSource
+import com.project.hello.transit.agency.domain.datasource.SupportedTransitAgenciesDataSource
 import com.project.hello.city.plan.framework.internal.model.api.City
 import javax.inject.Inject
 

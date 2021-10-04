@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.city.plan.framework.databinding.InfoRowItemBinding
 import com.project.hello.city.plan.framework.databinding.TransitAgencyItemBinding
 import com.project.hello.commons.framework.livedata.Event

@@ -43,7 +43,7 @@ dependencies {
     implementation project(path: ':commons-framework')
     implementation project(path: ':city-plan-framework')
     implementation project(path: ':vehicle-prediction-framework')
-    implementation project(path: ':city-plan-domain')
+    implementation project(path: ':transit-agency-domain')
     implementation project(path: ':legal-framework')
     implementation project(path: ':welcome-framework')
 }

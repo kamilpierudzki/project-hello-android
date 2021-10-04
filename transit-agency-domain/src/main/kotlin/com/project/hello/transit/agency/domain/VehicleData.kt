@@ -1,4 +1,4 @@
-package com.project.hello.city.plan.domain
+package com.project.hello.transit.agency.domain
 
 interface VehicleData {
     val vehicleTypes: List<VehicleType>

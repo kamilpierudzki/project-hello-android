@@ -1,7 +1,7 @@
 package com.project.hello.city.plan.framework.api
 
 import androidx.lifecycle.LiveData
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.commons.framework.livedata.Event
 import com.project.hello.commons.framework.viewmodel.ExternalViewModel
 

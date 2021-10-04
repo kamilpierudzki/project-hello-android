@@ -2,7 +2,7 @@ package com.project.hello.city.plan.framework.internal.datasource.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.TransitAgency
 
 @Entity
 internal data class TransitAgencyEntity(

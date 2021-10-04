@@ -1,6 +1,6 @@
 package com.project.hello.city.plan.framework.internal.usecase.implementation
 
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.city.plan.framework.internal.repository.TransitAgencyDataResource
 import com.project.hello.city.plan.framework.internal.repository.TransitAgencyPlanRepository
 import com.project.hello.commons.domain.data.Response

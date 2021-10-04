@@ -22,6 +22,6 @@ dependencies {
 
     testImplementation "junit:junit:$junit_version"
 
-    implementation project(path: ':city-plan-domain')
+    implementation project(path: ':transit-agency-domain')
     implementation project(path: ':commons-domain')
 }

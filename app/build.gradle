@@ -63,7 +63,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_android_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_compiler_version"
 
-    implementation project(path: ':city-plan-domain')
+    implementation project(path: ':transit-agency-domain')
     implementation project(path: ':vehicle-prediction-domain')
     implementation project(path: ':legal-domain')
 

@@ -3,8 +3,8 @@ package com.project.hello.vehicle.prediction.framework.internal
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.hello.city.plan.domain.VehicleType
-import com.project.hello.city.plan.domain.model.Line
+import com.project.hello.transit.agency.domain.VehicleType
+import com.project.hello.transit.agency.domain.model.Line
 import com.project.hello.commons.framework.hilt.DefaultDispatcher
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.Buffering

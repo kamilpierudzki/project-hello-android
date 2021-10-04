@@ -1,7 +1,7 @@
 package com.project.hello.city.plan.framework.internal.datasource.db
 
 import com.google.gson.Gson
-import com.project.hello.city.plan.domain.model.Line
+import com.project.hello.transit.agency.domain.model.Line
 
 internal object TransitAgencyDatabaseConverters {
 

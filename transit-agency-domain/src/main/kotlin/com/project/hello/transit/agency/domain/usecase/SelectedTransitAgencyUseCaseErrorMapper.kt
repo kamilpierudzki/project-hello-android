@@ -1,6 +1,6 @@
-package com.project.hello.city.plan.domain.usecase
+package com.project.hello.transit.agency.domain.usecase
 
-import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.commons.domain.data.Response
 
 interface SelectedTransitAgencyUseCaseErrorMapper {

@@ -1,6 +1,6 @@
 package com.project.hello.vehicle.domain.analysis.implementation
 
-import com.project.hello.city.plan.domain.model.Line
+import com.project.hello.transit.agency.domain.model.Line
 import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.analysis.LineWithShare
 
