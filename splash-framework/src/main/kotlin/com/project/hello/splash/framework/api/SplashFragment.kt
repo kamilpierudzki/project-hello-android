@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.project.hello.city.plan.framework.api.CityPickViewModel
-import com.project.hello.city.plan.framework.api.CitySelection
+import com.project.hello.city.plan.framework.api.TransitAgencyPickViewModel
+import com.project.hello.city.plan.framework.api.TransitAgencySelection
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelType
@@ -25,10 +25,10 @@ class SplashFragment : Fragment() {
 
     @Inject
     @ViewModelProvider(ViewModelType.ACTIVITY)
-    lateinit var cityPickViewModelProvider: ExternalViewModelProvider<CityPickViewModel>
+    lateinit var transitAgencyPickViewModelProvider: ExternalViewModelProvider<TransitAgencyPickViewModel>
 
     private val cityPickViewModel by externalViewModels {
-        cityPickViewModelProvider
+        transitAgencyPickViewModelProvider
     }
 
     @Inject
@@ -86,10 +86,10 @@ class SplashFragment : Fragment() {
     }
 
     private fun observeCurrentlySelectedCity() {
-        cityPickViewModel.currentlySelectedCityEvent.observe(viewLifecycleOwner, { event ->
+        cityPickViewModel.currentlySelectedTransitAgencyEvent.observe(viewLifecycleOwner, { event ->
             when (event.consumeAndReturn()) {
-                is CitySelection.NotSelected -> goToCityPickerScreen()
-                is CitySelection.Selected -> goToVehicleTypePickerScreen()
+                is TransitAgencySelection.NotSelected -> goToCityPickerScreen()
+                is TransitAgencySelection.Selected -> goToVehicleTypePickerScreen()
                 else -> finishActivity()
             }
         })

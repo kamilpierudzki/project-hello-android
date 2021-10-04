@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.project.hello.city.plan.domain.model.CityPlan
-import com.project.hello.city.plan.framework.api.CityPickViewModel
+import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.city.plan.framework.api.TransitAgencyPickViewModel
 import com.project.hello.city.plan.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.commons.framework.ui.showBinaryDialog
 import com.project.hello.commons.framework.ui.showInformationDialog
@@ -50,10 +50,10 @@ internal class PredictionFragment : Fragment() {
 
     @Inject
     @ViewModelProvider(ViewModelType.ACTIVITY)
-    lateinit var cityPickViewModelProvider: ExternalViewModelProvider<CityPickViewModel>
+    lateinit var transitAgencyPickViewModelProvider: ExternalViewModelProvider<TransitAgencyPickViewModel>
 
     private val cityPickViewModel by externalViewModels {
-        cityPickViewModelProvider
+        transitAgencyPickViewModelProvider
     }
 
     private val safeArgs: PredictionFragmentArgs by navArgs()
@@ -116,7 +116,7 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun passInitialInfoToViewModel() {
-        val currentlySelectedCity: CityPlan? = cityPickViewModel.currentlySelectedCity
+        val currentlySelectedCity: TransitAgency? = cityPickViewModel.currentlySelectedCity
         if (currentlySelectedCity != null) {
             val initialData = PredictionViewModelInitialData(
                 targetVehicleTypes = initialVehicleData.vehicleTypes,

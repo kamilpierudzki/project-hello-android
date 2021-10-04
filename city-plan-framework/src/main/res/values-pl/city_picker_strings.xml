@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="currently_selected">Aktualnie zaznaczono</string>
-    <string name="city_picker_loading">Ładowanie</string>
-    <string name="city_selection_error">Błąd podczas wybierania miasta.</string>
-    <string name="city_picker_label">Ekran wyboru miasta</string>
-    <string name="city_item_last_update_label">Ostatnia aktualizacja</string>
-    <string name="no_city">Mojego miasta nie ma na liście</string>
-    <string name="no_city_dialog_title"></string>
-    <string name="no_city_dialog_message">Jeśli nie znalazłeś swojego miasta na liście, możesz napisać komentarz w sklepie Play i poprosić autora o dodanie twojego miasta do aplikacji.</string>
+    <string name="transit_agency_picker_loading">Ładowanie</string>
+    <string name="transit_agency_selection_error">Błąd podczas wybierania przewoźnika.</string>
+    <string name="transit_agency_picker_label">Ekran Wyboru Przewoźnika</string>
+    <string name="transit_agency_item_last_update_label">Ostatnia aktualizacja</string>
+    <string name="no_transit_agency">Mojego przewoźnika nie ma na liście</string>
+    <string name="no_transit_agency_dialog_title"></string>
+    <string name="no_transit_agency_dialog_message">Jeśli nie znalazłeś swojego przewoźnika na liście, możesz napisać komentarz w sklepie Play i poprosić autora o dodanie przewoźnika z twojego miasta do aplikacji.</string>
 </resources>

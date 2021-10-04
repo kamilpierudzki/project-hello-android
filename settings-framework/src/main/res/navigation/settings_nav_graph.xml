@@ -4,7 +4,7 @@
     android:id="@+id/settings_nav_graph"
     app:startDestination="@id/settings_screen">
 
-    <include app:graph="@navigation/city_plan_nav_graph" />
+    <include app:graph="@navigation/transit_agency_nav_graph" />
     <include app:graph="@navigation/introduction_nav_graph" />
 
     <fragment
@@ -14,7 +14,7 @@
 
         <action
             android:id="@+id/go_to_city_picker_screen"
-            app:destination="@id/city_plan_nav_graph">
+            app:destination="@id/transit_agency_nav_graph">
 
             <argument
                 android:name="backButtonDisabled"

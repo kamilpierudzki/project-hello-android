@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.project.hello.city.plan.domain.model.CityPlan
-import com.project.hello.city.plan.framework.api.CityPickViewModel
+import com.project.hello.city.plan.domain.model.TransitAgency
+import com.project.hello.city.plan.framework.api.TransitAgencyPickViewModel
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelType
@@ -24,10 +24,10 @@ class SettingsFragment : Fragment() {
 
     @Inject
     @ViewModelProvider(ViewModelType.ACTIVITY)
-    lateinit var cityPickViewModelProvider: ExternalViewModelProvider<CityPickViewModel>
+    lateinit var transitAgencyPickViewModelProvider: ExternalViewModelProvider<TransitAgencyPickViewModel>
 
     private val cityPickViewModel by externalViewModels {
-        cityPickViewModelProvider
+        transitAgencyPickViewModelProvider
     }
 
     override fun onCreateView(
@@ -78,18 +78,18 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupBinding() {
-        val currentlySelectedCity: CityPlan? = cityPickViewModel.currentlySelectedCity
-        if (currentlySelectedCity != null) {
-            binding.pickCityRow.selected.text = currentlySelectedCity.city
-            updateContentDescriptionForRow(currentlySelectedCity)
+        val currentlySelectedTransitAgency: TransitAgency? = cityPickViewModel.currentlySelectedCity
+        if (currentlySelectedTransitAgency != null) {
+            binding.pickCityRow.selected.text = currentlySelectedTransitAgency.transitAgency
+            updateContentDescriptionForRow(currentlySelectedTransitAgency)
         }
     }
 
-    private fun updateContentDescriptionForRow(currentlySelectedCity: CityPlan) {
+    private fun updateContentDescriptionForRow(currentlySelectedTransitAgency: TransitAgency) {
         binding.pickCityRow.root.contentDescription = """
-            ${getString(R.string.settings_select_city)}. 
+            ${getString(R.string.settings_select_transit_agency)}. 
              ${getString(R.string.settings_select_city_currently_selected)}:
-             ${currentlySelectedCity.city}"
+             ${currentlySelectedTransitAgency.transitAgency}"
         """.trimIndent()
     }
 }

@@ -1,17 +1,9 @@
 {
-  "city": "Częstochowa",
-  "lastUpdateTimestampInMillis": 1632951524,
-  "humanReadableLastUpdateTimestamp": "29-09-2021",
-  "appVersion": 1,
+  "transitAgency": "Częstochowa",
+  "lastUpdateTimestampInMillis": 1633378306,
+  "lastUpdateFormatted": "04-10-2021",
+  "dataVersion": 1,
   "trams": [
-    {
-      "number": "1",
-      "destination": "Fieldorfa-Nila"
-    },
-    {
-      "number": "1",
-      "destination": "Zajezdnia Mpk"
-    },
     {
       "number": "2",
       "destination": "Fieldorfa-Nila"
@@ -27,14 +19,6 @@
     {
       "number": "3",
       "destination": "Stadion Raków"
-    },
-    {
-      "number": "10",
-      "destination": "Krakowska"
-    },
-    {
-      "number": "10",
-      "destination": "Parkitka - Szpital"
     }
   ],
   "buses": [
@@ -184,11 +168,11 @@
     },
     {
       "number": "29",
-      "destination": "Cmentarz Komunalny"
+      "destination": "Gombrowicza"
     },
     {
       "number": "29",
-      "destination": "Gombrowicza"
+      "destination": "Cmentarz Komunalny"
     },
     {
       "number": "30",
@@ -200,19 +184,19 @@
     },
     {
       "number": "31",
-      "destination": "Piłsudskiego"
-    },
-    {
-      "number": "31",
       "destination": "Cmentarz Komunalny"
     },
     {
-      "number": "32",
-      "destination": "Wielkoborska"
+      "number": "31",
+      "destination": "Piłsudskiego"
     },
     {
       "number": "32",
       "destination": "Archiwum Państwowe"
+    },
+    {
+      "number": "32",
+      "destination": "Wielkoborska"
     },
     {
       "number": "33",
@@ -280,11 +264,11 @@
     },
     {
       "number": "68",
-      "destination": "Zajezdnia Mpk"
+      "destination": "Poczesna - Bociania Górka"
     },
     {
       "number": "68",
-      "destination": "Poczesna - Bociania Górka"
+      "destination": "Zajezdnia Mpk"
     },
     {
       "number": "69",
@@ -304,11 +288,11 @@
     },
     {
       "number": "100",
-      "destination": "Mała"
+      "destination": "Jesienna"
     },
     {
       "number": "100",
-      "destination": "Jesienna"
+      "destination": "Mała"
     }
   ]
 }

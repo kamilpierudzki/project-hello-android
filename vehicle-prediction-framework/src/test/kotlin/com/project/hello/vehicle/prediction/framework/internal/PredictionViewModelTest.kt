@@ -2,7 +2,7 @@ package com.project.hello.vehicle.prediction.framework.internal
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.project.hello.city.plan.domain.VehicleType
-import com.project.hello.city.plan.domain.model.CityPlan
+import com.project.hello.city.plan.domain.model.TransitAgency
 import com.project.hello.city.plan.domain.model.Line
 import com.project.hello.commons.domain.test.CoroutinesTestRule
 import com.project.hello.vehicle.domain.VehiclePrediction
@@ -32,7 +32,7 @@ internal class PredictionViewModelTest {
     val bus1 = Line("B1", "")
     val bus2 = Line("B2", "")
 
-    val cityPlan = CityPlan(
+    val cityPlan = TransitAgency(
         city = "A",
         lastUpdateDate = "",
         listOf(tram1, tram2),

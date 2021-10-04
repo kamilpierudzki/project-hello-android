@@ -4,6 +4,6 @@ import androidx.annotation.Keep
 import com.project.hello.city.plan.domain.model.Line
 
 @Keep
-data class LineAPI(val number: String? = null, val destination: String? = null)
+data class LineAPI(val number: String, val destination: String)
 
-fun LineAPI.toLine() = Line(number = number ?: "", destination = destination ?: "")
+fun LineAPI.toLine() = Line(number = number, destination = destination)
