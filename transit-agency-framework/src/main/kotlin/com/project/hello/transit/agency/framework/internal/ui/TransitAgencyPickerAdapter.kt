@@ -64,11 +64,10 @@ internal class TransitAgencyPickerAdapter @Inject constructor() :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateSupportedCities(data: List<TransitAgencyPickerRow>) {
+    fun updateSupportedCities(data: List<TransitAgencyPickerRow.TransitAgencyRow>) {
         pickerData.clear()
-        pickerData = data.toMutableList().apply {
-            add(TransitAgencyPickerRow.Info)
-        }
+        pickerData.addAll(data.sortedBy { it.transitAgency.transitAgency })
+        pickerData.add(TransitAgencyPickerRow.Info)
         notifyDataSetChanged()
     }
 }
