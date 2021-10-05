@@ -5,7 +5,8 @@ import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.analysis.implementation.BufferingImpl
 import com.project.hello.vehicle.domain.steps.*
 import com.project.hello.vehicle.domain.steps.implementation.*
-import com.project.hello.vehicle.prediction.framework.internal.timeoutchecker.TimeoutCheckerFactory
+import com.project.hello.vehicle.domain.timeout.TimeoutCheckerFactory
+import com.project.hello.vehicle.domain.timeout.implementation.TimeoutCheckerFactoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,23 +38,19 @@ internal abstract class VehiclePredictionViewModelModule {
             impl
 
         @Provides
-        @ViewModelScoped
         fun provideTextMatching(universalTransformation: UniversalTransformation): TextMatching =
             TextMatchingImpl(universalTransformation)
 
         @Provides
-        @ViewModelScoped
         fun provideUniversalTransformation(
             countryCharactersProvider: CountryCharactersProvider
         ): UniversalTransformation = UniversalTransformationImpl(countryCharactersProvider)
 
         @Provides
-        @ViewModelScoped
         fun provideFindingLines(textMatching: TextMatching): MatchingCityLines =
             MatchingCityLinesImpl(textMatching)
 
         @Provides
-        @ViewModelScoped
         fun provideReduction(): Reduction =
             ReductionImpl()
 
@@ -61,11 +58,9 @@ internal abstract class VehiclePredictionViewModelModule {
         fun provideFragmentation(): Fragmentation = FragmentationImpl()
 
         @Provides
-        @ViewModelScoped
         fun provideOutputAnalysis(): OutputAnalysis = OutputAnalysisImpl()
 
         @Provides
-        @ViewModelScoped
         fun provideVehiclePrediction(
             matchingCityLines: MatchingCityLines,
             reduction: Reduction,
@@ -82,6 +77,7 @@ internal abstract class VehiclePredictionViewModelModule {
             )
 
         @Provides
-        fun provideTimeoutCheckerFactory() = TimeoutCheckerFactory(false)
+        fun provideTimeoutCheckerFactory(): TimeoutCheckerFactory =
+            TimeoutCheckerFactoryImpl(isDebugging = false)
     }
 }

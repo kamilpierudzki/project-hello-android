@@ -1,4 +1,4 @@
-package com.project.hello.vehicle.prediction.framework.api
+package com.project.hello.vehicle.prediction.framework.internal.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -25,8 +25,8 @@ import com.project.hello.commons.framework.viewmodel.externalViewModels
 import com.project.hello.country.api.ResourceCountryCharacters
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
-import com.project.hello.vehicle.prediction.framework.internal.PredictionViewModel
-import com.project.hello.vehicle.prediction.framework.internal.PredictionViewModelInitialData
+import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModel
+import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModelInitialData
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hello.vehicle.prediction.framework.internal.fps.FpsCounterManager
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
@@ -121,7 +121,7 @@ internal class PredictionFragment : Fragment() {
             val initialData = PredictionViewModelInitialData(
                 targetVehicleTypes = initialVehicleData.vehicleTypes,
                 countryCharacters = resourceCountryCharacters.get(),
-                selectedCity = currentlySelectedCity
+                selectedTransitAgency = currentlySelectedCity
             )
             predictionViewModel.setInitialData(initialData)
         }

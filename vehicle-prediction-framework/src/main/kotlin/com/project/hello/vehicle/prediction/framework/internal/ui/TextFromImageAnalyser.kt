@@ -1,4 +1,4 @@
-package com.project.hello.vehicle.prediction.framework.internal
+package com.project.hello.vehicle.prediction.framework.internal.ui
 
 import android.annotation.SuppressLint
 import androidx.camera.core.ImageProxy
@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.project.hello.vehicle.prediction.framework.internal.logger.PredictionConsoleLogger
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject

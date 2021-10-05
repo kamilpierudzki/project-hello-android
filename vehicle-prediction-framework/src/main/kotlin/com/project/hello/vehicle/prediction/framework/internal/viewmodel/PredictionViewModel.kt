@@ -1,4 +1,4 @@
-package com.project.hello.vehicle.prediction.framework.internal
+package com.project.hello.vehicle.prediction.framework.internal.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,8 +10,8 @@ import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.analysis.LineWithShare
 import com.project.hello.vehicle.domain.steps.CountryCharactersEmitter
-import com.project.hello.vehicle.prediction.framework.internal.timeoutchecker.TimeoutCheckerFactory
-import com.project.hello.vehicle.prediction.framework.internal.ui.PredictionLabelInfo
+import com.project.hello.vehicle.domain.timeout.TimeoutCheckerFactory
+import com.project.hello.vehicle.prediction.framework.internal.logger.PredictionConsoleLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ internal class PredictionViewModel @Inject constructor(
 
     fun setInitialData(initialData: PredictionViewModelInitialData) {
         countryCharactersEmitter.emmit(initialData.countryCharacters)
-        updateCityLines(initialData)
+        updateTransitAgencyLines(initialData)
     }
 
     fun processRecognisedTexts(inputs: List<String>) {
@@ -119,13 +119,13 @@ internal class PredictionViewModel @Inject constructor(
         currentPrediction: Line
     ): Boolean = previousPrediction == currentPrediction
 
-    private fun updateCityLines(initialData: PredictionViewModelInitialData) {
+    private fun updateTransitAgencyLines(initialData: PredictionViewModelInitialData) {
         val selectedCityLines: List<Line>? = initialData.targetVehicleTypes
             .takeIf { it.isNotEmpty() }
             ?.flatMap {
                 when (it) {
-                    VehicleType.TRAM -> initialData.selectedCity.trams
-                    VehicleType.BUS -> initialData.selectedCity.buses
+                    VehicleType.TRAM -> initialData.selectedTransitAgency.trams
+                    VehicleType.BUS -> initialData.selectedTransitAgency.buses
                 }
             }
         if (selectedCityLines != null) {

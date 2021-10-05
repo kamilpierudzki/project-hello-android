@@ -1,4 +1,4 @@
-package com.project.hello.vehicle.prediction.framework.internal.ui
+package com.project.hello.vehicle.prediction.framework.internal.viewmodel
 
 data class PredictionLabelInfo(
     val text: String?

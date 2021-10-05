@@ -3,6 +3,7 @@ package com.project.hello.vehicle.domain.steps.implementation
 import com.project.hello.transit.agency.domain.model.Line
 import com.project.hello.commons.domain.addElementIfNotContains
 import com.project.hello.vehicle.domain.steps.*
+import com.project.hello.vehicle.domain.timeout.TimeoutChecker
 
 class MatchingCityLinesImpl(
     private val textMatching: TextMatching

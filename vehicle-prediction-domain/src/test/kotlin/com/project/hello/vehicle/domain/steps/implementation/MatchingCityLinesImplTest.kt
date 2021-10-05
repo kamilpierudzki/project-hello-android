@@ -3,7 +3,7 @@ package com.project.hello.vehicle.domain.steps.implementation
 import com.project.hello.transit.agency.domain.model.Line
 import com.project.hello.vehicle.domain.steps.AccuracyLevel
 import com.project.hello.vehicle.domain.steps.CountryCharactersProvider
-import com.project.hello.vehicle.domain.steps.TimeoutChecker
+import com.project.hello.vehicle.domain.timeout.TimeoutChecker
 import org.junit.Assert
 import org.junit.Test
 

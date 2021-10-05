@@ -1,6 +1,7 @@
 package com.project.hello.vehicle.domain.steps
 
 import com.project.hello.transit.agency.domain.model.Line
+import com.project.hello.vehicle.domain.timeout.TimeoutChecker
 
 interface MatchingCityLines {
 

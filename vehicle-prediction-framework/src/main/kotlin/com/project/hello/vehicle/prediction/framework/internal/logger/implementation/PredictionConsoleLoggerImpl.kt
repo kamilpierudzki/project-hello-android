@@ -1,8 +1,8 @@
-package com.project.hello.vehicle.prediction.framework.internal.implementation
+package com.project.hello.vehicle.prediction.framework.internal.logger.implementation
 
 import com.project.hello.transit.agency.domain.model.Line
 import com.project.hello.vehicle.domain.analysis.LineWithShare
-import com.project.hello.vehicle.prediction.framework.internal.PredictionConsoleLogger
+import com.project.hello.vehicle.prediction.framework.internal.logger.PredictionConsoleLogger
 import javax.inject.Inject
 
 internal class PredictionConsoleLoggerImpl @Inject constructor() : PredictionConsoleLogger {

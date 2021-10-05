@@ -1,4 +1,4 @@
-package com.project.hello.vehicle.prediction.framework.api
+package com.project.hello.vehicle.prediction.framework.internal.ui
 
 import android.os.Bundle
 import android.view.*
@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VehicleTypePickerFragment : Fragment() {
+internal class VehicleTypePickerFragment : Fragment() {
 
     private lateinit var binding: VehicleTypePickerFragmentBinding
 

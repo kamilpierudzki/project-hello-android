@@ -1,7 +1,7 @@
 package com.project.hello.vehicle.prediction.framework.hilt
 
-import com.project.hello.vehicle.prediction.framework.internal.PredictionConsoleLogger
-import com.project.hello.vehicle.prediction.framework.internal.implementation.PredictionConsoleLoggerImpl
+import com.project.hello.vehicle.prediction.framework.internal.logger.PredictionConsoleLogger
+import com.project.hello.vehicle.prediction.framework.internal.logger.implementation.PredictionConsoleLoggerImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,6 +1,6 @@
-package com.project.hello.vehicle.prediction.framework.internal.timeoutchecker
+package com.project.hello.vehicle.domain.timeout.implementation
 
-import com.project.hello.vehicle.domain.steps.TimeoutChecker
+import com.project.hello.vehicle.domain.timeout.TimeoutChecker
 
 private const val TIMEOUT_IN_MILLIS = 3_500
 

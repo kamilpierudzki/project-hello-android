@@ -1,4 +1,4 @@
-package com.project.hello.vehicle.prediction.framework.internal
+package com.project.hello.vehicle.prediction.framework.internal.viewmodel
 
 import com.project.hello.transit.agency.domain.model.Line
 

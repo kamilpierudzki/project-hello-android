@@ -1,7 +1,7 @@
 package com.project.hello.vehicle.prediction.framework.hilt
 
 import androidx.fragment.app.Fragment
-import com.project.hello.vehicle.prediction.framework.internal.TextFromImageAnalyser
+import com.project.hello.vehicle.prediction.framework.internal.ui.TextFromImageAnalyser
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import dagger.Binds
