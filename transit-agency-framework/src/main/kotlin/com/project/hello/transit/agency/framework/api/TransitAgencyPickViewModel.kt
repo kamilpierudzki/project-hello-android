@@ -9,7 +9,7 @@ interface TransitAgencyPickViewModel : ExternalViewModel {
     val currentlySelectedTransitAgencyEvent: LiveData<Event<TransitAgencySelection>>
     val supportedTransitAgencies: LiveData<Event<SupportedTransitAgenciesStatus>>
     val processing: LiveData<Boolean>
-    val currentlySelectedCity: TransitAgency?
+    val currentlySelectedTransitAgency: TransitAgency?
 }
 
 internal interface InternalTransitAgencyPickViewModel: ExternalViewModel {

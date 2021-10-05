@@ -372,7 +372,7 @@ internal class TransitAgencyPickViewModelImplTest {
             tested.currentlySelectedTransitAgencyEvent.postValue(Event(TransitAgencySelection.Selected(cityA)))
 
             // then
-            val currentlySelectedCity = tested.currentlySelectedCity
+            val currentlySelectedCity = tested.currentlySelectedTransitAgency
             Assert.assertEquals(true, currentlySelectedCity != null)
             Assert.assertEquals(cityA, currentlySelectedCity)
         }

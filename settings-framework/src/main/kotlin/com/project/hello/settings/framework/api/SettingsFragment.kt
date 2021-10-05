@@ -78,7 +78,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupBinding() {
-        val currentlySelectedTransitAgency: TransitAgency? = cityPickViewModel.currentlySelectedCity
+        val currentlySelectedTransitAgency: TransitAgency? = cityPickViewModel.currentlySelectedTransitAgency
         if (currentlySelectedTransitAgency != null) {
             binding.pickCityRow.selected.text = currentlySelectedTransitAgency.transitAgency
             updateContentDescriptionForRow(currentlySelectedTransitAgency)

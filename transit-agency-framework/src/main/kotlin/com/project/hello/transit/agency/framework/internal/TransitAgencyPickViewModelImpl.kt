@@ -38,7 +38,7 @@ internal class TransitAgencyPickViewModelImpl @Inject constructor(
 
     override val currentlySelectedTransitAgencyEvent = MutableLiveData<Event<TransitAgencySelection>>()
     override val currentlySelectedTransitAgencyChangedEvent = MutableLiveData<Event<TransitAgencySelection>>()
-    override val currentlySelectedCity: TransitAgency?
+    override val currentlySelectedTransitAgency: TransitAgency?
         get() {
             val event = currentlySelectedTransitAgencyEvent.value?.content
             return if (event is TransitAgencySelection.Selected) {

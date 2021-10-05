@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.transit.agency.framework.api.TransitAgencyPickViewModel
 import com.project.hello.transit.agency.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.commons.framework.ui.showBinaryDialog
@@ -61,6 +60,7 @@ internal class PredictionFragment : Fragment() {
     private lateinit var binding: PredictionFragmentBinding
     private val predictionViewModel: PredictionViewModel by viewModels()
     private lateinit var requestCameraPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var requestLocationPermissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,11 +81,12 @@ internal class PredictionFragment : Fragment() {
         observeNewFrameEvent()
         observePredictedNumber()
         initRequestCameraPermissionLauncher()
-        processPermissionLogic()
+        initRequestLocationPermissionLauncher()
+        processCameraPermissionLogic()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         textAnalyzer.dispose()
     }
 
@@ -116,12 +117,12 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun passInitialInfoToViewModel() {
-        val currentlySelectedCity: TransitAgency? = cityPickViewModel.currentlySelectedCity
-        if (currentlySelectedCity != null) {
+        cityPickViewModel.currentlySelectedTransitAgency?.let { selected ->
             val initialData = PredictionViewModelInitialData(
                 targetVehicleTypes = initialVehicleData.vehicleTypes,
                 countryCharacters = resourceCountryCharacters.get(),
-                selectedTransitAgency = currentlySelectedCity
+                selectedTransitAgency = selected,
+                transitAgencyStop = null// todo
             )
             predictionViewModel.setInitialData(initialData)
         }
@@ -155,18 +156,18 @@ internal class PredictionFragment : Fragment() {
             RequestPermission()
         ) { isGranted ->
             if (isGranted) {
-                startCameraAnalysis()
+                processLocationPermissionLogic()
             } else {
-                showExplanatoryWhyPermissionIsRequired()
+                showExplanatoryWhyCameraPermissionIsRequired()
             }
         }
     }
 
-    private fun processPermissionLogic() {
-        if (!isCameraPermissionGranted()) {
-            requestCameraPermission()
+    private fun processCameraPermissionLogic() {
+        if (isCameraPermissionGranted()) {
+            processLocationPermissionLogic()
         } else {
-            startCameraAnalysis()
+            requestCameraPermission()
         }
     }
 
@@ -184,13 +185,13 @@ internal class PredictionFragment : Fragment() {
         cameraAnalysis.startCameraAnalysis(textAnalyzer, binding.cameraPreview.surfaceProvider)
     }
 
-    private fun showExplanatoryWhyPermissionIsRequired() {
+    private fun showExplanatoryWhyCameraPermissionIsRequired() {
         showBinaryDialog(
             requireContext(),
             R.string.camera_permission_explanatory_title,
             R.string.camera_permission_explanatory_message,
             positiveAction = {
-                processPermissionLogic()
+                processCameraPermissionLogic()
             },
             negativeAction = {
                 goBackToPreviousScreen()
@@ -200,5 +201,46 @@ internal class PredictionFragment : Fragment() {
 
     private fun goBackToPreviousScreen() {
         findNavController().navigateUp()
+    }
+
+    private fun initRequestLocationPermissionLauncher() {
+        requestLocationPermissionLauncher = registerForActivityResult(
+            RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                processLocationPermissionLogic()
+            } else {
+                showExplanatoryWhyLocationPermissionIsRequired()
+            }
+        }
+    }
+
+    private fun startTransitStationModule() {
+        android.util.Log.d("test123", "startTransitStationModule()")
+        // todo
+    }
+
+    private fun showExplanatoryWhyLocationPermissionIsRequired() {
+        android.util.Log.d("test123", "showExplanatoryWhyLocationPermissionIsRequired()")
+        // todo
+    }
+
+    private fun isLocationPermissionGranted(): Boolean =
+        ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+    private fun processLocationPermissionLogic() {
+        if (isLocationPermissionGranted()) {
+            startCameraAnalysis()
+            startTransitStationModule()
+        } else {
+            requestLocationPermission()
+        }
+    }
+
+    private fun requestLocationPermission() {
+        requestCameraPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 }

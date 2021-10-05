@@ -175,7 +175,7 @@ internal class TransitAgencyPickerFragment : Fragment() {
     }
 
     private fun fetchingSupportedCitiesSucceeded(status: SupportedTransitAgenciesStatus.Success) {
-        val currentlySelected: TransitAgency? = cityPickViewModel.currentlySelectedCity
+        val currentlySelected: TransitAgency? = cityPickViewModel.currentlySelectedTransitAgency
         val transitAgencies = status.supportedTransitAgencies.map {
             TransitAgencyPickerRow.TransitAgencyRow(
                 transitAgency = it,
