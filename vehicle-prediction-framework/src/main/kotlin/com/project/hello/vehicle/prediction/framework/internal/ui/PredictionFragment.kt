@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import android.Manifest.permission.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -60,7 +62,7 @@ internal class PredictionFragment : Fragment() {
     private lateinit var binding: PredictionFragmentBinding
     private val predictionViewModel: PredictionViewModel by viewModels()
     private lateinit var requestCameraPermissionLauncher: ActivityResultLauncher<String>
-    private lateinit var requestLocationPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var requestLocationPermissionLauncher: ActivityResultLauncher<Array<String>>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -174,11 +176,11 @@ internal class PredictionFragment : Fragment() {
     private fun isCameraPermissionGranted(): Boolean =
         ContextCompat.checkSelfPermission(
             requireActivity(),
-            Manifest.permission.CAMERA
+            CAMERA
         ) == PackageManager.PERMISSION_GRANTED
 
     private fun requestCameraPermission() {
-        requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+        requestCameraPermissionLauncher.launch(CAMERA)
     }
 
     private fun startCameraAnalysis() {
@@ -205,12 +207,16 @@ internal class PredictionFragment : Fragment() {
 
     private fun initRequestLocationPermissionLauncher() {
         requestLocationPermissionLauncher = registerForActivityResult(
-            RequestPermission()
-        ) { isGranted ->
-            if (isGranted) {
-                processLocationPermissionLogic()
-            } else {
-                showExplanatoryWhyLocationPermissionIsRequired()
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrElse(ACCESS_FINE_LOCATION, { false }) &&
+                        permissions.getOrElse(ACCESS_COARSE_LOCATION, { false }) -> {
+                    processLocationPermissionLogic()
+                }
+                else -> {
+                    showExplanatoryWhyLocationPermissionIsRequired()
+                }
             }
         }
     }
@@ -228,7 +234,7 @@ internal class PredictionFragment : Fragment() {
     private fun isLocationPermissionGranted(): Boolean =
         ContextCompat.checkSelfPermission(
             requireActivity(),
-            Manifest.permission.ACCESS_FINE_LOCATION
+            ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
     private fun processLocationPermissionLogic() {
@@ -241,6 +247,8 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun requestLocationPermission() {
-        requestCameraPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        requestLocationPermissionLauncher.launch(
+            arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
+        )
     }
 }
