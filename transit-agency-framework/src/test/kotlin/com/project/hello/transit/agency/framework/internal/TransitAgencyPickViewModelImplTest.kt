@@ -392,7 +392,9 @@ internal class TransitAgencyPickViewModelImplTest {
     private fun createTransitAgency(transitAgency: String) = TransitAgency(
         transitAgency = transitAgency,
         lastUpdateFormatted = "",
-        trams = emptyList(),
-        buses = emptyList()
+        tramLines = emptyList(),
+        busLines = emptyList(),
+        tramStops = emptyList(),
+        busStops = emptyList(),
     )
 }

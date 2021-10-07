@@ -13,9 +13,11 @@ data class TransitAgencyAPI(
     val buses: List<LineAPI>
 )
 
-fun TransitAgencyAPI.toCityPlan() = TransitAgency(
+fun TransitAgencyAPI.toTransitAgency(transitAgencyStopAPI: TransitAgencyStopAPI) = TransitAgency(
     transitAgency = transitAgency,
     lastUpdateFormatted = lastUpdateFormatted,
-    trams = trams.map { it.toLine() },
-    buses = buses.map { it.toLine() }
+    tramLines = trams.map { it.toLine() },
+    busLines = buses.map { it.toLine() },
+    tramStops = transitAgencyStopAPI.tramStops.map { it.toStop() },
+    busStops = transitAgencyStopAPI.busStops.map { it.toStop() },
 )

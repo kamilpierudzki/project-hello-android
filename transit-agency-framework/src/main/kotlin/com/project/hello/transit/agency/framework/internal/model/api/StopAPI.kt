@@ -4,6 +4,6 @@ import androidx.annotation.Keep
 import com.project.hello.transit.agency.domain.model.Stop
 
 @Keep
-data class StopAPI(val stopName: String, val lines: List<String>)
+data class StopAPI(val stopName: String, val stopLines: List<String>)
 
-fun StopAPI.toStop() = Stop(stopName = stopName, lines = lines)
+fun StopAPI.toStop() = Stop(stopName = stopName, lines = stopLines)

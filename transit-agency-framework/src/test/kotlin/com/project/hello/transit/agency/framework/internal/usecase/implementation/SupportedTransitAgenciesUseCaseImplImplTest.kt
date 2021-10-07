@@ -8,6 +8,7 @@ import com.project.hello.transit.agency.domain.usecase.SupportedTransitAgenciesU
 import com.project.hello.commons.domain.data.Response
 import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.commons.domain.test.CoroutinesTestRule
+import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyStopAPI
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runBlockingTest
@@ -26,16 +27,19 @@ internal class SupportedTransitAgenciesUseCaseImplImplTest {
     var coroutinesTestRule = CoroutinesTestRule()
 
     val successfulResource: TransitAgencyDataResource = mock {
-        on { load(0) } doReturn ResponseApi.Success(createTransitAgencyApi("A"))
-        on { load(1) } doReturn ResponseApi.Success(createTransitAgencyApi("B"))
+        on { loadTransitAgency(0) } doReturn ResponseApi.Success(createTransitAgencyApi("A"))
+        on { loadTransitAgency(1) } doReturn ResponseApi.Success(createTransitAgencyApi("B"))
+        on { loadTransitAgencyStop(0) } doReturn ResponseApi.Success(createTransitAgencyStopAPI("X"))
+        on { loadTransitAgencyStop(1) } doReturn ResponseApi.Success(createTransitAgencyStopAPI("Y"))
     }
 
     val failureResource: TransitAgencyDataResource = mock {
-        on { load(any()) } doReturn ResponseApi.Error("error")
+        on { loadTransitAgency(any()) } doReturn ResponseApi.Error("error")
     }
 
     val repository: TransitAgencyPlanRepository = mock {
         on { getSupportedTransitAgenciesFileResources() } doReturn listOf(0, 1)
+        on { getSupportedTransitAgencyStopsFileResources() } doReturn listOf(0, 1)
     }
 
     val supportedTransitAgenciesUseCaseErrorMapper: SupportedTransitAgenciesUseCaseErrorMapper =
@@ -86,5 +90,14 @@ internal class SupportedTransitAgenciesUseCaseImplImplTest {
         dataVersion = 1,
         trams = emptyList(),
         buses = emptyList()
+    )
+
+    private fun createTransitAgencyStopAPI(transitAgency: String) = TransitAgencyStopAPI(
+        transitAgency = transitAgency,
+        lastUpdateTimestampInMillis = 1,
+        lastUpdateFormatted = "",
+        dataVersion = 1,
+        tramStops = emptyList(),
+        busStops = emptyList()
     )
 }

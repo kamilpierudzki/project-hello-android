@@ -11,10 +11,10 @@ internal class DataBaseSelectedTransitAgency @Inject constructor(
     private val database: TransitAgencyDatabase
 ) : SelectedTransitAgencyDataSource {
 
-    override fun saveTransitAgency(city: TransitAgency) {
+    override fun saveTransitAgency(transitAgency: TransitAgency) {
         val dao = database.transitAgencyDao()
         dao.deleteAll()
-        val entity = TransitAgencyEntity.fromCityPlan(city)
+        val entity = TransitAgencyEntity.fromTransitAgency(transitAgency)
         dao.insertTransitAgency(entity)
     }
 
@@ -22,7 +22,7 @@ internal class DataBaseSelectedTransitAgency @Inject constructor(
         val dao = database.transitAgencyDao()
         val cityPlanEntity = dao.getTransitAgencies().firstOrNull()
             ?: return ResponseApi.Error(SelectedCity.SELECTED_CITY_ERROR)
-        val cityPlan = TransitAgencyEntity.toCityPlan(cityPlanEntity)
+        val cityPlan = TransitAgencyEntity.toTransitAgency(cityPlanEntity)
         return ResponseApi.Success(cityPlan)
     }
 }

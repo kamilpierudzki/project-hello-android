@@ -5,13 +5,14 @@ import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.commons.framework.hilt.IoDispatcher
 import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
-import com.project.hello.transit.agency.framework.internal.model.api.toCityPlan
+import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyAPI
+import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyStopAPI
+import com.project.hello.transit.agency.framework.internal.model.api.toTransitAgency
 import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyPlanRepository
 import com.project.hello.transit.agency.framework.internal.usecase.SelectedTransitAgencyUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.cancel
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -36,18 +37,26 @@ internal class SelectedTransitAgencyUseCaseImpl @Inject constructor(
                 emit(selectedCityResponse)
             }
             is ResponseApi.Success -> {
-                val updatedSelectedCity: TransitAgency? =
+                val transitAgencies: List<TransitAgencyAPI> =
                     transitAgencyPlanRepository.getSupportedTransitAgenciesFileResources()
-                        .map { supportedCityFile -> transitAgencyDataResource.load(supportedCityFile) }
-                        .mapNotNull {
-                            it.data
-                        }
-                        .map { it.toCityPlan() }
-                        .firstOrNull {
-                            it.transitAgency == selectedTransitAgencyResponseApi.successData.transitAgency
-                        }
-                if (updatedSelectedCity != null) {
-                    emit(Response.Success(updatedSelectedCity))
+                        .map { transitAgencyDataResource.loadTransitAgency(it) }
+                        .mapNotNull { (it as? ResponseApi.Success)?.successData }
+
+                val transitAgencyStops: List<TransitAgencyStopAPI> =
+                    transitAgencyPlanRepository.getSupportedTransitAgencyStopsFileResources()
+                        .map { transitAgencyDataResource.loadTransitAgencyStop(it) }
+                        .mapNotNull { (it as? ResponseApi.Success)?.successData }
+
+                val supportedCities: List<TransitAgency> = transitAgencies
+                    .zip(transitAgencyStops) { t1, t2 -> t1 to t2 }
+                    .map { it.first.toTransitAgency(it.second) }
+
+                val updatedSelectedTransitAgency: TransitAgency? = supportedCities
+                    .firstOrNull {
+                        it.transitAgency == selectedTransitAgencyResponseApi.successData.transitAgency
+                    }
+                if (updatedSelectedTransitAgency != null) {
+                    emit(Response.Success(updatedSelectedTransitAgency))
                 } else {
                     emit(Response.Success(selectedTransitAgencyResponseApi.successData))
                 }

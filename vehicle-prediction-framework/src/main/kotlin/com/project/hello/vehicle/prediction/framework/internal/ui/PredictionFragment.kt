@@ -1,6 +1,6 @@
 package com.project.hello.vehicle.prediction.framework.internal.ui
 
-import android.Manifest
+import android.Manifest.permission.*
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,14 +9,11 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
-import android.Manifest.permission.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.project.hello.transit.agency.framework.api.TransitAgencyPickViewModel
-import com.project.hello.transit.agency.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.commons.framework.ui.showBinaryDialog
 import com.project.hello.commons.framework.ui.showInformationDialog
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
@@ -24,13 +21,15 @@ import com.project.hello.commons.framework.viewmodel.ViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelType
 import com.project.hello.commons.framework.viewmodel.externalViewModels
 import com.project.hello.country.api.ResourceCountryCharacters
+import com.project.hello.transit.agency.framework.api.TransitAgencyPickViewModel
+import com.project.hello.transit.agency.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
-import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModel
-import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModelInitialData
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis
 import com.project.hello.vehicle.prediction.framework.internal.fps.FpsCounterManager
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
+import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModel
+import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModelInitialData
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -53,7 +52,7 @@ internal class PredictionFragment : Fragment() {
     @ViewModelProvider(ViewModelType.ACTIVITY)
     lateinit var transitAgencyPickViewModelProvider: ExternalViewModelProvider<TransitAgencyPickViewModel>
 
-    private val cityPickViewModel by externalViewModels {
+    private val transitAgencyPickViewModel by externalViewModels {
         transitAgencyPickViewModelProvider
     }
 
@@ -119,12 +118,11 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun passInitialInfoToViewModel() {
-        cityPickViewModel.currentlySelectedTransitAgency?.let { selected ->
+        transitAgencyPickViewModel.currentlySelectedTransitAgency?.let { selected ->
             val initialData = PredictionViewModelInitialData(
                 targetVehicleTypes = initialVehicleData.vehicleTypes,
                 countryCharacters = resourceCountryCharacters.get(),
                 selectedTransitAgency = selected,
-                transitAgencyStop = null// todo
             )
             predictionViewModel.setInitialData(initialData)
         }
@@ -222,12 +220,10 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun startTransitStationModule() {
-        android.util.Log.d("test123", "startTransitStationModule()")
-        // todo
+        predictionViewModel.startTransitStationModule()
     }
 
     private fun showExplanatoryWhyLocationPermissionIsRequired() {
-        android.util.Log.d("test123", "showExplanatoryWhyLocationPermissionIsRequired()")
         // todo
     }
 

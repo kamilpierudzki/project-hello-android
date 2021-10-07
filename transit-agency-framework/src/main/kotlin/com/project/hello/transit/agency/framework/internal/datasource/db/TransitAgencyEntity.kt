@@ -8,26 +8,32 @@ import com.project.hello.transit.agency.domain.model.TransitAgency
 internal data class TransitAgencyEntity(
     val transitAgency: String,
     val lastUpdateFormatted: String,
-    val trams: String,
-    val buses: String,
-    @PrimaryKey(autoGenerate = true) val cityPlanId: Int = 0
+    val tramLines: String,
+    val busLines: String,
+    val tramStations: String,
+    val busStations: String,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0
 ) {
     companion object {
-        fun fromCityPlan(transitAgency: TransitAgency): TransitAgencyEntity {
+        fun fromTransitAgency(transitAgency: TransitAgency): TransitAgencyEntity {
             return TransitAgencyEntity(
                 transitAgency = transitAgency.transitAgency,
                 lastUpdateFormatted = transitAgency.lastUpdateFormatted,
-                trams = TransitAgencyDatabaseConverters.linesToString(transitAgency.trams),
-                buses = TransitAgencyDatabaseConverters.linesToString(transitAgency.buses),
+                tramLines = TransitAgencyDatabaseConverters.linesToString(transitAgency.tramLines),
+                busLines = TransitAgencyDatabaseConverters.linesToString(transitAgency.busLines),
+                tramStations = TransitAgencyDatabaseConverters.stationsToString(transitAgency.tramStops),
+                busStations = TransitAgencyDatabaseConverters.stationsToString(transitAgency.busStops),
             )
         }
 
-        fun toCityPlan(transitAgencyEntity: TransitAgencyEntity) =
+        fun toTransitAgency(transitAgencyEntity: TransitAgencyEntity) =
             TransitAgency(
                 transitAgency = transitAgencyEntity.transitAgency,
                 lastUpdateFormatted = transitAgencyEntity.lastUpdateFormatted,
-                trams = TransitAgencyDatabaseConverters.stringToLines(transitAgencyEntity.trams),
-                buses = TransitAgencyDatabaseConverters.stringToLines(transitAgencyEntity.buses),
+                tramLines = TransitAgencyDatabaseConverters.stringToLines(transitAgencyEntity.tramLines),
+                busLines = TransitAgencyDatabaseConverters.stringToLines(transitAgencyEntity.busLines),
+                tramStops = TransitAgencyDatabaseConverters.stringToStops(transitAgencyEntity.tramStations),
+                busStops = TransitAgencyDatabaseConverters.stringToStops(transitAgencyEntity.busStations),
             )
     }
 }

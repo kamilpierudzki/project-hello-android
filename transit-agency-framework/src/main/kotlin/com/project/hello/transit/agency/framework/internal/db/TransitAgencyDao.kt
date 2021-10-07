@@ -15,6 +15,6 @@ internal interface TransitAgencyDao {
     fun deleteAll()
 
     @Transaction
-    @Query("SELECT * FROM TransitAgencyEntity ORDER BY cityPlanId ASC")
+    @Query("SELECT * FROM TransitAgencyEntity ORDER BY id ASC")
     fun getTransitAgencies(): List<TransitAgencyEntity>
 }

@@ -1,10 +1,16 @@
 package com.project.hello.vehicle.prediction.framework.internal.viewmodel
 
+import android.location.Location
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.project.hello.commons.domain.test.CoroutinesTestRule
 import com.project.hello.transit.agency.domain.VehicleType
 import com.project.hello.transit.agency.domain.model.Line
+import com.project.hello.transit.agency.domain.model.Stop
 import com.project.hello.transit.agency.domain.model.TransitAgency
+import com.project.hello.transit.station.framework.api.LocationUseCase
+import com.project.hello.transit.station.framework.api.TransitStationResult
+import com.project.hello.transit.station.framework.api.TransitStationUseCase
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.analysis.LineWithShare
@@ -13,6 +19,7 @@ import com.project.hello.vehicle.domain.timeout.TimeoutChecker
 import com.project.hello.vehicle.domain.timeout.TimeoutCheckerFactory
 import com.project.hello.vehicle.prediction.framework.internal.logger.PredictionConsoleLogger
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Rule
@@ -37,8 +44,10 @@ internal class PredictionViewModelTest {
     val transitAgency = TransitAgency(
         transitAgency = "A",
         lastUpdateFormatted = "",
-        listOf(tram1, tram2),
-        listOf(bus1, bus2)
+        tramLines = listOf(tram1, tram2),
+        busLines = listOf(bus1, bus2),
+        tramStops = emptyList(),
+        busStops = emptyList(),
     )
     val initialData = PredictionViewModelInitialData(
         listOf(VehicleType.TRAM, VehicleType.BUS),
@@ -54,21 +63,33 @@ internal class PredictionViewModelTest {
     val timeoutChecker: TimeoutChecker = mock {
         on { isTimeout() } doReturn false
     }
+
     val timeoutCheckerFactory: TimeoutCheckerFactory = mock {
         on { create() } doReturn timeoutChecker
     }
 
-    val tested = PredictionViewModel(
+    val mutableLocationUpdates = MutableLiveData<Location>()
+    val locationUseCase: LocationUseCase = mock {
+        on { locationUpdates } doReturn mutableLocationUpdates
+    }
+
+    val transitStationUseCase: TransitStationUseCase = mock()
+
+    fun tested() = PredictionViewModel(
         vehiclePrediction,
         buffering,
         countryCharactersEmitter,
         coroutinesTestRule.testDispatcher,
+        coroutinesTestRule.testDispatcher,
         predictionConsoleLogger,
-        timeoutCheckerFactory
+        timeoutCheckerFactory,
+        locationUseCase,
+        transitStationUseCase,
     )
 
     @Test
-    fun `when setInitialData is called then country characters are emitted`() =
+    fun `when setInitialData is called then country characters are emitted`() {
+        val tested = tested()
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // when
             tested.setInitialData(initialData)
@@ -76,9 +97,11 @@ internal class PredictionViewModelTest {
             // then
             verify(countryCharactersEmitter).emmit(initialData.countryCharacters)
         }
+    }
 
     @Test
-    fun `given initial data is set when processRecognisedTexts is called then city lines are stored internally`() =
+    fun `given initial data is set when processRecognisedTexts is called then city lines are stored internally`() {
+        val tested = tested()
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             tested.setInitialData(initialData)
@@ -97,9 +120,11 @@ internal class PredictionViewModelTest {
                 Assert.assertEquals(cityLines[3].number, "B2")
             }
         }
+    }
 
     @Test
-    fun `when processRecognisedTexts is called then vehicle prediction is called`() =
+    fun `when processRecognisedTexts is called then vehicle prediction is called`() {
+        val tested = tested()
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             tested.setInitialData(initialData)
@@ -110,9 +135,11 @@ internal class PredictionViewModelTest {
             // then
             verify(vehiclePrediction).predictLine(any(), any(), any())
         }
+    }
 
     @Test
-    fun `when processInput is called then predicted lines analysis in invoked`() =
+    fun `when processInput is called then predicted lines analysis in invoked`() {
+        val tested = tested()
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             tested.setInitialData(initialData)
@@ -123,9 +150,11 @@ internal class PredictionViewModelTest {
             // then
             verify(buffering).bufferedLine(any(), anyOrNull())
         }
+    }
 
     @Test
-    fun `given observing predictedNumberLabel, previousPrediction is NULL and bufferedLine is NULL when processInput is called then events are sent accordingly`() =
+    fun `given observing predictedNumberLabel, previousPrediction is NULL and bufferedLine is NULL when processInput is called then events are sent accordingly`() {
+        val tested = tested()
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(vehiclePrediction.predictLine(any(), any(), any())).thenReturn(null)
@@ -143,9 +172,11 @@ internal class PredictionViewModelTest {
             Assert.assertEquals(1, predictedNumberLabelEvents.size)
             Assert.assertEquals(PredictionLabelInfo.EMPTY, predictedNumberLabelEvents[0])
         }
+    }
 
     @Test
-    fun `given observing predictedNumberLabel, previousPrediction is NULL and bufferedLine is NOT NULL when processInput is called then events are sent accordingly`() =
+    fun `given observing predictedNumberLabel, previousPrediction is NULL and bufferedLine is NOT NULL when processInput is called then events are sent accordingly`() {
+        val tested = tested()
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(vehiclePrediction.predictLine(any(), any(), any())).thenReturn(tram1)
@@ -165,9 +196,11 @@ internal class PredictionViewModelTest {
             Assert.assertEquals(1, predictedNumberLabelEvents.size)
             Assert.assertEquals(tram1.number, predictedNumberLabelEvents[0].text)
         }
+    }
 
     @Test
-    fun `given observing predictedNumberLabel, previousPrediction is NOT NULL and bufferedLine is NULL when processInput is called then events are sent accordingly`() =
+    fun `given observing predictedNumberLabel, previousPrediction is NOT NULL and bufferedLine is NULL when processInput is called then events are sent accordingly`() {
+        val tested = tested()
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(vehiclePrediction.predictLine(any(), any(), any())).thenReturn(tram1)
@@ -192,9 +225,11 @@ internal class PredictionViewModelTest {
             Assert.assertEquals(1, predictedNumberLabelEvents.size)
             Assert.assertEquals(PredictionLabelInfo.EMPTY, predictedNumberLabelEvents[0])
         }
+    }
 
     @Test
-    fun `given observing predictedNumberLabel, previousPrediction is NOT NULL and bufferedLine is NOT NULL when processInput is called then events are sent accordingly`() =
+    fun `given observing predictedNumberLabel, previousPrediction is NOT NULL and bufferedLine is NOT NULL when processInput is called then events are sent accordingly`() {
+        val tested = tested()
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(vehiclePrediction.predictLine(any(), any(), any())).thenReturn(tram1)
@@ -216,9 +251,11 @@ internal class PredictionViewModelTest {
             // then
             Assert.assertEquals(0, predictedNumberLabelEvents.size)
         }
+    }
 
     @Test
-    fun `given confidence level is 84 when processInput is called then events are sent accordingly`() =
+    fun `given confidence level is 84 when processInput is called then events are sent accordingly`() {
+        val tested = tested()
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
             whenever(vehiclePrediction.predictLine(any(), any(), any())).thenReturn(tram1)
@@ -237,4 +274,59 @@ internal class PredictionViewModelTest {
             // then
             Assert.assertEquals(0, predictedNumberLabelEvents.size)
         }
+    }
+
+    @Test
+    fun `given initial data is provided when location update is received then transitStationUseCase is executed`() {
+        val tested = tested()
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+            tested.setInitialData(initialData)
+
+            // when
+            mutableLocationUpdates.postValue(Location(""))
+
+            // then
+            verify(transitStationUseCase).execute(any())
+        }
+    }
+
+    @Test
+    fun `given initial data is NOT provided when location update is received then transitStationUseCase is NOT executed`() {
+        val tested = tested()
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+
+            // when
+            mutableLocationUpdates.postValue(Location(""))
+
+            // then
+            verify(transitStationUseCase, never()).execute(any())
+        }
+    }
+
+    @Test
+    fun `given initial data is provided and transit station result is returned when location update is received then `() {
+        val tested = tested()
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+            val transitStationResult = TransitStationResult(
+                tramStops = listOf(Stop("X", listOf(tram1.number))),
+                busStops = emptyList(),
+            )
+            whenever(transitStationUseCase.execute(any()))
+                .thenReturn(flow { emit(transitStationResult) })
+            tested.setInitialData(initialData)
+
+            // when
+            mutableLocationUpdates.value = Location("")
+            tested.processRecognisedTexts(listOf("a"))
+
+            // then
+            val argCaptor = argumentCaptor<List<Line>> {
+                verify(vehiclePrediction).predictLine(any(), capture(), any())
+            }
+            Assert.assertEquals(listOf(tram1), argCaptor.firstValue)
+        }
+    }
 }

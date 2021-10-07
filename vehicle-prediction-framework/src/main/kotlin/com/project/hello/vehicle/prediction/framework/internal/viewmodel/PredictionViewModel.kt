@@ -1,11 +1,19 @@
 package com.project.hello.vehicle.prediction.framework.internal.viewmodel
 
+import android.location.Location
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.hello.commons.framework.hilt.DefaultDispatcher
+import com.project.hello.commons.framework.hilt.IoDispatcher
 import com.project.hello.transit.agency.domain.VehicleType
 import com.project.hello.transit.agency.domain.model.Line
-import com.project.hello.commons.framework.hilt.DefaultDispatcher
+import com.project.hello.transit.agency.domain.model.Stop
+import com.project.hello.transit.station.framework.api.LocationUseCase
+import com.project.hello.transit.station.framework.api.TransitStationData
+import com.project.hello.transit.station.framework.api.TransitStationResult
+import com.project.hello.transit.station.framework.api.TransitStationUseCase
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.analysis.LineWithShare
@@ -14,8 +22,10 @@ import com.project.hello.vehicle.domain.timeout.TimeoutCheckerFactory
 import com.project.hello.vehicle.prediction.framework.internal.logger.PredictionConsoleLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.atomic.AtomicReference
 import javax.inject.Inject
 
 const val PREDICTION_CONFIDENCE_LEVEL_THRESHOLD = 85
@@ -26,19 +36,50 @@ internal class PredictionViewModel @Inject constructor(
     private val buffering: Buffering,
     private val countryCharactersEmitter: CountryCharactersEmitter,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
+    @IoDispatcher private val ioDispather: CoroutineDispatcher,
     private val predictionConsoleLogger: PredictionConsoleLogger,
     private val timeoutCheckerFactory: TimeoutCheckerFactory,
+    private val locationUseCase: LocationUseCase,
+    private val transitStationUseCase: TransitStationUseCase,
 ) : ViewModel() {
 
     private val cityLines = CopyOnWriteArrayList<Line>()
+    private val initialData = AtomicReference<PredictionViewModelInitialData>()
+
     private var previousPrediction: Line? = null
+
+    private val locationObserver = Observer<Location> { location ->
+        viewModelScope.launch(ioDispather) {
+            initialData.get()?.selectedTransitAgency?.let { transitAgency ->
+                val data = TransitStationData(
+                    location = location,
+                    selectedTransitAgency = transitAgency
+                )
+                transitStationUseCase.execute(data).collect { transitStationResult ->
+                    updateCityLines(transitStationResult)
+                    predictionConsoleLogger.cityLinesAreUpdated()
+                }
+            }
+        }
+    }
 
     val predictedNumberLabel = MutableLiveData(PredictionLabelInfo.EMPTY)
     val newFrame = MutableLiveData<Unit>()
 
+    init {
+        observeLocationUpdates()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        locationUseCase.locationUpdates.removeObserver(locationObserver)
+        locationUseCase.dispose()
+    }
+
     fun setInitialData(initialData: PredictionViewModelInitialData) {
         countryCharactersEmitter.emmit(initialData.countryCharacters)
-        updateTransitAgencyLines(initialData)
+        this.initialData.set(initialData)
+        updateCityLines(TransitStationResult.EMPTY)
     }
 
     fun processRecognisedTexts(inputs: List<String>) {
@@ -46,9 +87,14 @@ internal class PredictionViewModel @Inject constructor(
             viewModelScope.launch(defaultDispatcher) {
                 val input = inputs.reduce { acc, text -> "$acc$text" }
                 predictionConsoleLogger.logRawRecognisedText(input)
+                predictionConsoleLogger.logUsedCityLines(cityLines)
                 processInput(input)
             }
         }
+    }
+
+    fun startTransitStationModule() {
+        locationUseCase.startLocationUpdates()
     }
 
     private fun processInput(input: String) {
@@ -119,20 +165,59 @@ internal class PredictionViewModel @Inject constructor(
         currentPrediction: Line
     ): Boolean = previousPrediction == currentPrediction
 
-    private fun updateTransitAgencyLines(initialData: PredictionViewModelInitialData) {
-        val selectedCityLines: List<Line>? = initialData.targetVehicleTypes
-            .takeIf { it.isNotEmpty() }
-            ?.flatMap {
-                when (it) {
-                    VehicleType.TRAM -> initialData.selectedTransitAgency.trams
-                    VehicleType.BUS -> initialData.selectedTransitAgency.buses
+    private fun updateCityLines(transitStationResult: TransitStationResult) {
+        val initialData = initialData.get()
+        if (initialData != null) {
+            val vehicleTypeCityLines = initialData.targetVehicleTypes
+                .flatMap {
+                    when (it) {
+                        VehicleType.TRAM -> initialData.selectedTransitAgency.tramLines
+                        VehicleType.BUS -> initialData.selectedTransitAgency.busLines
+                    }
+                }
+
+            val vehicleTransitStations = initialData.targetVehicleTypes
+                .flatMap {
+                    when (it) {
+                        VehicleType.TRAM -> transitStationResult.tramStops
+                        VehicleType.BUS -> transitStationResult.busStops
+                    }
+                }
+
+            val filteredLines = vehicleTypeCityLines
+                .asSequence()
+                .filter {
+                    shouldAllowLine(it, vehicleTransitStations)
+                }
+                .toList()
+
+
+            if (filteredLines.isNotEmpty()) {
+                cityLines.apply {
+                    clear()
+                    addAll(filteredLines)
                 }
             }
-        if (selectedCityLines != null) {
-            cityLines.apply {
-                clear()
-                addAll(selectedCityLines)
+        }
+    }
+
+    private fun shouldAllowLine(line: Line, stops: List<Stop>): Boolean {
+        if (stops.isEmpty()) {
+            return true
+        }
+
+        for (stop in stops) {
+            for (stopLine in stop.lines) {
+                val isTheSame = line.number == stopLine
+                if (isTheSame) {
+                    return true
+                }
             }
         }
+        return false
+    }
+
+    private fun observeLocationUpdates() {
+        locationUseCase.locationUpdates.observeForever(locationObserver)
     }
 }

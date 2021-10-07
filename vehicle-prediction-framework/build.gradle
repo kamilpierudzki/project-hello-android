@@ -59,4 +59,5 @@ dependencies {
     implementation project(path: ':transit-agency-framework')
     implementation project(path: ':country-resources-framework')
     implementation project(path: ':settings-framework')
+    implementation project(path: ':transit-station-framework')
 }

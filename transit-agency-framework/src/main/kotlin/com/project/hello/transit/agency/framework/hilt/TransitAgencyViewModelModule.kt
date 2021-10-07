@@ -3,11 +3,13 @@ package com.project.hello.transit.agency.framework.hilt
 import android.content.res.Resources
 import com.project.hello.transit.agency.domain.datasource.SelectedTransitAgencyDataSource
 import com.project.hello.transit.agency.domain.datasource.SupportedTransitAgenciesDataSource
+import com.project.hello.transit.agency.domain.datasource.SupportedTransitAgencyStopsDataSource
 import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
 import com.project.hello.transit.agency.domain.usecase.SupportedTransitAgenciesUseCaseErrorMapper
 import com.project.hello.transit.agency.framework.internal.datasource.db.DataBaseSelectedTransitAgency
 import com.project.hello.transit.agency.framework.internal.datasource.resources.TransitAgencyDataSource
 import com.project.hello.transit.agency.framework.internal.datasource.resources.implementation.RawResourcesSupportedTransitAgenciesDataSourceImpl
+import com.project.hello.transit.agency.framework.internal.datasource.resources.implementation.RawResourcesSupportedTransitAgencyStopsDataSourceImpl
 import com.project.hello.transit.agency.framework.internal.datasource.resources.implementation.RawResourcesTransitAgencyDataSourceImpl
 import com.project.hello.transit.agency.framework.internal.db.TransitAgencyDatabase
 import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyPlanRepository
@@ -56,6 +58,11 @@ internal abstract class TransitAgencyViewModelModule {
     @Binds
     abstract fun bindTransitAgencyPlanRepository(impl: TransitAgencyPlanRepositoryImpl):
             TransitAgencyPlanRepository
+
+    @Binds
+    abstract fun bindSupportedTransitAgencyStopsDataSource(
+        impl: RawResourcesSupportedTransitAgencyStopsDataSourceImpl
+    ): SupportedTransitAgencyStopsDataSource
 
     companion object {
         @Provides

@@ -22,4 +22,12 @@ internal class PredictionConsoleLoggerImpl @Inject constructor() : PredictionCon
     override fun logRawRecognisedText(recognisedText: String) {
         android.util.Log.d("test_raw", "raw text: $recognisedText")
     }
+
+    override fun logUsedCityLines(cityLines: List<Line>) {
+        android.util.Log.d("test_city_lines", "${cityLines.map { "$it\n" }}")
+    }
+
+    override fun cityLinesAreUpdated() {
+        android.util.Log.d("test_city_lines_updated", "---------CITY LINES UPDATED----------------------")
+    }
 }

@@ -8,4 +8,6 @@ interface PredictionConsoleLogger {
     fun logBufferedLine(buffered: LineWithShare?)
     fun logAnalysedResolution(width: Int, height: Int)
     fun logRawRecognisedText(recognisedText: String)
+    fun logUsedCityLines(cityLines: List<Line>)
+    fun cityLinesAreUpdated()
 }

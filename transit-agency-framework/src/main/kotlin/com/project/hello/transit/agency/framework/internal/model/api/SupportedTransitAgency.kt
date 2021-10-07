@@ -2,7 +2,7 @@ package com.project.hello.transit.agency.framework.internal.model.api
 
 import com.project.hello.transit.agency.framework.R
 
-internal enum class City(val file: Int) {
+internal enum class SupportedTransitAgency(val file: Int) {
     POZNAN(R.raw.mpk_poznan),
     KRAKOW(R.raw.mpk_krakow),
     WARSZAWA(R.raw.wtp_warszawa),

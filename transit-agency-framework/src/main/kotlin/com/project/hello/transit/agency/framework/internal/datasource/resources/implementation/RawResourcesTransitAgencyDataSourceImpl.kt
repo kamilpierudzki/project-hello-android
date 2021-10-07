@@ -6,17 +6,26 @@ import com.project.hello.transit.agency.framework.internal.datasource.resources.
 import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyAPI
 import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.commons.framework.resources.JsonResourceReader
+import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyStopAPI
 import javax.inject.Inject
 
 internal class RawResourcesTransitAgencyDataSourceImpl @Inject constructor(
     resources: Resources
 ) : TransitAgencyDataSource {
 
-    private val jsonResourceReader = JsonResourceReader(resources) { json ->
+    private val jsonTransitAgencyResourceReader = JsonResourceReader(resources) { json ->
         Gson().fromJson(json, TransitAgencyAPI::class.java)
     }
 
+    private val jsonTransitAgencyStopResourceReader = JsonResourceReader(resources) { json ->
+        Gson().fromJson(json, TransitAgencyStopAPI::class.java)
+    }
+
     override fun fetchTransitAgencyData(resFile: Int): ResponseApi<TransitAgencyAPI> {
-        return jsonResourceReader.readFile(resFile)
+        return jsonTransitAgencyResourceReader.readFile(resFile)
+    }
+
+    override fun fetchTransitAgencyStopData(resFile: Int): ResponseApi<TransitAgencyStopAPI> {
+        return jsonTransitAgencyStopResourceReader.readFile(resFile)
     }
 }

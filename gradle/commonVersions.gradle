@@ -40,4 +40,8 @@ ext {
     rxjava3_version = "3.0.0"
 
     annotation_version = "1.2.0"
+
+    play_services_location_version = "18.0.0"
+
+    retrofit_version = "2.9.0"
 }

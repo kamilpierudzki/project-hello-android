@@ -73,10 +73,12 @@ internal class TransitAgencySelectionUseCaseImplTest {
             Assert.assertEquals(cityPlan, cityPlanResponse.successData)
         }
 
-    private fun createTransitAgency(transitAgency: String): TransitAgency = TransitAgency(
+    private fun createTransitAgency(transitAgency: String) = TransitAgency(
         transitAgency = transitAgency,
         lastUpdateFormatted = "",
-        trams = emptyList(),
-        buses = emptyList()
+        tramLines = emptyList(),
+        busLines = emptyList(),
+        tramStops = emptyList(),
+        busStops = emptyList(),
     )
 }
