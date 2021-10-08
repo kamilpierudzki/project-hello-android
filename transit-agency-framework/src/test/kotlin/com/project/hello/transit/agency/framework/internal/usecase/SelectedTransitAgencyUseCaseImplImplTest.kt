@@ -1,18 +1,16 @@
 package com.project.hello.transit.agency.framework.internal.usecase
 
-import com.project.hello.transit.agency.domain.model.TransitAgency
-import com.project.hello.transit.agency.framework.internal.model.api.LineAPI
-import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyAPI
-import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyPlanRepository
-import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyDataResource
-import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
-import com.project.hello.transit.agency.framework.internal.usecase.implementation.SelectedTransitAgencyUseCaseImpl
 import com.project.hello.commons.domain.data.Response
 import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.commons.domain.test.CoroutinesTestRule
-import com.project.hello.transit.agency.domain.model.Stop
+import com.project.hello.transit.agency.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
+import com.project.hello.transit.agency.framework.internal.model.api.LineAPI
 import com.project.hello.transit.agency.framework.internal.model.api.StopAPI
-import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyStopAPI
+import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyAPI
+import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyDataResource
+import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyPlanRepository
+import com.project.hello.transit.agency.framework.internal.usecase.implementation.SelectedTransitAgencyUseCaseImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runBlockingTest
@@ -38,21 +36,11 @@ internal class SelectedTransitAgencyUseCaseImplImplTest {
         trams = listOf(LineAPI("x", "y"))
     )
     val transitAgencyApi2 = createTransitAgencyApi("b")
-    val transitAgencyStopAPI1 = TransitAgencyStopAPI(
-        "q", 1, "", 1,
-        listOf(StopAPI("", listOf("x"))), emptyList()
-    )
-    val transitAgencyStopAPI2 = TransitAgencyStopAPI(
-        "q", 1, "", 1,
-        emptyList(), emptyList()
-    )
 
     val successfulResource: TransitAgencyDataResource = mock {
         on { getCurrentlySelectedTransitAgency() } doReturn ResponseApi.Success(transitAgency)
         on { loadTransitAgency(1) } doReturn ResponseApi.Success(transitAgencyApi1)
         on { loadTransitAgency(2) } doReturn ResponseApi.Success(transitAgencyApi2)
-        on { loadTransitAgencyStop(1) } doReturn ResponseApi.Success(transitAgencyStopAPI1)
-        on { loadTransitAgencyStop(2) } doReturn ResponseApi.Success(transitAgencyStopAPI2)
     }
     val failedResource: TransitAgencyDataResource = mock {
         on { getCurrentlySelectedTransitAgency() } doReturn ResponseApi.Error("error")
@@ -128,8 +116,6 @@ internal class SelectedTransitAgencyUseCaseImplImplTest {
                 .thenReturn(successfulResource)
             whenever(transitAgencyPlanRepository.getSupportedTransitAgenciesFileResources())
                 .thenReturn(listOf(1, 2))
-            whenever(transitAgencyPlanRepository.getSupportedTransitAgencyStopsFileResources())
-                .thenReturn(listOf(1, 2))
 
             // when
             val events = mutableListOf<Response<TransitAgency>>()
@@ -150,7 +136,9 @@ internal class SelectedTransitAgencyUseCaseImplImplTest {
         lastUpdateTimestampInMillis = 0,
         lastUpdateFormatted = "",
         dataVersion = 1,
-        trams = trams,
-        buses = emptyList()
+        tramLines = trams,
+        busLines = emptyList(),
+        tramStops = emptyList(),
+        busStops = emptyList()
     )
 }

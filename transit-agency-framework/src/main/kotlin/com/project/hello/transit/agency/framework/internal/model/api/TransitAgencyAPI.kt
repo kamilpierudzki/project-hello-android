@@ -9,15 +9,17 @@ data class TransitAgencyAPI(
     val lastUpdateTimestampInMillis: Long,
     val lastUpdateFormatted: String,
     val dataVersion: Int,
-    val trams: List<LineAPI>,
-    val buses: List<LineAPI>
+    val tramLines: List<LineAPI>,
+    val busLines: List<LineAPI>,
+    val tramStops: List<StopAPI>,
+    val busStops: List<StopAPI>,
 )
 
-fun TransitAgencyAPI.toTransitAgency(transitAgencyStopAPI: TransitAgencyStopAPI) = TransitAgency(
+fun TransitAgencyAPI.toTransitAgency() = TransitAgency(
     transitAgency = transitAgency,
     lastUpdateFormatted = lastUpdateFormatted,
-    tramLines = trams.map { it.toLine() },
-    busLines = buses.map { it.toLine() },
-    tramStops = transitAgencyStopAPI.tramStops.map { it.toStop() },
-    busStops = transitAgencyStopAPI.busStops.map { it.toStop() },
+    tramLines = tramLines.map { it.toLine() },
+    busLines = busLines.map { it.toLine() },
+    tramStops = tramStops.map { it.toStop() },
+    busStops = busStops.map { it.toStop() },
 )

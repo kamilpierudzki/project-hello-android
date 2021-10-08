@@ -5,8 +5,6 @@ import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.commons.framework.hilt.IoDispatcher
 import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
-import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyAPI
-import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyStopAPI
 import com.project.hello.transit.agency.framework.internal.model.api.toTransitAgency
 import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyPlanRepository
 import com.project.hello.transit.agency.framework.internal.usecase.SelectedTransitAgencyUseCase
@@ -37,21 +35,13 @@ internal class SelectedTransitAgencyUseCaseImpl @Inject constructor(
                 emit(selectedCityResponse)
             }
             is ResponseApi.Success -> {
-                val transitAgencies: List<TransitAgencyAPI> =
+                val transitAgencies =
                     transitAgencyPlanRepository.getSupportedTransitAgenciesFileResources()
                         .map { transitAgencyDataResource.loadTransitAgency(it) }
                         .mapNotNull { (it as? ResponseApi.Success)?.successData }
+                        .map { it.toTransitAgency() }
 
-                val transitAgencyStops: List<TransitAgencyStopAPI> =
-                    transitAgencyPlanRepository.getSupportedTransitAgencyStopsFileResources()
-                        .map { transitAgencyDataResource.loadTransitAgencyStop(it) }
-                        .mapNotNull { (it as? ResponseApi.Success)?.successData }
-
-                val supportedCities: List<TransitAgency> = transitAgencies
-                    .zip(transitAgencyStops) { t1, t2 -> t1 to t2 }
-                    .map { it.first.toTransitAgency(it.second) }
-
-                val updatedSelectedTransitAgency: TransitAgency? = supportedCities
+                val updatedSelectedTransitAgency: TransitAgency? = transitAgencies
                     .firstOrNull {
                         it.transitAgency == selectedTransitAgencyResponseApi.successData.transitAgency
                     }
