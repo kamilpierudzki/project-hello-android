@@ -17,4 +17,6 @@
     <string name="action_settings">Settings</string>
     <string name="camera_permission_explanatory_title">Why a camera is required?</string>
     <string name="camera_permission_explanatory_message">The basis for recognizing the line number of a public transportation vehicle is the image from the camera. Without it, the application will not be able to recognize the line number. Do you want to try again?</string>
+    <string name="location_permission_explanatory_title">Why location is required?</string>
+    <string name="location_permission_explanatory_message">The location is needed to determine the stop where the user currently is. Determining the stop increases the accuracy of the results. Do you want to try again?</string>
 </resources>

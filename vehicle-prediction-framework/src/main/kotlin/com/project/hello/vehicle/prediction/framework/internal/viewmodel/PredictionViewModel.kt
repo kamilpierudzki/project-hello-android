@@ -65,6 +65,7 @@ internal class PredictionViewModel @Inject constructor(
 
     val predictedNumberLabel = MutableLiveData(PredictionLabelInfo.EMPTY)
     val newFrame = MutableLiveData<Unit>()
+    val locationSettingsSatisfactionEvent = locationUseCase.locationSettingsSatisfactionEvent
 
     init {
         observeLocationUpdates()
@@ -83,11 +84,11 @@ internal class PredictionViewModel @Inject constructor(
     }
 
     fun processRecognisedTexts(inputs: List<String>) {
+        predictionConsoleLogger.logUsedCityLines(cityLines)
         if (inputs.isNotEmpty() && cityLines.isNotEmpty()) {
             viewModelScope.launch(defaultDispatcher) {
                 val input = inputs.reduce { acc, text -> "$acc$text" }
                 predictionConsoleLogger.logRawRecognisedText(input)
-                predictionConsoleLogger.logUsedCityLines(cityLines)
                 processInput(input)
             }
         }

@@ -1,6 +1,7 @@
 package com.project.hello.vehicle.prediction.framework.internal.ui
 
 import android.Manifest.permission.*
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.gms.location.LocationSettingsRequest
+import com.project.hello.commons.framework.livedata.Event
 import com.project.hello.commons.framework.ui.showBinaryDialog
 import com.project.hello.commons.framework.ui.showInformationDialog
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
@@ -23,6 +26,7 @@ import com.project.hello.commons.framework.viewmodel.externalViewModels
 import com.project.hello.country.api.ResourceCountryCharacters
 import com.project.hello.transit.agency.framework.api.TransitAgencyPickViewModel
 import com.project.hello.transit.agency.framework.internal.datamodel.VehicleDataParcelable
+import com.project.hello.transit.station.framework.api.LocationSettingsSatisfaction
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis
@@ -32,6 +36,8 @@ import com.project.hello.vehicle.prediction.framework.internal.viewmodel.Predict
 import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModelInitialData
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
+private const val REQUEST_CHECK_SETTINGS = 1806
 
 @AndroidEntryPoint
 internal class PredictionFragment : Fragment() {
@@ -224,7 +230,17 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun showExplanatoryWhyLocationPermissionIsRequired() {
-        // todo
+        showBinaryDialog(
+            requireContext(),
+            R.string.location_permission_explanatory_title,
+            R.string.location_permission_explanatory_message,
+            positiveAction = {
+                processLocationPermissionLogic()
+            },
+            negativeAction = {
+                goBackToPreviousScreen()
+            }
+        )
     }
 
     private fun isLocationPermissionGranted(): Boolean =
@@ -237,6 +253,7 @@ internal class PredictionFragment : Fragment() {
         if (isLocationPermissionGranted()) {
             startCameraAnalysis()
             startTransitStationModule()
+            observeLocationSettingsSatisfaction()
         } else {
             requestLocationPermission()
         }
@@ -246,5 +263,24 @@ internal class PredictionFragment : Fragment() {
         requestLocationPermissionLauncher.launch(
             arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
         )
+    }
+
+    private fun observeLocationSettingsSatisfaction() {
+        predictionViewModel.locationSettingsSatisfactionEvent.observe(viewLifecycleOwner) { event ->
+            when (val result = event.consumeAndReturnOrNull()) {
+                is LocationSettingsSatisfaction.NotSatisfied -> {
+                    try {
+                        val exception = result.exception
+                        exception.startResolutionForResult(
+                            requireActivity(),
+                            REQUEST_CHECK_SETTINGS
+                        )
+                        goBackToPreviousScreen()
+                    } catch (sendEx: IntentSender.SendIntentException) {
+                        // Ignore the error.
+                    }
+                }
+            }
+        }
     }
 }

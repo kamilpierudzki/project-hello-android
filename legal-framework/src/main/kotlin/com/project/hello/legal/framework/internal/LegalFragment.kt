@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.project.hello.commons.framework.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
 import com.project.hello.commons.framework.viewmodel.ViewModelProvider
@@ -78,7 +77,7 @@ internal class LegalFragment : Fragment() {
 
     private fun observeAcceptationResult() {
         legalViewModel.latestAvailableLegalSavedResult.observe(viewLifecycleOwner, { event ->
-            when (event.consumeAndReturn()) {
+            when (event.consumeAndReturnOrNull()) {
                 is LatestAvailableLegalResult.Error -> {
                     setProgressVisibility(false)
                 }

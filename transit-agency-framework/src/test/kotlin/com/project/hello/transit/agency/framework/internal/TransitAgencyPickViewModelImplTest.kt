@@ -102,10 +102,10 @@ internal class TransitAgencyPickViewModelImplTest {
             lateinit var selection1: TransitAgencySelection.Selected
             lateinit var selection2: TransitAgencySelection.Selected
             tested.currentlySelectedTransitAgencyEvent.observeForever {
-                selection1 = it.consumeAndReturn() as TransitAgencySelection.Selected
+                selection1 = it.consumeAndReturnOrNull() as TransitAgencySelection.Selected
             }
             tested.currentlySelectedTransitAgencyChangedEvent.observeForever {
-                selection2 = it.consumeAndReturn() as TransitAgencySelection.Selected
+                selection2 = it.consumeAndReturnOrNull() as TransitAgencySelection.Selected
             }
 
             // then

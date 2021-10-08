@@ -5,7 +5,7 @@ class Event<T>(val content: T) {
     var consumed = false
         private set
 
-    fun consumeAndReturn(): T? =
+    fun consumeAndReturnOrNull(): T? =
         if (consumed) {
             null
         } else {

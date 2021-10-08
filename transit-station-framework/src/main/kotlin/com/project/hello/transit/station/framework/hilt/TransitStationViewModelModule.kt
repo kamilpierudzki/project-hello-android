@@ -3,6 +3,7 @@ package com.project.hello.transit.station.framework.hilt
 import android.content.Context
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.SettingsClient
 import com.project.hello.transit.station.framework.api.LocationUseCase
 import com.project.hello.transit.station.framework.api.TransitStationUseCase
 import com.project.hello.transit.station.framework.internal.*
@@ -70,6 +71,13 @@ internal abstract class TransitStationViewModelModule {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             return retrofit.create(GoogleMapsService::class.java)
+        }
+
+        @Provides
+        fun provideSettingsClient(
+            @ApplicationContext appContext: Context
+        ): SettingsClient {
+            return LocationServices.getSettingsClient(appContext)
         }
     }
 }
