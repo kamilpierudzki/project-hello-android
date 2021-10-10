@@ -27,7 +27,7 @@ internal class PredictionConsoleLoggerImpl @Inject constructor() : PredictionCon
         android.util.Log.d("test_city_lines", "${cityLines.map { "$it\n" }}")
     }
 
-    override fun cityLinesAreUpdated() {
-        android.util.Log.d("test_city_lines_updated", "---------CITY LINES UPDATED----------------------")
+    override fun cityLinesAreUpdated(size: Int) {
+        android.util.Log.d("test_city_lines_updated", "---------CITY LINES UPDATED-------- $size --------------")
     }
 }

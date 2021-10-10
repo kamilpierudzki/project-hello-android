@@ -9,6 +9,7 @@ import javax.inject.Inject
 
 
 internal class NearbySearchOptionsFactoryImpl @Inject constructor() : NearbySearchOptionsFactory {
+
     override fun create(location: Location) = mapOf(
         ParamName.LOCATION_NAME to "${location.latitude},${location.longitude}",
         ParamName.RADIUS_NAME to ParamValue.RADIUS_VALUE,

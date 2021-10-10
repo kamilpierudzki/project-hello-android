@@ -15,8 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.gms.location.LocationSettingsRequest
-import com.project.hello.commons.framework.livedata.Event
 import com.project.hello.commons.framework.ui.showBinaryDialog
 import com.project.hello.commons.framework.ui.showInformationDialog
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
@@ -30,7 +28,6 @@ import com.project.hello.transit.station.framework.api.LocationSettingsSatisfact
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis
-import com.project.hello.vehicle.prediction.framework.internal.fps.FpsCounterManager
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModel
 import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModelInitialData
@@ -62,6 +59,9 @@ internal class PredictionFragment : Fragment() {
         transitAgencyPickViewModelProvider
     }
 
+    @Inject
+    lateinit var cityLinesInfo: CityLinesInfo
+
     private val safeArgs: PredictionFragmentArgs by navArgs()
     private val initialVehicleData: VehicleDataParcelable get() = safeArgs.vehicleDataParcelable
     private lateinit var binding: PredictionFragmentBinding
@@ -90,6 +90,8 @@ internal class PredictionFragment : Fragment() {
         initRequestCameraPermissionLauncher()
         initRequestLocationPermissionLauncher()
         processCameraPermissionLogic()
+        observeCityLinesInfoEvent()
+        observeCityLinesInfo()
     }
 
     override fun onDestroyView() {
@@ -282,5 +284,15 @@ internal class PredictionFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun observeCityLinesInfoEvent() {
+        predictionViewModel.cityLinesEvent.observe(viewLifecycleOwner, {
+            cityLinesInfo.updateCityLinesInfo(it)
+        })
+    }
+
+    private fun observeCityLinesInfo() {
+        cityLinesInfo.observeCityLinesInfoUiChanges(viewLifecycleOwner, binding.cityLinesCount)
     }
 }

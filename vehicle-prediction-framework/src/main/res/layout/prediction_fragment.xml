@@ -43,6 +43,20 @@
         tools:text="10" />
 
     <TextView
+        android:id="@+id/city_lines_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@android:color/white"
+        android:importantForAccessibility="no"
+        android:textColor="@android:color/black"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fps_counter"
+        tools:text="10" />
+
+    <TextView
         android:id="@+id/predicted_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

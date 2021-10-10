@@ -1,16 +1,15 @@
-package com.project.hello.vehicle.prediction.framework.internal.fps.implementation
+package com.project.hello.vehicle.prediction.framework.internal.ui
 
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import com.project.hello.vehicle.domain.FpsCounter
-import com.project.hello.vehicle.prediction.framework.internal.fps.FpsCounterManager
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 @FragmentScoped
-internal class FpsCounterManagerImpl @Inject constructor() : FpsCounterManager {
+internal class DebugFpsCounterManagerImpl @Inject constructor() : FpsCounterManager {
 
     private val fpsCounter = FpsCounter(::onFpsChanged)
     private val currentValue = MutableLiveData(0)

@@ -1,10 +1,7 @@
 package com.project.hello.vehicle.prediction.framework.internal.viewmodel
 
 import android.location.Location
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.project.hello.commons.framework.hilt.DefaultDispatcher
 import com.project.hello.commons.framework.hilt.IoDispatcher
 import com.project.hello.transit.agency.domain.VehicleType
@@ -56,16 +53,19 @@ internal class PredictionViewModel @Inject constructor(
                     selectedTransitAgency = transitAgency
                 )
                 transitStationUseCase.execute(data).collect { transitStationResult ->
-                    updateCityLines(transitStationResult)
-                    predictionConsoleLogger.cityLinesAreUpdated()
+                    updateAndPostCityLines(transitStationResult)
+                    predictionConsoleLogger.cityLinesAreUpdated(cityLines.size)
                 }
             }
         }
     }
 
+    private val _cityLinesEvent = MutableLiveData<List<Line>>()
+
     val predictedNumberLabel = MutableLiveData(PredictionLabelInfo.EMPTY)
     val newFrame = MutableLiveData<Unit>()
     val locationSettingsSatisfactionEvent = locationUseCase.locationSettingsSatisfactionEvent
+    val cityLinesEvent = _cityLinesEvent
 
     init {
         observeLocationUpdates()
@@ -80,7 +80,7 @@ internal class PredictionViewModel @Inject constructor(
     fun setInitialData(initialData: PredictionViewModelInitialData) {
         countryCharactersEmitter.emmit(initialData.countryCharacters)
         this.initialData.set(initialData)
-        updateCityLines(TransitStationResult.EMPTY)
+        updateAndPostCityLines(TransitStationResult.EMPTY)
     }
 
     fun processRecognisedTexts(inputs: List<String>) {
@@ -166,7 +166,7 @@ internal class PredictionViewModel @Inject constructor(
         currentPrediction: Line
     ): Boolean = previousPrediction == currentPrediction
 
-    private fun updateCityLines(transitStationResult: TransitStationResult) {
+    private fun updateAndPostCityLines(transitStationResult: TransitStationResult) {
         val initialData = initialData.get()
         if (initialData != null) {
             val vehicleTypeCityLines = initialData.targetVehicleTypes
@@ -198,6 +198,7 @@ internal class PredictionViewModel @Inject constructor(
                     clear()
                     addAll(filteredLines)
                 }
+                _cityLinesEvent.postValue(cityLines)
             }
         }
     }

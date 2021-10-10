@@ -1,4 +1,4 @@
-package com.project.hello.vehicle.prediction.framework.internal.fps.implementation
+package com.project.hello.vehicle.prediction.framework.internal.ui
 
 import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -10,14 +10,14 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 
-internal class FpsCounterManagerImplTest {
+internal class DebugFpsCounterManagerImplTest {
 
     @get:Rule
     val liveDataRule = InstantTaskExecutorRule()
 
     val lifecycleOwner = TestLifecycle.create()
 
-    val tested = FpsCounterManagerImpl()
+    val tested = DebugFpsCounterManagerImpl()
 
     @Test
     fun `test 1`() {

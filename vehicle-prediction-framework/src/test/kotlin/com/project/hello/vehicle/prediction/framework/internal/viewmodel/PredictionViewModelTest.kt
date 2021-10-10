@@ -3,6 +3,7 @@ package com.project.hello.vehicle.prediction.framework.internal.viewmodel
 import android.location.Location
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.project.hello.commons.domain.test.CoroutinesTestRule
 import com.project.hello.transit.agency.domain.VehicleType
 import com.project.hello.transit.agency.domain.model.Line
@@ -306,7 +307,7 @@ internal class PredictionViewModelTest {
     }
 
     @Test
-    fun `given initial data is provided and transit station result is returned when location update is received then `() {
+    fun `given initial data is provided and transit station result is returned when location update is received then city lines are updated`() {
         val tested = tested()
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
@@ -327,6 +328,54 @@ internal class PredictionViewModelTest {
                 verify(vehiclePrediction).predictLine(any(), capture(), any())
             }
             Assert.assertEquals(listOf(tram1), argCaptor.firstValue)
+        }
+    }
+
+    @Test
+    fun `given observing city lines and transit station result is returned when initial data is provided then city lines are posted`() {
+        val tested = tested()
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+            val transitStationResult = TransitStationResult(
+                tramStops = listOf(Stop("X", listOf(tram1.number))),
+                busStops = emptyList(),
+            )
+            whenever(transitStationUseCase.execute(any()))
+                .thenReturn(flow { emit(transitStationResult) })
+            val events = mutableListOf<List<Line>>()
+            tested.cityLinesEvent.observeForever { events.add(it) }
+
+            // when
+            tested.setInitialData(initialData)
+
+            // then
+            Assert.assertEquals(1, events.size)
+            Assert.assertEquals(4, events[0].size)
+        }
+    }
+
+    @Test
+    fun `given observing city lines and transit station result is returned when location update is updated then city lines are posted`() {
+        val tested = tested()
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            // given
+            val transitStationResult = TransitStationResult(
+                tramStops = listOf(Stop("X", listOf(tram1.number))),
+                busStops = emptyList(),
+            )
+            whenever(transitStationUseCase.execute(any()))
+                .thenReturn(flow { emit(transitStationResult) })
+            val events = mutableListOf<List<Line>>()
+            tested.cityLinesEvent.observeForever { events.add(it) }
+            tested.setInitialData(initialData)
+
+            // when
+            events.clear()
+            mutableLocationUpdates.value = Location("")
+
+            // then
+            Assert.assertEquals(1, events.size)
+            Assert.assertEquals(1, events[0].size)
         }
     }
 }

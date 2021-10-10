@@ -1,4 +1,4 @@
-package com.project.hello.vehicle.prediction.framework.internal.fps
+package com.project.hello.vehicle.prediction.framework.internal.ui
 
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
