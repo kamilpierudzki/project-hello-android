@@ -23,7 +23,8 @@ internal class DebugCityLinesInfoImpl @Inject constructor() : CityLinesInfo {
     ) {
         label.visibility = View.VISIBLE
         cityLinesInfo.observe(viewLifecycleOwner, { lines ->
-            label.text = "(${lines.size}), ${lines.map { it.number }.distinct()}"
+            val data = lines.map { it.number }.distinct()
+            label.text = "(${data.size}), $data"
         })
     }
 }
