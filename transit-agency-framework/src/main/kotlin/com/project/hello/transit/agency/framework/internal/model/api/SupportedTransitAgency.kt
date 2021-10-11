@@ -18,4 +18,5 @@ internal enum class SupportedTransitAgency(val file: Int) {
     OLSZTYN(R.raw.zdzit_olsztyn),
     GORNOSLASKO_ZAGLEBOWSKA_METROPOLIA(R.raw.gzm),
     KOLOBRZEG(R.raw.km_kolobrzeg),
+    MPK_SWIDNICA(R.raw.mpk_swidnica)
 }
