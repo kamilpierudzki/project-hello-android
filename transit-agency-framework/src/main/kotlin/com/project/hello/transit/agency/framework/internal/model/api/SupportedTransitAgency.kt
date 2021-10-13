@@ -20,4 +20,5 @@ internal enum class SupportedTransitAgency(val file: Int) {
     KOLOBRZEG(R.raw.km_kolobrzeg),
     MPK_SWIDNICA(R.raw.mpk_swidnica),
     BIELSKO_BIALA(R.raw.mzk_bielsko_biala),
+    MZK_GORZOW_WLKP(R.raw.mzk_gorzow_wielkopolski),
 }
