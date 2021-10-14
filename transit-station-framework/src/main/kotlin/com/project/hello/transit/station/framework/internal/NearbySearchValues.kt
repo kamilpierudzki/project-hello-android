@@ -9,7 +9,7 @@ object NearbySearchValues {
     }
 
     object ParamValue {
-        const val RADIUS_VALUE = "25"
+        const val RADIUS_VALUE = "50"
         const val PLACE_TYPE_VALUE = "transit_station"
     }
 }
