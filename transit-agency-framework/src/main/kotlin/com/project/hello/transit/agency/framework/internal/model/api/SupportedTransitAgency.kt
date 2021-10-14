@@ -16,9 +16,10 @@ internal enum class SupportedTransitAgency(val file: Int) {
     SLUPSK(R.raw.zim_slupsk),
     CZESTOCHOWA(R.raw.czestochowa),
     OLSZTYN(R.raw.zdzit_olsztyn),
-    GORNOSLASKO_ZAGLEBOWSKA_METROPOLIA(R.raw.gzm),
+    GORNOSLASKO_ZAGLEBOWSKA_METROPOLIA(R.raw.gzm_ztm),
     KOLOBRZEG(R.raw.km_kolobrzeg),
     MPK_SWIDNICA(R.raw.mpk_swidnica),
     BIELSKO_BIALA(R.raw.mzk_bielsko_biala),
     MZK_GORZOW_WLKP(R.raw.mzk_gorzow_wielkopolski),
+    ZTM_KIELCE(R.raw.ztm_kielce),
 }
