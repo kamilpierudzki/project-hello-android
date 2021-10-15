@@ -44,4 +44,6 @@ ext {
     play_services_location_version = "18.0.0"
 
     retrofit_version = "2.9.0"
+
+    androidx_test_version = "1.4.0"
 }

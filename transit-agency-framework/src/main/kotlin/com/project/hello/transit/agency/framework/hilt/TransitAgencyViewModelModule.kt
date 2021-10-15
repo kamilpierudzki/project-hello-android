@@ -5,6 +5,8 @@ import com.project.hello.transit.agency.domain.datasource.SelectedTransitAgencyD
 import com.project.hello.transit.agency.domain.datasource.SupportedTransitAgenciesDataSource
 import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
 import com.project.hello.transit.agency.domain.usecase.SupportedTransitAgenciesUseCaseErrorMapper
+import com.project.hello.transit.agency.framework.internal.cryptography.Decoding
+import com.project.hello.transit.agency.framework.internal.cryptography.implementation.DecodingImpl
 import com.project.hello.transit.agency.framework.internal.datasource.db.DataBaseSelectedTransitAgency
 import com.project.hello.transit.agency.framework.internal.datasource.resources.TransitAgencyDataSource
 import com.project.hello.transit.agency.framework.internal.datasource.resources.implementation.RawResourcesSupportedTransitAgenciesDataSourceImpl
@@ -57,10 +59,14 @@ internal abstract class TransitAgencyViewModelModule {
     abstract fun bindTransitAgencyPlanRepository(impl: TransitAgencyPlanRepositoryImpl):
             TransitAgencyPlanRepository
 
+    @Binds
+    abstract fun bindDecoding(impl: DecodingImpl): Decoding
+
+    @Binds
+    abstract fun bindTransitAgencyDataSource(impl: RawResourcesTransitAgencyDataSourceImpl):
+            TransitAgencyDataSource
+
     companion object {
-        @Provides
-        fun provideCityDataSource(resources: Resources): TransitAgencyDataSource =
-            RawResourcesTransitAgencyDataSourceImpl(resources)
 
         @Provides
         fun provideSelectedCityDataSource(

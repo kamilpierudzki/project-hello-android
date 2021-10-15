@@ -19,17 +19,17 @@ class JsonResourceReader<T>(
         val inputStreamReader = InputStreamReader(inputStream)
 
         val bufferedReader = BufferedReader(inputStreamReader)
-        val json: String = bufferedReader.readText()
+        val raw_text: String = bufferedReader.readText()
         bufferedReader.close()
         inputStreamReader.close()
         inputStream.close()
 
         return try {
-            val data: T? = objectCreator.invoke(json)
+            val data: T? = objectCreator.invoke(raw_text)
             if (data != null) {
                 ResponseApi.Success(data)
             } else {
-                ResponseApi.Error("json is empty")
+                ResponseApi.Error("raw text is empty")
             }
         } catch (exception: JsonSyntaxException) {
             ResponseApi.Error(exception.message ?: "")
