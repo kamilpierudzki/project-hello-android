@@ -22,4 +22,5 @@ internal enum class SupportedTransitAgency(val file: Int) {
     BIELSKO_BIALA(R.raw.mzk_bielsko_biala),
     MZK_GORZOW_WLKP(R.raw.mzk_gorzow_wielkopolski),
     ZTM_KIELCE(R.raw.ztm_kielce),
+    KM_PLOCK(R.raw.km_plock),
 }
