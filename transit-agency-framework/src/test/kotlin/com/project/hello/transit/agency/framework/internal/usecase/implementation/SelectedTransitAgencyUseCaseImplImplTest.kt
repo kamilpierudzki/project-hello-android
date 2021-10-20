@@ -1,16 +1,14 @@
-package com.project.hello.transit.agency.framework.internal.usecase
+package com.project.hello.transit.agency.framework.internal.usecase.implementation
 
 import com.project.hello.commons.domain.data.Response
 import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.commons.domain.test.CoroutinesTestRule
+import com.project.hello.transit.agency.domain.model.Line
 import com.project.hello.transit.agency.domain.model.TransitAgency
+import com.project.hello.transit.agency.domain.repository.TransitAgencyPlanRepository
 import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
 import com.project.hello.transit.agency.framework.internal.model.api.LineAPI
-import com.project.hello.transit.agency.framework.internal.model.api.StopAPI
 import com.project.hello.transit.agency.framework.internal.model.api.TransitAgencyAPI
-import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyDataResource
-import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyPlanRepository
-import com.project.hello.transit.agency.framework.internal.usecase.implementation.SelectedTransitAgencyUseCaseImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runBlockingTest
@@ -31,26 +29,24 @@ internal class SelectedTransitAgencyUseCaseImplImplTest {
         "a", "",
         emptyList(), emptyList(), emptyList(), emptyList()
     )
-    val transitAgencyApi1 = createTransitAgencyApi(
+    val transitAgency1 = createTransitAgency(
         transitAgency = "a",
-        trams = listOf(LineAPI("x", "y"))
+        trams = listOf(Line("x", "y"))
     )
-    val transitAgencyApi2 = createTransitAgencyApi("b")
+    val transitAgency2 = createTransitAgency("b")
 
-    val successfulResource: TransitAgencyDataResource = mock {
+    val successfulRepository: TransitAgencyPlanRepository = mock {
         on { getCurrentlySelectedTransitAgency() } doReturn ResponseApi.Success(transitAgency)
-        on { loadTransitAgency(1) } doReturn ResponseApi.Success(transitAgencyApi1)
-        on { loadTransitAgency(2) } doReturn ResponseApi.Success(transitAgencyApi2)
+        on { loadTransitAgencies() } doReturn listOf(transitAgency1, transitAgency2)
     }
-    val failedResource: TransitAgencyDataResource = mock {
+    val failedRepository: TransitAgencyPlanRepository = mock {
         on { getCurrentlySelectedTransitAgency() } doReturn ResponseApi.Error("error")
     }
 
-    val transitAgencyPlanRepository: TransitAgencyPlanRepository = mock()
     val selectedTransitAgencyUseCaseErrorMapper: SelectedTransitAgencyUseCaseErrorMapper = mock()
 
-    val tested = SelectedTransitAgencyUseCaseImpl(
-        transitAgencyPlanRepository,
+    fun tested(repository: TransitAgencyPlanRepository) = SelectedTransitAgencyUseCaseImpl(
+        repository,
         selectedTransitAgencyUseCaseErrorMapper,
         coroutinesTestRule.testDispatcher
     )
@@ -59,9 +55,7 @@ internal class SelectedTransitAgencyUseCaseImplImplTest {
     fun `when execute is called then loading event is sent`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(transitAgencyPlanRepository.getTransitAgencyDataResource()).thenReturn(
-                failedResource
-            )
+            val tested = tested(failedRepository)
 
             // when
             val events = mutableListOf<Response<TransitAgency>>()
@@ -75,9 +69,7 @@ internal class SelectedTransitAgencyUseCaseImplImplTest {
     fun `given fetching currently selected city fails when execute is called then loading event followed by failure event is sent`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(transitAgencyPlanRepository.getTransitAgencyDataResource()).thenReturn(
-                failedResource
-            )
+            val tested = tested(failedRepository)
 
             // when
             val events = mutableListOf<Response<TransitAgency>>()
@@ -92,12 +84,8 @@ internal class SelectedTransitAgencyUseCaseImplImplTest {
     fun `given fetching currently selected city succeeds and fetching supported cities fails when execute is called then loading event followed by successful event is sent`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(transitAgencyPlanRepository.getTransitAgencyDataResource()).thenReturn(
-                successfulResource
-            )
-            whenever(transitAgencyPlanRepository.getSupportedTransitAgenciesFileResources()).thenReturn(
-                emptyList()
-            )
+            whenever(successfulRepository.loadTransitAgencies()).thenReturn(emptyList())
+            val tested = tested(successfulRepository)
 
             // when
             val events = mutableListOf<Response<TransitAgency>>()
@@ -112,10 +100,13 @@ internal class SelectedTransitAgencyUseCaseImplImplTest {
     fun `given fetching currently selected city succeeds and fetching supported cities succeeds when execute is called then loading event followed by successful event is sent`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             // given
-            whenever(transitAgencyPlanRepository.getTransitAgencyDataResource())
-                .thenReturn(successfulResource)
-            whenever(transitAgencyPlanRepository.getSupportedTransitAgenciesFileResources())
-                .thenReturn(listOf(1, 2))
+            whenever(successfulRepository.loadTransitAgencies()).thenReturn(
+                listOf(
+                    transitAgency1,
+                    transitAgency2
+                )
+            )
+            val tested = tested(successfulRepository)
 
             // when
             val events = mutableListOf<Response<TransitAgency>>()
@@ -127,6 +118,18 @@ internal class SelectedTransitAgencyUseCaseImplImplTest {
             val selectedCityResponse = events[1] as Response.Success
             Assert.assertEquals(1, selectedCityResponse.successData.tramLines.size)
         }
+
+    private fun createTransitAgency(
+        transitAgency: String,
+        trams: List<Line> = emptyList()
+    ) = TransitAgency(
+        transitAgency = transitAgency,
+        lastUpdateFormatted = "",
+        tramLines = trams,
+        busLines = emptyList(),
+        tramStops = emptyList(),
+        busStops = emptyList()
+    )
 
     private fun createTransitAgencyApi(
         transitAgency: String,

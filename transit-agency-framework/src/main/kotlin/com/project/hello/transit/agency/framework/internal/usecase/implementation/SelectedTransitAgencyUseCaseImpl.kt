@@ -5,8 +5,7 @@ import com.project.hello.commons.domain.data.ResponseApi
 import com.project.hello.commons.framework.hilt.IoDispatcher
 import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
-import com.project.hello.transit.agency.framework.internal.model.api.toTransitAgency
-import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyPlanRepository
+import com.project.hello.transit.agency.domain.repository.TransitAgencyPlanRepository
 import com.project.hello.transit.agency.framework.internal.usecase.SelectedTransitAgencyUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -23,9 +22,8 @@ internal class SelectedTransitAgencyUseCaseImpl @Inject constructor(
 
     override fun execute(): Flow<Response<TransitAgency>> = flow {
         emit(Response.Loading())
-        val transitAgencyDataResource = transitAgencyPlanRepository.getTransitAgencyDataResource()
         when (val selectedTransitAgencyResponseApi =
-            transitAgencyDataResource.getCurrentlySelectedTransitAgency()) {
+            transitAgencyPlanRepository.getCurrentlySelectedTransitAgency()) {
             is ResponseApi.Error -> {
                 val selectedCityResponse =
                     Response.Error<TransitAgency>(selectedTransitAgencyResponseApi.rawErrorMessage)
@@ -35,13 +33,8 @@ internal class SelectedTransitAgencyUseCaseImpl @Inject constructor(
                 emit(selectedCityResponse)
             }
             is ResponseApi.Success -> {
-                val transitAgencies =
-                    transitAgencyPlanRepository.getSupportedTransitAgenciesFileResources()
-                        .map { transitAgencyDataResource.loadTransitAgency(it) }
-                        .mapNotNull { (it as? ResponseApi.Success)?.successData }
-                        .map { it.toTransitAgency() }
-
-                val updatedSelectedTransitAgency: TransitAgency? = transitAgencies
+                val transitAgencies = transitAgencyPlanRepository.loadTransitAgencies()
+                val updatedSelectedTransitAgency = transitAgencies
                     .firstOrNull {
                         it.transitAgency == selectedTransitAgencyResponseApi.successData.transitAgency
                     }

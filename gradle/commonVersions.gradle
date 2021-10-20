@@ -3,6 +3,7 @@ ext {
     coroutines_core_version = "1.4.3"
     junit_version = "4.13.2"
     mockito_kotlin_version = "3.2.0"
+    mockito_inline_version = "3.11.2"
     kotlinx_coroutines_test_version = "1.4.3"
     core_testing_version = "2.1.0"
     core_ktx_version = "1.5.0"

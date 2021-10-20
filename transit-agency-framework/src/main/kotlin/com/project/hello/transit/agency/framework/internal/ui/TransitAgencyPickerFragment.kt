@@ -1,4 +1,4 @@
-package com.project.hello.transit.agency.framework.internal
+package com.project.hello.transit.agency.framework.internal.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,8 +15,6 @@ import com.project.hello.transit.agency.framework.api.SupportedTransitAgenciesSt
 import com.project.hello.transit.agency.framework.api.TransitAgencyPickViewModel
 import com.project.hello.transit.agency.framework.api.TransitAgencySelection
 import com.project.hello.transit.agency.framework.databinding.TransitAgencyPickerFragmentBinding
-import com.project.hello.transit.agency.framework.internal.ui.TransitAgencyPickerAdapter
-import com.project.hello.transit.agency.framework.internal.ui.TransitAgencyPickerRow
 import com.project.hello.commons.framework.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hello.commons.framework.ui.showInformationDialog
 import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider

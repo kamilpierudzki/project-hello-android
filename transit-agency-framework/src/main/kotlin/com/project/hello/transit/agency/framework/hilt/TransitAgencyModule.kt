@@ -2,7 +2,7 @@ package com.project.hello.transit.agency.framework.hilt
 
 import android.content.Context
 import androidx.room.Room
-import com.project.hello.transit.agency.framework.internal.db.TransitAgencyDatabase
+import com.project.hello.transit.agency.framework.internal.repository.db.TransitAgencyDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

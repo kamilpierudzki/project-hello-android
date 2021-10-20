@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/transit_agency_picker_screen"
-        android:name="com.project.hello.transit.agency.framework.internal.TransitAgencyPickerFragment"
+        android:name="com.project.hello.transit.agency.framework.internal.ui.TransitAgencyPickerFragment"
         android:label="@string/transit_agency_picker_label">
 
         <argument

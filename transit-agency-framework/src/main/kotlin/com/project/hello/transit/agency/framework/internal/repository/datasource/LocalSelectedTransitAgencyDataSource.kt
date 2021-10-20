@@ -1,13 +1,14 @@
-package com.project.hello.transit.agency.framework.internal.datasource.db
+package com.project.hello.transit.agency.framework.internal.repository.datasource
 
-import com.project.hello.transit.agency.domain.datasource.SelectedTransitAgencyDataSource
+import com.project.hello.transit.agency.domain.repository.datasource.SelectedTransitAgencyDataSource
 import com.project.hello.transit.agency.domain.model.TransitAgency
 import com.project.hello.transit.agency.domain.model.ErrorCode.SelectedCity
 import com.project.hello.commons.domain.data.ResponseApi
-import com.project.hello.transit.agency.framework.internal.db.TransitAgencyDatabase
+import com.project.hello.transit.agency.framework.internal.repository.db.TransitAgencyEntity
+import com.project.hello.transit.agency.framework.internal.repository.db.TransitAgencyDatabase
 import javax.inject.Inject
 
-internal class DataBaseSelectedTransitAgency @Inject constructor(
+internal class LocalSelectedTransitAgencyDataSource @Inject constructor(
     private val database: TransitAgencyDatabase
 ) : SelectedTransitAgencyDataSource {
 

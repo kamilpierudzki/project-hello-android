@@ -1,4 +1,4 @@
-package com.project.hello.transit.agency.framework.internal.datasource.db
+package com.project.hello.transit.agency.framework.internal.repository.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

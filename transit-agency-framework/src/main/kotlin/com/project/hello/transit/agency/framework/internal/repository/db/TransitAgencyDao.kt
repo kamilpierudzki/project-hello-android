@@ -1,7 +1,6 @@
-package com.project.hello.transit.agency.framework.internal.db
+package com.project.hello.transit.agency.framework.internal.repository.db
 
 import androidx.room.*
-import com.project.hello.transit.agency.framework.internal.datasource.db.TransitAgencyEntity
 
 @Dao
 internal interface TransitAgencyDao {

@@ -1,4 +1,4 @@
-package com.project.hello.transit.agency.framework.internal.datasource.db
+package com.project.hello.transit.agency.framework.internal.repository.db
 
 import com.google.gson.Gson
 import com.project.hello.transit.agency.domain.model.Line

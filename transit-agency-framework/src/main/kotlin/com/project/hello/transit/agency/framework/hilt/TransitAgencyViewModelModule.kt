@@ -1,19 +1,16 @@
 package com.project.hello.transit.agency.framework.hilt
 
-import android.content.res.Resources
-import com.project.hello.transit.agency.domain.datasource.SelectedTransitAgencyDataSource
-import com.project.hello.transit.agency.domain.datasource.SupportedTransitAgenciesDataSource
+import com.project.hello.transit.agency.domain.repository.TransitAgencyPlanRepository
+import com.project.hello.transit.agency.domain.repository.datasource.SelectedTransitAgencyDataSource
+import com.project.hello.transit.agency.domain.repository.datasource.SupportedTransitAgenciesDataSource
 import com.project.hello.transit.agency.domain.usecase.SelectedTransitAgencyUseCaseErrorMapper
 import com.project.hello.transit.agency.domain.usecase.SupportedTransitAgenciesUseCaseErrorMapper
 import com.project.hello.transit.agency.framework.internal.cryptography.Decoding
 import com.project.hello.transit.agency.framework.internal.cryptography.implementation.DecodingImpl
-import com.project.hello.transit.agency.framework.internal.datasource.db.DataBaseSelectedTransitAgency
-import com.project.hello.transit.agency.framework.internal.datasource.resources.TransitAgencyDataSource
-import com.project.hello.transit.agency.framework.internal.datasource.resources.implementation.RawResourcesSupportedTransitAgenciesDataSourceImpl
-import com.project.hello.transit.agency.framework.internal.datasource.resources.implementation.RawResourcesTransitAgencyDataSourceImpl
-import com.project.hello.transit.agency.framework.internal.db.TransitAgencyDatabase
-import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyPlanRepository
-import com.project.hello.transit.agency.framework.internal.repository.implementation.TransitAgencyPlanRepositoryImpl
+import com.project.hello.transit.agency.framework.internal.repository.datasource.LocalSelectedTransitAgencyDataSource
+import com.project.hello.transit.agency.framework.internal.repository.datasource.LocalSupportedTransitAgenciesDataSource
+import com.project.hello.transit.agency.framework.internal.repository.db.TransitAgencyDatabase
+import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyPlanRepositoryImpl
 import com.project.hello.transit.agency.framework.internal.usecase.*
 import com.project.hello.transit.agency.framework.internal.usecase.implementation.SelectedTransitAgencyUseCaseImpl
 import com.project.hello.transit.agency.framework.internal.usecase.implementation.SupportedTransitAgenciesUseCaseImpl
@@ -52,7 +49,7 @@ internal abstract class TransitAgencyViewModelModule {
 
     @Binds
     abstract fun bindSupportedTransitAgenciesDataSource(
-        impl: RawResourcesSupportedTransitAgenciesDataSourceImpl
+        impl: LocalSupportedTransitAgenciesDataSource
     ): SupportedTransitAgenciesDataSource
 
     @Binds
@@ -62,15 +59,11 @@ internal abstract class TransitAgencyViewModelModule {
     @Binds
     abstract fun bindDecoding(impl: DecodingImpl): Decoding
 
-    @Binds
-    abstract fun bindTransitAgencyDataSource(impl: RawResourcesTransitAgencyDataSourceImpl):
-            TransitAgencyDataSource
-
     companion object {
 
         @Provides
         fun provideSelectedCityDataSource(
             database: TransitAgencyDatabase
-        ): SelectedTransitAgencyDataSource = DataBaseSelectedTransitAgency(database)
+        ): SelectedTransitAgencyDataSource = LocalSelectedTransitAgencyDataSource(database)
     }
 }

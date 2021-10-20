@@ -1,8 +1,7 @@
 package com.project.hello.transit.agency.framework.internal.usecase.implementation
 
 import com.project.hello.transit.agency.domain.model.TransitAgency
-import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyDataResource
-import com.project.hello.transit.agency.framework.internal.repository.TransitAgencyPlanRepository
+import com.project.hello.transit.agency.domain.repository.TransitAgencyPlanRepository
 import com.project.hello.commons.domain.data.Response
 import com.project.hello.commons.domain.test.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,7 +11,6 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
@@ -25,10 +23,7 @@ internal class TransitAgencySelectionUseCaseImplTest {
 
     val cityPlan = createTransitAgency("A")
 
-    val transitAgencyDataResource: TransitAgencyDataResource = mock()
-    val transitAgencyPlanRepository: TransitAgencyPlanRepository = mock {
-        on { getTransitAgencyDataResource() } doReturn transitAgencyDataResource
-    }
+    val transitAgencyPlanRepository: TransitAgencyPlanRepository = mock()
 
     val tested = TransitAgencySelectionUseCaseImpl(
         transitAgencyPlanRepository,
@@ -55,7 +50,7 @@ internal class TransitAgencySelectionUseCaseImplTest {
             tested.execute(cityPlan).collect { }
 
             // then
-            verify(transitAgencyDataResource).saveCurrentlySelectedTransitAgency(cityPlan)
+            verify(transitAgencyPlanRepository).saveCurrentlySelectedTransitAgency(cityPlan)
         }
 
     @Test
