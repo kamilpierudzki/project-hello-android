@@ -14,8 +14,13 @@ internal class NearbySearchUseCaseImpl @Inject constructor(
 ) : NearbySearchUseCase {
 
     override fun getNearbySearchResult(location: Location): NearbySearchAPI? {
-        val options = nearbySearchOptionsFactory.create(location)
-        val response: Response<NearbySearchAPI> = googleMapsService.nearbySearch(options).execute()
-        return response.body()
+        return try {
+            val options = nearbySearchOptionsFactory.create(location)
+            val response: Response<NearbySearchAPI> =
+                googleMapsService.nearbySearch(options).execute()
+            response.body()
+        } catch (t: Throwable) {
+            null
+        }
     }
 }
