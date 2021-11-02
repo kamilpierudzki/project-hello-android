@@ -15,8 +15,8 @@ data class LineWithShare(
     val share: Int
 ) {
     init {
-        if (share > 100 || share < 0) {
-            throw IllegalStateException("Share value cannot be greater than 100 or less than 0. Current value $share")
+        if (share !in 0..100) {
+            throw IllegalArgumentException("Share value cannot be greater than 100 or less than 0. Current value $share")
         }
     }
 }

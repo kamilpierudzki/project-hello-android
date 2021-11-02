@@ -10,7 +10,7 @@ internal class LineWithShareTest {
 
     @Test
     fun `test 1`() {
-        Assert.assertThrows(IllegalStateException::class.java) {
+        Assert.assertThrows(IllegalArgumentException::class.java) {
             LineWithShare(line, -1)
         }
     }
@@ -29,8 +29,14 @@ internal class LineWithShareTest {
 
     @Test
     fun `test 4`() {
-        Assert.assertThrows(IllegalStateException::class.java) {
+        Assert.assertThrows(IllegalArgumentException::class.java) {
             LineWithShare(line, 101)
         }
+    }
+
+    @Test
+    fun `test 5`() {
+        val result = LineWithShare(line, 50)
+        Assert.assertEquals(50, result.share)
     }
 }
