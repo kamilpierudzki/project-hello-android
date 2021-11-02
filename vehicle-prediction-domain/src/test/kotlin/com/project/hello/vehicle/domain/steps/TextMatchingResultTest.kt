@@ -7,7 +7,7 @@ class TextMatchingResultTest {
 
     @Test
     fun `test 1`() {
-        Assert.assertThrows(IllegalStateException::class.java) {
+        Assert.assertThrows(IllegalArgumentException::class.java) {
             TextMatchingResult.Positive(-1)
         }
     }
@@ -26,8 +26,14 @@ class TextMatchingResultTest {
 
     @Test
     fun `test 4`() {
-        Assert.assertThrows(IllegalStateException::class.java) {
+        Assert.assertThrows(IllegalArgumentException::class.java) {
             TextMatchingResult.Positive(101)
         }
+    }
+
+    @Test
+    fun `test 5`() {
+        val result = TextMatchingResult.Positive(50)
+        Assert.assertEquals(50, result.percentage)
     }
 }
