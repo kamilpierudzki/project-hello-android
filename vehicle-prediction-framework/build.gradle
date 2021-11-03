@@ -35,6 +35,8 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
+    resourcePrefix = "vehicle_prediction_"
 }
 
 dependencies {

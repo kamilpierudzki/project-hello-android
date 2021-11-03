@@ -100,7 +100,7 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun announceScreenNameByScreenReader() {
-        binding.root.announceForAccessibility(getString(R.string.prediction_fragment_label))
+        binding.root.announceForAccessibility(getString(R.string.vehicle_prediction_fragment_label))
     }
 
     private fun setupViews() {
@@ -111,8 +111,8 @@ internal class PredictionFragment : Fragment() {
         binding.helpIcon.setOnClickListener {
             showInformationDialog(
                 it.context,
-                R.string.help_dialog_title,
-                R.string.help_dialog_message
+                R.string.vehicle_prediction_help_dialog_title,
+                R.string.vehicle_prediction_help_dialog_message
             )
         }
     }
@@ -196,8 +196,8 @@ internal class PredictionFragment : Fragment() {
     private fun showExplanatoryWhyCameraPermissionIsRequired() {
         showBinaryDialog(
             requireContext(),
-            R.string.camera_permission_explanatory_title,
-            R.string.camera_permission_explanatory_message,
+            R.string.vehicle_prediction_camera_permission_explanatory_title,
+            R.string.vehicle_prediction_camera_permission_explanatory_message,
             positiveAction = {
                 processCameraPermissionLogic()
             },
@@ -234,8 +234,8 @@ internal class PredictionFragment : Fragment() {
     private fun showExplanatoryWhyLocationPermissionIsRequired() {
         showBinaryDialog(
             requireContext(),
-            R.string.location_permission_explanatory_title,
-            R.string.location_permission_explanatory_message,
+            R.string.vehicle_prediction_location_permission_explanatory_title,
+            R.string.vehicle_prediction_location_permission_explanatory_message,
             positiveAction = {
                 processLocationPermissionLogic()
             },

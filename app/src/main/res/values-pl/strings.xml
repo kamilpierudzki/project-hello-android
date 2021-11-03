@@ -21,4 +21,25 @@
     <string name="transit_agency_no_transit_agency_value">Mojego przewoźnika nie ma na liście</string>
     <string name="transit_agency_no_transit_agency_dialog_title_value"></string>
     <string name="transit_agency_no_transit_agency_dialog_message_value">Jeśli nie znalazłeś swojego przewoźnika na liście, możesz napisać komentarz w sklepie Play i poprosić autora o dodanie przewoźnika z twojego miasta do aplikacji.</string>
+
+    <string name="vehicle_prediction_fragment_label_value">Ekran Rozpoznawania Pojazdu</string>
+    <string name="vehicle_prediction_help_icon_description_value">Pomoc</string>
+    <string name="vehicle_prediction_help_dialog_title_value">Jak korzystać z rozpoznawania?</string>
+    <string name="vehicle_prediction_help_dialog_message_value">Skieruj obiektyw kamery w kierunku pojazdu transportu publicznego. Informację o rozpoznanej linii znajdziesz w dolnej części ekranu.</string>
+    <string name="vehicle_prediction_probably_value">Prawdopodobieństwo</string>
+    <string name="vehicle_prediction_percent_value">procent</string>
+    <string name="vehicle_prediction_line_value">Linia</string>
+    <string name="vehicle_prediction_type_picker_fragment_label_value">Ekran Wyboru Pojazdu</string>
+    <string name="vehicle_prediction_type_picker_header_value">Wybierz typ pojazdu</string>
+    <string name="vehicle_prediction_type_picker_vehicle_all_value">Tramwaj i Autobus</string>
+    <string name="vehicle_prediction_type_picker_vehicle_tram_value">Tramwaj</string>
+    <string name="vehicle_prediction_type_picker_vehicle_bus_value">Autobus</string>
+    <string name="vehicle_prediction_type_picker_help_title_value">Dlaczego muszę wybrać typ pojazdu?</string>
+    <string name="vehicle_prediction_type_picker_help_message_value">Zawężenie kryterium typu pojazdu poprawia dokładność rozpoznawania numeru linii.</string>
+    <string name="vehicle_prediction_action_settings_value">Ustawienia</string>
+    <string name="vehicle_prediction_camera_permission_explanatory_title_value">Dlaczego kamera jest potrzebna?</string>
+    <string name="vehicle_prediction_camera_permission_explanatory_message_value">Podstawą rozpoznania numeru linii pojazdu transportu publicznego jest obraz z kamery. Bez niej aplikacja nie będzie w stanie rozpoznać numeru linii. Czy chcesz spróbować jeszcze raz?</string>
+    <string name="vehicle_prediction_location_permission_explanatory_title_value">Dlaczego lokalizacja jest potrzebna?</string>
+    <string name="vehicle_prediction_location_permission_explanatory_message_value">Lokalizacja jest potrzebna aby ustalić przystanek, na którym aktualnie znajduje się użytkownik. Ustalenie przystanku podnosi dokładność wyników. Czy chcesz spróbować jeszcze raz?</string>
+
 </resources>

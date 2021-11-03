@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/help_icon_description"
+        android:contentDescription="@string/vehicle_prediction_help_icon_description"
         android:padding="8dp"
         android:src="@drawable/ic_help"
         app:layout_constraintEnd_toEndOf="parent"

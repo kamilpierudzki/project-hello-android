@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/vehicle_type_picker_fragment"
         android:name="com.project.hello.vehicle.prediction.framework.internal.ui.VehicleTypePickerFragment"
-        android:label="@string/vehicle_type_picker_fragment_label">
+        android:label="@string/vehicle_prediction_type_picker_fragment_label">
 
         <action
             android:id="@+id/go_to_prediction_screen"
@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/prediction_fragment"
         android:name="com.project.hello.vehicle.prediction.framework.internal.ui.PredictionFragment"
-        android:label="@string/prediction_fragment_label">
+        android:label="@string/vehicle_prediction_fragment_label">
 
         <argument
             android:name="vehicleDataParcelable"

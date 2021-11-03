@@ -56,7 +56,7 @@ internal class VehicleTypePickerFragment : Fragment() {
     }
 
     private fun announceScreenNameByScreenReader() {
-        binding.root.announceForAccessibility(getString(R.string.vehicle_type_picker_fragment_label))
+        binding.root.announceForAccessibility(getString(R.string.vehicle_prediction_type_picker_fragment_label))
     }
 
     private fun setupViews() {
@@ -68,8 +68,8 @@ internal class VehicleTypePickerFragment : Fragment() {
         binding.helpIcon.setOnClickListener {
             showInformationDialog(
                 it.context,
-                R.string.vehicle_type_picker_help_title,
-                R.string.vehicle_type_picker_help_message
+                R.string.vehicle_prediction_type_picker_help_title,
+                R.string.vehicle_prediction_type_picker_help_message
             )
         }
     }

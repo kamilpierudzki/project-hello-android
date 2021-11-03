@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="prediction_fragment_label">Vehicle Recognition Screen</string>
-    <string name="help_icon_description">Help</string>
-    <string name="help_dialog_title">How to use recognition?</string>
-    <string name="help_dialog_message">Point the camera lens towards a public transportation vehicle. You can find information about the recognized line at the bottom of the screen.</string>
-    <string name="probably">Probability</string>
-    <string name="percent">percent</string>
-    <string name="line">Line</string>
-    <string name="vehicle_type_picker_fragment_label">Select Vehicle Type Screen</string>
-    <string name="vehicle_type_picker_header">Select vehicle type</string>
-    <string name="vehicle_type_picker_vehicle_all">Tram and Bus</string>
-    <string name="vehicle_type_picker_vehicle_tram">Tram</string>
-    <string name="vehicle_type_picker_vehicle_bus">Bus</string>
-    <string name="vehicle_type_picker_help_title">Why do I have to choose a vehicle type? </string>
-    <string name="vehicle_type_picker_help_message">Narrowing down a vehicle type criterion improves accuracy of line number recognition.</string>
-    <string name="action_settings">Settings</string>
-    <string name="camera_permission_explanatory_title">Why a camera is required?</string>
-    <string name="camera_permission_explanatory_message">The basis for recognizing the line number of a public transportation vehicle is the image from the camera. Without it, the application will not be able to recognize the line number. Do you want to try again?</string>
-    <string name="location_permission_explanatory_title">Why location is required?</string>
-    <string name="location_permission_explanatory_message">The location is needed to determine the stop where the user currently is. Determining the stop increases the accuracy of the results. Do you want to try again?</string>
+    <string name="vehicle_prediction_fragment_label" translatable="false">@string/vehicle_prediction_fragment_label_value</string>
+    <string name="vehicle_prediction_help_icon_description" translatable="false">@string/vehicle_prediction_help_icon_description_value</string>
+    <string name="vehicle_prediction_help_dialog_title" translatable="false">@string/vehicle_prediction_help_dialog_title_value</string>
+    <string name="vehicle_prediction_help_dialog_message" translatable="false">@string/vehicle_prediction_help_dialog_message_value</string>
+    <string name="vehicle_prediction_probably" translatable="false">@string/vehicle_prediction_probably_value</string>
+    <string name="vehicle_prediction_percent" translatable="false">@string/vehicle_prediction_percent_value</string>
+    <string name="vehicle_prediction_line" translatable="false">@string/vehicle_prediction_line_value</string>
+    <string name="vehicle_prediction_type_picker_fragment_label" translatable="false">@string/vehicle_prediction_type_picker_fragment_label_value</string>
+    <string name="vehicle_prediction_type_picker_header" translatable="false">@string/vehicle_prediction_type_picker_header_value</string>
+    <string name="vehicle_prediction_type_picker_vehicle_all" translatable="false">@string/vehicle_prediction_type_picker_vehicle_all_value</string>
+    <string name="vehicle_prediction_type_picker_vehicle_tram" translatable="false">@string/vehicle_prediction_type_picker_vehicle_tram_value</string>
+    <string name="vehicle_prediction_type_picker_vehicle_bus" translatable="false">@string/vehicle_prediction_type_picker_vehicle_bus_value</string>
+    <string name="vehicle_prediction_type_picker_help_title" translatable="false">@string/vehicle_prediction_type_picker_help_title_value</string>
+    <string name="vehicle_prediction_type_picker_help_message" translatable="false">@string/vehicle_prediction_type_picker_help_message_value</string>
+    <string name="vehicle_prediction_action_settings" translatable="false">@string/vehicle_prediction_action_settings_value</string>
+    <string name="vehicle_prediction_camera_permission_explanatory_title" translatable="false">@string/vehicle_prediction_camera_permission_explanatory_title_value</string>
+    <string name="vehicle_prediction_camera_permission_explanatory_message" translatable="false">@string/vehicle_prediction_camera_permission_explanatory_message_value</string>
+    <string name="vehicle_prediction_location_permission_explanatory_title" translatable="false">@string/vehicle_prediction_location_permission_explanatory_title_value</string>
+    <string name="vehicle_prediction_location_permission_explanatory_message" translatable="false">@string/vehicle_prediction_location_permission_explanatory_message_value</string>
 </resources>

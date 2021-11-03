@@ -21,4 +21,24 @@
     <string name="transit_agency_no_transit_agency_value">My transit agency is not listed</string>
     <string name="transit_agency_no_transit_agency_dialog_title_value"></string>
     <string name="transit_agency_no_transit_agency_dialog_message_value">If you did not find your transit agency on the list, you can write a comment in the Play Store and ask the author to add your city\'s transit agency to the app.</string>
+
+    <string name="vehicle_prediction_fragment_label_value">Vehicle Recognition Screen</string>
+    <string name="vehicle_prediction_help_icon_description_value">Help</string>
+    <string name="vehicle_prediction_help_dialog_title_value">How to use recognition?</string>
+    <string name="vehicle_prediction_help_dialog_message_value">Point the camera lens towards a public transportation vehicle. You can find information about the recognized line at the bottom of the screen.</string>
+    <string name="vehicle_prediction_probably_value">Probability</string>
+    <string name="vehicle_prediction_percent_value">percent</string>
+    <string name="vehicle_prediction_line_value">Line</string>
+    <string name="vehicle_prediction_type_picker_fragment_label_value">Select Vehicle Type Screen</string>
+    <string name="vehicle_prediction_type_picker_header_value">Select vehicle type</string>
+    <string name="vehicle_prediction_type_picker_vehicle_all_value">Tram and Bus</string>
+    <string name="vehicle_prediction_type_picker_vehicle_tram_value">Tram</string>
+    <string name="vehicle_prediction_type_picker_vehicle_bus_value">Bus</string>
+    <string name="vehicle_prediction_type_picker_help_title_value">Why do I have to choose a vehicle type? </string>
+    <string name="vehicle_prediction_type_picker_help_message_value">Narrowing down a vehicle type criterion improves accuracy of line number recognition.</string>
+    <string name="vehicle_prediction_action_settings_value">Settings</string>
+    <string name="vehicle_prediction_camera_permission_explanatory_title_value">Why a camera is required?</string>
+    <string name="vehicle_prediction_camera_permission_explanatory_message_value">The basis for recognizing the line number of a public transportation vehicle is the image from the camera. Without it, the application will not be able to recognize the line number. Do you want to try again?</string>
+    <string name="vehicle_prediction_location_permission_explanatory_title_value">Why location is required?</string>
+    <string name="vehicle_prediction_location_permission_explanatory_message_value">The location is needed to determine the stop where the user currently is. Determining the stop increases the accuracy of the results. Do you want to try again?</string>
 </resources>
