@@ -14,7 +14,7 @@ internal class LatestAvailableLegalUseCaseErrorMapperImpl @Inject constructor(
 
     override fun mapError(error: Response.Error<LatestAvailableLegal>) {
         error.localisedErrorMessage = when (error.rawErrorMessage) {
-            LATEST_AVAILABLE_LEGAL_ERROR -> resources.getString(R.string.error_load_latest_available_legal)
+            LATEST_AVAILABLE_LEGAL_ERROR -> resources.getString(R.string.legal_error_load_latest_available_legal)
             else -> error.rawErrorMessage
         }
     }
