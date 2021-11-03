@@ -21,13 +21,13 @@ internal class TransitAgencyViewHolder(private val viewBinding: TransitAgencyIte
         updateContentDescription(transitAgency)
     }
 
-    private fun updateContentDescription(transitAgency: TransitAgencyPickerRow.TransitAgencyRow) {
+    private fun updateContentDescription(transitAgencyRow: TransitAgencyPickerRow.TransitAgencyRow) {
         val context = viewBinding.selected.context
-        val transitAgencyName = transitAgency.transitAgency.tramLines
-        val lastUpdateValue = transitAgency.transitAgency.lastUpdateFormatted
+        val transitAgencyName = transitAgencyRow.transitAgency.transitAgency
+        val lastUpdateValue = transitAgencyRow.transitAgency.lastUpdateFormatted
         val lastUpdateLabel = context.getString(R.string.transit_agency_item_last_update_label)
 
-        val selectionText = if (transitAgency.selected) {
+        val selectionText = if (transitAgencyRow.selected) {
             "${context.getString(R.string.currently_selected)}"
         } else {
             ""
