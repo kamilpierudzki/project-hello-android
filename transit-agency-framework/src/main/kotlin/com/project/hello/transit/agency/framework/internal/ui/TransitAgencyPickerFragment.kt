@@ -114,8 +114,8 @@ internal class TransitAgencyPickerFragment : Fragment() {
     private fun showInfoDialog() {
         showInformationDialog(
             requireContext(),
-            R.string.no_transit_agency_dialog_title,
-            R.string.no_transit_agency_dialog_message
+            R.string.transit_agency_no_transit_agency_dialog_title,
+            R.string.transit_agency_no_transit_agency_dialog_message
         )
     }
 

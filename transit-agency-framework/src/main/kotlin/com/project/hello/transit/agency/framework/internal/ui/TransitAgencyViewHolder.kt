@@ -28,7 +28,7 @@ internal class TransitAgencyViewHolder(private val viewBinding: TransitAgencyIte
         val lastUpdateLabel = context.getString(R.string.transit_agency_item_last_update_label)
 
         val selectionText = if (transitAgencyRow.selected) {
-            "${context.getString(R.string.currently_selected)}"
+            "${context.getString(R.string.transit_agency_currently_selected)}"
         } else {
             ""
         }

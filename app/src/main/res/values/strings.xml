@@ -12,4 +12,13 @@
     <string name="settings_introduction_screen_value">Introduction screen</string>
 
     <string name="splash_screen_label_value">Loading Screen</string>
+
+    <string name="transit_agency_currently_selected_value">Currently selected</string>
+    <string name="transit_agency_picker_loading_value">Loading</string>
+    <string name="transit_agency_selection_error_value">Error during selecting city.</string>
+    <string name="transit_agency_picker_label_value">Select a Transit Agency Screen</string>
+    <string name="transit_agency_item_last_update_label_value">Last update</string>
+    <string name="transit_agency_no_transit_agency_value">My transit agency is not listed</string>
+    <string name="transit_agency_no_transit_agency_dialog_title_value"></string>
+    <string name="transit_agency_no_transit_agency_dialog_message_value">If you did not find your transit agency on the list, you can write a comment in the Play Store and ask the author to add your city\'s transit agency to the app.</string>
 </resources>

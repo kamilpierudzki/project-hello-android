@@ -12,4 +12,13 @@
     <string name="settings_introduction_screen_value">Ekran wprowadzenia</string>
 
     <string name="splash_screen_label_value">Ekran Ładowania</string>
+
+    <string name="transit_agency_currently_selected_value">Aktualnie zaznaczono</string>
+    <string name="transit_agency_picker_loading_value">Ładowanie</string>
+    <string name="transit_agency_selection_error_value">Błąd podczas wybierania przewoźnika.</string>
+    <string name="transit_agency_picker_label_value">Ekran Wyboru Przewoźnika</string>
+    <string name="transit_agency_item_last_update_label_value">Ostatnia aktualizacja</string>
+    <string name="transit_agency_no_transit_agency_value">Mojego przewoźnika nie ma na liście</string>
+    <string name="transit_agency_no_transit_agency_dialog_title_value"></string>
+    <string name="transit_agency_no_transit_agency_dialog_message_value">Jeśli nie znalazłeś swojego przewoźnika na liście, możesz napisać komentarz w sklepie Play i poprosić autora o dodanie przewoźnika z twojego miasta do aplikacji.</string>
 </resources>

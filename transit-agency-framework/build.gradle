@@ -42,6 +42,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
     }
+
+    resourcePrefix = "transit_agency_"
 }
 
 dependencies {
