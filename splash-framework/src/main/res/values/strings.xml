@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="splash_screen_label">Loading Screen</string>
+    <string name="splash_screen_label" translatable="false">@string/splash_screen_label_value</string>
 </resources>

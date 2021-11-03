@@ -22,7 +22,7 @@ android {
         }
     }
 
-    resourcePrefix "legal_"
+    resourcePrefix = "legal_"
 }
 
 dependencies {

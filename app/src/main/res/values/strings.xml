@@ -10,4 +10,6 @@
     <string name="settings_select_city_currently_selected_value">Currently selected</string>
     <string name="settings_screen_label_value">Settings Screen</string>
     <string name="settings_introduction_screen_value">Introduction screen</string>
+
+    <string name="splash_screen_label_value">Loading Screen</string>
 </resources>

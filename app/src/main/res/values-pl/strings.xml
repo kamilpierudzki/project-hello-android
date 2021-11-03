@@ -10,4 +10,6 @@
     <string name="settings_select_city_currently_selected_value">Aktualnie wybrane</string>
     <string name="settings_screen_label_value">Ekran Ustawień</string>
     <string name="settings_introduction_screen_value">Ekran wprowadzenia</string>
+
+    <string name="splash_screen_label_value">Ekran Ładowania</string>
 </resources>
