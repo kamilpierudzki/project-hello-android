@@ -5,4 +5,9 @@
     <string name="legal_error_load_latest_accepted_legal_value">Nie udało się załadować ostatnio zaakceptowanego ostrzeżenia.</string>
     <string name="legal_confirmation_button_value">Rozumiem</string>
     <string name="legal_loading_label_value">Ładowanie</string>
+
+    <string name="settings_select_transit_agency_value">Wybór przewoźnika</string>
+    <string name="settings_select_city_currently_selected_value">Aktualnie wybrane</string>
+    <string name="settings_screen_label_value">Ekran Ustawień</string>
+    <string name="settings_introduction_screen_value">Ekran wprowadzenia</string>
 </resources>

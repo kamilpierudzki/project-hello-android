@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_select_transit_agency">Transit agency selection</string>
-    <string name="settings_select_city_currently_selected">Currently selected</string>
-    <string name="settings_screen_label">Settings Screen</string>
-    <string name="settings_introduction_screen">Introduction screen</string>
+    <string name="settings_select_transit_agency" translatable="false">@string/settings_select_transit_agency_value</string>
+    <string name="settings_select_city_currently_selected" translatable="false">@string/settings_select_city_currently_selected_value</string>
+    <string name="settings_screen_label" translatable="false">@string/settings_screen_label_value</string>
+    <string name="settings_introduction_screen" translatable="false">@string/settings_introduction_screen_value</string>
 </resources>

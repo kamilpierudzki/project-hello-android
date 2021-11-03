@@ -5,4 +5,9 @@
     <string name="legal_error_load_latest_accepted_legal_value">Couldn\'t load latest accepted legal warning.</string>
     <string name="legal_confirmation_button_value">I understand</string>
     <string name="legal_loading_label_value">Loading</string>
+
+    <string name="settings_select_transit_agency_value">Transit agency selection</string>
+    <string name="settings_select_city_currently_selected_value">Currently selected</string>
+    <string name="settings_screen_label_value">Settings Screen</string>
+    <string name="settings_introduction_screen_value">Introduction screen</string>
 </resources>

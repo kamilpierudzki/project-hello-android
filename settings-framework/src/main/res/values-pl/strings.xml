@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="settings_select_transit_agency">Wybór przewoźnika</string>
-    <string name="settings_select_city_currently_selected">Aktualnie wybrane</string>
-    <string name="settings_screen_label">Ekran Ustawień</string>
-    <string name="settings_introduction_screen">Ekran wprowadzenia</string>
-</resources>
