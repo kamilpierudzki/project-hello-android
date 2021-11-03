@@ -42,4 +42,12 @@
     <string name="vehicle_prediction_location_permission_explanatory_title_value">Dlaczego lokalizacja jest potrzebna?</string>
     <string name="vehicle_prediction_location_permission_explanatory_message_value">Lokalizacja jest potrzebna aby ustalić przystanek, na którym aktualnie znajduje się użytkownik. Ustalenie przystanku podnosi dokładność wyników. Czy chcesz spróbować jeszcze raz?</string>
 
+    <string name="welcome_screen_header_value">Pierwsze uruchomienie aplikacji</string>
+    <string name="welcome_screen_description_value">Czy chcesz przeczytać wprowadzenie?</string>
+    <string name="welcome_screen_label_value">Ekran Powitalny</string>
+    <string name="welcome_screen_show_introduction_value">Tak, pokaż wprowadzenie</string>
+    <string name="welcome_screen_go_to_next_screen_value">Nie, przejdź do następnego ekranu</string>
+    <string name="welcome_screen_dialog_message_value">Możesz przejść do wprowadzenia później. Ekran wprowadzenia można otworzyć z poziomu ekranu ustawień aplikacji.</string>
+    <string name="welcome_screen_introduction_screen_label_value">Ekran Wprowadzenia</string>
+    <string name="welcome_screen_introduction_screen_message_value">Witaj w aplikacji stworzonej z myślą o osobach niewidomych i niedowidzących. Głównym zadaniem aplikacji jest rozpoznanie numeru linii pojazdu transportu publicznego.\n\nAplikacja składa się z dwóch głównych ekranów: Ekran wyboru typu pojazdu, który chcesz rozpoznać oraz ekran rozpoznania numeru linii pojazdu.\n\nNa ekranie wyboru pojazdu jest możliwość wybrania jednego z dwóch dostępnych typów pojazdu. Może to być tramwaj lub autobus. Po wybraniu typu użytkownik zostaje przeniesiony na ekran rozpoznania numeru linii.\n\nEkran rozpoznania numeru linii wykorzystuje kamerę, aby przekazać obraz do silnika analizującego. Jeśli numer linii zostanie rozpoznany to ta informacja zostanie zaprezentowana w dolnej części ekranu. Dolna część ekranu składa się z dwóch elementów: numeru rozpoznanej linii oraz poziomu prawdopodobieństwa, że jest to rzeczywiście ta linia.</string>
 </resources>

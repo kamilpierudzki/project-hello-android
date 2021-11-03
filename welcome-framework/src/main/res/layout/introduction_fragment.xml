@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="@string/introduction_screen_message"
+        android:text="@string/welcome_screen_introduction_screen_message"
         android:textColor="?attr/colorPrimary"
         android:textSize="16sp" />
 

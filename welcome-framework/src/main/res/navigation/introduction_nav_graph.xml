@@ -7,6 +7,6 @@
     <fragment
         android:id="@+id/introduction_fragment"
         android:name="com.project.hello.welcome.framework.internal.IntroductionFragment"
-        android:label="@string/introduction_screen_label" />
+        android:label="@string/welcome_screen_introduction_screen_label" />
 
 </navigation>

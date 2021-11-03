@@ -41,4 +41,13 @@
     <string name="vehicle_prediction_camera_permission_explanatory_message_value">The basis for recognizing the line number of a public transportation vehicle is the image from the camera. Without it, the application will not be able to recognize the line number. Do you want to try again?</string>
     <string name="vehicle_prediction_location_permission_explanatory_title_value">Why location is required?</string>
     <string name="vehicle_prediction_location_permission_explanatory_message_value">The location is needed to determine the stop where the user currently is. Determining the stop increases the accuracy of the results. Do you want to try again?</string>
+
+    <string name="welcome_screen_header_value">First launch of the application</string>
+    <string name="welcome_screen_description_value">Do you want to read introduction?</string>
+    <string name="welcome_screen_label_value">Welcome Screen</string>
+    <string name="welcome_screen_show_introduction_value">Yes, show me introduction</string>
+    <string name="welcome_screen_go_to_next_screen_value">No, go to the next screen</string>
+    <string name="welcome_screen_dialog_message_value">You can go to the introduction screen later. You can enter the screen from the app\'s settings.</string>
+    <string name="welcome_screen_introduction_screen_label_value">Introduction Screen</string>
+    <string name="welcome_screen_introduction_screen_message_value">Welcome to the application designed for the blind and visually impaired. The main task of the application is to recognize the line number of a public transport vehicle.\n\nThe application consists of two main screens: the screen for selecting the type of vehicle you want to recognize and the screen for recognizing the line number of the vehicle.\n\nIn the vehicle selection screen, it is possible to choose one of the two available vehicle types. It can be a tram or a bus. After selecting the type, the user is taken to the line number recognition screen.\n\nThe line number recognition screen uses a camera to transmit the image to the analyzing engine. If the line number is recognized, this information will be presented at the bottom of the screen. The bottom part of the screen consists of two elements: the number of the recognized line and the level of probability that it is the line.</string>
 </resources>
