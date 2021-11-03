@@ -24,7 +24,7 @@ import com.project.hello.commons.framework.viewmodel.externalViewModels
 import com.project.hello.country.api.ResourceCountryCharacters
 import com.project.hello.transit.agency.framework.api.TransitAgencyPickViewModel
 import com.project.hello.transit.agency.framework.internal.datamodel.VehicleDataParcelable
-import com.project.hello.transit.station.framework.api.LocationSettingsSatisfaction
+import com.project.hello.vehicle.prediction.framework.internal.station.LocationSettingsSatisfaction
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis

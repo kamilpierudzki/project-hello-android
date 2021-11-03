@@ -77,5 +77,4 @@ dependencies {
     implementation project(path: ':legal-framework')
     implementation project(path: ':welcome-framework')
     implementation project(path: ':welcome-domain')
-    implementation project(path: ':transit-station-framework')
 }

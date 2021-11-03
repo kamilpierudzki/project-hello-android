@@ -7,10 +7,10 @@ import com.project.hello.commons.framework.hilt.IoDispatcher
 import com.project.hello.transit.agency.domain.VehicleType
 import com.project.hello.transit.agency.domain.model.Line
 import com.project.hello.transit.agency.domain.model.Stop
-import com.project.hello.transit.station.framework.api.LocationUseCase
-import com.project.hello.transit.station.framework.api.TransitStationData
-import com.project.hello.transit.station.framework.api.TransitStationResult
-import com.project.hello.transit.station.framework.api.TransitStationUseCase
+import com.project.hello.vehicle.prediction.framework.internal.station.LocationUseCase
+import com.project.hello.vehicle.prediction.framework.internal.station.TransitStationData
+import com.project.hello.vehicle.prediction.framework.internal.station.TransitStationResult
+import com.project.hello.vehicle.prediction.framework.internal.station.TransitStationUseCase
 import com.project.hello.vehicle.domain.VehiclePrediction
 import com.project.hello.vehicle.domain.analysis.Buffering
 import com.project.hello.vehicle.domain.analysis.LineWithShare
