@@ -1,5 +1,5 @@
 rootProject.name = "project-hello-android"
-include ':app'
+include ':android-app'
 include ':splash-framework'
 include ':settings-framework'
 include ':country-resources-framework'
