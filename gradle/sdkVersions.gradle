@@ -3,6 +3,6 @@ ext {
     target_sdk_version = 30
     compile_sdk_version = "android-30"
     build_tools_version = "30.0.3"
-    version_code_version = 19
-    version_name_version = "1.5.3"
+    version_code_version = 20
+    version_name_version = "1.6.0"
 }
