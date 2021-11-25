@@ -27,7 +27,7 @@ class SplashFragment : Fragment() {
     @ViewModelProvider(ViewModelType.ACTIVITY)
     lateinit var transitAgencyPickViewModelProvider: ExternalViewModelProvider<TransitAgencyPickViewModel>
 
-    private val cityPickViewModel by externalViewModels {
+    private val transitAgencyViewModel by externalViewModels {
         transitAgencyPickViewModelProvider
     }
 
@@ -86,7 +86,7 @@ class SplashFragment : Fragment() {
     }
 
     private fun observeCurrentlySelectedCity() {
-        cityPickViewModel.currentlySelectedTransitAgencyEvent.observe(viewLifecycleOwner, { event ->
+        transitAgencyViewModel.currentlySelectedTransitAgencyEvent.observe(viewLifecycleOwner, { event ->
             when (event.consumeAndReturnOrNull()) {
                 is TransitAgencySelection.NotSelected -> goToCityPickerScreen()
                 is TransitAgencySelection.Selected -> goToVehicleTypePickerScreen()

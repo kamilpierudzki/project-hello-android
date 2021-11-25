@@ -6,10 +6,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.project.hello.transit.agency.domain.VehicleType
-import com.project.hello.transit.agency.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.commons.framework.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hello.commons.framework.ui.showInformationDialog
+import com.project.hello.commons.framework.viewmodel.ExternalViewModelProvider
+import com.project.hello.commons.framework.viewmodel.ViewModelProvider
+import com.project.hello.commons.framework.viewmodel.ViewModelType
+import com.project.hello.commons.framework.viewmodel.externalViewModels
+import com.project.hello.transit.agency.domain.VehicleType
+import com.project.hello.transit.agency.framework.api.TransitAgencyPickViewModel
+import com.project.hello.transit.agency.framework.internal.datamodel.VehicleDataParcelable
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.VehicleTypePickerFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +27,14 @@ internal class VehicleTypePickerFragment : Fragment() {
 
     @Inject
     lateinit var actionBarUpIndicatorVisibility: ActionBarUpIndicatorVisibility
+
+    @Inject
+    @ViewModelProvider(ViewModelType.ACTIVITY)
+    lateinit var transitAgencyPickViewModelProvider: ExternalViewModelProvider<TransitAgencyPickViewModel>
+
+    private val transitAgencyViewModel by externalViewModels {
+        transitAgencyPickViewModelProvider
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +75,7 @@ internal class VehicleTypePickerFragment : Fragment() {
     private fun setupViews() {
         setupHelpIconClicks()
         setupButtonClicks()
+        updateButtonsVisibilityBasedOnSelectedTransitAgency()
     }
 
     private fun setupHelpIconClicks() {
@@ -88,5 +102,20 @@ internal class VehicleTypePickerFragment : Fragment() {
     private fun provideAction(vehicleTypes: List<VehicleType>): NavDirections {
         val vehicleData = VehicleDataParcelable(vehicleTypes)
         return VehicleTypePickerFragmentDirections.goToPredictionScreen(vehicleData)
+    }
+
+    private fun updateButtonsVisibilityBasedOnSelectedTransitAgency() {
+        val transitAgency = transitAgencyViewModel.currentlySelectedTransitAgency
+        if (transitAgency != null) {
+            if (transitAgency.busLines.isEmpty()) {
+                binding.busTypesButton.visibility = View.GONE
+            }
+            if (transitAgency.tramLines.isEmpty()) {
+                binding.tramTypesButton.visibility = View.GONE
+            }
+        } else {
+            binding.busTypesButton.visibility = View.GONE
+            binding.tramTypesButton.visibility = View.GONE
+        }
     }
 }
