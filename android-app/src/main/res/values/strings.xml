@@ -41,6 +41,9 @@
     <string name="vehicle_prediction_camera_permission_explanatory_message_value">The basis for recognizing the line number of a public transportation vehicle is the image from the camera. Without it, the application will not be able to recognize the line number. Do you want to try again?</string>
     <string name="vehicle_prediction_location_permission_explanatory_title_value">Why location is required?</string>
     <string name="vehicle_prediction_location_permission_explanatory_message_value">The location is needed to determine the stop where the user currently is. Determining the stop increases the accuracy of the results. Do you want to try again?</string>
+    <string name="vehicle_prediction_camera_rating_dialog_title_value" translatable="false">Camera evaluation</string>
+    <string name="vehicle_prediction_camera_rating_dialog_message_value" translatable="false">The evaluation was made on the basis of the hardware capabilities of the camera read from the device. The higher the rating, the more accurate the vehicle recognition can be. Usually, devices from a higher price range have a camera with more possibilities.</string>
+    <string name="vehicle_prediction_camera_rating_content_description_value" translatable="false">Camera evaluation, %1$d on %2$d</string>
 
     <string name="welcome_screen_header_value">First launch of the application</string>
     <string name="welcome_screen_description_value">Do you want to read introduction?</string>

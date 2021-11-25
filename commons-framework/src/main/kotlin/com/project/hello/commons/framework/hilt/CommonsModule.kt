@@ -17,7 +17,6 @@ import javax.inject.Singleton
 internal class CommonsModule {
 
     @Provides
-    @Singleton
     fun provideResources(@ApplicationContext appContext: Context): Resources = appContext.resources
 
     @IoDispatcher

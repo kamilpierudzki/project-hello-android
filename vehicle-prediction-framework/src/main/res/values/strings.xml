@@ -19,4 +19,7 @@
     <string name="vehicle_prediction_camera_permission_explanatory_message" translatable="false">@string/vehicle_prediction_camera_permission_explanatory_message_value</string>
     <string name="vehicle_prediction_location_permission_explanatory_title" translatable="false">@string/vehicle_prediction_location_permission_explanatory_title_value</string>
     <string name="vehicle_prediction_location_permission_explanatory_message" translatable="false">@string/vehicle_prediction_location_permission_explanatory_message_value</string>
+    <string name="vehicle_prediction_camera_rating_dialog_title" translatable="false">@string/vehicle_prediction_camera_rating_dialog_title_value</string>
+    <string name="vehicle_prediction_camera_rating_dialog_message" translatable="false">@string/vehicle_prediction_camera_rating_dialog_message_value</string>
+    <string name="vehicle_prediction_camera_rating_content_description" translatable="false">@string/vehicle_prediction_camera_rating_content_description_value</string>
 </resources>

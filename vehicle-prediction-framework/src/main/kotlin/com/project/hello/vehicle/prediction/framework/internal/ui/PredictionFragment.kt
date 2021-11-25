@@ -24,10 +24,10 @@ import com.project.hello.commons.framework.viewmodel.externalViewModels
 import com.project.hello.country.api.ResourceCountryCharacters
 import com.project.hello.transit.agency.framework.api.TransitAgencyPickViewModel
 import com.project.hello.transit.agency.framework.internal.datamodel.VehicleDataParcelable
-import com.project.hello.vehicle.prediction.framework.internal.station.LocationSettingsSatisfaction
 import com.project.hello.vehicle.prediction.framework.R
 import com.project.hello.vehicle.prediction.framework.databinding.PredictionFragmentBinding
 import com.project.hello.vehicle.prediction.framework.internal.camera.CameraAnalysis
+import com.project.hello.vehicle.prediction.framework.internal.station.LocationSettingsSatisfaction
 import com.project.hello.vehicle.prediction.framework.internal.textrecognition.DisposableImageAnalyzer
 import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModel
 import com.project.hello.vehicle.prediction.framework.internal.viewmodel.PredictionViewModelInitialData
@@ -61,6 +61,9 @@ internal class PredictionFragment : Fragment() {
 
     @Inject
     lateinit var cityLinesInfo: CityLinesInfo
+
+    @Inject
+    lateinit var cameraRatingUi: CameraRatingUi
 
     private val safeArgs: PredictionFragmentArgs by navArgs()
     private val initialVehicleData: VehicleDataParcelable get() = safeArgs.vehicleDataParcelable
@@ -105,6 +108,7 @@ internal class PredictionFragment : Fragment() {
 
     private fun setupViews() {
         setupHelpIconClicks()
+        setupCameraRatingClicks()
     }
 
     private fun setupHelpIconClicks() {
@@ -113,6 +117,16 @@ internal class PredictionFragment : Fragment() {
                 it.context,
                 R.string.vehicle_prediction_help_dialog_title,
                 R.string.vehicle_prediction_help_dialog_message
+            )
+        }
+    }
+
+    private fun setupCameraRatingClicks() {
+        binding.cameraRating.setOnClickListener {
+            showInformationDialog(
+                it.context,
+                R.string.vehicle_prediction_camera_rating_dialog_title,
+                R.string.vehicle_prediction_camera_rating_dialog_message
             )
         }
     }
@@ -164,7 +178,7 @@ internal class PredictionFragment : Fragment() {
             RequestPermission()
         ) { isGranted ->
             if (isGranted) {
-                processLocationPermissionLogic()
+                processCameraPermissionLogic()
             } else {
                 showExplanatoryWhyCameraPermissionIsRequired()
             }
@@ -173,6 +187,7 @@ internal class PredictionFragment : Fragment() {
 
     private fun processCameraPermissionLogic() {
         if (isCameraPermissionGranted()) {
+            cameraRatingUi.updateCameraHardwareRatingUi(binding.cameraRating)
             processLocationPermissionLogic()
         } else {
             requestCameraPermission()

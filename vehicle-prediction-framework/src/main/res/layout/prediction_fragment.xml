@@ -29,6 +29,26 @@
         app:tint="?attr/colorPrimary" />
 
     <TextView
+        android:id="@+id/camera_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/help_icon"
+        tools:text="N/3" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/right_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="help_icon,camera_rating" />
+
+    <TextView
         android:id="@+id/fps_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,7 +64,7 @@
 
     <TextView
         android:id="@+id/city_lines_count"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@android:color/white"
@@ -53,6 +73,7 @@
         android:textSize="11sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/right_barrier"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fps_counter"
