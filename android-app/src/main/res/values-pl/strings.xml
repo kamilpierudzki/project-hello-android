@@ -41,9 +41,9 @@
     <string name="vehicle_prediction_camera_permission_explanatory_message_value">Podstawą rozpoznania numeru linii pojazdu transportu publicznego jest obraz z kamery. Bez niej aplikacja nie będzie w stanie rozpoznać numeru linii. Czy chcesz spróbować jeszcze raz?</string>
     <string name="vehicle_prediction_location_permission_explanatory_title_value">Dlaczego lokalizacja jest potrzebna?</string>
     <string name="vehicle_prediction_location_permission_explanatory_message_value">Lokalizacja jest potrzebna aby ustalić przystanek, na którym aktualnie znajduje się użytkownik. Ustalenie przystanku podnosi dokładność wyników. Czy chcesz spróbować jeszcze raz?</string>
-    <string name="vehicle_prediction_camera_rating_dialog_title_value" translatable="false">Ocena kamery</string>
-    <string name="vehicle_prediction_camera_rating_dialog_message_value" translatable="false">Ocena została dokonana na podstawie możliwości sprzętowych kamery odczytanych z urządzenia. Im wyższa ocena tym rozpoznanie pojazdu może być dokładniejsze. Zazwyczaj urządzenia z wyższej półki cenowej posiadają kamerę o większych możliwościach.</string>
-    <string name="vehicle_prediction_camera_rating_content_description_value" translatable="false">Ocena kamery, %1$d na %2$d</string>
+    <string name="vehicle_prediction_camera_rating_dialog_title_value">Ocena kamery</string>
+    <string name="vehicle_prediction_camera_rating_dialog_message_value">Ocena została dokonana na podstawie możliwości sprzętowych kamery odczytanych z urządzenia. Im wyższa ocena tym rozpoznanie pojazdu może być dokładniejsze. Zazwyczaj urządzenia z wyższej półki cenowej posiadają kamerę o większych możliwościach.</string>
+    <string name="vehicle_prediction_camera_rating_content_description_value">Ocena kamery, %1$d na %2$d</string>
 
     <string name="welcome_screen_header_value">Pierwsze uruchomienie aplikacji</string>
     <string name="welcome_screen_description_value">Czy chcesz przeczytać wprowadzenie?</string>
