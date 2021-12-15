@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="transit_agency_currently_selected" translatable="false">@string/transit_agency_currently_selected_value</string>
+    <string name="transit_agency_picker_loading" translatable="false">@string/transit_agency_picker_loading_value</string>
+    <string name="transit_agency_selection_error" translatable="false">@string/transit_agency_selection_error_value</string>
+    <string name="transit_agency_picker_label" translatable="false">@string/transit_agency_picker_label_value</string>
+    <string name="transit_agency_item_last_update_label" translatable="false">@string/transit_agency_item_last_update_label_value</string>
+    <string name="transit_agency_no_transit_agency" translatable="false">@string/transit_agency_no_transit_agency_value</string>
+    <string name="transit_agency_no_transit_agency_dialog_title" translatable="false">@string/transit_agency_no_transit_agency_dialog_title_value</string>
+    <string name="transit_agency_no_transit_agency_dialog_message" translatable="false">@string/transit_agency_no_transit_agency_dialog_message_value</string>
+    <string name="transit_agency_error_load_selected_transit_agency" translatable="false">@string/transit_agency_error_load_selected_transit_agency_value</string>
+    <string name="transit_agency_error_load_supported_transit_agencies" translatable="false">@string/transit_agency_error_load_supported_transit_agencies_value</string>
+</resources>

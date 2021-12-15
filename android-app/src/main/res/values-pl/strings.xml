@@ -21,6 +21,8 @@
     <string name="transit_agency_no_transit_agency_value">Mojego przewoźnika nie ma na liście</string>
     <string name="transit_agency_no_transit_agency_dialog_title_value"></string>
     <string name="transit_agency_no_transit_agency_dialog_message_value">Jeśli nie znalazłeś swojego przewoźnika na liście, możesz napisać komentarz w sklepie Play i poprosić autora o dodanie przewoźnika z twojego miasta do aplikacji.</string>
+    <string name="transit_agency_error_load_selected_transit_agency_value">Nie udało się załadować aktualnie wybranego przewoźnika.</string>
+    <string name="transit_agency_error_load_supported_transit_agencies_value">Nie udało się załadować dostępnych przewoźników.</string>
 
     <string name="vehicle_prediction_fragment_label_value">Ekran Rozpoznawania Pojazdu</string>
     <string name="vehicle_prediction_help_icon_description_value">Pomoc</string>

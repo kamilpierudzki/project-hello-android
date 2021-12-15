@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.project.hello.android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:name="com.project.hello.android.HelloApplication"
         android:allowBackup="false"
@@ -15,6 +13,7 @@
 
         <activity
             android:name="com.project.hello.android.MainActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ProjectHelloAndroid.NoActionBar">
             <intent-filter>
@@ -24,10 +23,6 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="ocr" />
-
     </application>
 
-</manifest>
+</manifest> 

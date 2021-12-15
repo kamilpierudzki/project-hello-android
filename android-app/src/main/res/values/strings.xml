@@ -21,6 +21,8 @@
     <string name="transit_agency_no_transit_agency_value">My transit agency is not listed</string>
     <string name="transit_agency_no_transit_agency_dialog_title_value"></string>
     <string name="transit_agency_no_transit_agency_dialog_message_value">If you did not find your transit agency on the list, you can write a comment in the Play Store and ask the author to add your city\'s transit agency to the app.</string>
+    <string name="transit_agency_error_load_selected_transit_agency_value">Couldn\'t load currently selected transit agency.</string>
+    <string name="transit_agency_error_load_supported_transit_agencies_value">Couldn\'t load supported transit agencies.</string>
 
     <string name="vehicle_prediction_fragment_label_value">Vehicle Recognition Screen</string>
     <string name="vehicle_prediction_help_icon_description_value">Help</string>
