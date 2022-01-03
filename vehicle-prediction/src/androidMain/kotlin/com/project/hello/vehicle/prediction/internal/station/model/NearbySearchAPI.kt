@@ -4,6 +4,6 @@ import androidx.annotation.Keep
 
 @Keep
 internal data class NearbySearchAPI(
-    val results: List<ResultAPI>,
+    val results: List<Result>,
     val status: String
 )

@@ -1,17 +1,17 @@
 package com.project.hello.vehicle.prediction.internal.station.implementation
 
-import com.project.hello.vehicle.prediction.internal.station.model.GeometryAPI
-import com.project.hello.vehicle.prediction.internal.station.model.LocationAPI
-import com.project.hello.vehicle.prediction.internal.station.model.ResultAPI
+import com.project.hello.vehicle.prediction.internal.station.model.Geometry
+import com.project.hello.vehicle.prediction.internal.station.model.Location
+import com.project.hello.vehicle.prediction.internal.station.model.Result
 import org.junit.Assert
 import org.junit.Test
 
 internal class PositionCalculationImplTest {
 
-    val centralLocation = LocationAPI(0.0, 0.0)
-    val furtherLocation = LocationAPI(20.0, 20.0)
-    val resultFurther = ResultAPI("A", "", emptyList(), GeometryAPI(furtherLocation))
-    val resultCloser = ResultAPI("A", "", emptyList(), GeometryAPI(furtherLocation))
+    val centralLocation = Location(0.0, 0.0)
+    val furtherLocation = Location(20.0, 20.0)
+    val resultFurther = Result("A", "", emptyList(), Geometry(furtherLocation))
+    val resultCloser = Result("A", "", emptyList(), Geometry(furtherLocation))
 
     val tested = PositionCalculationImpl()
 

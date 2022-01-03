@@ -1,17 +1,18 @@
 package com.project.hello.vehicle.prediction.internal.station.implementation
 
 import com.project.hello.vehicle.prediction.internal.station.NearbySearchValues.ParamValue
-import com.project.hello.vehicle.prediction.internal.station.model.GeometryAPI
-import com.project.hello.vehicle.prediction.internal.station.model.LocationAPI
-import com.project.hello.vehicle.prediction.internal.station.model.ResultAPI
+import com.project.hello.vehicle.prediction.internal.station.model.Geometry
+import com.project.hello.vehicle.prediction.internal.station.model.Location
+import com.project.hello.vehicle.prediction.internal.station.model.Result
 import org.junit.Assert
 import org.junit.Test
 
 internal class NearbySearchResultFiltrationImplTest {
 
-    val geometry = GeometryAPI(LocationAPI(0.0, 0.0))
-    val correctResult = ResultAPI("", "", listOf("a", ParamValue.PLACE_TYPE_VALUE), geometry)
-    val incorrectResult = ResultAPI("", "", listOf("a", "b"), geometry)
+    val geometry = Geometry(Location(0.0, 0.0))
+    val correctResult =
+        Result("", "", listOf("a", ParamValue.PLACE_TYPE_VALUE), geometry)
+    val incorrectResult = Result("", "", listOf("a", "b"), geometry)
 
     val tested = NearbySearchResultFiltrationImpl()
 

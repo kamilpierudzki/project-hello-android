@@ -102,11 +102,6 @@ android {
     defaultConfig {
         minSdk = 23
         targetSdk = 31
-        buildConfigField(
-            "String",
-            "GOOGLE_MAPS_API_KEY",
-            properties["GOOGLE_MAPS_API_KEY"].toString()
-        )
     }
     buildFeatures {
         viewBinding = true

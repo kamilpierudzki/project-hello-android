@@ -3,7 +3,6 @@ package com.project.hello.vehicle.prediction.internal.station.implementation
 import android.location.Location
 import com.project.hello.commons.hilt.IoDispatcher
 import com.project.hello.vehicle.prediction.internal.station.*
-import com.project.hello.vehicle.prediction.internal.station.model.LocationAPI
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -47,4 +46,4 @@ internal class TransitStationUseCaseImpl @Inject constructor(
     private fun Location.toInternalLocation() = InternalLocation(latitude, longitude)
 }
 
-internal typealias InternalLocation = LocationAPI
+internal typealias InternalLocation = com.project.hello.vehicle.prediction.internal.station.model.Location

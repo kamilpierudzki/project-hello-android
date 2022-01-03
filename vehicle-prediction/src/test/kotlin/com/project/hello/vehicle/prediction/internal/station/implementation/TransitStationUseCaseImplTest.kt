@@ -5,10 +5,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.project.hello.commons.test.CoroutinesTestRule
 import com.project.hello.transit.agency.model.TransitAgency
 import com.project.hello.vehicle.prediction.internal.station.*
-import com.project.hello.vehicle.prediction.internal.station.model.GeometryAPI
-import com.project.hello.vehicle.prediction.internal.station.model.LocationAPI
+import com.project.hello.vehicle.prediction.internal.station.model.Geometry
 import com.project.hello.vehicle.prediction.internal.station.model.NearbySearchAPI
-import com.project.hello.vehicle.prediction.internal.station.model.ResultAPI
+import com.project.hello.vehicle.prediction.internal.station.model.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runBlockingTest
@@ -16,6 +15,8 @@ import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.*
+
+internal typealias InternalLocation = com.project.hello.vehicle.prediction.internal.station.model.Location
 
 @ExperimentalCoroutinesApi
 internal class TransitStationUseCaseImplTest {
@@ -69,7 +70,7 @@ internal class TransitStationUseCaseImplTest {
             whenever(nearbySearchUseCase.getNearbySearchResult(any()))
                 .thenReturn(NearbySearchAPI(emptyList(), ""))
 
-            val result = ResultAPI("", "", emptyList(), GeometryAPI(LocationAPI(0.0, 0.0)))
+            val result = Result("", "", emptyList(), Geometry(InternalLocation(0.0, 0.0)))
             whenever(positionCalculation.findTheClosestResultOrNull(any(), any()))
                 .thenReturn(result)
 
@@ -108,7 +109,7 @@ internal class TransitStationUseCaseImplTest {
             whenever(nearbySearchUseCase.getNearbySearchResult(any()))
                 .thenReturn(NearbySearchAPI(emptyList(), ""))
 
-            val result = ResultAPI("", "", emptyList(), GeometryAPI(LocationAPI(0.0, 0.0)))
+            val result = Result("", "", emptyList(), Geometry(InternalLocation(0.0, 0.0)))
             whenever(positionCalculation.findTheClosestResultOrNull(any(), any()))
                 .thenReturn(result)
 
