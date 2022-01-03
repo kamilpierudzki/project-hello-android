@@ -1,7 +1,7 @@
 package com.project.hello.transit.agency.internal.repository
 
 import com.project.hello.commons.data.ResponseApi
-import com.project.hello.transit.agency.internal.model.api.toTransitAgency
+import com.project.hello.transit.agency.model.api.toTransitAgency
 import com.project.hello.transit.agency.internal.repository.datasource.LocalTransitAgencyDataSource
 import com.project.hello.transit.agency.model.TransitAgency
 import com.project.hello.transit.agency.repository.TransitAgencyPlanRepository

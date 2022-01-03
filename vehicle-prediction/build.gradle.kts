@@ -28,6 +28,7 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
+                implementation(kotlin("test-junit"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
@@ -68,6 +69,10 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
+                implementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+                implementation("org.mockito:mockito-inline:4.2.0")
+                implementation("androidx.arch.core:core-testing:2.1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
             }
         }
         val iosX64Main by getting
@@ -105,5 +110,8 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
     }
 }

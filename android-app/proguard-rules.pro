@@ -62,4 +62,5 @@
 # is used.
 -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
 
--keep class com.project.hello.legal.model.api.LatestAvailableLegalApi
+-keep class com.project.hello.transit.agency.model.api.** { *; }
+-keep class com.project.hello.legal.model.api.** { *; }

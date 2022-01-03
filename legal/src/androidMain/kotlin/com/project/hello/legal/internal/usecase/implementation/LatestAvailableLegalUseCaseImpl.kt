@@ -5,7 +5,7 @@ import com.project.hello.commons.data.ResponseApi
 import com.project.hello.commons.data.toSuccessResponse
 import com.project.hello.legal.internal.usecase.LatestAvailableLegalUseCase
 import com.project.hello.legal.model.LatestAvailableLegal
-import com.project.hello.legal.model.api.toLatestAvailableLegal
+import com.project.hello.legal.model.api.LatestAvailableLegalApi
 import com.project.hello.legal.repository.LegalRepository
 import com.project.hello.legal.usecase.LatestAvailableLegalUseCaseErrorMapper
 import io.reactivex.rxjava3.core.Observable
@@ -38,3 +38,6 @@ internal class LatestAvailableLegalUseCaseImpl @Inject constructor(
         }
     }
 }
+
+private fun LatestAvailableLegalApi.toLatestAvailableLegal() =
+    LatestAvailableLegal(version = version, message = message)

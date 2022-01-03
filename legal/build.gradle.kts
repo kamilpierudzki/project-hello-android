@@ -54,8 +54,13 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
+                implementation(project(":top-level-resources"))
+
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
+                implementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+                implementation("androidx.arch.core:core-testing:2.1.0")
+                implementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
             }
         }
         val iosX64Main by getting
@@ -90,5 +95,14 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+
+    packagingOptions {
+        resources.excludes.add("META-INF/AL2.0")
+        resources.excludes.add("META-INF/LGPL2.1")
+        resources.excludes.add("META-INF/atomicfu.kotlin_module")
+        resources.excludes.add("META-INF/licenses/ASM")
+        resources.excludes.add("win32-x86-64/attach_hotspot_windows.dll")
+        resources.excludes.add("win32-x86/attach_hotspot_windows.dll")
     }
 }

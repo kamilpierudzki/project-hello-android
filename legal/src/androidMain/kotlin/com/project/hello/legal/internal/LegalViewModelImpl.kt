@@ -55,7 +55,7 @@ internal class LegalViewModelImpl @Inject constructor(
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         { handleSuccessfulSave() },
-                        { handleFailedSave(it) }
+                        { error -> handleFailedSave(error) }
                     )
             )
         }
@@ -107,25 +107,27 @@ internal class LegalViewModelImpl @Inject constructor(
 
     private fun fetchLatestAvailableLegal(): Observable<Response.Success<LatestAvailableLegal>> =
         latestAvailableLegalUseCase.execute()
+            .filter { it !is Response.Loading }
             .flatMap { response ->
                 when (response) {
                     is Response.Success -> Observable.just(response)
                     is Response.Error -> Observable.error(
                         LatestLegalNotAvailableException(response.localisedErrorMessage)
                     )
-                    else -> Observable.never()
+                    else -> Observable.error(IllegalStateException())
                 }
             }
 
     private fun fetchLatestAcceptedLegalVersion(): Observable<Response.Success<Int>> =
         latestAcceptedLegalVersionUseCase.execute()
+            .filter { it !is Response.Loading }
             .flatMap { response ->
                 when (response) {
                     is Response.Success -> Observable.just(response)
                     is Response.Error -> Observable.error(
                         LatestLegalNotAcceptedException(response.localisedErrorMessage)
                     )
-                    else -> Observable.never()
+                    else -> Observable.error(IllegalStateException())
                 }
             }
 }

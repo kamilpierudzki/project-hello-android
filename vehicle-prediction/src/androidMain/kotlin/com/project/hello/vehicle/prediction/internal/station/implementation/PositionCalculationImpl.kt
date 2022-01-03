@@ -1,21 +1,21 @@
 package com.project.hello.vehicle.prediction.internal.station.implementation
 
 import android.location.Location.distanceBetween
-import com.project.hello.vehicle.prediction.internal.station.Location
 import com.project.hello.vehicle.prediction.internal.station.PositionCalculation
-import com.project.hello.vehicle.prediction.internal.station.Result
+import com.project.hello.vehicle.prediction.internal.station.model.LocationAPI
+import com.project.hello.vehicle.prediction.internal.station.model.ResultAPI
 import javax.inject.Inject
 
 internal class PositionCalculationImpl @Inject constructor() : PositionCalculation {
 
-    override fun findTheClosestResultOrNull(location: Location, results: List<Result>): Result? =
+    override fun findTheClosestResultOrNull(locationAPI: LocationAPI, results: List<ResultAPI>): ResultAPI? =
         results.map {
-            val endLatitude = it.geometry.location.lat
-            val endLongitude = it.geometry.location.lng
+            val endLatitude = it.geometryAPI.location.lat
+            val endLongitude = it.geometryAPI.location.lng
             val calculationResults = FloatArray(1)
             distanceBetween(
-                location.lat,
-                location.lng,
+                locationAPI.lat,
+                locationAPI.lng,
                 endLatitude,
                 endLongitude,
                 calculationResults

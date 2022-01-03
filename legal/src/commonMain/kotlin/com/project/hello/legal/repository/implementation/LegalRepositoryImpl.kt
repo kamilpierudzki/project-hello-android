@@ -6,7 +6,6 @@ import com.project.hello.legal.datasource.AvailableLegalDataSource
 import com.project.hello.legal.datasource.LatestAcceptedLegalDataSource
 import com.project.hello.legal.model.LatestAvailableLegal
 import com.project.hello.legal.model.api.LatestAvailableLegalApi
-import com.project.hello.legal.model.toLatestAvailableLegalApi
 import com.project.hello.legal.repository.LegalDataResource
 import com.project.hello.legal.repository.LegalRepository
 
@@ -31,3 +30,6 @@ class LegalRepositoryImpl(
         }
     }
 }
+
+private fun LatestAvailableLegal.toLatestAvailableLegalApi() =
+    LatestAvailableLegalApi(version = version, message = message)

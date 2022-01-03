@@ -4,9 +4,9 @@ import android.content.res.Resources
 import com.google.gson.Gson
 import com.project.hello.commons.data.ResponseApi
 import com.project.hello.commons.resources.JsonResourceReader
+import com.project.hello.legal.R
 import com.project.hello.legal.datasource.AvailableLegalDataSource
 import com.project.hello.legal.model.api.LatestAvailableLegalApi
-import com.project.hello.legal.R
 import javax.inject.Inject
 
 internal class RawResourcesLatestAvailableLegalDataSourceImpl @Inject constructor(

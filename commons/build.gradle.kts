@@ -49,7 +49,7 @@ kotlin {
 
                 implementation("com.google.code.gson:gson:2.8.6")
                 implementation("junit:junit:4.13.2")
-                implementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+                implementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3")

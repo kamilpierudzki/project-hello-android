@@ -2,13 +2,13 @@ package com.project.hello.vehicle.prediction.internal.station.implementation
 
 import com.project.hello.vehicle.prediction.internal.station.NearbySearchResultFiltration
 import com.project.hello.vehicle.prediction.internal.station.NearbySearchValues.ParamValue
-import com.project.hello.vehicle.prediction.internal.station.Result
+import com.project.hello.vehicle.prediction.internal.station.model.ResultAPI
 import javax.inject.Inject
 
 internal class NearbySearchResultFiltrationImpl @Inject constructor() :
     NearbySearchResultFiltration {
 
-    override fun filteredTransitStations(results: List<Result>): List<Result> =
+    override fun filteredTransitStations(results: List<ResultAPI>): List<ResultAPI> =
         results
             .asSequence()
             .filter {

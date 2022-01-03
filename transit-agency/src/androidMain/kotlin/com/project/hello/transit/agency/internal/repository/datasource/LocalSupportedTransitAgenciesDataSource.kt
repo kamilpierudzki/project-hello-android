@@ -1,6 +1,6 @@
 package com.project.hello.transit.agency.internal.repository.datasource
 
-import com.project.hello.transit.agency.internal.model.api.SupportedTransitAgency
+import com.project.hello.transit.agency.internal.model.SupportedTransitAgency
 import com.project.hello.transit.agency.repository.datasource.SupportedTransitAgenciesDataSource
 import javax.inject.Inject
 

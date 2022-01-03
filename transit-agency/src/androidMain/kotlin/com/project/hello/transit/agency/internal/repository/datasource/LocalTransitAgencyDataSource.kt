@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.project.hello.commons.data.ResponseApi
 import com.project.hello.commons.resources.JsonResourceReader
 import com.project.hello.transit.agency.internal.cryptography.Decoding
-import com.project.hello.transit.agency.internal.model.api.TransitAgencyAPI
+import com.project.hello.transit.agency.model.api.TransitAgencyAPI
 import javax.inject.Inject
 
 internal class LocalTransitAgencyDataSource @Inject constructor(
