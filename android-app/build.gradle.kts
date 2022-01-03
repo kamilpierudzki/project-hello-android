@@ -34,8 +34,8 @@ android {
         applicationId = "com.project.hello.android"
         minSdk = 23
         targetSdk = 31
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 23
+        versionName = "1.6.3"
     }
     buildTypes {
         getByName("release") {
