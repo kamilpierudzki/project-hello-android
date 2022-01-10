@@ -3,11 +3,10 @@ package com.project.hello.vehicle.prediction.internal.characters.implementation
 import android.content.res.Resources
 import com.project.hello.vehicle.prediction.R
 import com.project.hello.vehicle.prediction.internal.characters.ResourceCountryCharacters
-import javax.inject.Inject
 
 private const val SPLIT_CHARACTER = "-"
 
-internal class ResourceCountryCharactersImpl @Inject constructor(
+internal class ResourceCountryCharactersImpl(
     private val resources: Resources
 ) : ResourceCountryCharacters {
 

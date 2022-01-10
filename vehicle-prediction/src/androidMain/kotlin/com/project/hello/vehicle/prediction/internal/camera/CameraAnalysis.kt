@@ -12,7 +12,6 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.project.hello.vehicle.prediction.internal.textrecognition.DisposableImageAnalyzer
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
-import kotlin.math.min
 
 internal class CameraAnalysis(private val fragment: Fragment) {
 

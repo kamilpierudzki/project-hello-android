@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":welcome"))
     implementation(project(":vehicle-prediction"))
     implementation(project(":transit-agency"))
+    implementation(project(":settings"))
 
     implementation("androidx.multidex:multidex:2.0.1")
     implementation("androidx.appcompat:appcompat:1.3.1")

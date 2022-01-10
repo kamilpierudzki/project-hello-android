@@ -6,7 +6,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.SettingsClient
 import com.project.hello.commons.concurrency.Synchronization
 import com.project.hello.commons.time.SystemTime
-import com.project.hello.vehicle.prediction.internal.station.implementation.LocationUseCaseImpl
 import com.project.hello.vehicle.prediction.VehiclePrediction
 import com.project.hello.vehicle.prediction.analysis.Buffering
 import com.project.hello.vehicle.prediction.analysis.implementation.BufferingImpl
@@ -22,7 +21,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -58,22 +56,18 @@ internal abstract class VehiclePredictionViewModelModule {
     companion object {
 
         @Provides
-        @ViewModelScoped
         fun providePredictedLinesAnalysis(synchronization: Synchronization): Buffering =
             BufferingImpl(synchronization)
 
         @Provides
-        @ViewModelScoped
         fun provideCountryCharactersProviderImpl(synchronization: Synchronization) =
             CountryCharactersProviderImpl(synchronization)
 
         @Provides
-        @ViewModelScoped
         fun provideCountryCharactersProvider(impl: CountryCharactersProviderImpl):
                 CountryCharactersProvider = impl
 
         @Provides
-        @ViewModelScoped
         fun provideCountryCharactersEmitter(impl: CountryCharactersProviderImpl):
                 CountryCharactersEmitter = impl
 

@@ -4,15 +4,15 @@
     android:id="@+id/settings_nav_graph"
     app:startDestination="@id/settings_screen">
 
-<!--    <include app:graph="@navigation/transit_agency_nav_graph" />-->
+    <include app:graph="@navigation/transit_agency_nav_graph" />
     <include app:graph="@navigation/introduction_nav_graph" />
 
     <fragment
         android:id="@+id/settings_screen"
-        android:name="com.project.hello.settings.internal.SettingsFragment"
+        android:name="com.project.hello.settings.internal.ui.SettingsFragment"
         android:label="@string/settings_screen_label">
 
-        <!--<action
+        <action
             android:id="@+id/go_to_city_picker_screen"
             app:destination="@id/transit_agency_nav_graph">
 
@@ -20,7 +20,7 @@
                 android:name="backButtonDisabled"
                 app:argType="boolean" />
 
-        </action>-->
+        </action>
 
         <action
             android:id="@+id/go_to_introduction_screen"

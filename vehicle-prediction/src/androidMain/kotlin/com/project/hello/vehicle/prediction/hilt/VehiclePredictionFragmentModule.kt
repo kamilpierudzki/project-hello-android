@@ -11,7 +11,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
-import dagger.hilt.android.scopes.FragmentScoped
 
 @Module
 @InstallIn(FragmentComponent::class)
@@ -26,7 +25,7 @@ internal abstract class VehiclePredictionFragmentModule {
         fun provideCameraAnalysis(fragment: Fragment) = CameraAnalysis(fragment)
 
         @Provides
-        fun bindResourceCountryCharacters(fragment: Fragment): ResourceCountryCharacters =
+        fun provideResourceCountryCharacters(fragment: Fragment): ResourceCountryCharacters =
             ResourceCountryCharactersImpl(fragment.resources)
     }
 }

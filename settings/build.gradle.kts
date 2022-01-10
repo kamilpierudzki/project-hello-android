@@ -31,6 +31,7 @@ kotlin {
             dependencies {
                 implementation(project(":commons"))
                 implementation(project(":welcome"))
+                implementation(project(":transit-agency"))
 
                 implementation("com.google.dagger:hilt-android:2.38.1")
                 configurations.getByName("kapt").dependencies.add(

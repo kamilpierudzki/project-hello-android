@@ -8,10 +8,8 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.project.hello.vehicle.prediction.internal.logger.PredictionConsoleLogger
 import com.project.hello.vehicle.prediction.internal.textrecognition.DisposableImageAnalyzer
-import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
-@FragmentScoped
 internal class TextFromImageAnalyser @Inject constructor(
     private val predictionConsoleLogger: PredictionConsoleLogger
 ) : DisposableImageAnalyzer {
