@@ -1,3 +1,4 @@
+import com.project.hello.script.Config
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -32,8 +33,6 @@ kotlin {
         val androidMain by getting
         val androidTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
             }
         }
         val iosMain by getting
@@ -42,10 +41,10 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = Config.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(23)
-        targetSdkVersion(31)
+        minSdk = Config.minSdk
+        targetSdk = Config.targetSdk
     }
 }

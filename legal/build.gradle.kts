@@ -1,3 +1,5 @@
+import com.project.hello.script.Dependencies
+
 plugins {
     id("com.android.library")
     id("dagger.hilt.android.plugin")
@@ -37,14 +39,8 @@ kotlin {
                 implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
                 implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
-                implementation("com.google.dagger:hilt-android:2.38.1")
-                configurations.getByName("kapt").dependencies.add(
-                    org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
-                        "com.google.dagger",
-                        "hilt-compiler",
-                        "2.38.1"
-                    )
-                )
+                implementation(Dependencies.hilt)
+                configurations.getByName("kapt").dependencies.add(Dependencies.hiltKaptCompiler)
 
                 implementation("com.google.code.gson:gson:2.8.6")
 
@@ -95,14 +91,5 @@ android {
 
     buildFeatures {
         viewBinding = true
-    }
-
-    packagingOptions {
-        resources.excludes.add("META-INF/AL2.0")
-        resources.excludes.add("META-INF/LGPL2.1")
-        resources.excludes.add("META-INF/atomicfu.kotlin_module")
-        resources.excludes.add("META-INF/licenses/ASM")
-        resources.excludes.add("win32-x86-64/attach_hotspot_windows.dll")
-        resources.excludes.add("win32-x86/attach_hotspot_windows.dll")
     }
 }

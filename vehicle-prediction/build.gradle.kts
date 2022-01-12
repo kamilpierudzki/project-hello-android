@@ -1,3 +1,6 @@
+import com.project.hello.script.Config
+import com.project.hello.script.Dependencies
+
 plugins {
     id("com.android.library")
     id("dagger.hilt.android.plugin")
@@ -39,40 +42,35 @@ kotlin {
                 implementation(project(":transit-agency"))
                 implementation(project(":settings"))
 
-                implementation("androidx.camera:camera-camera2:1.1.0-alpha11")
-                implementation("androidx.camera:camera-lifecycle:1.1.0-alpha11")
-                implementation("androidx.camera:camera-view:1.0.0-alpha28")
+                implementation(Dependencies.cameraCamera2)
+                implementation(Dependencies.cameraLifecycle)
+                implementation(Dependencies.cameraView)
 
-                implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-                implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+                implementation(Dependencies.navigationFragment)
+                implementation(Dependencies.navigationUi)
 
-                implementation("com.google.dagger:hilt-android:2.38.1")
-                configurations.getByName("kapt").dependencies.add(
-                    org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
-                        "com.google.dagger",
-                        "hilt-compiler",
-                        "2.38.1"
-                    )
-                )
+                implementation(Dependencies.hilt)
+                configurations.getByName("kapt")
+                    .dependencies.add(Dependencies.hiltKaptCompiler)
 
-                implementation("com.google.android.gms:play-services-mlkit-text-recognition:17.0.1")
-                api("com.google.android.gms:play-services-location:19.0.0")
+                implementation(Dependencies.playServicesMlkitTextRecognition)
+                api(Dependencies.playServicesLocation)
 
-                implementation("com.squareup.retrofit2:retrofit:2.9.0")
-                implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+                implementation(Dependencies.retrofit)
+                implementation(Dependencies.retrofitConverter)
 
-                implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
-                implementation("io.reactivex.rxjava3:rxjava:3.0.0")
+                implementation(Dependencies.rxAndroid)
+                implementation(Dependencies.rxJava)
             }
         }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
-                implementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-                implementation("org.mockito:mockito-inline:4.2.0")
-                implementation("androidx.arch.core:core-testing:2.1.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+                implementation(Dependencies.junit)
+                implementation(Dependencies.mockitoKotlin)
+                implementation(Dependencies.mockitoInline)
+                implementation(Dependencies.coreTesting)
+                implementation(Dependencies.kotlinxCoroutinesTest)
             }
         }
         val iosX64Main by getting
@@ -97,11 +95,11 @@ kotlin {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = Config.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 23
-        targetSdk = 31
+        minSdk = Config.minSdk
+        targetSdk = Config.targetSdk
     }
     buildFeatures {
         viewBinding = true

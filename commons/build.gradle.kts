@@ -1,3 +1,6 @@
+import com.project.hello.script.Config
+import com.project.hello.script.Dependencies
+
 plugins {
     id("com.android.library")
     id("dagger.hilt.android.plugin")
@@ -7,7 +10,7 @@ plugins {
 
 kotlin {
     android()
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -28,37 +31,28 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.google.dagger:hilt-android:2.38.1")
-                configurations.getByName("kapt").dependencies.add(
-                    org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
-                        "com.google.dagger",
-                        "hilt-compiler",
-                        "2.38.1"
-                    )
-                )
+                implementation(Dependencies.hilt)
+                configurations.getByName("kapt")
+                    .dependencies.add(Dependencies.hiltKaptCompiler)
 
-                implementation("androidx.appcompat:appcompat:1.4.0")
-                implementation("com.google.android.material:material:1.4.0")
-                implementation("androidx.core:core-ktx:1.7.0")
+                implementation(Dependencies.appcompat)
+                implementation(Dependencies.material)
+                implementation(Dependencies.coreKtx)
 
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
+                implementation(Dependencies.kotlinxCoroutinesCore)
+                implementation(Dependencies.kotlinxCoroutinesAndroid)
 
-                implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
-                implementation("io.reactivex.rxjava3:rxjava:3.0.0")
+                implementation(Dependencies.rxAndroid)
+                implementation(Dependencies.rxJava)
 
-                implementation("com.google.code.gson:gson:2.8.6")
-                implementation("junit:junit:4.13.2")
-                implementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3")
+                implementation(Dependencies.gson)
+                implementation(Dependencies.junit)
+                implementation(Dependencies.mockitoKotlin)
+                implementation(Dependencies.kotlinxCoroutinesTest)
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
             }
         }
         val iosX64Main by getting
@@ -83,10 +77,10 @@ kotlin {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = Config.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 23
-        targetSdk = 31
+        minSdk = Config.minSdk
+        targetSdk = Config.targetSdk
     }
 }

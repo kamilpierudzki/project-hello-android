@@ -1,3 +1,6 @@
+import com.project.hello.script.Config
+import com.project.hello.script.Dependencies
+
 plugins {
     id("com.android.application")
     id("dagger.hilt.android.plugin")
@@ -15,28 +18,27 @@ dependencies {
     implementation(project(":transit-agency"))
     implementation(project(":settings"))
 
-    implementation("androidx.multidex:multidex:2.0.1")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.1")
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation(Dependencies.multidex)
+    implementation(Dependencies.appcompat)
+    implementation(Dependencies.constraintLayout)
+    implementation(Dependencies.coreKtx)
+    implementation(Dependencies.material)
 
-    implementation("com.google.android.material:material:1.4.0")
+    implementation(Dependencies.navigationFragment)
+    implementation(Dependencies.navigationUi)
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-
-    implementation("com.google.dagger:hilt-android:2.38.1")
-    kapt("com.google.dagger:hilt-compiler:2.38.1")
+    implementation(Dependencies.hilt)
+    kapt(Dependencies.hiltCompiler)
 }
 
 android {
-    compileSdk = 31
+    compileSdk = Config.compileSdk
     defaultConfig {
         applicationId = "com.project.hello.android"
-        minSdk = 23
-        targetSdk = 31
-        versionCode = 24
-        versionName = "1.6.4"
+        minSdk = Config.minSdk
+        targetSdk = Config.targetSdk
+        versionCode = Config.versionCode
+        versionName = Config.versionName
     }
     buildTypes {
         getByName("release") {

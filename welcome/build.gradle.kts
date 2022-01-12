@@ -1,3 +1,4 @@
+import com.project.hello.script.Dependencies
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -45,14 +46,8 @@ kotlin {
                 implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
                 implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
-                implementation("com.google.dagger:hilt-android:2.38.1")
-                configurations.getByName("kapt").dependencies.add(
-                    org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
-                        "com.google.dagger",
-                        "hilt-compiler",
-                        "2.38.1"
-                    )
-                )
+                implementation(Dependencies.hilt)
+                configurations.getByName("kapt").dependencies.add(Dependencies.hiltKaptCompiler)
 
                 implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
                 implementation("io.reactivex.rxjava3:rxjava:3.0.0")

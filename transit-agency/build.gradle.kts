@@ -1,4 +1,5 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import com.project.hello.script.Config
+import com.project.hello.script.Dependencies
 
 plugins {
     id("com.android.library")
@@ -36,39 +37,28 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.google.dagger:hilt-android:2.38.1")
-                configurations.getByName("kapt").dependencies.add(
-                    org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
-                        "com.google.dagger",
-                        "hilt-compiler",
-                        "2.38.1"
-                    )
-                )
+                implementation(Dependencies.hilt)
+                configurations.getByName("kapt")
+                    .dependencies.add(Dependencies.hiltKaptCompiler)
 
-                implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-                implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+                implementation(Dependencies.navigationFragment)
+                implementation(Dependencies.navigationUi)
 
-                implementation("androidx.room:room-ktx:2.3.0")
-                configurations.getByName("kapt").dependencies.add(
-                    org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
-                        "androidx.room",
-                        "room-compiler",
-                        "2.3.0"
-                    )
-                )
+                implementation(Dependencies.roomKtx)
+                configurations.getByName("kapt")
+                    .dependencies.add(Dependencies.roomKaptCompiler)
 
-                implementation("com.google.code.gson:gson:2.8.6")
+                implementation(Dependencies.gson)
             }
         }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
-
-                implementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-                implementation("org.mockito:mockito-inline:4.2.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
-                implementation("androidx.arch.core:core-testing:2.1.0")
+                implementation(Dependencies.junit)
+                implementation(Dependencies.mockitoKotlin)
+                implementation(Dependencies.mockitoInline)
+                implementation(Dependencies.kotlinxCoroutinesTest)
+                implementation(Dependencies.coreTesting)
             }
         }
         val iosX64Main by getting
@@ -93,11 +83,11 @@ kotlin {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = Config.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 23
-        targetSdk = 31
+        minSdk = Config.minSdk
+        targetSdk = Config.targetSdk
     }
     buildFeatures {
         viewBinding = true
