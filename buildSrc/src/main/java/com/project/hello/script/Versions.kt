@@ -7,7 +7,7 @@ object Versions {
     const val cameraLifecycle = "1.1.0-alpha11"
     const val cameraView = "1.0.0-alpha28"
 
-    const val playServicesMlkitTextRecognition = "17.0.1"
+    const val playServicesMlkitTextRecognition = "18.0.0"
     const val playServicesLocation = "19.0.1"
 
     const val navigation = "2.3.5"
