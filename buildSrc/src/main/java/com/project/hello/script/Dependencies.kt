@@ -51,4 +51,5 @@ object Dependencies {
     const val kotlinxCoroutinesAndroid =
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlinxCoroutinesAndroid}"
     const val multidex = "androidx.multidex:multidex:${Versions.multidex}"
+    const val firebaseAnalyticsKtx = "com.google.firebase:firebase-analytics-ktx:${Versions.firebaseAnalyticsKtx}"
 }

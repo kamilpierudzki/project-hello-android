@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.project.hello.analytics.api.ScreenLogging
 import com.project.hello.commons.actionbar.ActionBarUpIndicatorVisibility
 import com.project.hello.commons.ui.showInformationDialog
 import com.project.hello.commons.viewmodel.ExternalViewModelProvider
@@ -35,6 +36,9 @@ internal class VehicleTypePickerFragment : Fragment() {
     private val transitAgencyViewModel by externalViewModels {
         transitAgencyPickViewModelProvider
     }
+
+    @Inject
+    lateinit var screenLogging: ScreenLogging
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +70,7 @@ internal class VehicleTypePickerFragment : Fragment() {
         setHasOptionsMenu(true)
         actionBarUpIndicatorVisibility.disableUpButtonIfPossible(activity)
         setupViews()
+        logScreenEnteredEvent()
     }
 
     private fun announceScreenNameByScreenReader() {
@@ -117,5 +122,9 @@ internal class VehicleTypePickerFragment : Fragment() {
             binding.busTypesButton.visibility = View.GONE
             binding.tramTypesButton.visibility = View.GONE
         }
+    }
+
+    private fun logScreenEnteredEvent() {
+        screenLogging.logScreen("vehicle-type-fragment")
     }
 }

@@ -27,4 +27,7 @@ object Versions {
     const val kotlinxCoroutinesCore = "1.5.0"
     const val kotlinxCoroutinesAndroid = "1.6.0"
     const val multidex = "2.0.1"
+
+    const val firebaseBom = "29.0.4"
+    const val firebaseAnalyticsKtx = "20.0.2"
 }

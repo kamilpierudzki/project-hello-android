@@ -4,6 +4,7 @@ import com.project.hello.script.Dependencies
 plugins {
     id("com.android.application")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
     kotlin("android")
     kotlin("kapt")
 }
@@ -17,6 +18,7 @@ dependencies {
     implementation(project(":vehicle-prediction"))
     implementation(project(":transit-agency"))
     implementation(project(":settings"))
+    implementation(project(":analytics"))
 
     implementation(Dependencies.multidex)
     implementation(Dependencies.appcompat)

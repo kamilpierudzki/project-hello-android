@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.project.hello.analytics.api.ScreenLogging
 import com.project.hello.commons.ui.showBinaryDialog
 import com.project.hello.commons.ui.showInformationDialog
 import com.project.hello.commons.viewmodel.ExternalViewModelProvider
@@ -65,6 +66,9 @@ internal class PredictionFragment : Fragment() {
     @Inject
     lateinit var cameraRatingUi: CameraRatingUi
 
+    @Inject
+    lateinit var screenLogging: ScreenLogging
+
     private val safeArgs: PredictionFragmentArgs by navArgs()
     private val initialVehicleData: VehicleDataParcelable get() = safeArgs.vehicleDataParcelable
     private lateinit var binding: PredictionFragmentBinding
@@ -95,6 +99,7 @@ internal class PredictionFragment : Fragment() {
         processCameraPermissionLogic()
         observeCityLinesInfoEvent()
         observeCityLinesInfo()
+        logScreenEnteredEvent()
     }
 
     override fun onDestroyView() {
@@ -132,11 +137,11 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun observeRecognisedTexts() {
-        textAnalyzer.recognisedTexts.observe(viewLifecycleOwner, { texts ->
+        textAnalyzer.recognisedTexts.observe(viewLifecycleOwner) { texts ->
             if (texts.isNotEmpty()) {
                 predictionViewModel.processRecognisedTexts(texts)
             }
-        })
+        }
     }
 
     private fun passInitialInfoToViewModel() {
@@ -151,13 +156,13 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun observeNewFrameEvent() {
-        predictionViewModel.newFrame.observe(viewLifecycleOwner, {
+        predictionViewModel.newFrame.observe(viewLifecycleOwner) {
             fpsCounterManager.newFrameProcessed(System.currentTimeMillis())
-        })
+        }
     }
 
     private fun observePredictedNumber() {
-        predictionViewModel.predictedNumberLabel.observe(viewLifecycleOwner, { numberInfo ->
+        predictionViewModel.predictedNumberLabel.observe(viewLifecycleOwner) { numberInfo ->
             val number = numberInfo.text
             if (number != null) {
                 binding.predictedNumber.visibility = View.VISIBLE
@@ -166,7 +171,7 @@ internal class PredictionFragment : Fragment() {
             } else {
                 binding.predictedNumber.visibility = View.GONE
             }
-        })
+        }
     }
 
     private fun observeFpsCounter() {
@@ -302,12 +307,16 @@ internal class PredictionFragment : Fragment() {
     }
 
     private fun observeCityLinesInfoEvent() {
-        predictionViewModel.cityLinesEvent.observe(viewLifecycleOwner, {
+        predictionViewModel.cityLinesEvent.observe(viewLifecycleOwner) {
             cityLinesInfo.updateCityLinesInfo(it)
-        })
+        }
     }
 
     private fun observeCityLinesInfo() {
         cityLinesInfo.observeCityLinesInfoUiChanges(viewLifecycleOwner, binding.cityLinesCount)
+    }
+
+    private fun logScreenEnteredEvent() {
+        screenLogging.logScreen("prediction-fragment")
     }
 }

@@ -1,10 +1,8 @@
-import com.project.hello.script.Config
 import com.project.hello.script.Dependencies
 
 plugins {
     id("com.android.library")
     id("dagger.hilt.android.plugin")
-    id("androidx.navigation.safeargs")
     kotlin("multiplatform")
     kotlin("kapt")
 }
@@ -18,60 +16,31 @@ kotlin {
         //iosSimulatorArm64() sure all ios dependencies support this target
     ).forEach {
         it.binaries.framework {
-            baseName = "vehicle-prediction"
+            baseName = "analytics"
         }
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":commons"))
-                implementation(project(":transit-agency"))
-            }
-        }
+        val commonMain by getting
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(project(":commons"))
-                implementation(project(":transit-agency"))
-                implementation(project(":settings"))
-                implementation(project(":analytics"))
-
-                implementation(Dependencies.cameraCamera2)
-                implementation(Dependencies.cameraLifecycle)
-                implementation(Dependencies.cameraView)
-
-                implementation(Dependencies.navigationFragment)
-                implementation(Dependencies.navigationUi)
-
                 implementation(Dependencies.hilt)
                 configurations.getByName("kapt")
                     .dependencies.add(Dependencies.hiltKaptCompiler)
 
-                implementation(Dependencies.playServicesMlkitTextRecognition)
-                api(Dependencies.playServicesLocation)
-
-                implementation(Dependencies.retrofit)
-                implementation(Dependencies.retrofitConverter)
-
-                implementation(Dependencies.rxAndroid)
-                implementation(Dependencies.rxJava)
+                api(Dependencies.firebaseAnalyticsKtx)
             }
         }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation(Dependencies.junit)
-                implementation(Dependencies.mockitoKotlin)
-                implementation(Dependencies.mockitoInline)
-                implementation(Dependencies.coreTesting)
-                implementation(Dependencies.kotlinxCoroutinesTest)
+                implementation("junit:junit:4.13.2")
             }
         }
         val iosX64Main by getting
@@ -96,16 +65,10 @@ kotlin {
 }
 
 android {
-    compileSdk = Config.compileSdk
+    compileSdk = 31
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = Config.minSdk
-        targetSdk = Config.targetSdk
-    }
-    buildFeatures {
-        viewBinding = true
-    }
-    testOptions {
-        unitTests.isReturnDefaultValues = true
+        minSdk = 23
+        targetSdk = 31
     }
 }
